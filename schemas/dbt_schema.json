@@ -1,0 +1,50 @@
+{
+    "title": "dbt_yml_files",
+    "type": "object",
+    "required": ["version"],
+    "additionalProperties": false,
+    "properties": {
+        "version": { "type": "number"},
+        "models": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": "name",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "tests": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": ["string", "object"]
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

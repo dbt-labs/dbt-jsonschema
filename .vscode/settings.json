@@ -1,0 +1,12 @@
+{
+    "yaml.schemas": {
+        "./schemas/dbt_schema.json": [
+            "/*.yml",
+            "!profiles.yml",
+            "!dbt_project.yml"
+        ],
+        "./schemas/dbt_project.json": [
+            "dbt_project.yml"
+        ]
+    }
+}

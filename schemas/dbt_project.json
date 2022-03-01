@@ -1,0 +1,17 @@
+{
+    "title": "dbt_project_files",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["name", "version", "config-version"],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "version": {
+            "type": "number"
+        },
+        "config-version": {
+            "type": "number"
+        }
+    }
+}

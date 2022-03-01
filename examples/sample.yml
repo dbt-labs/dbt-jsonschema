@@ -1,0 +1,17 @@
+version: 2
+
+
+
+models:
+  - name: my_model
+    description: foo
+    columns:
+      - name: my_column
+        description: foo
+        tests:
+          - unique
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "a + b = c"
+
+# metrics:
