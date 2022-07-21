@@ -23,10 +23,14 @@
                                 "examples": ["dbt-labs/dbt_utils"]
                             },
                             "version": {
-                                "type": ["string", "number"],
+                                "type": ["string", "number", "array"],
                                 "title": "Package version",
-                                "description": "A semantic version string or range",
-                                "examples": ["0.8.1", "['>=1.0.0', '<2.0.0']"]
+                                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]"
+                            },
+                            "install-prerelease": {
+                                "type": "boolean",
+                                "title": "Install Prerelease",
+                                "description": "Opt in to prerelease versions of a package"
                             }
                         },
                         "required": [
