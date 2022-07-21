@@ -1,17 +1,87 @@
 {
-    "title": "dbt_project_files",
+    "title": "dbt_project",
     "type": "object",
     "additionalProperties": false,
-    "required": ["name", "version", "config-version"],
+    "required": [
+        "name",
+        "version",
+        "config-version"
+    ],
     "properties": {
         "name": {
             "type": "string"
         },
         "version": {
-            "type": "number"
+            "type": "string"
         },
         "config-version": {
-            "type": "number"
+            "type": "number",
+            "default": 2
+        },
+        "profile": {
+            "type": "string"
+        },
+        "model-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "analysis-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "test-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "seed-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "macro-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "snapshot-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "target-path": {
+            "type": "string"
+        },
+        "clean-targets": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "models": {
+            "type": "object",
+            "properties": {
+                "+materialized": {
+                    "type": "string"
+                },
+                "+sql_header": {
+                    "type": "string"
+                },
+                "+enabled": {
+                    "type": "boolean"
+                },
+                "+tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                }
+            }
+        }
+    },
+    "$defs": {
+        "array_of_strings": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "string_or_array_of_strings": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
         }
     }
 }
