@@ -1,0 +1,73 @@
+{
+    "title": "packages",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "packages"
+    ],
+    "properties": {
+        "packages": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "package": {
+                                "type": "string",
+                                "pattern": "^[\\w\\-\\.]+\/[\\w\\-\\.]+$",
+                                "title": "Package identifier",
+                                "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
+                                "examples": ["dbt-labs/dbt_utils"]
+                            },
+                            "version": {
+                                "type": ["string", "number"],
+                                "title": "Package version",
+                                "description": "A semantic version string or range",
+                                "examples": ["0.8.1", "['>=1.0.0', '<2.0.0']"]
+                            }
+                        },
+                        "required": [
+                            "package",
+                            "version"
+                        ]
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "git": {
+                                "type": "string",
+                                "title": "Git URL"
+                            },
+                            "revision": {
+                                "type": "string",
+                                "title": "Revision",
+                                "description": "Pin your package to a specific release by specifying a release name"
+                            },
+                            "subdirectory": {
+                                "type": "string",
+                                "title": "Subdirectory",
+                                "description": "Only required if the package is nested in a subdirectory of the git project"
+                            }
+                        },
+                        "required":[
+                            "git"
+                        ]
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "local": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
