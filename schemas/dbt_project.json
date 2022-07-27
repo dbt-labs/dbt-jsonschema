@@ -46,21 +46,10 @@
             "$ref": "#/$defs/array_of_strings"
         },
         "models": {
-            "type": "object",
-            "properties": {
-                "+materialized": {
-                    "type": "string"
-                },
-                "+sql_header": {
-                    "type": "string"
-                },
-                "+enabled": {
-                    "type": "boolean"
-                },
-                "+tags": {
-                    "$ref": "#/$defs/string_or_array_of_strings"
-                }
-            }
+            "$ref": "#/$defs/model_configs"
+        },
+        "tests": {
+            "$ref": "#/$defs/test_configs"
         }
     },
     "$defs": {
@@ -76,12 +65,101 @@
                     "type": "string"
                 },
                 {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "$ref": "#/$defs/array_of_strings"
                 }
             ]
+        },
+        "model_configs": {
+            "title": "Model configs",
+            "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set. Nested subdirectories are supported.",
+            "type": "object",
+            "properties": {
+                "+materialized": {
+                    "type": "string"
+                },
+                "+sql_header": {
+                    "type": "string"
+                },
+                "+enabled": {
+                    "type": "boolean"
+                },
+                "+tags": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/$defs/model_configs"
+            }
+        },
+        "test_configs": {
+            "title": "Test configs",
+            "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set. Nested subdirectories are supported.",
+            "type": "object",
+            "properties": {
+                "+enabled": {
+                    "type": "boolean"
+                },
+                "+database": {
+                    "description": "Only relevant when `store_failures` is true",
+                    "type": "string"
+                },
+                "+schema": {
+                    "description": "Only relevant when `store_failures` is true",
+                    "type": "string"
+                },
+                "+alias": {
+                    "description": "Only relevant when `store_failures` is true",
+                    "type": "string"
+                },
+                "+store_failures": {
+                    "type": "boolean"
+                },
+                "+fail_calc": {
+                    "type": "string"
+                },
+                "+limit": {
+                    "type": "number"
+                },
+                "+severity": {
+                    "type": "string",
+                    "enum": [
+                        "warn",
+                        "error"
+                    ]
+                },
+                "+error_if": {
+                    "type": "string"
+                },
+                "+warn_if": {
+                    "type": "string"
+                },
+                "+tags": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/$defs/test_configs"
+            }
         }
     }
 }
