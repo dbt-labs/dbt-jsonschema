@@ -21,6 +21,9 @@
         "profile": {
             "type": "string"
         },
+        "require-dbt-version": {
+            "$ref": "#/$defs/string_or_array_of_strings"
+        },
         "model-paths": {
             "$ref": "#/$defs/array_of_strings"
         },
@@ -42,14 +45,32 @@
         "target-path": {
             "type": "string"
         },
+        "asset-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
         "clean-targets": {
             "$ref": "#/$defs/array_of_strings"
         },
         "models": {
             "$ref": "#/$defs/model_configs"
         },
+        "vars": {
+            "type": "object"
+        },
+        "seeds": {
+            "$ref": "#/$defs/seed_configs"
+        },
+        "sources": {
+            "$ref": "#/$defs/source_configs"
+        },
         "tests": {
             "$ref": "#/$defs/test_configs"
+        },
+        "on-run-start": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "on-run-end": {
+            "$ref": "#/$defs/array_of_strings"
         }
     },
     "$defs": {
@@ -69,9 +90,20 @@
                 }
             ]
         },
+        "boolean_or_jinja_string": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "pattern": "{{.*}}"
+                },
+                {
+                    "type": "boolean"
+                }
+            ]
+        },
         "model_configs": {
             "title": "Model configs",
-            "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set. Nested subdirectories are supported.",
+            "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
             "type": "object",
             "properties": {
                 "+materialized": {
@@ -81,20 +113,19 @@
                     "type": "string"
                 },
                 "+enabled": {
-                    "type": "boolean"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+schema": {
+                    "type": "string"
+                },
+                "+post-hook": {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                "+incremental_strategy": {
+                    "type": "string"
                 },
                 "+tags": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ]
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": {
@@ -103,11 +134,11 @@
         },
         "test_configs": {
             "title": "Test configs",
-            "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set. Nested subdirectories are supported.",
+            "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
             "type": "object",
             "properties": {
                 "+enabled": {
-                    "type": "boolean"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+database": {
                     "description": "Only relevant when `store_failures` is true",
@@ -122,7 +153,7 @@
                     "type": "string"
                 },
                 "+store_failures": {
-                    "type": "boolean"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+fail_calc": {
                     "type": "string"
@@ -144,21 +175,41 @@
                     "type": "string"
                 },
                 "+tags": {
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ]
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": {
                 "$ref": "#/$defs/test_configs"
+            }
+        },
+        "seed_configs": {
+            "title": "Seed configs",
+            "type": "object",
+            "properties": {
+                "+quote_columns": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/$defs/seed_configs"
+            }
+        },
+        "source_configs": {
+            "title": "Source configs",
+            "type": "object",
+            "properties": {
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/$defs/source_configs"
             }
         }
     }
