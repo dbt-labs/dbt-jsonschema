@@ -1,16 +1,22 @@
 {
     "title": "dbt_yml_files",
     "type": "object",
-    "required": ["version"],
+    "required": [
+        "version"
+    ],
     "additionalProperties": false,
     "properties": {
-        "version": { "type": "number"},
+        "version": {
+            "type": "number"
+        },
         "models": {
             "type": "array",
             "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["name"],
+                "required": [
+                    "name"
+                ],
                 "properties": {
                     "name": {
                         "type": "string"
@@ -18,33 +24,53 @@
                     "description": {
                         "type": "string"
                     },
+                    "config": {
+                        "type": "object"
+                    },
                     "columns": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": "name",
-                            "properties": {
-                                "name": {
-                                    "type": "string"
-                                },
-                                "description": {
-                                    "type": "string"
-                                },
-                                "tests": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": ["string", "object"]
-                                    }
-                                }
-
-                            }
-
+                            "$ref": "#/$defs/column_properties"
                         }
                     }
                 }
             }
         }
-
+    },
+    "$defs": {
+        "column_properties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": "name",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "tests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/tests"
+                    }
+                }
+            }
+        },
+        "tests": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "config": {
+                            "type": "object"
+                        }
+                    }
+                }
+            ]
+        }
     }
 }
