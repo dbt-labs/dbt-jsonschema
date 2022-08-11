@@ -14,11 +14,16 @@
         ]
     },
     "sortJSON.orderOverride": [
+        "version",
         "title",
+        "name",
         "type",
-        "required"
+        "required",
     ],
     "sortJSON.orderUnderride": [
+        "properties",
+        "patternProperties",
+        "additionalProperties",
         "$defs"
     ]
 }

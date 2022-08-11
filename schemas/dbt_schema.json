@@ -4,7 +4,6 @@
     "required": [
         "version"
     ],
-    "additionalProperties": false,
     "properties": {
         "version": {
             "type": "number"
@@ -13,7 +12,6 @@
             "type": "array",
             "items": {
                 "type": "object",
-                "additionalProperties": false,
                 "required": [
                     "name"
                 ],
@@ -21,26 +19,27 @@
                     "name": {
                         "type": "string"
                     },
-                    "description": {
-                        "type": "string"
-                    },
-                    "config": {
-                        "type": "object"
-                    },
                     "columns": {
                         "type": "array",
                         "items": {
                             "$ref": "#/$defs/column_properties"
                         }
+                    },
+                    "config": {
+                        "type": "object"
+                    },
+                    "description": {
+                        "type": "string"
                     }
-                }
+                },
+                "additionalProperties": false
             }
         }
     },
+    "additionalProperties": false,
     "$defs": {
         "column_properties": {
             "type": "object",
-            "additionalProperties": false,
             "required": "name",
             "properties": {
                 "name": {
@@ -55,7 +54,8 @@
                         "$ref": "#/$defs/tests"
                     }
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "tests": {
             "oneOf": [

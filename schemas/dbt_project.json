@@ -1,49 +1,20 @@
 {
     "title": "dbt_project",
     "type": "object",
-    "additionalProperties": false,
     "required": [
         "name",
         "version",
         "config-version"
     ],
     "properties": {
-        "name": {
-            "type": "string"
-        },
         "version": {
             "type": "string"
         },
-        "config-version": {
-            "type": "number",
-            "default": 2
-        },
-        "profile": {
+        "name": {
             "type": "string"
-        },
-        "require-dbt-version": {
-            "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "model-paths": {
-            "$ref": "#/$defs/array_of_strings"
         },
         "analysis-paths": {
             "$ref": "#/$defs/array_of_strings"
-        },
-        "test-paths": {
-            "$ref": "#/$defs/array_of_strings"
-        },
-        "seed-paths": {
-            "$ref": "#/$defs/array_of_strings"
-        },
-        "macro-paths": {
-            "$ref": "#/$defs/array_of_strings"
-        },
-        "snapshot-paths": {
-            "$ref": "#/$defs/array_of_strings"
-        },
-        "target-path": {
-            "type": "string"
         },
         "asset-paths": {
             "$ref": "#/$defs/array_of_strings"
@@ -51,44 +22,63 @@
         "clean-targets": {
             "$ref": "#/$defs/array_of_strings"
         },
+        "config-version": {
+            "type": "number",
+            "default": 2
+        },
+        "macro-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "model-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
         "models": {
             "$ref": "#/$defs/model_configs"
         },
-        "vars": {
-            "type": "object"
-        },
-        "seeds": {
-            "$ref": "#/$defs/seed_configs"
-        },
-        "sources": {
-            "$ref": "#/$defs/source_configs"
-        },
-        "tests": {
-            "$ref": "#/$defs/test_configs"
+        "on-run-end": {
+            "$ref": "#/$defs/array_of_strings"
         },
         "on-run-start": {
             "$ref": "#/$defs/array_of_strings"
         },
-        "on-run-end": {
+        "profile": {
+            "type": "string"
+        },
+        "require-dbt-version": {
+            "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "seed-paths": {
             "$ref": "#/$defs/array_of_strings"
+        },
+        "seeds": {
+            "$ref": "#/$defs/seed_configs"
+        },
+        "snapshot-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "sources": {
+            "$ref": "#/$defs/source_configs"
+        },
+        "target-path": {
+            "type": "string"
+        },
+        "test-paths": {
+            "$ref": "#/$defs/array_of_strings"
+        },
+        "tests": {
+            "$ref": "#/$defs/test_configs"
+        },
+        "vars": {
+            "type": "object"
         }
     },
+    "additionalProperties": false,
     "$defs": {
         "array_of_strings": {
             "type": "array",
             "items": {
                 "type": "string"
             }
-        },
-        "string_or_array_of_strings": {
-            "oneOf": [
-                {
-                    "type": "string"
-                },
-                {
-                    "$ref": "#/$defs/array_of_strings"
-                }
-            ]
         },
         "boolean_or_jinja_string": {
             "oneOf": [
@@ -103,25 +93,25 @@
         },
         "model_configs": {
             "title": "Model configs",
-            "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
             "type": "object",
+            "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
             "properties": {
-                "+materialized": {
-                    "type": "string"
-                },
-                "+sql_header": {
-                    "type": "string"
-                },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "+schema": {
+                "+incremental_strategy": {
+                    "type": "string"
+                },
+                "+materialized": {
                     "type": "string"
                 },
                 "+post-hook": {
                     "$ref": "#/$defs/array_of_strings"
                 },
-                "+incremental_strategy": {
+                "+schema": {
+                    "type": "string"
+                },
+                "+sql_header": {
                     "type": "string"
                 },
                 "+tags": {
@@ -130,56 +120,6 @@
             },
             "additionalProperties": {
                 "$ref": "#/$defs/model_configs"
-            }
-        },
-        "test_configs": {
-            "title": "Test configs",
-            "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
-            "type": "object",
-            "properties": {
-                "+enabled": {
-                    "$ref": "#/$defs/boolean_or_jinja_string"
-                },
-                "+database": {
-                    "description": "Only relevant when `store_failures` is true",
-                    "type": "string"
-                },
-                "+schema": {
-                    "description": "Only relevant when `store_failures` is true",
-                    "type": "string"
-                },
-                "+alias": {
-                    "description": "Only relevant when `store_failures` is true",
-                    "type": "string"
-                },
-                "+store_failures": {
-                    "$ref": "#/$defs/boolean_or_jinja_string"
-                },
-                "+fail_calc": {
-                    "type": "string"
-                },
-                "+limit": {
-                    "type": "number"
-                },
-                "+severity": {
-                    "type": "string",
-                    "enum": [
-                        "warn",
-                        "error"
-                    ]
-                },
-                "+error_if": {
-                    "type": "string"
-                },
-                "+warn_if": {
-                    "type": "string"
-                },
-                "+tags": {
-                    "$ref": "#/$defs/string_or_array_of_strings"
-                }
-            },
-            "additionalProperties": {
-                "$ref": "#/$defs/test_configs"
             }
         },
         "seed_configs": {
@@ -210,6 +150,66 @@
             },
             "additionalProperties": {
                 "$ref": "#/$defs/source_configs"
+            }
+        },
+        "string_or_array_of_strings": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                }
+            ]
+        },
+        "test_configs": {
+            "title": "Test configs",
+            "type": "object",
+            "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
+            "properties": {
+                "+alias": {
+                    "type": "string",
+                    "description": "Only relevant when `store_failures` is true"
+                },
+                "+database": {
+                    "type": "string",
+                    "description": "Only relevant when `store_failures` is true"
+                },
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+error_if": {
+                    "type": "string"
+                },
+                "+fail_calc": {
+                    "type": "string"
+                },
+                "+limit": {
+                    "type": "number"
+                },
+                "+schema": {
+                    "type": "string",
+                    "description": "Only relevant when `store_failures` is true"
+                },
+                "+severity": {
+                    "type": "string",
+                    "enum": [
+                        "warn",
+                        "error"
+                    ]
+                },
+                "+store_failures": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+warn_if": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/$defs/test_configs"
             }
         }
     }
