@@ -30,6 +30,20 @@
                     },
                     "description": {
                         "type": "string"
+                    },
+                    "docs": {
+                        "type": "object",
+                        "properties": {
+                            "show": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "tests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/tests"
+                        }
                     }
                 },
                 "additionalProperties": false
@@ -38,6 +52,17 @@
     },
     "additionalProperties": false,
     "$defs": {
+        "boolean_or_jinja_string": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "pattern": "{{.*}}"
+                },
+                {
+                    "type": "boolean"
+                }
+            ]
+        },
         "column_properties": {
             "type": "object",
             "required": "name",
@@ -47,6 +72,12 @@
                 },
                 "description": {
                     "type": "string"
+                },
+                "meta": {
+                    "type": "object"
+                },
+                "quote": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "tests": {
                     "type": "array",
@@ -58,15 +89,54 @@
             "additionalProperties": false
         },
         "tests": {
-            "oneOf": [
+            "anyOf": [
                 {
                     "type": "string"
                 },
                 {
                     "type": "object",
                     "properties": {
-                        "config": {
-                            "type": "object"
+                        "relationships": {
+                            "type": "object",
+                            "required": [
+                                "to",
+                                "field"
+                            ],
+                            "properties": {
+                                "to": {
+                                    "type": "string",
+                                    "default": "ref('')",
+                                    "examples": [
+                                        "ref('parent_model')",
+                                        "source('parent_schema', 'parent_table')"
+                                    ]
+                                },
+                                "field": {
+                                    "description": "The foreign key column",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "accepted_values": {
+                            "type": "object",
+                            "required": [
+                                "values"
+                            ],
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
                         }
                     }
                 }
