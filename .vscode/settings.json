@@ -12,5 +12,13 @@
         "./schemas/packages.json": [
             "packages.yml"
         ]
-    }
+    },
+    "sortJSON.orderOverride": [
+        "title",
+        "type",
+        "required"
+    ],
+    "sortJSON.orderUnderride": [
+        "$defs"
+    ]
 }
