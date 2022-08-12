@@ -77,11 +77,11 @@
                     "config": {
                         "type": "object",
                         "properties": {
-                            "quote_columns": {
-                                "$ref": "#/$defs/boolean_or_jinja_string"
-                            },
                             "column_types": {
                                 "type": "object"
+                            },
+                            "quote_columns": {
+                                "$ref": "#/$defs/boolean_or_jinja_string"
                             }
                         }
                     },
@@ -115,36 +115,144 @@
                 ],
                 "properties": {
                     "name": {
+                        "type": "string",
+                        "description": "How you will identify the schema in {{ source() }} calls. Unless `schema` is also set, this will be the name of the schema in the database."
+                    },
+                    "config": {
+                        "type": "object"
+                    },
+                    "database": {
                         "type": "string"
                     },
                     "description": {
                         "type": "string"
                     },
-                    "database": {
-                        "type": "string"
+                    "freshness": {
+                        "type": "object",
+                        "properties": {
+                            "error_after": {
+                                "$ref": "#/$defs/freshness_rules"
+                            },
+                            "filter": {
+                                "type": "string"
+                            },
+                            "warn_after": {
+                                "$ref": "#/$defs/freshness_rules"
+                            }
+                        },
+                        "additionalProperties": false
                     },
-                    "schema": {
+                    "loaded_at_field": {
                         "type": "string"
                     },
                     "loader": {
                         "type": "string"
                     },
-                    "loaded_at_field": {
-                        "type": "string"
-                    },
                     "meta": {
                         "type": "object"
                     },
+                    "overrides": {
+                        "title": "Package to Override",
+                        "type": "string",
+                        "description": "The name of another package installed in your project. If that package has a source with the same name as this one, its properties will be applied on top of the base properties of the overridden source. https://docs.getdbt.com/reference/resource-properties/overrides"
+                    },
+                    "quoting": {
+                        "type": "object",
+                        "properties": {
+                            "database": {
+                                "$ref": "#/$defs/boolean_or_jinja_string"
+                            },
+                            "identifier": {
+                                "$ref": "#/$defs/boolean_or_jinja_string"
+                            },
+                            "schema": {
+                                "$ref": "#/$defs/boolean_or_jinja_string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "schema": {
+                        "type": "string",
+                        "description": "The schema name as stored in the database. Only needed if you want to use a different `name` than what exists in the database (otherwise `name` is used by default)"
+                    },
+                    "tables": {
+                        "type": "array",
+                        "required": [
+                            "name"
+                        ],
+                        "items": {
+                            "name": {
+                                "title": "Name",
+                                "type": "string",
+                                "description": "How you will identify the table in {{ source() }} calls. Unless `identifier` is also set, this will be the name of the table in the database."
+                            },
+                            "columns": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/$defs/column_properties"
+                                }
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "external": {
+                                "type": "object"
+                            },
+                            "freshness": {
+                                "type": "object",
+                                "properties": {
+                                    "error_after": {
+                                        "$ref": "#/$defs/freshness_rules"
+                                    },
+                                    "filter": {
+                                        "type": "string"
+                                    },
+                                    "warn_after": {
+                                        "$ref": "#/$defs/freshness_rules"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "identifier": {
+                                "title": "Identifier",
+                                "type": "string",
+                                "description": "The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)"
+                            },
+                            "loaded_at_field": {
+                                "type": "string",
+                                "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall."
+                            },
+                            "meta": {
+                                "type": "object"
+                            },
+                            "quoting": {
+                                "type": "object",
+                                "properties": {
+                                    "database": {
+                                        "$ref": "#/$defs/boolean_or_jinja_string"
+                                    },
+                                    "identifier": {
+                                        "$ref": "#/$defs/boolean_or_jinja_string"
+                                    },
+                                    "schema": {
+                                        "$ref": "#/$defs/boolean_or_jinja_string"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "tags": {
+                                "$ref": "#/$defs/string_or_array_of_strings"
+                            },
+                            "tests": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/$defs/tests"
+                                }
+                            }
+                        }
+                    },
                     "tags": {
                         "$ref": "#/$defs/string_or_array_of_strings"
-                    },
-                    "config": {
-                        "type": "object"
-                    },
-                    "overrides": {
-                        "type": "string",
-                        "title": "Package to Override",
-                        "description": "The name of another package installed in your project. If that package has a source with the same name as this one, its properties will be applied on top of the base properties of the overridden source."
                     },
                     "tests": {
                         "type": "array",
@@ -197,6 +305,28 @@
                     "items": {
                         "$ref": "#/$defs/tests"
                     }
+                }
+            },
+            "additionalProperties": false
+        },
+        "freshness_rules": {
+            "type": "object",
+            "required": [
+                "count",
+                "period"
+            ],
+            "properties": {
+                "count": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "period": {
+                    "type": "string",
+                    "enum": [
+                        "minute",
+                        "hour",
+                        "day"
+                    ]
                 }
             },
             "additionalProperties": false
