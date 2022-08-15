@@ -177,78 +177,79 @@
                     },
                     "tables": {
                         "type": "array",
-                        "required": [
-                            "name"
-                        ],
                         "items": {
-                            "name": {
-                                "title": "Name",
-                                "type": "string",
-                                "description": "How you will identify the table in {{ source() }} calls. Unless `identifier` is also set, this will be the name of the table in the database."
-                            },
-                            "columns": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/$defs/column_properties"
-                                }
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "external": {
-                                "type": "object"
-                            },
-                            "freshness": {
-                                "type": "object",
-                                "properties": {
-                                    "error_after": {
-                                        "$ref": "#/$defs/freshness_rules"
-                                    },
-                                    "filter": {
-                                        "type": "string"
-                                    },
-                                    "warn_after": {
-                                        "$ref": "#/$defs/freshness_rules"
+                            "type": "object",
+                            "required": [
+                                "name"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "title": "Name",
+                                    "type": "string",
+                                    "description": "How you will identify the table in {{ source() }} calls. Unless `identifier` is also set, this will be the name of the table in the database."
+                                },
+                                "columns": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/$defs/column_properties"
                                     }
                                 },
-                                "additionalProperties": false
-                            },
-                            "identifier": {
-                                "title": "Identifier",
-                                "type": "string",
-                                "description": "The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)"
-                            },
-                            "loaded_at_field": {
-                                "type": "string",
-                                "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall."
-                            },
-                            "meta": {
-                                "type": "object"
-                            },
-                            "quoting": {
-                                "type": "object",
-                                "properties": {
-                                    "database": {
-                                        "$ref": "#/$defs/boolean_or_jinja_string"
-                                    },
-                                    "identifier": {
-                                        "$ref": "#/$defs/boolean_or_jinja_string"
-                                    },
-                                    "schema": {
-                                        "$ref": "#/$defs/boolean_or_jinja_string"
-                                    }
+                                "external": {
+                                    "type": "object"
                                 },
-                                "additionalProperties": false
-                            },
-                            "tags": {
-                                "$ref": "#/$defs/string_or_array_of_strings"
-                            },
-                            "tests": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/$defs/tests"
+                                "freshness": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error_after": {
+                                            "$ref": "#/$defs/freshness_rules"
+                                        },
+                                        "filter": {
+                                            "type": "string"
+                                        },
+                                        "warn_after": {
+                                            "$ref": "#/$defs/freshness_rules"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "identifier": {
+                                    "title": "Identifier",
+                                    "type": "string",
+                                    "description": "The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)"
+                                },
+                                "loaded_at_field": {
+                                    "type": "string",
+                                    "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall."
+                                },
+                                "meta": {
+                                    "type": "object"
+                                },
+                                "quoting": {
+                                    "type": "object",
+                                    "properties": {
+                                        "database": {
+                                            "$ref": "#/$defs/boolean_or_jinja_string"
+                                        },
+                                        "identifier": {
+                                            "$ref": "#/$defs/boolean_or_jinja_string"
+                                        },
+                                        "schema": {
+                                            "$ref": "#/$defs/boolean_or_jinja_string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "tags": {
+                                    "$ref": "#/$defs/string_or_array_of_strings"
+                                },
+                                "tests": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/$defs/tests"
+                                    }
                                 }
-                            }
+                            },
+                            "additionalProperties": false
                         }
                     },
                     "tags": {
