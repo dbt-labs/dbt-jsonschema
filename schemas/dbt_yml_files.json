@@ -6,7 +6,131 @@
     ],
     "properties": {
         "version": {
-            "type": "number"
+            "type": "number",
+            "const": 2
+        },
+        "analyses": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "name"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "config": {
+                        "type": "object",
+                        "properties": {
+                            "tags": {
+                                "$ref": "#/$defs/string_or_array_of_strings"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "docs": {
+                        "type": "object",
+                        "required": [
+                            "show"
+                        ],
+                        "properties": {
+                            "show": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "exposures": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "owner",
+                    "depends_on"
+                ],
+                "$comment": "NB: depends_on is not strictly required, but is _expected_ according to the documentation",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "dashboard",
+                            "notebook",
+                            "analysis",
+                            "ml",
+                            "application"
+                        ]
+                    },
+                    "depends_on": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "maturity": {
+                        "type": "string",
+                        "enum": [
+                            "high",
+                            "medium",
+                            "low"
+                        ]
+                    },
+                    "meta": {
+                        "type": "object"
+                    },
+                    "owner": {
+                        "type": "object",
+                        "required": [
+                            "email"
+                        ],
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "tags": {
+                        "$ref": "#/$defs/string_or_array_of_strings"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
         },
         "models": {
             "type": "array",
@@ -261,8 +385,7 @@
                             "$ref": "#/$defs/tests"
                         }
                     }
-                },
-                "additionalProperties": false
+                }
             }
         }
     },
@@ -283,7 +406,8 @@
                 {
                     "type": "boolean"
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "column_properties": {
             "type": "object",
@@ -414,6 +538,7 @@
                                 "field": {
                                     "title": "Relationships: Field",
                                     "type": "string",
+                                    "default": "<FOREIGN_KEY_COLUMN>",
                                     "description": "The foreign key column"
                                 },
                                 "to": {
@@ -423,6 +548,9 @@
                                         "ref('parent_model')",
                                         "source('parent_schema', 'parent_table')"
                                     ]
+                                },
+                                "where": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -452,6 +580,9 @@
                                     "items": {
                                         "type": "string"
                                     }
+                                },
+                                "where": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -469,6 +600,9 @@
                                 },
                                 "config": {
                                     "$ref": "#/$defs/test_configs"
+                                },
+                                "where": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -486,6 +620,9 @@
                                 },
                                 "config": {
                                     "$ref": "#/$defs/test_configs"
+                                },
+                                "where": {
+                                    "type": "string"
                                 }
                             }
                         }
