@@ -1,13 +1,18 @@
 {
     "yaml.schemas": {
-        "./schemas/dbt_schema.json": [
+        "./schemas/dbt_yml_files.json": [
             "/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
-            "!packages.yml"
+            "!packages.yml",
+            "!selectors.yml",
+            "!profile_template.yml"
         ],
         "./schemas/dbt_project.json": [
             "dbt_project.yml"
+        ],
+        "./schemas/selectors.json": [
+            "selectors.yml"
         ],
         "./schemas/packages.json": [
             "packages.yml"

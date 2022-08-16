@@ -1,0 +1,51 @@
+{
+    "title": "selectors",
+    "type": "object",
+    "required": [
+        "selectors"
+    ],
+    "properties": {
+        "selectors": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "pattern": "{{.*}}"
+                            },
+                            {
+                                "type": "boolean"
+                            }
+                        ],
+                        "additionalProperties": false
+                    },
+                    "definition": {
+                        "oneOf": [
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ]
+                    }
+                },
+                "additionalProperties": false
+            },
+            "minItems": 1
+        }
+    },
+    "additionalProperties": false
+}
