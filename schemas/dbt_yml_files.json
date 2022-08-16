@@ -132,6 +132,145 @@
                 }
             }
         },
+        "macros": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "arguments": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "name"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "docs": {
+                        "type": "object",
+                        "properties": {
+                            "show": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "metrics": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "type",
+                    "sql",
+                    "timestamp",
+                    "time_grains"
+                ],
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "expression"
+                        }
+                    }
+                },
+                "then": {
+                    "required": [
+                        "name",
+                        "type",
+                        "sql",
+                        "timestamp",
+                        "time_grains"
+                    ]
+                },
+                "else": {
+                    "required": [
+                        "name",
+                        "type",
+                        "sql",
+                        "timestamp",
+                        "time_grains",
+                        "model"
+                    ]
+                },
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "dimensions": {
+                        "$ref": "#/$defs/array_of_strings"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "field",
+                                "operator",
+                                "value"
+                            ],
+                            "properties": {
+                                "field": {
+                                    "type": "string"
+                                },
+                                "operator": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string",
+                        "default": "ref('')"
+                    },
+                    "sql": {
+                        "type": "string"
+                    },
+                    "time_grains": {
+                        "$ref": "#/$defs/array_of_strings"
+                    },
+                    "timestamp": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "models": {
             "type": "array",
             "items": {

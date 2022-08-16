@@ -19,6 +19,9 @@
         "name",
         "type",
         "required",
+        "if",
+        "then",
+        "else"
     ],
     "sortJSON.orderUnderride": [
         "properties",
