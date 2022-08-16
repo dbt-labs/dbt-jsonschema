@@ -26,6 +26,25 @@
             "type": "number",
             "default": 2
         },
+        "dispatch": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "macro_namespace",
+                    "search_order"
+                ],
+                "properties": {
+                    "macro_namespace": {
+                        "type": "string"
+                    },
+                    "search_order": {
+                        "$ref": "#/$defs/array_of_strings"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
         "macro-paths": {
             "$ref": "#/$defs/array_of_strings"
         },
