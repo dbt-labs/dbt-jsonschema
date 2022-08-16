@@ -457,6 +457,9 @@
                                         "$ref": "#/$defs/column_properties"
                                     }
                                 },
+                                "description": {
+                                    "type": "string"
+                                },
                                 "external": {
                                     "type": "object"
                                 },
