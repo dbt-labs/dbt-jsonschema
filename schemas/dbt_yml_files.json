@@ -391,19 +391,7 @@
                         "type": "string"
                     },
                     "freshness": {
-                        "type": "object",
-                        "properties": {
-                            "error_after": {
-                                "$ref": "#/$defs/freshness_rules"
-                            },
-                            "filter": {
-                                "type": "string"
-                            },
-                            "warn_after": {
-                                "$ref": "#/$defs/freshness_rules"
-                            }
-                        },
-                        "additionalProperties": false
+                        "$ref": "#/$defs/freshness_definition"
                     },
                     "loaded_at_field": {
                         "type": "string"
@@ -464,19 +452,7 @@
                                     "type": "object"
                                 },
                                 "freshness": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error_after": {
-                                            "$ref": "#/$defs/freshness_rules"
-                                        },
-                                        "filter": {
-                                            "type": "string"
-                                        },
-                                        "warn_after": {
-                                            "$ref": "#/$defs/freshness_rules"
-                                        }
-                                    },
-                                    "additionalProperties": false
+                                    "$ref": "#/$defs/freshness_definition"
                                 },
                                 "identifier": {
                                     "title": "Identifier",
@@ -575,6 +551,38 @@
                 }
             },
             "additionalProperties": false
+        },
+        "freshness_definition": {
+            "default": {
+                "warn_after": {
+                    "count": 1,
+                    "period": "day"
+                },
+                "error_after": {
+                    "count": 2,
+                    "period": "day"
+                }
+            },
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "error_after": {
+                            "$ref": "#/$defs/freshness_rules"
+                        },
+                        "filter": {
+                            "type": "string"
+                        },
+                        "warn_after": {
+                            "$ref": "#/$defs/freshness_rules"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "const": null
+                }
+            ]
         },
         "freshness_rules": {
             "type": "object",
