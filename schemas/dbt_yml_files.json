@@ -33,6 +33,9 @@
                                 },
                                 "description": {
                                     "type": "string"
+                                },
+                                "data_type": {
+                                    "type": "string"
                                 }
                             },
                             "additionalProperties": false
@@ -534,6 +537,9 @@
                 "name": {
                     "type": "string"
                 },
+                "data_type": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -548,6 +554,9 @@
                     "items": {
                         "$ref": "#/$defs/tests"
                     }
+                },
+                "tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": false
