@@ -3,7 +3,7 @@
 [JSON Schema](https://json-schema.org/) is a way to define the expected shape of JSON (or YAML) documents, which enable live checking of your files, as well as Intellisense/autocomplete as you type. 
 
 ## 60 second demo video:
-<a href="https://www.loom.com/share/7dd4dfc67765441b80ff454942f59b63" target="_blank"><img src="https://user-images.githubusercontent.com/7335046/185288526-7dda607f-b406-4e79-ad9f-bf96f654ead0.gif"/></a>
+<a href="https://www.loom.com/share/7dd4dfc67765441b80ff454942f59b63?autoplay=1"><img src="https://user-images.githubusercontent.com/7335046/185288526-7dda607f-b406-4e79-ad9f-bf96f654ead0.gif"/></a>
 
 ## What does it do?
 This repository contains schemata for:
