@@ -14,14 +14,12 @@ This repository contains schemata for:
 
 ## Installation in VS Code
 
-1. Clone this repo locally
-2. Install the [VSCode-YAML extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
-3. Inside of your dbt project's directory, create a `.vscode/settings.json` file containing the following data. This is what tells the extension which schema to associate with each file. 
+1. Install the [VSCode-YAML extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+2. Inside of your dbt project's directory, create a `.vscode/settings.json` file containing the following data. This is what tells the extension which schema to associate with each file. 
 ```json
-//If you are checking the file into source control, you should make PATH_TO_THIS_REPO a relative link so that your colleagues get it too.
 {    
     "yaml.schemas": {
-        "PATH_TO_THIS_REPO/schemas/dbt_yml_files.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/dbt_yml_files.json": [
             "/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
@@ -29,19 +27,19 @@ This repository contains schemata for:
             "!selectors.yml",
             "!profile_template.yml"
         ],
-        "PATH_TO_THIS_REPO/schemas/dbt_project.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/dbt_project.json": [
             "dbt_project.yml"
         ],
-        "PATH_TO_THIS_REPO/schemas/selectors.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/selectors.json": [
             "selectors.yml"
         ],
-        "PATH_TO_THIS_REPO/schemas/packages.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/packages.json": [
             "packages.yml"
         ]
     },
 }
 ```
-4. To prompt other users to install the YAML extension, create a `.vscode/extensions.json` file containing the following data inside of your dbt project's directory:
+3. To prompt other users to install the YAML extension, create a `.vscode/extensions.json` file containing the following data inside of your dbt project's directory:
 ```json
 {
     "recommendations": [
