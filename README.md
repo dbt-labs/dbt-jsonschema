@@ -1,9 +1,11 @@
 # dbt YAML validator using JSON Schema
 
-[JSON Schema](https://json-schema.org/) is a way to define the expected shape of JSON (or YAML) documents, which enable live checking of your files, as well as Intellisense/autocomplete as you type:
+[JSON Schema](https://json-schema.org/) is a way to define the expected shape of JSON (or YAML) documents, which enable live checking of your files, as well as Intellisense/autocomplete as you type. 
 
-<div style="position: relative; padding-bottom: 66.84856753069577%; height: 0;"><iframe src="https://www.loom.com/embed/7dd4dfc67765441b80ff454942f59b63" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+## 60 second demo video:
+<a href="https://www.loom.com/share/7dd4dfc67765441b80ff454942f59b63" target="_blank"><img src="https://user-images.githubusercontent.com/7335046/185288526-7dda607f-b406-4e79-ad9f-bf96f654ead0.gif"/></a>
 
+## What does it do?
 This repository contains schemata for:
 - Project definition files (`dbt_project.yml`)
 - Package files (`packages.yml`)
