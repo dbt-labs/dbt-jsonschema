@@ -20,7 +20,7 @@ This repository contains schemata for:
 {    
     "yaml.schemas": {
         "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/dbt_yml_files.json": [
-            "/*.yml",
+            "/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
             "!packages.yml",
