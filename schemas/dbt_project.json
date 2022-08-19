@@ -94,6 +94,9 @@
         "seeds": {
             "$ref": "#/$defs/seed_configs"
         },
+        "snapshots": {
+            "$ref": "#/$defs/snapshot_configs"
+        },
         "snapshot-paths": {
             "$ref": "#/$defs/array_of_strings"
         },
