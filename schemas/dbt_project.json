@@ -141,7 +141,8 @@
             "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
             "properties": {
                 "+bind": {
-                    "$ref": "#/$defs/boolean_or_jinja_string"
+                    "$ref": "#/$defs/boolean_or_jinja_string",
+                    "default": false
                 },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
