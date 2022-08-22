@@ -153,17 +153,20 @@
                 "+materialized": {
                     "type": "string"
                 },
-                "+persist-docs": {
+                "+persist_docs": {
                     "type": "object",
                     "properties": {
                         "columns": {
-                            "$ref": "#/$defs/boolean_or_jinja_string"
+                            "$ref": "#/$defs/boolean_or_jinja_string",
+                            "default": true
                         },
                         "relation": {
-                            "$ref": "#/$defs/boolean_or_jinja_string"
+                            "$ref": "#/$defs/boolean_or_jinja_string",
+                            "default": true
                         }
                     },
                     "additionalProperties": false
+
                 },
                 "+post-hook": {
                     "$ref": "#/$defs/array_of_strings"
