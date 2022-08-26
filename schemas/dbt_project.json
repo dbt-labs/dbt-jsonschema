@@ -63,6 +63,28 @@
         "profile": {
             "type": "string"
         },
+        "query-comment": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "append": {
+                            "$ref": "#/$defs/boolean_or_jinja_string"
+                        },
+                        "comment": {
+                            "type": "string"
+                        },
+                        "job-label": {
+                            "$ref": "#/$defs/boolean_or_jinja_string"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        },
         "require-dbt-version": {
             "$ref": "#/$defs/string_or_array_of_strings"
         },
@@ -71,6 +93,9 @@
         },
         "seeds": {
             "$ref": "#/$defs/seed_configs"
+        },
+        "snapshots": {
+            "$ref": "#/$defs/snapshot_configs"
         },
         "snapshot-paths": {
             "$ref": "#/$defs/array_of_strings"
@@ -115,6 +140,10 @@
             "type": "object",
             "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
             "properties": {
+                "+bind": {
+                    "$ref": "#/$defs/boolean_or_jinja_string",
+                    "default": false
+                },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
@@ -123,6 +152,21 @@
                 },
                 "+materialized": {
                     "type": "string"
+                },
+                "+persist_docs": {
+                    "type": "object",
+                    "properties": {
+                        "columns": {
+                            "$ref": "#/$defs/boolean_or_jinja_string",
+                            "default": true
+                        },
+                        "relation": {
+                            "$ref": "#/$defs/boolean_or_jinja_string",
+                            "default": true
+                        }
+                    },
+                    "additionalProperties": false
+
                 },
                 "+post-hook": {
                     "$ref": "#/$defs/array_of_strings"
@@ -148,12 +192,27 @@
                 "+quote_columns": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "+schema": {
+                    "type": "string"
+                },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": {
                 "$ref": "#/$defs/seed_configs"
+            }
+        },
+        "snapshot_configs": {
+            "title": "Snapshot configs",
+            "type": "object",
+            "properties": {
+                "+target_schema": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/$defs/snapshot_configs"
             }
         },
         "source_configs": {
