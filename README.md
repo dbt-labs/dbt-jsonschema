@@ -52,7 +52,7 @@ This repository contains schemata for:
 
 1. Install the [coc.nvim](https://github.com/neoclide/coc.nvim) plugin
 2. Install [coc-yaml](https://github.com/neoclide/coc-yaml): `:CocInstall coc-yaml`
-3. Add schema to `coc-settings.json` (`:CocConfig`):
+3. Add JSON Schema (there might be a better way to do this, but adding directly to `coc-settings.json` using `:CocConfig` works):
 ```json
 {    
     "yaml.schemas": {
