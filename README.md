@@ -48,6 +48,35 @@ This repository contains schemata for:
 }
 ```
 
+## Installation in Vim
+
+1. Install the [coc.nvim](https://github.com/neoclide/coc.nvim) plugin
+2. Install [coc-yaml](https://github.com/neoclide/coc-yaml): `:CocInstall coc-yaml`
+3. Add JSON Schema (there might be a better way to do this, but adding directly to `coc-settings.json` using `:CocConfig` works):
+```json
+{    
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/dbt_yml_files.json": [
+            "/**/*.yml",
+            "!profiles.yml",
+            "!dbt_project.yml",
+            "!packages.yml",
+            "!selectors.yml",
+            "!profile_template.yml"
+        ],
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/dbt_project.json": [
+            "dbt_project.yml"
+        ],
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/selectors.json": [
+            "selectors.yml"
+        ],
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/packages.json": [
+            "packages.yml"
+        ]
+    },
+}
+```
+
 _Do you use a different IDE which also supports JSON Schema? Please open a PR with setup instructions and links to any extensions!_
 
 ## Contributing 
