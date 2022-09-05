@@ -147,6 +147,9 @@
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
                 },
+                "+database": {
+                    "type": "string"
+                },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
@@ -170,14 +173,11 @@
                     },
                     "additionalProperties": false
                 },
-                "+pre-hook": {
-                    "$ref": "#/$defs/array_of_strings"
-                },
                 "+post-hook": {
                     "$ref": "#/$defs/array_of_strings"
                 },
-                "+database": {
-                    "type": "string"
+                "+pre-hook": {
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "+schema": {
                     "type": "string"
