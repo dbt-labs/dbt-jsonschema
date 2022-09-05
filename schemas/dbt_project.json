@@ -170,8 +170,14 @@
                     },
                     "additionalProperties": false
                 },
+                "+pre-hook": {
+                    "$ref": "#/$defs/array_of_strings"
+                },
                 "+post-hook": {
                     "$ref": "#/$defs/array_of_strings"
+                },
+                "+database": {
+                    "type": "string"
                 },
                 "+schema": {
                     "type": "string"
