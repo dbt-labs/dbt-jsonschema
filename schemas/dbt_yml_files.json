@@ -521,8 +521,7 @@
         "boolean_or_jinja_string": {
             "oneOf": [
                 {
-                    "type": "string",
-                    "pattern": "{{.*}}"
+                    "$ref": "#/$defs/jinja_string"
                 },
                 {
                     "type": "boolean"
@@ -601,8 +600,7 @@
             ],
             "properties": {
                 "count": {
-                    "type": "number",
-                    "minimum": 1
+                    "$ref": "#/$defs/number_or_jinja_string"
                 },
                 "period": {
                     "type": "string",
@@ -613,6 +611,21 @@
                     ]
                 }
             },
+            "additionalProperties": false
+        },
+        "jinja_string": {
+            "type": "string",
+            "pattern": "^{{.*}}$"
+        },
+        "number_or_jinja_string": {
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/jinja_string"
+                },
+                {
+                    "type": "number"
+                }
+            ],
             "additionalProperties": false
         },
         "string_or_array_of_strings": {
