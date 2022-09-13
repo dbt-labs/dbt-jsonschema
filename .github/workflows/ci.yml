@@ -18,20 +18,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-          cache: 'pip'
-      - name: install dbt
-        run: pip install dbt-postgres
-      - name: create sample project
-        run: dbt init --project-dir ./test -s test
       - uses: actions/setup-node@v3
         with:
           node-version: 16
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
-      - name: validate dbt_project.yml
+      - name: validate dbt_project.yml sample file
         run: npx ajv-cli validate -s schemas/dbt_project.json -d tests/dbt_project.yml
-      - name: validate model yml files
+      - name: validate sample model YAML file
         run: npx ajv-cli validate -s schemas/dbt_yml_files.json -d tests/schema.yml
