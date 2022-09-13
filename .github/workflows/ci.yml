@@ -12,6 +12,6 @@ jobs:
           node-version: 16
           cache: 'npm'
       - name: install avj
-        run: npm install ajv-cli@5.0.0
+        run: npm install --no-save ajv-cli@5.0.0
       - name: validate all schema files
         run: find ./schemas -name "*.json" | xargs -n 1 -I {} npx ajv-cli compile -s {} --strict=false --spec=draft7
