@@ -131,7 +131,7 @@
             "oneOf": [
                 {
                     "type": "string",
-                    "pattern": "{{.*}}"
+                    "pattern": "\\{\\{.*\\}\\}"
                 },
                 {
                     "type": "boolean"
