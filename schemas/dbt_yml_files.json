@@ -617,7 +617,7 @@
         },
         "jinja_string": {
             "type": "string",
-            "pattern": "{{.*}}"
+            "pattern": "\\{\\{.*\\}\\}"
         },
         "number_or_jinja_string": {
             "oneOf": [
