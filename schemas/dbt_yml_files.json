@@ -531,7 +531,9 @@
         },
         "column_properties": {
             "type": "object",
-            "required": "name",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "name": {
                     "type": "string"
@@ -615,7 +617,7 @@
         },
         "jinja_string": {
             "type": "string",
-            "pattern": "{{.*}}"
+            "pattern": "\\{\\{.*\\}\\}"
         },
         "number_or_jinja_string": {
             "oneOf": [
