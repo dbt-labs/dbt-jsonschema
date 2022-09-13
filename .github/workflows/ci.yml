@@ -10,7 +10,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
       - name: validate all schema files
@@ -30,7 +29,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
       - name: validate dbt_project.yml
