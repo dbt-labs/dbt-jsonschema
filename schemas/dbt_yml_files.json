@@ -1,5 +1,6 @@
 {
     "title": "dbt_yml_files",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "required": [
         "version"
@@ -531,7 +532,9 @@
         },
         "column_properties": {
             "type": "object",
-            "required": "name",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "name": {
                     "type": "string"
@@ -615,7 +618,7 @@
         },
         "jinja_string": {
             "type": "string",
-            "pattern": "{{.*}}"
+            "pattern": "\\{\\{.*\\}\\}"
         },
         "number_or_jinja_string": {
             "oneOf": [

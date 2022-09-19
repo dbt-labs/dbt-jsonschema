@@ -1,0 +1,29 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  validate-json-schemas:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: install avj
+        run: npm install --no-save ajv-cli@5.0.0
+      - name: validate all schema files
+        run: find ./schemas -name "*.json" | xargs -n 1 -I {} npx ajv-cli compile -s {} --strict=false
+  test-against-sample-dbt-files:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: install avj
+        run: npm install --no-save ajv-cli@5.0.0
+      - name: validate dbt_project.yml sample file
+        run: npx ajv-cli validate -s schemas/dbt_project.json -d tests/dbt_project.yml
+      - name: validate sample model YAML file
+        run: npx ajv-cli validate -s schemas/dbt_yml_files.json -d tests/schema.yml

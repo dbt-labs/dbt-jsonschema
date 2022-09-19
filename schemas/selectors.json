@@ -1,5 +1,6 @@
 {
     "title": "selectors",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "required": [
         "selectors"
@@ -20,7 +21,7 @@
                         "oneOf": [
                             {
                                 "type": "string",
-                                "pattern": "{{.*}}"
+                                "pattern": "\\{\\{.*\\}\\}"
                             },
                             {
                                 "type": "boolean"

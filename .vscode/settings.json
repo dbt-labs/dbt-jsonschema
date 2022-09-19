@@ -6,7 +6,8 @@
             "!dbt_project.yml",
             "!packages.yml",
             "!selectors.yml",
-            "!profile_template.yml"
+            "!profile_template.yml",
+            "!/.github/**/*.yml"
         ],
         "./schemas/dbt_project.json": [
             "dbt_project.yml"
