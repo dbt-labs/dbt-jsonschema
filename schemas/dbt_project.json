@@ -139,6 +139,18 @@
                 }
             ]
         },
+        "label_configs": {
+            "title": "Label configs",
+            "type": "object",
+            "description": "Configurations specific to Big Query adapter used to add labels and tags to tables & views created by dbt.",
+            "patternProperties": {
+                "^[a-z][a-z0-9_-]{0,63}$": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9_-]{0,64}$"
+                }
+            },
+            "additionalProperties": false
+        },
         "model_configs": {
             "title": "Model configs",
             "type": "object",
@@ -154,8 +166,19 @@
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "+hours_to_expiration": {
+                    "type": "number",
+                    "description": "Configuration specific to Big Query adapter used to set an expiration delay (in hours) to a table."
+                },
                 "+incremental_strategy": {
                     "type": "string"
+                },
+                "+kms_key_name": {
+                    "type": "string",
+                    "description": "Configuration, specific to Big Query adapter, of the KMS key name used for data encryption."
+                },
+                "+labels": {
+                    "$ref": "#/$defs/label_configs"
                 },
                 "+materialized": {
                     "type": "string"
