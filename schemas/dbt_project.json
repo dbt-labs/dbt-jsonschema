@@ -166,6 +166,22 @@
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "+grant_access_to": {
+                    "title": "Authorized views",
+                    "type": "array",
+                    "description": "Configuration, specific to Big Query adapter, used to setup authorized views.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "database": {
+                                "type": "string"
+                            },
+                            "project": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
                 "+hours_to_expiration": {
                     "type": "number",
                     "description": "Configuration specific to Big Query adapter used to set an expiration delay (in hours) to a table."
