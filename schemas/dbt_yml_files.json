@@ -571,7 +571,7 @@
                 "policy_tags": {
                     "title": "Policy tags",
                     "type": "array",
-                    "description": "Configurations, specific to Big Query adapter, used to set policy tags on specific columns, enabling column-level security.",
+                    "description": "Configurations, specific to Big Query adapter, used to set policy tags on specific columns, enabling column-level security. Only relevant when `persist_docs.columns` is true.",
                     "items": {
                         "type": "string"
                     }
