@@ -179,7 +179,8 @@
                             "project": {
                                 "type": "string"
                             }
-                        }
+                        },
+                        "additionalProperties": false
                     }
                 },
                 "+hours_to_expiration": {
