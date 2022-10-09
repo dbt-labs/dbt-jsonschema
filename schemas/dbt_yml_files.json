@@ -322,7 +322,8 @@
                             },
                             "kms_key_name": {
                                 "type": "string",
-                                "description": "Configuration of the KMS key name, specific to BigQuery adapter."
+                                "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
+                                "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*"
                             },
                             "labels": {
                                 "title": "Label configs",
