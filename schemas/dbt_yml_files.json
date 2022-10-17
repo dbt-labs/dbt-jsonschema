@@ -361,6 +361,9 @@
                             }
                         }
                     },
+                    "meta": {
+                        "type": "object"
+                    },
                     "tests": {
                         "type": "array",
                         "items": {
