@@ -201,18 +201,7 @@
                     "type": "string"
                 },
                 "+persist_docs": {
-                    "type": "object",
-                    "properties": {
-                        "columns": {
-                            "$ref": "#/$defs/boolean_or_jinja_string",
-                            "default": true
-                        },
-                        "relation": {
-                            "$ref": "#/$defs/boolean_or_jinja_string",
-                            "default": true
-                        }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "+post-hook": {
                     "$ref": "#/$defs/array_of_strings"
@@ -234,10 +223,29 @@
                 "$ref": "#/$defs/model_configs"
             }
         },
+        "persist_docs_config": {
+            "title": "Persist docs config",
+            "type": "object",
+            "description": "Configurations for the persistence of the dbt documentation.",
+            "properties": {
+                "columns": {
+                    "$ref": "#/$defs/boolean_or_jinja_string",
+                    "default": true
+                },
+                "relation": {
+                    "$ref": "#/$defs/boolean_or_jinja_string",
+                    "default": true
+                }
+            },
+            "additionalProperties": false
+        },
         "seed_configs": {
             "title": "Seed configs",
             "type": "object",
             "properties": {
+                "+persist_docs": {
+                    "$ref": "#/$defs/persist_docs_config"
+                },
                 "+quote_columns": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
