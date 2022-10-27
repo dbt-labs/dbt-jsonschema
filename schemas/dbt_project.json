@@ -1,12 +1,12 @@
 {
     "title": "dbt_project",
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "required": [
         "name",
         "version",
         "config-version"
     ],
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
         "version": {
             "type": "string"
@@ -48,6 +48,9 @@
         },
         "docs-paths": {
             "$ref": "#/$defs/array_of_strings"
+        },
+        "log-path": {
+            "type": "string"
         },
         "macro-paths": {
             "$ref": "#/$defs/array_of_strings"
