@@ -67,6 +67,9 @@
         "on-run-start": {
             "$ref": "#/$defs/array_of_strings"
         },
+        "packages-install-path": {
+            "type": "string"
+        },
         "profile": {
             "type": "string"
         },
