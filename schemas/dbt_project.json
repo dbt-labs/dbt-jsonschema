@@ -223,6 +223,9 @@
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+docs": {
+                    "$ref": "#/$defs/docs_config"
                 }
             },
             "additionalProperties": {
@@ -352,6 +355,22 @@
             "additionalProperties": {
                 "$ref": "#/$defs/test_configs"
             }
+        },
+        "docs_config": {
+            "title": "Docs config",
+            "type": "object",
+            "description": "Configurations for the appearance of nodes in the dbt documentation.",
+            "properties": {
+                "node_color": {
+                    "type": "string",
+                    "description": "The color of the node on the DAG in the documentation"
+                },
+                "show": {
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "additionalProperties": false
         }
     }
 }
