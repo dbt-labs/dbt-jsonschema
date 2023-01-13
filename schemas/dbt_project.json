@@ -223,6 +223,9 @@
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+on_schema_change": {
+                    "type": "string"
                 }
             },
             "additionalProperties": {
