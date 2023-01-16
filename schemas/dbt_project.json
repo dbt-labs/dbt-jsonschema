@@ -206,6 +206,17 @@
                 "+materialized": {
                     "type": "string"
                 },
+                "+on_schema_change": {
+                    "type": "string",
+                    "enum": [
+                        "append_new_columns",
+                        "fail",
+                        "ignore",
+                        "sync_all_columns"
+                    ]
+
+                },
+                
                 "+persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
                 },
