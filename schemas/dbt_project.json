@@ -363,7 +363,8 @@
             "properties": {
                 "node_color": {
                     "type": "string",
-                    "description": "The color of the node on the DAG in the documentation"
+                    "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+                    "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
                 },
                 "show": {
                     "type": "boolean",
