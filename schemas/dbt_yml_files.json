@@ -517,6 +517,9 @@
                                     "type": "string",
                                     "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall."
                                 },
+                                "loader": {
+                                    "type": "string"
+                                },
                                 "meta": {
                                     "type": "object"
                                 },
