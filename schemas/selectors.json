@@ -17,17 +17,9 @@
                     "description": {
                         "type": "string"
                     },
-                    "enabled": {
-                        "oneOf": [
-                            {
-                                "type": "string",
-                                "pattern": "\\{\\{.*\\}\\}"
-                            },
-                            {
-                                "type": "boolean"
-                            }
-                        ],
-                        "additionalProperties": false
+                    "default": {
+                        "type": "boolean",
+                        "default": true
                     },
                     "definition": {
                         "oneOf": [
