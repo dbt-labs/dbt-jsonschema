@@ -18,8 +18,16 @@
                         "type": "string"
                     },
                     "default": {
-                        "type": "boolean",
-                        "default": true
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "pattern": "\\{\\{.*\\}\\}"
+                            },
+                            {
+                                "type": "boolean"
+                            }
+                        ],
+                        "additionalProperties": false
                     },
                     "definition": {
                         "oneOf": [
