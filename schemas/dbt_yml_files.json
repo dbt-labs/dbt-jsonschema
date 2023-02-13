@@ -397,6 +397,9 @@
                             "column_types": {
                                 "type": "object"
                             },
+                            "enabled": {
+                                "$ref": "#/$defs/boolean_or_jinja_string"
+                            },
                             "quote_columns": {
                                 "$ref": "#/$defs/boolean_or_jinja_string"
                             }
