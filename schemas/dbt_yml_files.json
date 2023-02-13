@@ -401,7 +401,7 @@
                                 "$ref": "#/$defs/boolean_or_jinja_string"
                             },
                             "database": {
-                                "typ": "string"
+                                "type": "string"
                             },
                             "enabled": {
                                 "$ref": "#/$defs/boolean_or_jinja_string"
