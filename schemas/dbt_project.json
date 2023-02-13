@@ -272,6 +272,12 @@
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "+copy_grants": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+database": {
+                    "type": "string"
+                },
                 "+schema": {
                     "type": "string"
                 },
