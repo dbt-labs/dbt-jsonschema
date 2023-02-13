@@ -397,12 +397,21 @@
                             "column_types": {
                                 "type": "object"
                             },
+                            "copy_grants": {
+                                "$ref": "#/$defs/boolean_or_jinja_string"
+                            },
+                            "database": {
+                                "typ": "string"
+                            },
                             "enabled": {
                                 "$ref": "#/$defs/boolean_or_jinja_string"
                             },
                             "quote_columns": {
                                 "$ref": "#/$defs/boolean_or_jinja_string"
-                            }
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
                         }
                     },
                     "description": {
