@@ -269,6 +269,9 @@
                 "+quote_columns": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "+schema": {
                     "type": "string"
                 },

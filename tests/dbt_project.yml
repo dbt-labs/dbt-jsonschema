@@ -40,4 +40,4 @@ models:
 
 seeds:
   test:
-    enabled: false
+    +enabled: false
