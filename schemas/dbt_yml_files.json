@@ -411,7 +411,7 @@
                             },
                             "schema": {
                                 "type": "string"
-                            },
+                            }
                         }
                     },
                     "description": {
