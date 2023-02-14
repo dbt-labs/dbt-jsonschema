@@ -145,6 +145,23 @@
                 }
             ]
         },
+        "docs_config": {
+            "title": "Docs config",
+            "type": "object",
+            "description": "Configurations for the appearance of nodes in the dbt documentation.",
+            "properties": {
+                "node_color": {
+                    "type": "string",
+                    "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+                    "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
+                },
+                "show": {
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "additionalProperties": false
+        },
         "label_configs": {
             "title": "Label configs",
             "type": "object",
@@ -168,6 +185,9 @@
                 },
                 "+database": {
                     "type": "string"
+                },
+                "+docs": {
+                    "$ref": "#/$defs/docs_config"
                 },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
@@ -214,9 +234,7 @@
                         "ignore",
                         "sync_all_columns"
                     ]
-
                 },
-                
                 "+persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
                 },
@@ -234,9 +252,6 @@
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
-                },
-                "+docs": {
-                    "$ref": "#/$defs/docs_config"
                 }
             },
             "additionalProperties": {
@@ -263,6 +278,15 @@
             "title": "Seed configs",
             "type": "object",
             "properties": {
+                "+copy_grants": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+database": {
+                    "type": "string"
+                },
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "+persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
                 },
@@ -366,23 +390,6 @@
             "additionalProperties": {
                 "$ref": "#/$defs/test_configs"
             }
-        },
-        "docs_config": {
-            "title": "Docs config",
-            "type": "object",
-            "description": "Configurations for the appearance of nodes in the dbt documentation.",
-            "properties": {
-                "node_color": {
-                    "type": "string",
-                    "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
-                    "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
-                },
-                "show": {
-                    "type": "boolean",
-                    "default": true
-                }
-            },
-            "additionalProperties": false
         }
     }
 }
