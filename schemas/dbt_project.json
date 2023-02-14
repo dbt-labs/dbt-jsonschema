@@ -95,6 +95,20 @@
                 }
             ]
         },
+        "quoting": {
+            "type": "object",
+            "properties": {
+                "database": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "schema": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "identifier": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                }
+            }
+        },
         "require-dbt-version": {
             "$ref": "#/$defs/string_or_array_of_strings"
         },

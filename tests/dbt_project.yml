@@ -41,3 +41,8 @@ models:
 seeds:
   test:
     +enabled: false
+
+quoting:
+  database: true
+  schema: true
+  identifier: true
