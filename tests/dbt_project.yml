@@ -41,3 +41,10 @@ models:
 seeds:
   test:
     +enabled: false
+
+snapshots:
+  tests: 
+    +target_schema: schema 
+    +target_database: database 
+    +grants:
+      select: ['role']

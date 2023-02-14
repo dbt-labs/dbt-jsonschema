@@ -308,7 +308,46 @@
             "title": "Snapshot configs",
             "type": "object",
             "properties": {
+                "+alias": {
+                    "type": "string"
+                },
+                "+check_cols": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+grants": {
+                    "type": "object"
+                },
+                "+persist_docs": {
+                    "$ref": "#/$defs/persist_docs_config"
+                },
+                "+post-hook": {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                "+pre-hook": {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                "+quote_columns": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+strategy": {
+                    "type": "string"
+                },
+                "+tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+target_database": {
+                    "type": "string"
+                },
                 "+target_schema": {
+                    "type": "string"
+                },
+                "+unique_key": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+updated_at": {
                     "type": "string"
                 }
             },
