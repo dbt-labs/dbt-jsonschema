@@ -101,10 +101,10 @@
                 "database": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "schema": {
+                "identifier": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "identifier": {
+                "schema": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             }
