@@ -39,8 +39,24 @@ models:
       +materialized: view
     subdirectory:
       +materialized: table
-    other_subdirectory:
+    empty_subdirectory:
 
 seeds:
   test:
     +enabled: false
+    empty_subdirectory:
+
+tests:
+  test:
+    +enabled: true
+    empty_subdirectory:
+
+snapshots:
+  test:
+    +target_schema: schema
+    empty_subdirectory:
+
+sources:
+  test: 
+    +enabled: true
+    empty_subdirectory:
