@@ -134,6 +134,9 @@
                 "type": "string"
             }
         },
+        "empty_directory": {
+          "type": "null"
+        },
         "boolean_or_jinja_string": {
             "oneOf": [
                 {
@@ -255,7 +258,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/model_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/model_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "persist_docs_config": {
