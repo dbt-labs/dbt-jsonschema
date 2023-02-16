@@ -23,7 +23,20 @@ jobs:
           node-version: 16
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
-      - name: validate dbt_project.yml sample file
-        run: npx ajv-cli validate -s schemas/dbt_project.json -d tests/dbt_project.yml
-      - name: validate sample model YAML file
-        run: npx ajv-cli validate -s schemas/dbt_yml_files.json -d tests/schema.yml
+      - name: Validate dbt_project.yml sample files
+        run: |
+          npx ajv-cli test -s schemas/dbt_project.json -d tests/valid/dbt_project.yml --valid
+          npx ajv-cli test -s schemas/dbt_project.json -d tests/invalid/dbt_project.yml --invalid
+      - name: Validate resource yml sample files
+        run: |
+          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/valid/schema.yml --valid
+          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/invalid/schema.yml --invalid
+      - name: Validate packages.yml sample files
+        run: |
+          npx ajv-cli test -s schemas/packages.json -d tests/valid/packages.yml --valid
+          npx ajv-cli test -s schemas/packages.json -d tests/invalid/packages.yml --invalid
+      - name: Validate selectors.yml sample files
+        run: |
+          npx ajv-cli test -s schemas/selectors.json -d tests/valid/selectors.yml --valid
+          npx ajv-cli test -s schemas/selectors.json -d tests/invalid/selectors.yml --invalid
+
