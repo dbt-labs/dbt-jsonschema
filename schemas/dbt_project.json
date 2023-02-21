@@ -95,6 +95,20 @@
                 }
             ]
         },
+        "quoting": {
+            "type": "object",
+            "properties": {
+                "database": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "identifier": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "schema": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                }
+            }
+        },
         "require-dbt-version": {
             "$ref": "#/$defs/string_or_array_of_strings"
         },
@@ -137,8 +151,7 @@
         "boolean_or_jinja_string": {
             "oneOf": [
                 {
-                    "type": "string",
-                    "pattern": "\\{\\{.*\\}\\}"
+                    "$ref": "#/$defs/jinja_string"
                 },
                 {
                     "type": "boolean"
@@ -162,14 +175,25 @@
             },
             "additionalProperties": false
         },
+        "jinja_string": {
+            "type": "string",
+            "pattern": "\\{\\{.*\\}\\}"
+        },
         "label_configs": {
             "title": "Label configs",
             "type": "object",
             "description": "Configurations specific to BigQuery adapter used to add labels and tags to tables & views created by dbt.",
             "patternProperties": {
                 "^[a-z][a-z0-9_-]{0,63}$": {
-                    "type": "string",
-                    "pattern": "^[a-z0-9_-]{0,64}$"
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^[a-z0-9_-]{0,64}$"
+                        },
+                        {
+                            "$ref": "#/$defs/jinja_string"
+                        }
+                    ]
                 }
             },
             "additionalProperties": false

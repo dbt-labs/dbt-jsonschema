@@ -37,6 +37,10 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+  test_bq:
+    +labels:
+      key: val
+      jinja_key: "{{ target.name }}"
 
 seeds:
   test:
@@ -48,3 +52,8 @@ snapshots:
     +target_database: database 
     +grants:
       select: ['role']
+
+quoting:
+  database: true
+  schema: true
+  identifier: true
