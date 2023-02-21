@@ -20,3 +20,11 @@ models:
         tests:
           - unique
           - not_null
+
+
+snapshots:
+  - name: snapshot_name
+    description: slowly changing dimension
+    columns:
+      - name: id 
+        description: cool column, eh?
