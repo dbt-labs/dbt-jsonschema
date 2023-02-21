@@ -148,6 +148,9 @@
                 "type": "string"
             }
         },
+        "empty_directory": {
+          "type": "null"
+        },
         "boolean_or_jinja_string": {
             "oneOf": [
                 {
@@ -279,7 +282,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/model_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/model_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "persist_docs_config": {
@@ -325,7 +335,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/seed_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/seed_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "snapshot_configs": {
@@ -376,7 +393,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/snapshot_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/snapshot_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "source_configs": {
@@ -391,7 +415,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/source_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/source_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "string_or_array_of_strings": {
@@ -451,7 +482,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/test_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/test_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         }
     }
