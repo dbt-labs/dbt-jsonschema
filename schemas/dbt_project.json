@@ -332,6 +332,17 @@
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+column_types": {
+                    "type": "object",
+                    "patternProperties": {
+                        "": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "+full_refresh": {
+                    "type": "boolean"
                 }
             },
             "additionalProperties": {
