@@ -62,10 +62,24 @@
             "$ref": "#/$defs/model_configs"
         },
         "on-run-end": {
-            "$ref": "#/$defs/array_of_strings"
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "on-run-start": {
-            "$ref": "#/$defs/array_of_strings"
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "packages-install-path": {
             "type": "string"
