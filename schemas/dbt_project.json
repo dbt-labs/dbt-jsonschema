@@ -346,6 +346,17 @@
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+column_types": {
+                    "type": "object",
+                    "patternProperties": {
+                        "": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "+full_refresh": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             },
             "additionalProperties": {
