@@ -342,7 +342,7 @@
                     }
                 },
                 "+full_refresh": {
-                    "type": "boolean"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             },
             "additionalProperties": {
