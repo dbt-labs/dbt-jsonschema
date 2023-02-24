@@ -62,10 +62,24 @@
             "$ref": "#/$defs/model_configs"
         },
         "on-run-end": {
-            "$ref": "#/$defs/array_of_strings"
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "on-run-start": {
-            "$ref": "#/$defs/array_of_strings"
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "packages-install-path": {
             "type": "string"
@@ -340,6 +354,17 @@
                 "+transient": {
                     "type": "boolean",
                     "description": "Configuration option specific to Snowflake adapter."
+                },
+                "+column_types": {
+                    "type": "object",
+                    "patternProperties": {
+                        "": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "+full_refresh": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             },
             "additionalProperties": {
