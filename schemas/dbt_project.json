@@ -295,8 +295,7 @@
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+transient": {
-                    "type": "boolean",
-                    "description": "Configuration option specific to Snowflake adapter."
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             },
             "additionalProperties": {
@@ -352,8 +351,7 @@
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+transient": {
-                    "type": "boolean",
-                    "description": "Configuration option specific to Snowflake adapter."
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+column_types": {
                     "type": "object",
@@ -419,8 +417,7 @@
                     "type": "string"
                 },
                 "+transient": {
-                    "type": "boolean",
-                    "description": "Configuration option specific to Snowflake adapter."
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+unique_key": {
                     "$ref": "#/$defs/string_or_array_of_strings"
