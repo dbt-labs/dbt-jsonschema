@@ -62,10 +62,24 @@
             "$ref": "#/$defs/model_configs"
         },
         "on-run-end": {
-            "$ref": "#/$defs/array_of_strings"
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "on-run-start": {
-            "$ref": "#/$defs/array_of_strings"
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                {
+                    "type": "string"
+                }
+            ]
         },
         "packages-install-path": {
             "type": "string"
@@ -94,6 +108,20 @@
                     "additionalProperties": false
                 }
             ]
+        },
+        "quoting": {
+            "type": "object",
+            "properties": {
+                "database": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "identifier": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "schema": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                }
+            }
         },
         "require-dbt-version": {
             "$ref": "#/$defs/string_or_array_of_strings"
@@ -134,11 +162,13 @@
                 "type": "string"
             }
         },
+        "empty_directory": {
+          "type": "null"
+        },
         "boolean_or_jinja_string": {
             "oneOf": [
                 {
-                    "type": "string",
-                    "pattern": "\\{\\{.*\\}\\}"
+                    "$ref": "#/$defs/jinja_string"
                 },
                 {
                     "type": "boolean"
@@ -162,14 +192,25 @@
             },
             "additionalProperties": false
         },
+        "jinja_string": {
+            "type": "string",
+            "pattern": "\\{\\{.*\\}\\}"
+        },
         "label_configs": {
             "title": "Label configs",
             "type": "object",
             "description": "Configurations specific to BigQuery adapter used to add labels and tags to tables & views created by dbt.",
             "patternProperties": {
                 "^[a-z][a-z0-9_-]{0,63}$": {
-                    "type": "string",
-                    "pattern": "^[a-z0-9_-]{0,64}$"
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^[a-z0-9_-]{0,64}$"
+                        },
+                        {
+                            "$ref": "#/$defs/jinja_string"
+                        }
+                    ]
                 }
             },
             "additionalProperties": false
@@ -255,7 +296,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/model_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/model_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "persist_docs_config": {
@@ -298,22 +346,86 @@
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+column_types": {
+                    "type": "object",
+                    "patternProperties": {
+                        "": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "+full_refresh": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/seed_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/seed_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "snapshot_configs": {
             "title": "Snapshot configs",
             "type": "object",
             "properties": {
+                "+alias": {
+                    "type": "string"
+                },
+                "+check_cols": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+grants": {
+                    "type": "object"
+                },
+                "+persist_docs": {
+                    "$ref": "#/$defs/persist_docs_config"
+                },
+                "+post-hook": {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                "+pre-hook": {
+                    "$ref": "#/$defs/array_of_strings"
+                },
+                "+quote_columns": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+strategy": {
+                    "type": "string"
+                },
+                "+tags": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+target_database": {
+                    "type": "string"
+                },
                 "+target_schema": {
+                    "type": "string"
+                },
+                "+unique_key": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "+updated_at": {
                     "type": "string"
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/snapshot_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/snapshot_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "source_configs": {
@@ -328,7 +440,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/source_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/source_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         },
         "string_or_array_of_strings": {
@@ -388,7 +507,14 @@
                 }
             },
             "additionalProperties": {
-                "$ref": "#/$defs/test_configs"
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/test_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
             }
         }
     }

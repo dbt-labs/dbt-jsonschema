@@ -37,7 +37,39 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+    subdirectory:
+      +materialized: table
+    empty_subdirectory:
+  test_bq:
+    +labels:
+      key: val
+      jinja_key: "{{ target.name }}"
 
 seeds:
   test:
     +enabled: false
+    empty_subdirectory:
+
+tests:
+  test:
+    +enabled: true
+    empty_subdirectory:
+
+snapshots:
+  test:
+    +target_schema: schema
+    +target_database: database 
+    +grants:
+      select: ['role']
+
+    empty_subdirectory:
+
+sources:
+  test: 
+    +enabled: true
+    empty_subdirectory:
+
+quoting:
+  database: true
+  schema: true
+  identifier: true
