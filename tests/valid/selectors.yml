@@ -1,0 +1,8 @@
+selectors:
+  - name: nodes_to_joy
+    definition:
+        method: tag
+        value: nightly
+        exclude:
+          - "@tag:daily"
+      
