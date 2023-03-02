@@ -38,8 +38,8 @@ models:
     example:
       +materialized: view
     subdirectory:
+      # same key without the plus
       materialized: table
-      bubble: gum
     empty_subdirectory:
   test_bq:
     +labels:
