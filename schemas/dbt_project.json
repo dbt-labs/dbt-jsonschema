@@ -219,21 +219,21 @@
             "title": "Model configs",
             "type": "object",
             "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
-            "properties": {
-                "+bind": {
+            "patternProperties": {
+                "^+?bind$": {
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
                 },
-                "+database": {
+                "^+?database$": {
                     "type": "string"
                 },
-                "+docs": {
+                "^+?docs$": {
                     "$ref": "#/$defs/docs_config"
                 },
-                "+enabled": {
+                "^+?enabled$": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "+grant_access_to": {
+                "^+?grant_access_to$": {
                     "title": "Authorized views",
                     "type": "array",
                     "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
@@ -250,24 +250,24 @@
                         "additionalProperties": false
                     }
                 },
-                "+hours_to_expiration": {
+                "^+?hours_to_expiration$": {
                     "type": "number",
                     "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
                 },
-                "+incremental_strategy": {
+                "^+?incremental_strategy$": {
                     "type": "string"
                 },
-                "+kms_key_name": {
+                "^+?kms_key_name$": {
                     "type": "string",
                     "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
                 },
-                "+labels": {
+                "^+?labels$": {
                     "$ref": "#/$defs/label_configs"
                 },
-                "+materialized": {
+                "^+?materialized$": {
                     "type": "string"
                 },
-                "+on_schema_change": {
+                "^+?on_schema_change$": {
                     "type": "string",
                     "enum": [
                         "append_new_columns",
@@ -276,22 +276,22 @@
                         "sync_all_columns"
                     ]
                 },
-                "+persist_docs": {
+                "^+?persist_docs$": {
                     "$ref": "#/$defs/persist_docs_config"
                 },
-                "+post-hook": {
+                "^+?post-hook$": {
                     "$ref": "#/$defs/array_of_strings"
                 },
-                "+pre-hook": {
+                "^+?pre-hook$": {
                     "$ref": "#/$defs/array_of_strings"
                 },
-                "+schema": {
+                "^+?schema$": {
                     "type": "string"
                 },
-                "+sql_header": {
+                "^+?sql_header$": {
                     "type": "string"
                 },
-                "+tags": {
+                "^+?tags$": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },

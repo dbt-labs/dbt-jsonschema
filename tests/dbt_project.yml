@@ -38,7 +38,8 @@ models:
     example:
       +materialized: view
     subdirectory:
-      +materialized: table
+      materialized: table
+      bubble: gum
     empty_subdirectory:
   test_bq:
     +labels:
