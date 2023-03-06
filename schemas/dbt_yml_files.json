@@ -302,6 +302,9 @@
                 }
               }
             },
+            "contract": {
+              "$ref": "#/$defs/boolean_or_jinja_string"
+            },
             "description": {
               "type": "string"
             },
