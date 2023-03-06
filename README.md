@@ -105,7 +105,7 @@ If you want to know the details, the [dbt YAML validator in JetBrains article](h
     - Schema version: JSON schema version 7
     - Mapping: `models/**/*.yml`, `analysis/**/*.yml`, `snapshots/**/*.yml`
 
-![A screenshot of a JetBrains Preferences panel showing the correct mapping of the dbt_yml_files JSON Schema](jetbrains-config.png)
+![A screenshot of a JetBrains Preferences panel showing the correct mapping of the dbt_yml_files JSON Schema](/jetbrains-config.png)
 
 _Do you use a different IDE which also supports JSON Schema? Please open a PR with setup instructions and links to any extensions!_
 
