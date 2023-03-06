@@ -118,6 +118,35 @@
           }
         }
       },
+      "groups": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "owner"],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
       "macros": {
         "type": "array",
         "items": {
@@ -246,6 +275,10 @@
             "name": {
               "type": "string"
             },
+            "access": {
+              "type": "string",
+              "enum": ["private", "protected", "public"]
+            },
             "columns": {
               "type": "array",
               "items": {
@@ -255,6 +288,9 @@
             "config": {
               "type": "object",
               "properties": {
+                "contract": {
+                  "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "grant_access_to": {
                   "title": "Authorized views",
                   "type": "array",
@@ -315,6 +351,9 @@
                   "type": "boolean"
                 }
               }
+            },
+            "group": {
+              "type": "string"
             },
             "meta": {
               "type": "object"
@@ -635,6 +674,12 @@
         "required": ["name"],
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "constraints": {
+            "$ref": "#/$defs/array_of_strings"
+          },
+          "constraints_check": {
             "type": "string"
           },
           "data_type": {

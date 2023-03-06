@@ -21,6 +21,23 @@ models:
           - unique
           - not_null
 
+  - name: my_contracted_dbt_model
+    description: "A dbt model with contracts"
+    access: public
+    group: analytics
+    config:
+      contract: true
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        constraints: 
+          - "not null"
+          - "unique"
+        constraints_check: (id > 0)
+        tests:
+          - unique
+          - not_null
+
 
 snapshots:
   - name: snapshot_name
@@ -28,3 +45,12 @@ snapshots:
     columns:
       - name: id 
         description: cool column, eh?
+
+
+# model groups 
+
+groups:
+  - name: analytics
+    owner:
+      name: dave
+      
