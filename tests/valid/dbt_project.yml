@@ -70,6 +70,12 @@ sources:
     +enabled: true
     empty_subdirectory:
 
+metrics:
+  test: 
+    +enabled: true
+    +treat_null_values_as_zero: true
+    empty_subdirectory:
+
 quoting:
   database: true
   schema: true
