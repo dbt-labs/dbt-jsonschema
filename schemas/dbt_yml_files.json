@@ -127,9 +127,6 @@
             "name": {
               "type": "string"
             },
-            "description": {
-              "type": "string"
-            },
             "owner": {
               "type": "object",
               "minProperties": 1,
