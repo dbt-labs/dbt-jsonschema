@@ -79,14 +79,14 @@ This repository contains schemata for:
 
 ## Installation in JetBrains
 
-IDES by JetBrains like PyCharm and IntelliJ enables us to use the JSON schema, using [the JSON schema mapping feature](https://www.jetbrains.com/help/idea/json.html#ws_json_schema_add_custom).
+IDEs by JetBrains like PyCharm and IntelliJ enable us to use the JSON Schema, using [the JSON schema mapping feature](https://www.jetbrains.com/help/idea/json.html#ws_json_schema_add_custom).
 
 1. Open the preferences of JSON schema mapping in JetBrains
 2. Add custom schema mappings
 
-There is no way to add the preferences with a configuration file like VS code.
+There is no way to add the preferences with a configuration file like VS Code.
 As we have to manually configure them one by one, we just describe values of the configurations below.
-If you want to know the details, [dbt YAML validator in JetBrains](https://yu-ishikawa.medium.com/dbt-yaml-validator-in-jetbrains-b5ef25e9253e) describes how to configure the JSON schema mapping in details.
+If you want to know the details, the [dbt YAML validator in JetBrains article](https://yu-ishikawa.medium.com/dbt-yaml-validator-in-jetbrains-b5ef25e9253e) describes how to configure the JSON schema mapping in details.
 
 - Project definition files
     - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/dbt_project.json`
@@ -105,6 +105,7 @@ If you want to know the details, [dbt YAML validator in JetBrains](https://yu-is
     - Schema version: JSON schema version 7
     - Mapping: `models/**/*.yml`, `analysis/**/*.yml`, `snapshots/**/*.yml`
 
+![A screenshot of a JetBrains Preferences panel showing the correct mapping of the dbt_yml_files JSON Schema](jetbrains-config.png)
 
 _Do you use a different IDE which also supports JSON Schema? Please open a PR with setup instructions and links to any extensions!_
 
