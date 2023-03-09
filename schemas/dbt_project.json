@@ -221,16 +221,17 @@
             "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
             "properties": {
                 "+bind": {
-                    "$ref": "#/$defs/bind"
+                    "$ref": "#/$defs/boolean_or_jinja_string",
+                    "default": false
                 },
                 "+database": {
                     "$ref": "#/$defs/database"
                 },
                 "+docs": {
-                    "$ref": "#/$defs/docs"
+                    "$ref": "#/$defs/docs_config"
                 },
                 "+enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+grant_access_to": {
                     "$ref": "#/$defs/grant_access_to"
@@ -245,7 +246,7 @@
                     "$ref": "#/$defs/kms_key_name"
                 },
                 "+labels": {
-                    "$ref": "#/$defs/labels"
+                    "$ref": "#/$defs/label_configs"
                 },
                 "+materialized": {
                     "$ref": "#/$defs/materialized"
@@ -254,13 +255,13 @@
                     "$ref": "#/$defs/on_schema_change"
                 },
                 "+persist_docs": {
-                    "$ref": "#/$defs/persist_docs"
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "+post-hook": {
-                    "$ref": "#/$defs/post-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "+pre-hook": {
-                    "$ref": "#/$defs/pre-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "+schema": {
                     "$ref": "#/$defs/schema"
@@ -269,19 +270,20 @@
                     "$ref": "#/$defs/sql_header"
                 },
                 "+tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "bind": {
-                    "$ref": "#/$defs/bind"
+                    "$ref": "#/$defs/boolean_or_jinja_string",
+                    "default": false
                 },
                 "database": {
                     "$ref": "#/$defs/database"
                 },
                 "docs": {
-                    "$ref": "#/$defs/docs"
+                    "$ref": "#/$defs/docs_config"
                 },
                 "enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "grant_access_to": {
                     "$ref": "#/$defs/grant_access_to"
@@ -296,7 +298,7 @@
                     "$ref": "#/$defs/kms_key_name"
                 },
                 "labels": {
-                    "$ref": "#/$defs/labels"
+                    "$ref": "#/$defs/label_configs"
                 },
                 "materialized": {
                     "$ref": "#/$defs/materialized"
@@ -305,13 +307,13 @@
                     "$ref": "#/$defs/on_schema_change"
                 },
                 "persist_docs": {
-                    "$ref": "#/$defs/persist_docs"
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "post-hook": {
-                    "$ref": "#/$defs/post-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "pre-hook": {
-                    "$ref": "#/$defs/pre-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "schema": {
                     "$ref": "#/$defs/schema"
@@ -320,7 +322,7 @@
                     "$ref": "#/$defs/sql_header"
                 },
                 "tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": {
@@ -355,58 +357,58 @@
             "type": "object",
             "properties": {
                 "+copy_grants": {
-                    "$ref": "#/$defs/copy_grants"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+database": {
                     "$ref": "#/$defs/database"
                 },
                 "+enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+persist_docs": {
-                    "$ref": "#/$defs/persist_docs"
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "+quote_columns": {
-                    "$ref": "#/$defs/quote_columns"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+schema": {
                     "$ref": "#/$defs/schema"
                 },
                 "+tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+column_types": {
                     "$ref": "#/$defs/column_types"
                 },
                 "+full_refresh": {
-                    "$ref": "#/$defs/full_refresh"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "copy_grants": {
-                    "$ref": "#/$defs/copy_grants"
-                },
-                "database": {
-                    "$ref": "#/$defs/database"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "persist_docs": {
-                    "$ref": "#/$defs/persist_docs"
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "quote_columns": {
-                    "$ref": "#/$defs/quote_columns"
-                },
-                "schema": {
-                    "$ref": "#/$defs/schema"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "column_types": {
                     "$ref": "#/$defs/column_types"
                 },
                 "full_refresh": {
-                    "$ref": "#/$defs/full_refresh"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "database": {
+                    "$ref": "#/$defs/database"
+                },
+                "schema": {
+                    "$ref": "#/$defs/schema"
                 }
             },
             "additionalProperties": {
@@ -428,31 +430,31 @@
                     "$ref": "#/$defs/alias"
                 },
                 "+check_cols": {
-                    "$ref": "#/$defs/check_cols"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+grants": {
                     "$ref": "#/$defs/grants"
                 },
                 "+persist_docs": {
-                    "$ref": "#/$defs/persist_docs"
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "+post-hook": {
-                    "$ref": "#/$defs/post-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "+pre-hook": {
-                    "$ref": "#/$defs/pre-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "+quote_columns": {
-                    "$ref": "#/$defs/quote_columns"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+strategy": {
                     "$ref": "#/$defs/strategy"
                 },
                 "+tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+target_database": {
                     "$ref": "#/$defs/target_database"
@@ -461,7 +463,7 @@
                     "$ref": "#/$defs/target_schema"
                 },
                 "+unique_key": {
-                    "$ref": "#/$defs/unique_key"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+updated_at": {
                     "$ref": "#/$defs/updated_at"
@@ -470,31 +472,31 @@
                     "$ref": "#/$defs/alias"
                 },
                 "check_cols": {
-                    "$ref": "#/$defs/check_cols"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "grants": {
                     "$ref": "#/$defs/grants"
                 },
                 "persist_docs": {
-                    "$ref": "#/$defs/persist_docs"
+                    "$ref": "#/$defs/persist_docs_config"
                 },
                 "post-hook": {
-                    "$ref": "#/$defs/post-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "pre-hook": {
-                    "$ref": "#/$defs/pre-hook"
+                    "$ref": "#/$defs/array_of_strings"
                 },
                 "quote_columns": {
-                    "$ref": "#/$defs/quote_columns"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "strategy": {
                     "$ref": "#/$defs/strategy"
                 },
                 "tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "target_database": {
                     "$ref": "#/$defs/target_database"
@@ -503,7 +505,7 @@
                     "$ref": "#/$defs/target_schema"
                 },
                 "unique_key": {
-                    "$ref": "#/$defs/unique_key"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "updated_at": {
                     "$ref": "#/$defs/updated_at"
@@ -525,16 +527,16 @@
             "type": "object",
             "properties": {
                 "+enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": {
@@ -570,7 +572,7 @@
                     "$ref": "#/$defs/database"
                 },
                 "+enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+error_if": {
                     "$ref": "#/$defs/error_if"
@@ -588,22 +590,16 @@
                     "$ref": "#/$defs/severity"
                 },
                 "+store_failures": {
-                    "$ref": "#/$defs/store_failures"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+warn_if": {
                     "$ref": "#/$defs/warn_if"
                 },
-                "alias": {
-                    "$ref": "#/$defs/alias"
-                },
-                "database": {
-                    "$ref": "#/$defs/database"
-                },
                 "enabled": {
-                    "$ref": "#/$defs/enabled"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "error_if": {
                     "$ref": "#/$defs/error_if"
@@ -614,20 +610,26 @@
                 "limit": {
                     "$ref": "#/$defs/limit"
                 },
-                "schema": {
-                    "$ref": "#/$defs/schema"
-                },
                 "severity": {
                     "$ref": "#/$defs/severity"
                 },
                 "store_failures": {
-                    "$ref": "#/$defs/store_failures"
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "tags": {
-                    "$ref": "#/$defs/tags"
+                    "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "warn_if": {
                     "$ref": "#/$defs/warn_if"
+                },
+                "alias": {
+                    "$ref": "#/$defs/alias"
+                },
+                "database": {
+                    "$ref": "#/$defs/database"
+                },
+                "schema": {
+                    "$ref": "#/$defs/schema"
                 }
             },
             "additionalProperties": {
@@ -641,18 +643,8 @@
                 ]
             }
         },
-        "bind": {
-            "$ref": "#/$defs/boolean_or_jinja_string",
-            "default": false
-        },
         "database": {
             "type": "string"
-        },
-        "docs": {
-            "$ref": "#/$defs/docs_config"
-        },
-        "enabled": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "grant_access_to": {
             "title": "Authorized views",
@@ -682,9 +674,6 @@
             "type": "string",
             "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
         },
-        "labels": {
-            "$ref": "#/$defs/label_configs"
-        },
         "materialized": {
             "type": "string"
         },
@@ -697,29 +686,11 @@
                 "sync_all_columns"
             ]
         },
-        "persist_docs": {
-            "$ref": "#/$defs/persist_docs_config"
-        },
-        "post-hook": {
-            "$ref": "#/$defs/array_of_strings"
-        },
-        "pre-hook": {
-            "$ref": "#/$defs/array_of_strings"
-        },
         "schema": {
             "type": "string"
         },
         "sql_header": {
             "type": "string"
-        },
-        "tags": {
-            "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "copy_grants": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "quote_columns": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "column_types": {
             "type": "object",
@@ -729,14 +700,8 @@
                 }
             }
         },
-        "full_refresh": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-        },
         "alias": {
             "type": "string"
-        },
-        "check_cols": {
-            "$ref": "#/$defs/string_or_array_of_strings"
         },
         "grants": {
             "type": "object"
@@ -749,9 +714,6 @@
         },
         "target_schema": {
             "type": "string"
-        },
-        "unique_key": {
-            "$ref": "#/$defs/string_or_array_of_strings"
         },
         "updated_at": {
             "type": "string"
@@ -771,9 +733,6 @@
                 "warn",
                 "error"
             ]
-        },
-        "store_failures": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "warn_if": {
             "type": "string"
