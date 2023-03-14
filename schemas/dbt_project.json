@@ -273,8 +273,7 @@
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "bind": {
-                    "$ref": "#/$defs/boolean_or_jinja_string",
-                    "default": false
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "database": {
                     "$ref": "#/$defs/database"
