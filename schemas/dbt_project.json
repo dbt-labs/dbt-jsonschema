@@ -274,7 +274,7 @@
                 },
                 "bind": {
                     "$ref": "#/$defs/boolean_or_jinja_string",
-                    "default": true
+                    "default": false
                 },
                 "database": {
                     "$ref": "#/$defs/database"
@@ -323,6 +323,9 @@
                 },
                 "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "something": {
+                    "type": "string"
                 }
             },
             "additionalProperties": {
