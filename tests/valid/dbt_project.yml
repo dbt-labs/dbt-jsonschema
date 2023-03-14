@@ -38,7 +38,8 @@ models:
     example:
       +materialized: view
     subdirectory:
-      +materialized: table
+      # same key without the plus
+      materialized: table
     empty_subdirectory:
   test_bq:
     +labels:
