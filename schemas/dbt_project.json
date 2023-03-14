@@ -224,6 +224,9 @@
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
                 },
+                "+contract": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "+database": {
                     "$ref": "#/$defs/database"
                 },
@@ -275,6 +278,9 @@
                 "bind": {
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
+                },
+                "contract": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "database": {
                     "$ref": "#/$defs/database"
