@@ -166,7 +166,7 @@
             }
         },
         "empty_directory": {
-          "type": "null"
+            "type": "null"
         },
         "boolean_or_jinja_string": {
             "oneOf": [
@@ -257,7 +257,7 @@
                     "default": false
                 },
                 "+database": {
-                    "type": "string"
+                    "$ref": "#/$defs/database"
                 },
                 "+docs": {
                     "$ref": "#/$defs/docs_config"
@@ -266,47 +266,25 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+grant_access_to": {
-                    "title": "Authorized views",
-                    "type": "array",
-                    "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "database": {
-                                "type": "string"
-                            },
-                            "project": {
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": false
-                    }
+                    "$ref": "#/$defs/grant_access_to"
                 },
                 "+hours_to_expiration": {
-                    "type": "number",
-                    "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
+                    "$ref": "#/$defs/hours_to_expiration"
                 },
                 "+incremental_strategy": {
-                    "type": "string"
+                    "$ref": "#/$defs/incremental_strategy"
                 },
                 "+kms_key_name": {
-                    "type": "string",
-                    "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
+                    "$ref": "#/$defs/kms_key_name"
                 },
                 "+labels": {
                     "$ref": "#/$defs/label_configs"
                 },
                 "+materialized": {
-                    "type": "string"
+                    "$ref": "#/$defs/materialized"
                 },
                 "+on_schema_change": {
-                    "type": "string",
-                    "enum": [
-                        "append_new_columns",
-                        "fail",
-                        "ignore",
-                        "sync_all_columns"
-                    ]
+                    "$ref": "#/$defs/on_schema_change"
                 },
                 "+persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
@@ -318,10 +296,10 @@
                     "$ref": "#/$defs/array_of_strings"
                 },
                 "+schema": {
-                    "type": "string"
+                    "$ref": "#/$defs/schema"
                 },
                 "+sql_header": {
-                    "type": "string"
+                    "$ref": "#/$defs/sql_header"
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
@@ -331,7 +309,7 @@
                     "default": false
                 },
                 "database": {
-                    "type": "string"
+                    "$ref": "#/$defs/database"
                 },
                 "docs": {
                     "$ref": "#/$defs/docs_config"
@@ -340,47 +318,25 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "grant_access_to": {
-                    "title": "Authorized views",
-                    "type": "array",
-                    "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "database": {
-                                "type": "string"
-                            },
-                            "project": {
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": false
-                    }
+                    "$ref": "#/$defs/grant_access_to"
                 },
                 "hours_to_expiration": {
-                    "type": "number",
-                    "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
+                    "$ref": "#/$defs/hours_to_expiration"
                 },
                 "incremental_strategy": {
-                    "type": "string"
+                    "$ref": "#/$defs/incremental_strategy"
                 },
                 "kms_key_name": {
-                    "type": "string",
-                    "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
+                    "$ref": "#/$defs/kms_key_name"
                 },
                 "labels": {
                     "$ref": "#/$defs/label_configs"
                 },
                 "materialized": {
-                    "type": "string"
+                    "$ref": "#/$defs/materialized"
                 },
                 "on_schema_change": {
-                    "type": "string",
-                    "enum": [
-                        "append_new_columns",
-                        "fail",
-                        "ignore",
-                        "sync_all_columns"
-                    ]
+                    "$ref": "#/$defs/on_schema_change"
                 },
                 "persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
@@ -392,17 +348,17 @@
                     "$ref": "#/$defs/array_of_strings"
                 },
                 "schema": {
-                    "type": "string"
+                    "$ref": "#/$defs/schema"
                 },
                 "sql_header": {
-                    "type": "string"
+                    "$ref": "#/$defs/sql_header"
                 },
                 "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 }
             },
             "additionalProperties": {
-                "oneOf" : [
+                "oneOf": [
                     {
                         "$ref": "#/$defs/model_configs"
                     },
@@ -436,7 +392,7 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+database": {
-                    "type": "string"
+                    "$ref": "#/$defs/database"
                 },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
@@ -448,27 +404,19 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+schema": {
-                    "type": "string"
+                    "$ref": "#/$defs/schema"
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+column_types": {
-                    "type": "object",
-                    "patternProperties": {
-                        "": {
-                            "type": "string"
-                        }
-                    }
+                    "$ref": "#/$defs/column_types"
                 },
                 "+full_refresh": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "copy_grants": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
-                },
-                "database": {
-                    "type": "string"
                 },
                 "enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
@@ -479,26 +427,24 @@
                 "quote_columns": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "schema": {
-                    "type": "string"
-                },
                 "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "column_types": {
-                    "type": "object",
-                    "patternProperties": {
-                        "": {
-                            "type": "string"
-                        }
-                    }
+                    "$ref": "#/$defs/column_types"
                 },
                 "full_refresh": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "database": {
+                    "$ref": "#/$defs/database"
+                },
+                "schema": {
+                    "$ref": "#/$defs/schema"
                 }
             },
             "additionalProperties": {
-                "oneOf" : [
+                "oneOf": [
                     {
                         "$ref": "#/$defs/seed_configs"
                     },
@@ -513,7 +459,7 @@
             "type": "object",
             "properties": {
                 "+alias": {
-                    "type": "string"
+                    "$ref": "#/$defs/alias"
                 },
                 "+check_cols": {
                     "$ref": "#/$defs/string_or_array_of_strings"
@@ -522,7 +468,7 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+grants": {
-                    "type": "object"
+                    "$ref": "#/$defs/grants"
                 },
                 "+persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
@@ -537,25 +483,25 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+strategy": {
-                    "type": "string"
+                    "$ref": "#/$defs/strategy"
                 },
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+target_database": {
-                    "type": "string"
+                    "$ref": "#/$defs/target_database"
                 },
                 "+target_schema": {
-                    "type": "string"
+                    "$ref": "#/$defs/target_schema"
                 },
                 "+unique_key": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+updated_at": {
-                    "type": "string"
+                    "$ref": "#/$defs/updated_at"
                 },
                 "alias": {
-                    "type": "string"
+                    "$ref": "#/$defs/alias"
                 },
                 "check_cols": {
                     "$ref": "#/$defs/string_or_array_of_strings"
@@ -564,7 +510,7 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "grants": {
-                    "type": "object"
+                    "$ref": "#/$defs/grants"
                 },
                 "persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
@@ -579,26 +525,26 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "strategy": {
-                    "type": "string"
+                    "$ref": "#/$defs/strategy"
                 },
                 "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "target_database": {
-                    "type": "string"
+                    "$ref": "#/$defs/target_database"
                 },
                 "target_schema": {
-                    "type": "string"
+                    "$ref": "#/$defs/target_schema"
                 },
                 "unique_key": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "updated_at": {
-                    "type": "string"
+                    "$ref": "#/$defs/updated_at"
                 }
             },
             "additionalProperties": {
-                "oneOf" : [
+                "oneOf": [
                     {
                         "$ref": "#/$defs/snapshot_configs"
                     },
@@ -626,7 +572,7 @@
                 }
             },
             "additionalProperties": {
-                "oneOf" : [
+                "oneOf": [
                     {
                         "$ref": "#/$defs/source_configs"
                     },
@@ -652,32 +598,28 @@
             "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
             "properties": {
                 "+alias": {
-                    "type": "string",
-                    "description": "Only relevant when `store_failures` is true"
+                    "$ref": "#/$defs/alias"
                 },
                 "+database": {
-                    "type": "string",
-                    "description": "Only relevant when `store_failures` is true"
+                    "$ref": "#/$defs/database"
                 },
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "+error_if": {
-                    "type": "string"
+                    "$ref": "#/$defs/error_if"
                 },
                 "+fail_calc": {
-                    "type": "string"
+                    "$ref": "#/$defs/fail_calc"
                 },
                 "+limit": {
-                    "type": "number"
+                    "$ref": "#/$defs/limit"
                 },
                 "+schema": {
-                    "type": "string",
-                    "description": "Only relevant when `store_failures` is true"
+                    "$ref": "#/$defs/schema"
                 },
                 "+severity": {
-                    "type": "string",
-                    "enum": ["warn", "error"]
+                    "$ref": "#/$defs/severity"
                 },
                 "+store_failures": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
@@ -686,35 +628,22 @@
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "+warn_if": {
-                    "type": "string"
-                },
-                "alias": {
-                    "type": "string",
-                    "description": "Only relevant when `store_failures` is true"
-                },
-                "database": {
-                    "type": "string",
-                    "description": "Only relevant when `store_failures` is true"
+                    "$ref": "#/$defs/warn_if"
                 },
                 "enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "error_if": {
-                    "type": "string"
+                    "$ref": "#/$defs/error_if"
                 },
                 "fail_calc": {
-                    "type": "string"
+                    "$ref": "#/$defs/fail_calc"
                 },
                 "limit": {
-                    "type": "number"
-                },
-                "schema": {
-                    "type": "string",
-                    "description": "Only relevant when `store_failures` is true"
+                    "$ref": "#/$defs/limit"
                 },
                 "severity": {
-                    "type": "string",
-                    "enum": ["warn", "error"]
+                    "$ref": "#/$defs/severity"
                 },
                 "store_failures": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
@@ -723,11 +652,20 @@
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
                 "warn_if": {
-                    "type": "string"
+                    "$ref": "#/$defs/warn_if"
+                },
+                "alias": {
+                    "$ref": "#/$defs/alias"
+                },
+                "database": {
+                    "$ref": "#/$defs/database"
+                },
+                "schema": {
+                    "$ref": "#/$defs/schema"
                 }
             },
             "additionalProperties": {
-                "oneOf" : [
+                "oneOf": [
                     {
                         "$ref": "#/$defs/test_configs"
                     },
@@ -736,6 +674,100 @@
                     }
                 ]
             }
+        },
+        "database": {
+            "type": "string"
+        },
+        "grant_access_to": {
+            "title": "Authorized views",
+            "type": "array",
+            "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "database": {
+                        "type": "string"
+                    },
+                    "project": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "hours_to_expiration": {
+            "type": "number",
+            "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
+        },
+        "incremental_strategy": {
+            "type": "string"
+        },
+        "kms_key_name": {
+            "type": "string",
+            "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
+        },
+        "materialized": {
+            "type": "string"
+        },
+        "on_schema_change": {
+            "type": "string",
+            "enum": [
+                "append_new_columns",
+                "fail",
+                "ignore",
+                "sync_all_columns"
+            ]
+        },
+        "schema": {
+            "type": "string"
+        },
+        "sql_header": {
+            "type": "string"
+        },
+        "column_types": {
+            "type": "object",
+            "patternProperties": {
+                "": {
+                    "type": "string"
+                }
+            }
+        },
+        "alias": {
+            "type": "string"
+        },
+        "grants": {
+            "type": "object"
+        },
+        "strategy": {
+            "type": "string"
+        },
+        "target_database": {
+            "type": "string"
+        },
+        "target_schema": {
+            "type": "string"
+        },
+        "updated_at": {
+            "type": "string"
+        },
+        "error_if": {
+            "type": "string"
+        },
+        "fail_calc": {
+            "type": "string"
+        },
+        "limit": {
+            "type": "number"
+        },
+        "severity": {
+            "type": "string",
+            "enum": [
+                "warn",
+                "error"
+            ]
+        },
+        "warn_if": {
+            "type": "string"
         }
     }
 }
