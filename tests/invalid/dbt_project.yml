@@ -38,6 +38,7 @@ models:
     example:
       +materialized: view
       +bogus_key: true
+      bogus_key_no_plus: "shonuff"
 
 seeds:
   test:
