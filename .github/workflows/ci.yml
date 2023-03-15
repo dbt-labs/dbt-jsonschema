@@ -7,7 +7,7 @@ on:
 
 jobs:
   validate-json-schemas:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -18,7 +18,7 @@ jobs:
       - name: validate all schema files
         run: find ./schemas -name "*.json" | xargs -n 1 -I {} npx ajv-cli compile -s {} --strict=false
   test-against-sample-dbt-files:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,7 +26,34 @@ jobs:
           node-version: 16
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
-      - name: validate dbt_project.yml sample file
-        run: npx ajv-cli validate -s schemas/dbt_project.json -d tests/dbt_project.yml
-      - name: validate sample model YAML file
-        run: npx ajv-cli validate -s schemas/dbt_yml_files.json -d tests/schema.yml
+      - name: Validate dbt_project.yml sample files
+        run: |
+          npx ajv-cli test -s schemas/dbt_project.json -d tests/valid/dbt_project.yml --valid
+          npx ajv-cli test -s schemas/dbt_project.json -d tests/invalid/dbt_project.yml --invalid
+      - name: Validate resource yml sample files
+        run: |
+          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/valid/schema.yml --valid
+          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/invalid/schema.yml --invalid
+      - name: Validate packages.yml sample files
+        run: |
+          npx ajv-cli test -s schemas/packages.json -d tests/valid/packages.yml --valid
+          npx ajv-cli test -s schemas/packages.json -d tests/invalid/packages.yml --invalid
+      - name: Validate selectors.yml sample files
+        run: |
+          npx ajv-cli test -s schemas/selectors.json -d tests/valid/selectors.yml --valid
+          npx ajv-cli test -s schemas/selectors.json -d tests/invalid/selectors.yml --invalid
+
+  validate_plusless_properties:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: install avj
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsondiff
+      - name: Validate dbt_project.json has equivalent properties with and without pluses
+        run: |
+          python tests/validate_plusless_properties.py

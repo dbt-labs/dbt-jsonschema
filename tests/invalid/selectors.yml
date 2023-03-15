@@ -1,0 +1,8 @@
+selector:
+  - name: nodes_to_joy
+    definition:
+        method_of_attack: tag
+        value: nightly
+        dont_include:
+          - "@tag:daily"
+      
