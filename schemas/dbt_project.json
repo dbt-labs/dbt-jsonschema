@@ -55,6 +55,9 @@
         "macro-paths": {
             "$ref": "#/$defs/array_of_strings"
         },
+        "metrics": {
+            "$ref": "#/$defs/metric_configs"
+        },
         "model-paths": {
             "$ref": "#/$defs/array_of_strings"
         },
@@ -214,6 +217,35 @@
                 }
             },
             "additionalProperties": false
+        },
+        "metric_configs": {
+            "title": "Metric configs",
+            "type": "object",
+            "description": "Configurations set in the dbt_project.yml file will apply to all metrics that don't have a more specific configuration set.",
+            "properties": {
+                "+enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "+treat_null_values_as_zero": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "enabled": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "treat_null_values_as_zero": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                }
+            },
+            "additionalProperties": {
+                "oneOf" : [
+                    {
+                        "$ref": "#/$defs/metric_configs"
+                    },
+                    {
+                        "$ref": "#/$defs/empty_directory"
+                    }
+                ]
+            }
         },
         "model_configs": {
             "title": "Model configs",
