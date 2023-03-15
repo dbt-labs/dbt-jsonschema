@@ -226,10 +226,10 @@
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "enabled": {
+                "+treat_null_values_as_zero": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
-                "+treat_null_values_as_zero": {
+                "enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "treat_null_values_as_zero": {
