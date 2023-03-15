@@ -272,6 +272,9 @@
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
+                "+transient": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "bind": {
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
@@ -323,6 +326,9 @@
                 },
                 "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "transient": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 }
             },
             "additionalProperties": {
@@ -377,6 +383,9 @@
                 "+tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
+                "+transient": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "+column_types": {
                     "$ref": "#/$defs/column_types"
                 },
@@ -397,6 +406,9 @@
                 },
                 "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
+                },
+                "transient": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "column_types": {
                     "$ref": "#/$defs/column_types"
@@ -462,6 +474,9 @@
                 "+target_schema": {
                     "$ref": "#/$defs/target_schema"
                 },
+                "+transient": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                },
                 "+unique_key": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                 },
@@ -503,6 +518,9 @@
                 },
                 "target_schema": {
                     "$ref": "#/$defs/target_schema"
+                },
+                "transient": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "unique_key": {
                     "$ref": "#/$defs/string_or_array_of_strings"
