@@ -165,32 +165,27 @@
         "type": "array",
         "items": {
           "type": "object",
-          "required": ["name", "type", "sql", "timestamp", "time_grains"],
           "if": {
             "properties": {
-              "type": {
-                "const": "expression"
+              "calculation_method": {
+                "const": "derived"
               }
             }
           },
           "then": {
-            "required": ["name", "type", "sql", "timestamp", "time_grains"]
+            "required": ["name", "label", "calculation_method", "expression"]
           },
           "else": {
             "required": [
               "name",
-              "type",
-              "sql",
-              "timestamp",
-              "time_grains",
-              "model"
+              "model",
+              "label",
+              "calculation_method",
+              "expression"
             ]
           },
           "properties": {
-            "name": {
-              "type": "string"
-            },
-            "type": {
+            "calculation_method": {
               "type": "string"
             },
             "description": {
@@ -198,6 +193,9 @@
             },
             "dimensions": {
               "$ref": "#/$defs/array_of_strings"
+            },
+            "expression": {
+              "type": "string"
             },
             "filters": {
               "type": "array",
@@ -221,11 +219,14 @@
             "label": {
               "type": "string"
             },
+            "meta": {
+              "type": "object"
+            },
             "model": {
               "type": "string",
               "default": "ref('')"
             },
-            "sql": {
+            "name": {
               "type": "string"
             },
             "time_grains": {
@@ -234,7 +235,8 @@
             "timestamp": {
               "type": "string"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "models": {
