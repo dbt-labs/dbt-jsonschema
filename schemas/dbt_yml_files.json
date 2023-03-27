@@ -165,7 +165,7 @@
         "type": "array",
         "items": {
           "type": "object",
-          "required": ["name", "model", "label", "calculation_method", "expression"],
+          "required": ["name", "label", "calculation_method", "expression"],
           "if": {
             "properties": {
               "calculation_method": {
