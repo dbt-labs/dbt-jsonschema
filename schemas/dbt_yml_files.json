@@ -299,6 +299,26 @@
             "config": {
               "$refs": "#/$defs/model_configs"
             },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "columns": {
+                    "$ref": "#/$defs/string_or_array_of_strings"
+                  },
+                  "expression": { "type": "string" },
+                  "type": { "type": "string" },
+                  "name": { "type": "string" },
+                  "warn_unenforced": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                  },
+                  "warn_unsupported": {
+                    "$ref": "#/$defs/boolean_or_jinja_string"
+                  }
+                }
+              }
+            },
             "contract": {
               "$ref": "#/$defs/boolean_or_jinja_string"
             },
@@ -316,6 +336,9 @@
             "group": {
               "type": "string"
             },
+            "latest_version": {
+              "type": "number"
+            },
             "meta": {
               "type": "object"
             },
@@ -323,27 +346,24 @@
               "type": "array",
               "items": {
                 "$ref": "#/$defs/tests"
-              },
+              }
+            },
             "versions": {
               "type": "array",
               "items": {
                 "type": "object",
-                "required": [
-                  "v"
-                ],
+                "required": ["v"],
                 "properties": {
-                  "v" : {"type": "number"},
-                  "config" : {"$ref": "#/$defs/model_configs"},
-                  "columns" : {
-                    "type": "object",
-                    "properties": {
-                      "include": {
-                        "$ref": "#/$defs/string_or_array_of_strings"
-                      },
-                      "exclude": {
-                        "$ref": "#/$defs/string_or_array_of_strings"
-                      }
-                    } 
+                  "v": { "type": "number" },
+                  "config": { "$ref": "#/$defs/model_configs" },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        { "$ref": "#/$defs/include_exclude" },
+                        { "$ref": "#/$defs/column_properties" }
+                      ]
+                    }
                   }
                 }
               }
@@ -744,6 +764,17 @@
         },
         "additionalProperties": false
       },
+      "include_exclude": {
+        "type": "object",
+        "properties": {
+          "include": {
+            "$ref": "#/$defs/string_or_array_of_strings"
+          },
+          "exclude": {
+            "$ref": "#/$defs/string_or_array_of_strings"
+          }
+        }
+      },
       "jinja_string": {
         "type": "string",
         "pattern": "\\{\\{.*\\}\\}"
@@ -752,9 +783,9 @@
         "type": "object",
         "properties": {
           "contract": {
-            "type" : "object",
+            "type": "object",
             "properties": {
-              "enforced" : {
+              "enforced": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               }
             }

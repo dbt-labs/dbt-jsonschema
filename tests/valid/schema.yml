@@ -23,12 +23,14 @@ models:
     description: "A dbt model with contracts"
     access: public
     group: analytics
+    latest_version: 2
     config:
       contract: 
         enforced: true
     columns:
       - name: id
         description: "The primary key for this table"
+        data_type: int
         constraints: 
           - "not null"
           - "unique"
@@ -40,7 +42,26 @@ models:
       - v: 2
         columns:
           - include: '*'
-            exclude: country_name # this is the breaking 
+            exclude: country_name
+          - name: id  # included in addition the '*' set. if customer_id were in the '*' set -> override it
+            description: This is the primary key
+            data_type: float
+      - v: 1
+        config:
+          alias: dim_customers
+  
+  - name: my_model_level_contract_model
+    config:
+      contract:
+        enforced: true
+    constraints:
+    - type: check
+      expression: (id > 0)
+    - type: primary_key
+      columns: [ id ]
+    - type: unique
+      columns: [ color, date_day ]
+      name: strange_uniqueness_requirement
 
 
 snapshots:
