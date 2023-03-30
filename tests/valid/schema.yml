@@ -1,7 +1,5 @@
 # this file was generated with dbt init with dbt 1.2.1
 
-version: 2
-
 models:
   - name: my_first_dbt_model
     description: "A starter dbt model"
