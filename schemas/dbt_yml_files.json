@@ -303,6 +303,9 @@
               "type": "array",
               "items": {
                 "type": "object",
+                "required": [
+                  "type"
+                ],
                 "properties": {
                   "columns": {
                     "$ref": "#/$defs/string_or_array_of_strings"
