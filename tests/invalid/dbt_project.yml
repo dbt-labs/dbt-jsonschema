@@ -43,3 +43,7 @@ models:
 seeds:
   test:
     +enabled: false
+
+metrics:
+  test: 
+    invalid: true

@@ -1,7 +1,5 @@
 # this file was generated with dbt init with dbt 1.2.1
 
-version: 2
-
 models:
   - name: my_first_dbt_model
     description: "A starter dbt model"
@@ -54,3 +52,37 @@ groups:
     owner:
       name: dave
       
+metrics:
+  - name: new_customers
+    label: New Customers marked 'paying'
+    model: ref('dim_model_7')
+    description: "The number of paid customers using the product"
+
+    calculation_method: count
+    expression: user_id # superfluous here, but shown as an example
+
+    timestamp: signup_date
+    time_grains: [day, week, month]
+
+    dimensions:
+      - plan
+      - country
+
+    filters:
+      - field: is_paying
+        operator: '='
+        value: 'true'
+      - field: company_name
+        operator: '!='
+        value: "Acme', Inc"
+
+    meta: 
+      team: "Finance"
+      refresh_rate: "Bob's weekly run"
+
+  - name: derived_metric
+    label: New Customers marked 'paying'
+    description: "The number of paid customers using the product"
+
+    calculation_method: derived
+    expression: "{{ metric('new_customers') }} * 2" 

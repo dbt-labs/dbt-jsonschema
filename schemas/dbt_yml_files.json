@@ -2,9 +2,6 @@
     "title": "dbt_yml_files",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
-    "required": [
-        "version"
-    ],
     "properties": {
       "version": {
         "type": "number",
@@ -191,25 +188,24 @@
         "type": "array",
         "items": {
           "type": "object",
-          "required": ["name", "type", "sql", "timestamp", "time_grains"],
+          "required": ["name", "label", "calculation_method", "expression"],
           "if": {
             "properties": {
-              "type": {
-                "const": "expression"
+              "calculation_method": {
+                "const": "derived"
               }
             }
           },
           "then": {
-            "required": ["name", "type", "sql", "timestamp", "time_grains"]
+            "required": ["name", "label", "calculation_method", "expression"]
           },
           "else": {
             "required": [
               "name",
-              "type",
-              "sql",
-              "timestamp",
-              "time_grains",
-              "model"
+              "model",
+              "label",
+              "calculation_method",
+              "expression"
             ]
           },
           "properties": {
@@ -227,10 +223,7 @@
                 }
               }
             },
-            "name": {
-              "type": "string"
-            },
-            "type": {
+            "calculation_method": {
               "type": "string"
             },
             "description": {
@@ -238,6 +231,9 @@
             },
             "dimensions": {
               "$ref": "#/$defs/array_of_strings"
+            },
+            "expression": {
+              "type": "string"
             },
             "filters": {
               "type": "array",
@@ -261,11 +257,14 @@
             "label": {
               "type": "string"
             },
+            "meta": {
+              "type": "object"
+            },
             "model": {
               "type": "string",
               "default": "ref('')"
             },
-            "sql": {
+            "name": {
               "type": "string"
             },
             "time_grains": {
@@ -274,7 +273,8 @@
             "timestamp": {
               "type": "string"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "models": {
@@ -334,9 +334,9 @@
                   "type": "object",
                   "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
                   "patternProperties": {
-                    "^[a-z][a-z0-9]{0,63}$": {
+                    "^[a-z][a-z0-9_-]{0,62}$": {
                       "type": "string",
-                      "pattern": "^[a-z0-9_-]{0,64}$"
+                      "pattern": "^[a-z0-9_-]{0,63}$"
                     }
                   },
                   "additionalProperties": false

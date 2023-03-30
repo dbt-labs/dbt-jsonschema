@@ -16,7 +16,7 @@ def check_equivalency(key, node_type, node_properties):
         difference = diff(key_properties, counterpart_properties)
         raise Exception(f"{key} and {counterpart_key} both exist in {node_type}, but are different: {difference}")
 
-node_types = ['model_configs', 'seed_configs', 'snapshot_configs', 'source_configs', 'test_configs']
+node_types = ['metric_configs', 'model_configs', 'seed_configs', 'snapshot_configs', 'source_configs', 'test_configs']
 with open("./schemas/dbt_project.json", "r") as f:
     data = json.load(f)
     for node_type in node_types:
