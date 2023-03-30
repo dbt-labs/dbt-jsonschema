@@ -297,57 +297,7 @@
               }
             },
             "config": {
-              "type": "object",
-              "properties": {
-                "contract": {
-                  "$ref": "#/$defs/boolean_or_jinja_string"
-                },
-                "grant_access_to": {
-                  "title": "Authorized views",
-                  "type": "array",
-                  "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
-                  "items": {
-                    "type": "object",
-                    "required": ["database", "project"],
-                    "properties": {
-                      "database": {
-                        "type": "string"
-                      },
-                      "project": {
-                        "type": "string"
-                      }
-                    },
-                    "additionalProperties": false
-                  }
-                },
-                "hours_to_expiration": {
-                  "type": "number",
-                  "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
-                },
-                "kms_key_name": {
-                  "type": "string",
-                  "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
-                  "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*"
-                },
-                "labels": {
-                  "title": "Label configs",
-                  "type": "object",
-                  "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
-                  "patternProperties": {
-                    "^[a-z][a-z0-9_-]{0,62}$": {
-                      "type": "string",
-                      "pattern": "^[a-z0-9_-]{0,63}$"
-                    }
-                  },
-                  "additionalProperties": false
-                },
-                "materialized": {
-                  "type": "string"
-                },
-                "sql_header": {
-                  "type": "string"
-                }
-              }
+              "$refs": "#/$defs/model_configs"
             },
             "contract": {
               "$ref": "#/$defs/boolean_or_jinja_string"
@@ -373,6 +323,29 @@
               "type": "array",
               "items": {
                 "$ref": "#/$defs/tests"
+              },
+            "versions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "v"
+                ],
+                "properties": {
+                  "v" : {"type": "number"},
+                  "config" : {"$ref": "#/$defs/model_configs"},
+                  "columns" : {
+                    "type": "object",
+                    "properties": {
+                      "include": {
+                        "$ref": "#/$defs/string_or_array_of_strings"
+                      },
+                      "exclude": {
+                        "$ref": "#/$defs/string_or_array_of_strings"
+                      }
+                    } 
+                  }
+                }
               }
             }
           },
@@ -774,6 +747,64 @@
       "jinja_string": {
         "type": "string",
         "pattern": "\\{\\{.*\\}\\}"
+      },
+      "model_configs": {
+        "type": "object",
+        "properties": {
+          "contract": {
+            "type" : "object",
+            "properties": {
+              "enforced" : {
+                "$ref": "#/$defs/boolean_or_jinja_string"
+              }
+            }
+          },
+          "grant_access_to": {
+            "title": "Authorized views",
+            "type": "array",
+            "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
+            "items": {
+              "type": "object",
+              "required": ["database", "project"],
+              "properties": {
+                "database": {
+                  "type": "string"
+                },
+                "project": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "hours_to_expiration": {
+            "type": "number",
+            "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
+          },
+          "kms_key_name": {
+            "type": "string",
+            "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
+            "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*"
+          },
+          "labels": {
+            "title": "Label configs",
+            "type": "object",
+            "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
+            "patternProperties": {
+              "^[a-z][a-z0-9_-]{0,62}$": {
+                "type": "string",
+                "pattern": "^[a-z0-9_-]{0,63}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "materialized": {
+            "type": "string"
+          },
+          "sql_header": {
+            "type": "string"
+          }
+        }
       },
       "number_or_jinja_string": {
         "oneOf": [

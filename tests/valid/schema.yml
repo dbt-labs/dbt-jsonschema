@@ -24,7 +24,8 @@ models:
     access: public
     group: analytics
     config:
-      contract: true
+      contract: 
+        enforced: true
     columns:
       - name: id
         description: "The primary key for this table"
@@ -35,6 +36,11 @@ models:
         tests:
           - unique
           - not_null
+    versions:
+      - v: 2
+        columns:
+          - include: '*'
+            exclude: country_name # this is the breaking 
 
 
 snapshots:
