@@ -297,7 +297,7 @@
               }
             },
             "config": {
-              "$refs": "#/$defs/model_configs"
+              "$ref": "#/$defs/model_configs"
             },
             "constraints": {
               "type": "array",
