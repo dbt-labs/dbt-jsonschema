@@ -300,30 +300,7 @@
               "$ref": "#/$defs/model_configs"
             },
             "constraints": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": [
-                  "type"
-                ],
-                "properties": {
-                  "columns": {
-                    "$ref": "#/$defs/string_or_array_of_strings"
-                  },
-                  "expression": { "type": "string" },
-                  "type": { "type": "string" },
-                  "name": { "type": "string" },
-                  "warn_unenforced": {
-                    "$ref": "#/$defs/boolean_or_jinja_string"
-                  },
-                  "warn_unsupported": {
-                    "$ref": "#/$defs/boolean_or_jinja_string"
-                  }
-                }
-              }
-            },
-            "contract": {
-              "$ref": "#/$defs/boolean_or_jinja_string"
+              "$ref": "#/$defs/constraints"
             },
             "description": {
               "type": "string"
@@ -357,14 +334,22 @@
                 "type": "object",
                 "required": ["v"],
                 "properties": {
-                  "v": { "type": "number" },
-                  "config": { "$ref": "#/$defs/model_configs" },
+                  "v": {
+                    "type": "number" 
+                  },
+                  "config": {
+                    "$ref": "#/$defs/model_configs" 
+                  },
                   "columns": {
                     "type": "array",
                     "items": {
                       "anyOf": [
-                        { "$ref": "#/$defs/include_exclude" },
-                        { "$ref": "#/$defs/column_properties" }
+                        {
+                          "$ref": "#/$defs/include_exclude" 
+                        },
+                        {
+                          "$ref": "#/$defs/column_properties"
+                        }
                       ]
                     }
                   }
@@ -684,10 +669,7 @@
             "type": "string"
           },
           "constraints": {
-            "$ref": "#/$defs/array_of_strings"
-          },
-          "constraints_check": {
-            "type": "string"
+            "$ref": "#/$defs/constraints"
           },
           "data_type": {
             "type": "string"
@@ -720,6 +702,33 @@
           }
         },
         "additionalProperties": false
+      },
+      "constraints": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "columns": {
+              "$ref": "#/$defs/string_or_array_of_strings"
+            },
+            "expression": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "warn_unenforced": {
+              "$ref": "#/$defs/boolean_or_jinja_string"
+            },
+            "warn_unsupported": {
+              "$ref": "#/$defs/boolean_or_jinja_string"
+            }
+          }
+        }
       },
       "freshness_definition": {
         "default": {

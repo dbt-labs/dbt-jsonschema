@@ -32,9 +32,10 @@ models:
         description: "The primary key for this table"
         data_type: int
         constraints: 
-          - "not null"
-          - "unique"
-        constraints_check: (id > 0)
+          - type: not_null
+          - type: unique
+          - type: check
+            expression: (id > 0)
         tests:
           - unique
           - not_null
@@ -43,7 +44,7 @@ models:
         columns:
           - include: '*'
             exclude: country_name
-          - name: id  # included in addition the '*' set. if customer_id were in the '*' set -> override it
+          - name: id  # included in addition the '*' set. if id were in the '*' set -> override it
             description: This is the primary key
             data_type: float
       - v: 1
