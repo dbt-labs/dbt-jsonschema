@@ -25,8 +25,6 @@ models:
 snapshots:
   - name: snapshot_name
     description: slowly changing dimension
-    tags: 
-      - daily
     columns:
       - name: id 
         description: cool column, eh?
