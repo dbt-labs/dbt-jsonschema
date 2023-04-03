@@ -3,6 +3,8 @@
 models:
   - name: my_first_dbt_model
     description: "A starter dbt model"
+    tags:
+      - thank_you
     columns:
       - name: id
         description: "The primary key for this table"
@@ -23,6 +25,8 @@ models:
 snapshots:
   - name: snapshot_name
     description: slowly changing dimension
+    tags: 
+      - daily
     columns:
       - name: id 
         description: cool column, eh?
