@@ -19,6 +19,51 @@ models:
           - unique
           - not_null
 
+  - name: my_contracted_dbt_model
+    description: "A dbt model with contracts"
+    access: public
+    group: analytics
+    latest_version: 2
+    config:
+      contract: 
+        enforced: true
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        data_type: int
+        constraints: 
+          - type: not_null
+          - type: unique
+          - type: check
+            expression: (id > 0)
+        tests:
+          - unique
+          - not_null
+    versions:
+      - v: 2
+        columns:
+          - include: '*'
+            exclude: country_name
+          - name: id  # included in addition the '*' set. if id were in the '*' set -> override it
+            description: This is the primary key
+            data_type: float
+      - v: 1
+        config:
+          alias: dim_customers
+  
+  - name: my_model_level_contract_model
+    config:
+      contract:
+        enforced: true
+    constraints:
+    - type: check
+      expression: (id > 0)
+    - type: primary_key
+      columns: [ id ]
+    - type: unique
+      columns: [ color, date_day ]
+      name: strange_uniqueness_requirement
+
 
 snapshots:
   - name: snapshot_name
@@ -28,6 +73,13 @@ snapshots:
         description: cool column, eh?
 
 
+# model groups 
+
+groups:
+  - name: analytics
+    owner:
+      name: dave
+      
 metrics:
   - name: new_customers
     label: New Customers marked 'paying'

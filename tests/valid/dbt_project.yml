@@ -39,6 +39,10 @@ models:
       # same key without the plus
       materialized: table
     empty_subdirectory:
+    contracted_models:
+      +contract:
+        enforced: true
+    
   test_bq:
     +labels:
       key: val

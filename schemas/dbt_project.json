@@ -163,6 +163,18 @@
                 "type": "string"
             }
         },
+        "contract": {
+            "type": "object",
+            "required": [
+                "enforced"
+            ],
+            "properties": {
+                "enforced": {
+                  "$ref": "#/$defs/boolean_or_jinja_string",
+                  "default": "true"
+                }
+            }
+        },
         "empty_directory": {
             "type": "null"
         },
@@ -254,6 +266,9 @@
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
                 },
+                "+contract": {
+                    "$ref": "#/$defs/contract"
+                },
                 "+database": {
                     "$ref": "#/$defs/database"
                 },
@@ -308,6 +323,9 @@
                 "bind": {
                     "$ref": "#/$defs/boolean_or_jinja_string",
                     "default": false
+                },
+                "contract": {
+                    "$ref": "#/$defs/contract"
                 },
                 "database": {
                     "$ref": "#/$defs/database"
