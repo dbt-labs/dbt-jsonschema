@@ -103,12 +103,12 @@
           "childrens_parents": {
             "$ref": "#/$defs/boolean_or_jinja_string"
           },
-
           "indirect_selection": {
             "type": "string",
             "enum": ["buildable", "cautious", "eager"]
           }
-        }
+        },
+        "additionalProperties": true
       },
       "exclude_block": {
         "type": "array",
