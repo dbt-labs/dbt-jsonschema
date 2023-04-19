@@ -114,3 +114,7 @@ metrics:
 
     calculation_method: derived
     expression: "{{ metric('new_customers') }} * 2" 
+
+    window:
+      count: 14
+      period: day
