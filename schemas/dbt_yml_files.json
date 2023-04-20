@@ -272,6 +272,18 @@
             },
             "timestamp": {
               "type": "string"
+            },
+            "window": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "period": {
+                  "type": "string",
+                  "enum": [ "day", "week", "month", "year"]
+                }
+                }
             }
           },
           "additionalProperties": false
