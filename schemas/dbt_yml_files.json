@@ -281,7 +281,7 @@
                 },
                 "period": {
                   "type": "string",
-                  "enum": [ "day", "week", "month", "year", "all_time"]
+                  "enum": [ "day", "week", "month", "year"]
                 }
                 }
             }
