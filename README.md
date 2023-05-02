@@ -97,7 +97,7 @@ If you want to know the details, the [dbt YAML validator in JetBrains article](h
     - Schema version: JSON schema version 7
     - Mapping: `packages.yml`
 - Selectors files
-    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/selector.json`
+    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/selectors.json`
     - Schema version: JSON schema version 7
     - Mapping: `selector.yml`
 - Property files
