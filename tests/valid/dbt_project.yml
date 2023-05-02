@@ -54,8 +54,17 @@ seeds:
     empty_subdirectory:
 
 tests:
-  test:
+  test1:
     +enabled: true
+    +severity: warn
+    empty_subdirectory:
+  test2:
+    +enabled: false
+    +severity: error
+    empty_subdirectory:
+  test3:
+    +enabled: "{{ env_var('DBT_ENABLE_TESTS', 'error') }}"
+    +severity: "{{ env_var('DBT_TEST_SEVERITY', 'error') }}"
     empty_subdirectory:
 
 snapshots:
