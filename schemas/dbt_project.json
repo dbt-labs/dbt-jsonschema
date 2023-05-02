@@ -794,10 +794,17 @@
             "type": "number"
         },
         "severity": {
-            "type": "string",
-            "enum": [
-                "warn",
-                "error"
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/jinja_string"
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "warn",
+                        "error"
+                    ]
+                }
             ]
         },
         "warn_if": {
