@@ -928,8 +928,18 @@
             "description": "Only relevant when `store_failures` is true"
           },
           "severity": {
-            "type": "string",
-            "enum": ["warn", "error"]
+            "oneOf": [
+              {
+                "$ref": "#/$defs/jinja_string"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "warn",
+                  "error"
+                ]
+              }
+            ]
           },
           "store_failures": {
             "$ref": "#/$defs/boolean_or_jinja_string"
