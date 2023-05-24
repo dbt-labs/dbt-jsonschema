@@ -814,6 +814,9 @@
               }
             }
           },
+          "file_format": {
+            "type": "string"
+          },
           "grant_access_to": {
             "title": "Authorized views",
             "type": "array",
@@ -852,6 +855,9 @@
               }
             },
             "additionalProperties": false
+          },
+          "location": {
+            "type": "string"
           },
           "materialized": {
             "type": "string"
