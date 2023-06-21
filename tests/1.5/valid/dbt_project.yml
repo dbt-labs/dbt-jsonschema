@@ -3,10 +3,10 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'test'
+name: "test"
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'test'
+profile: "test"
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -18,11 +18,10 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
+target-path: "target" # directory which will store compiled SQL files
+clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
-
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -42,7 +41,7 @@ models:
     contracted_models:
       +contract:
         enforced: true
-    
+
   test_bq:
     +labels:
       key: val
@@ -54,26 +53,35 @@ seeds:
     empty_subdirectory:
 
 tests:
-  test:
+  test1:
     +enabled: true
+    +severity: warn
+    empty_subdirectory:
+  test2:
+    +enabled: false
+    +severity: error
+    empty_subdirectory:
+  test3:
+    +enabled: "{{ env_var('DBT_ENABLE_TESTS', 'error') }}"
+    +severity: "{{ env_var('DBT_TEST_SEVERITY', 'error') }}"
     empty_subdirectory:
 
 snapshots:
   test:
     +target_schema: schema
-    +target_database: database 
+    +target_database: database
     +grants:
-      select: ['role']
+      select: ["role"]
 
     empty_subdirectory:
 
 sources:
-  test: 
+  test:
     +enabled: true
     empty_subdirectory:
 
 metrics:
-  test: 
+  test:
     +enabled: true
     +treat_null_values_as_zero: true
     empty_subdirectory:
