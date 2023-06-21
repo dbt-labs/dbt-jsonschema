@@ -24,7 +24,7 @@ def check_equivalency(key, node_type, node_properties):
 
 node_types = ['metric_configs', 'model_configs', 'seed_configs', 'snapshot_configs', 'source_configs', 'test_configs']
 for filepath in PROJECT_SCHEMA_FILES:
-    with open("./schemas/dbt_project.json", "r") as f:
+    with open(filepath, "r") as f:
         data = json.load(f)
         for node_type in node_types:
             node_properties = data["$defs"][node_type]["properties"]
