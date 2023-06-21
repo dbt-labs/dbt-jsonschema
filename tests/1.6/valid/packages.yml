@@ -1,0 +1,8 @@
+packages:
+  - package: dbt-labs/dbt-utils
+    version: 1.0.0
+
+  - git: "https://github.com/dbt-labs/dbt-utils.git"
+    revision: 1.0.0
+
+  - local: /opt/dbt/redshift

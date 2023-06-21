@@ -1,9 +1,8 @@
 name: CI
 
-on: 
+on:
   - pull_request
   - workflow_dispatch
-
 
 jobs:
   validate-json-schemas:
@@ -26,22 +25,39 @@ jobs:
           node-version: 16
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
-      - name: Validate dbt_project.yml sample files
+      - name: Validate dbt_project.yml sample files for dbt version 1.5
         run: |
-          npx ajv-cli test -s schemas/dbt_project.json -d tests/valid/dbt_project.yml --valid
-          npx ajv-cli test -s schemas/dbt_project.json -d tests/invalid/dbt_project.yml --invalid
-      - name: Validate resource yml sample files
+          npx ajv-cli test -s schemas/dbt_project-1.5.json -d tests/1.5/valid/dbt_project.yml --valid
+          npx ajv-cli test -s schemas/dbt_project-1.5.json -d tests/1.5/invalid/dbt_project.yml --invalid
+      - name: Validate resource yml sample files for dbt version 1.5
         run: |
-          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/valid/schema.yml --valid
-          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/invalid/schema.yml --invalid
-      - name: Validate packages.yml sample files
+          npx ajv-cli test -s schemas/dbt_yml_files-1.5.json -d tests/1.5/valid/schema.yml --valid
+          npx ajv-cli test -s schemas/dbt_yml_files-1.5.json -d tests/1.5/invalid/schema.yml --invalid
+      - name: Validate packages.yml sample files for dbt version 1.5
         run: |
-          npx ajv-cli test -s schemas/packages.json -d tests/valid/packages.yml --valid
-          npx ajv-cli test -s schemas/packages.json -d tests/invalid/packages.yml --invalid
-      - name: Validate selectors.yml sample files
+          npx ajv-cli test -s schemas/packages-1.5.json -d tests/1.5/valid/packages.yml --valid
+          npx ajv-cli test -s schemas/packages-1.5.json -d tests/1.5/invalid/packages.yml --invalid
+      - name: Validate selectors.yml sample files for dbt version 1.5
         run: |
-          npx ajv-cli test -s schemas/selectors.json -d tests/valid/selectors.yml --valid
-          npx ajv-cli test -s schemas/selectors.json -d tests/invalid/selectors.yml --invalid
+          npx ajv-cli test -s schemas/selectors-1.5.json -d tests/1.5/valid/selectors.yml --valid
+          npx ajv-cli test -s schemas/selectors-1.5.json -d tests/1.5/invalid/selectors.yml --invalid
+
+      - name: Validate dbt_project.yml sample files for dbt version 1.6
+        run: |
+          npx ajv-cli test -s schemas/dbt_project-1.6.json -d tests/1.6/valid/dbt_project.yml --valid
+          npx ajv-cli test -s schemas/dbt_project-1.6.json -d tests/1.6/invalid/dbt_project.yml --invalid
+      - name: Validate resource yml sample files for dbt version 1.6
+        run: |
+          npx ajv-cli test -s schemas/dbt_yml_files-1.6.json -d tests/1.6/valid/schema.yml --valid
+          npx ajv-cli test -s schemas/dbt_yml_files-1.6.json -d tests/1.6/invalid/schema.yml --invalid
+      - name: Validate packages.yml sample files for dbt version 1.6
+        run: |
+          npx ajv-cli test -s schemas/packages-1.6.json -d tests/1.6/valid/packages.yml --valid
+          npx ajv-cli test -s schemas/packages-1.6.json -d tests/1.6/invalid/packages.yml --invalid
+      - name: Validate selectors.yml sample files for dbt version 1.6
+        run: |
+          npx ajv-cli test -s schemas/selectors-1.6.json -d tests/1.6/valid/selectors.yml --valid
+          npx ajv-cli test -s schemas/selectors-1.6.json -d tests/1.6/invalid/selectors.yml --invalid
 
   validate_plusless_properties:
     runs-on: ubuntu-latest
@@ -49,7 +65,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - name: install avj
         run: |
           python -m pip install --upgrade pip
