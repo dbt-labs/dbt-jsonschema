@@ -44,6 +44,11 @@ seeds:
   test:
     +enabled: false
 
+tests:
+  test:
+    +enabled: never
+    +severity: plaid
+
 metrics:
   test: 
     invalid: true

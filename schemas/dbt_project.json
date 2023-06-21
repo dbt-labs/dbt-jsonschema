@@ -278,6 +278,9 @@
                 "+enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "+file_format": {
+                    "$ref": "#/$defs/file_format"
+                },
                 "+grant_access_to": {
                     "$ref": "#/$defs/grant_access_to"
                 },
@@ -292,6 +295,9 @@
                 },
                 "+labels": {
                     "$ref": "#/$defs/label_configs"
+                },
+                "+location": {
+                    "$ref": "#/$defs/location"
                 },
                 "+materialized": {
                     "$ref": "#/$defs/materialized"
@@ -336,6 +342,9 @@
                 "enabled": {
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
+                "file_format": {
+                    "$ref": "#/$defs/file_format"
+                },
                 "grant_access_to": {
                     "$ref": "#/$defs/grant_access_to"
                 },
@@ -350,6 +359,9 @@
                 },
                 "labels": {
                     "$ref": "#/$defs/label_configs"
+                },
+                "location": {
+                    "$ref": "#/$defs/location"
                 },
                 "materialized": {
                     "$ref": "#/$defs/materialized"
@@ -712,6 +724,9 @@
         "database": {
             "type": "string"
         },
+        "file_format": {
+            "type": "string"
+        },
         "grant_access_to": {
             "title": "Authorized views",
             "type": "array",
@@ -739,6 +754,9 @@
         "kms_key_name": {
             "type": "string",
             "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
+        },
+        "location": {
+            "type": "string"
         },
         "materialized": {
             "type": "string"
@@ -794,10 +812,17 @@
             "type": "number"
         },
         "severity": {
-            "type": "string",
-            "enum": [
-                "warn",
-                "error"
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/jinja_string"
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "warn",
+                        "error"
+                    ]
+                }
             ]
         },
         "warn_if": {
