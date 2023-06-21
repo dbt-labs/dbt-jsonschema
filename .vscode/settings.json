@@ -25,6 +25,7 @@
             "!dbt_project.yml",
             "!packages.yml",
             "!selectors.yml",
+            "!dependencies.yml",
             "!profile_template.yml",
             "!/.github/**/*.yml"
         ],
@@ -36,7 +37,9 @@
         ],
         "./schemas/packages-1.6.json": [
             "/tests/1.6/**/packages.yml"
-            
+        ],
+        "./schemas/dependencies-1.6.json": [
+            "/tests/1.6/**/dependencies.yml"
         ]
 
     },

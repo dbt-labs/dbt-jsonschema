@@ -59,6 +59,11 @@ jobs:
           npx ajv-cli test -s schemas/selectors-1.6.json -d tests/1.6/valid/selectors.yml --valid
           npx ajv-cli test -s schemas/selectors-1.6.json -d tests/1.6/invalid/selectors.yml --invalid
 
+      - name: Validate dependencies.yml sample files for dbt version 1.6
+        run: |
+          npx ajv-cli test -s schemas/dependencies-1.6.json -d tests/1.6/valid/dependencies.yml --valid
+          npx ajv-cli test -s schemas/dependencies-1.6.json -d tests/1.6/invalid/dependencies.yml --invalid
+
   validate_plusless_properties:
     runs-on: ubuntu-latest
     steps:
