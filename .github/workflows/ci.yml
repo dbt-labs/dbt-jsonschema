@@ -20,6 +20,10 @@ jobs:
     strategy:
       matrix:
         dbt-version: ["1.5", "1.6"]
+        dbt-file-name: ["dbt_project", "packages", "selectors", "dbt_yml_files", "dependencies"]
+        exclude:
+          - dbt-version: "1.5"
+            dbt-file-name: "dependencies"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,28 +34,9 @@ jobs:
         run: npm install --no-save ajv-cli@5.0.0
       - name: Validate dbt_project.yml sample files for dbt version ${{ matrix.dbt-version }}
         run: |
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/dbt_project-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/dbt_project.yml --valid
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/dbt_project-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/dbt_project.yml --invalid
+          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}/-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/${{ matrix.dbt-file-name }}.yml --valid
+          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/${{ matrix.dbt-file-name }}.yml --invalid
       
-      - name: Validate resource yml sample files for dbt version ${{ matrix.dbt-version }}
-        run: |
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/dbt_yml_files-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/schema.yml --valid
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/dbt_yml_files-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/schema.yml --invalid
-
-      - name: Validate packages.yml sample files for dbt version ${{ matrix.dbt-version }}
-        run: |
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/packages-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/packages.yml --valid
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/packages-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/packages.yml --invalid
-      
-      - name: Validate selectors.yml sample files for dbt version 1.5
-        run: |
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/selectors-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/selectors.yml --valid
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/selectors-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/selectors.yml --invalid
-
-      - name: Validate dependencies.yml sample files for dbt version 1.6
-        run: |
-          npx ajv-cli test -s schemas/dependencies-1.6.json -d tests/1.6/valid/dependencies.yml --valid
-          npx ajv-cli test -s schemas/dependencies-1.6.json -d tests/1.6/invalid/dependencies.yml --invalid
 
   validate_plusless_properties:
     runs-on: ubuntu-latest
