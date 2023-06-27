@@ -1,6 +1,6 @@
 {
     "yaml.schemas": {
-        "./schemas/dbt_yml_files-1.5.json": [
+        "./schemas/1.5/dbt_yml_files-1.5.json": [
             "/tests/1.5/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
@@ -9,17 +9,17 @@
             "!profile_template.yml",
             "!/.github/**/*.yml"
         ],
-        "./schemas/dbt_project-1.5.json": [
+        "./schemas/1.5/dbt_project-1.5.json": [
             "/tests/1.5/**/dbt_project.yml"
         ],
-        "./schemas/selectors-1.5.json": [
+        "./schemas/1.5/selectors-1.5.json": [
             "/tests/1.5/**/selectors.yml"
         ],
-        "./schemas/packages-1.5.json": [
+        "./schemas/1.5/packages-1.5.json": [
             "/tests/1.5/**/packages.yml"
             
         ],
-        "./schemas/dbt_yml_files-1.6.json": [
+        "./schemas/1.6/dbt_yml_files-1.6.json": [
             "/tests/1.6/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
@@ -29,16 +29,16 @@
             "!profile_template.yml",
             "!/.github/**/*.yml"
         ],
-        "./schemas/dbt_project-1.6.json": [
+        "./schemas/1.6/dbt_project-1.6.json": [
             "/tests/1.6/**/dbt_project.yml"
         ],
-        "./schemas/selectors-1.6.json": [
+        "./schemas/1.6/selectors-1.6.json": [
             "/tests/1.6/**/selectors.yml"
         ],
-        "./schemas/packages-1.6.json": [
+        "./schemas/1.6/packages-1.6.json": [
             "/tests/1.6/**/packages.yml"
         ],
-        "./schemas/dependencies-1.6.json": [
+        "./schemas/1.6/dependencies-1.6.json": [
             "/tests/1.6/**/dependencies.yml"
         ]
 
