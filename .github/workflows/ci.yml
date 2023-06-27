@@ -16,10 +16,10 @@ jobs:
         run: npm install --no-save ajv-cli@5.0.0
       - name: validate all schema files
         run: find ./schemas -name "*.json" | xargs -n 1 -I {} npx ajv-cli compile -s {} --strict=false
+  test-against-sample-dbt-files:
     strategy:
       matrix:
         dbt-version: ["1.5", "1.6"]
-  test-against-sample-dbt-files:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
