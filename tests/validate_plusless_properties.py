@@ -2,9 +2,9 @@ import json
 from jsondiff import diff
 
 PROJECT_SCHEMA_FILES = [
-    "./schemas/dbt_project.json",
-    "./schemas/dbt_project-1.5.json",
-    "./schemas/dbt_project-1.6.json"
+    "./schemas/default/dbt_project.json",
+    "./schemas/1.5/dbt_project-1.5.json",
+    "./schemas/1.6/dbt_project-1.6.json"
 ]
 
 def check_equivalency(key, node_type, node_properties):
