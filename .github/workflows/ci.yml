@@ -34,7 +34,7 @@ jobs:
         run: npm install --no-save ajv-cli@5.0.0
       - name: Validate dbt_project.yml sample files for dbt version ${{ matrix.dbt-version }}
         run: |
-          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}/-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/${{ matrix.dbt-file-name }}.yml --valid
+          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/${{ matrix.dbt-file-name }}.yml --valid
           npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/${{ matrix.dbt-file-name }}.yml --invalid
       
 
