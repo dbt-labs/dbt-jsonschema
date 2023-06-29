@@ -1,9 +1,8 @@
 name: CI
 
-on: 
+on:
   - pull_request
   - workflow_dispatch
-
 
 jobs:
   validate-json-schemas:
@@ -18,6 +17,13 @@ jobs:
       - name: validate all schema files
         run: find ./schemas -name "*.json" | xargs -n 1 -I {} npx ajv-cli compile -s {} --strict=false
   test-against-sample-dbt-files:
+    strategy:
+      matrix:
+        dbt-version: ["1.5", "1.6"]
+        dbt-file-name: ["dbt_project", "packages", "selectors", "dbt_yml_files", "dependencies"]
+        exclude:
+          - dbt-version: "1.5"
+            dbt-file-name: "dependencies"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,22 +32,11 @@ jobs:
           node-version: 16
       - name: install avj
         run: npm install --no-save ajv-cli@5.0.0
-      - name: Validate dbt_project.yml sample files
+      - name: Validate dbt_project.yml sample files for dbt version ${{ matrix.dbt-version }}
         run: |
-          npx ajv-cli test -s schemas/dbt_project.json -d tests/valid/dbt_project.yml --valid
-          npx ajv-cli test -s schemas/dbt_project.json -d tests/invalid/dbt_project.yml --invalid
-      - name: Validate resource yml sample files
-        run: |
-          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/valid/schema.yml --valid
-          npx ajv-cli test -s schemas/dbt_yml_files.json -d tests/invalid/schema.yml --invalid
-      - name: Validate packages.yml sample files
-        run: |
-          npx ajv-cli test -s schemas/packages.json -d tests/valid/packages.yml --valid
-          npx ajv-cli test -s schemas/packages.json -d tests/invalid/packages.yml --invalid
-      - name: Validate selectors.yml sample files
-        run: |
-          npx ajv-cli test -s schemas/selectors.json -d tests/valid/selectors.yml --valid
-          npx ajv-cli test -s schemas/selectors.json -d tests/invalid/selectors.yml --invalid
+          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/valid/${{ matrix.dbt-file-name }}.yml --valid
+          npx ajv-cli test -s schemas/${{ matrix.dbt-version }}/${{ matrix.dbt-file-name }}-${{ matrix.dbt-version }}.json -d tests/${{ matrix.dbt-version }}/invalid/${{ matrix.dbt-file-name }}.yml --invalid
+      
 
   validate_plusless_properties:
     runs-on: ubuntu-latest
@@ -49,7 +44,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - name: install avj
         run: |
           python -m pip install --upgrade pip
