@@ -262,6 +262,9 @@
         "+contract": {
           "$ref": "#/$defs/contract"
         },
+        "+copy_grants": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
         "+database": {
           "$ref": "#/$defs/database"
         },
@@ -325,6 +328,9 @@
         },
         "contract": {
           "$ref": "#/$defs/contract"
+        },
+        "copy_grants": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "database": {
           "$ref": "#/$defs/database"
