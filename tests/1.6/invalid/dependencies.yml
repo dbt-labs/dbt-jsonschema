@@ -1,2 +1,6 @@
 projects:
   - gnome: my_dbt_project
+
+pancakeages:
+  - pancake: dbt-labs/dbt-utils
+    version: 1.0.0
