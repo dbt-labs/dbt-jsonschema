@@ -158,6 +158,11 @@ semantic_models:
         type: time
         type_params:
           time_granularity: day
+      - name: ds2
+        expr: cast(ordered_at as date)
+        type: time
+        type_params:
+          time_granularity: day
       - name: is_food_order
         type: categorical
       - name: is_drink_order
