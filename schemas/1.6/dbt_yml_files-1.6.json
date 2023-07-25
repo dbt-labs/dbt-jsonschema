@@ -517,6 +517,146 @@
         "additionalProperties": false
       }
     },
+    "semantic_models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "model",
+          "defaults",
+          "entities",
+          "measures",
+          "dimensions"
+        ],
+        "properties": {
+          "config": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "$ref": "#/$defs/boolean_or_jinja_string"
+              }
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "dimensions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "if": {
+                "properties": {
+                  "type": {
+                    "const": "time"
+                  }
+                }
+              },
+              "then": {
+                "required": ["name", "type", "type_params"]
+              },
+              "else": {
+                "required": ["name", "type"]
+              },
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "expr": {
+                  "type": "string"
+                },
+                "is_partition": {
+                  "type": "boolean"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "type_params": {
+                  "type": "object",
+                  "properties": {
+                    "time_granularity": {
+                      "type": "string"
+                    },
+                    "validity_params": {
+                      "type": "object",
+                      "properties": {
+                        "is_end": {
+                          "type": "boolean"
+                        },
+                        "is_partition": {
+                          "type": "boolean"
+                        },
+                        "is_start": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                }
+              }
+            }
+          },
+          "expression": {
+            "type": "string"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["field", "operator", "value"],
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "operator": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "label": {
+            "type": "string"
+          },
+          "meta": {
+            "type": "object"
+          },
+          "model": {
+            "type": "string",
+            "default": "ref('')"
+          },
+          "name": {
+            "type": "string"
+          },
+          "time_grains": {
+            "$ref": "#/$defs/array_of_strings"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "window": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "period": {
+                "type": "string",
+                "enum": ["day", "week", "month", "year"]
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "sources": {
       "type": "array",
       "items": {

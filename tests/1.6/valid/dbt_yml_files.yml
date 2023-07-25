@@ -79,7 +79,97 @@ groups:
   - name: analytics
     owner:
       name: dave
-      
+
+semantic_models:
+  #The name of the semantic model.
+  - name: orders
+    description: |
+      Model containting order data. The grain of the table is the order id.
+    
+    #The name of the dbt model and schema
+    model: ref('orders')
+    defaults:
+      agg_time_dimension: ds
+    #Entities. These usually corespond to keys in the table.
+    entities:
+      - name: order_id
+        type: primary
+      - name: location
+        type: foreign
+        expr: location_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+
+    #Measures. These are the aggregations on the columns in the table.
+    measures:
+      - name: order_total
+        agg: sum
+      - name: food_orders
+        expr: case when is_food_order then order_total else 0 end
+        agg: sum
+      - name: orders
+        expr: "1"
+        agg: sum
+      - name: max_order_total
+        expr: order_total
+        agg: max
+      - name: min_order_total
+        expr: order_total
+        agg: min
+      - name: customers
+        expr: customer_id
+        agg: count_distinct
+      - name: average_order_total
+        expr: order_total
+        agg: average
+      - name: order_cost
+        agg: sum
+        description: test
+      - name: locations_with_orders
+        expr: location_id
+        agg: count_distinct
+      - name: median_order_total
+        expr: order_total
+        agg: median
+      - name: order_total_p99
+        expr: order_total
+        agg: percentile
+        agg_params:
+          percentile: 0.99
+          use_discrete_percentile: True
+          use_approximate_percentile: False
+        agg_time_dimension: ds
+      - name: discrete_order_total_p99
+        expr: order_total
+        agg: percentile
+        agg_params:
+          percentile: 0.99
+          use_discrete_percentile: True
+          use_approximate_percentile: False
+
+  #Dimensions,either categorical or time. These add additonal context to metrics. The typical querying pattern is Metric by Dimension.
+    dimensions:
+      - name: location_name
+        type: categorical
+        description: hello
+      - name: ds
+        expr: cast(ordered_at as date)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: is_food_order
+        type: categorical
+      - name: is_drink_order
+        type: categorical
+      - name: order_total_dim
+        type: categorical
+        expr: order_total
+      - name: is_large_order
+        type: categorical
+        expr: case when order_total > 50 then true else false end
+
+
 metrics:
   - name: new_customers
     label: New Customers marked 'paying'
