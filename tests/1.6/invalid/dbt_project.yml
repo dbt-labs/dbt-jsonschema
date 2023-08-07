@@ -49,6 +49,10 @@ tests:
     +enabled: never
     +severity: plaid
 
+semantic_models:
+  test:
+    +enabled: false
+
 metrics:
   test: 
     invalid: true

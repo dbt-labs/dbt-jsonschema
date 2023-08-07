@@ -79,42 +79,55 @@ groups:
   - name: analytics
     owner:
       name: dave
-      
-metrics:
-  - name: new_customers
-    label: New Customers marked 'paying'
-    model: ref('dim_model_7')
-    description: "The number of paid customers using the product"
 
-    calculation_method: count
-    expression: user_id # superfluous here, but shown as an example
-
-    timestamp: signup_date
-    time_grains: [day, week, month]
-
+semantic_models:
+  - name: customers
+    defaults:
+      agg_time_dimension: first_ordered_at
+    description: |
+      Customer grain mart.
+    model: ref('customers')
+    entities:
+      - name: customer
+        expr: customer_id
+        type: primary
     dimensions:
-      - plan
-      - country
+      - name: customer_name
+        type: categorical
+      - name: customer_type
+        type: categorical
+      - name: first_ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+      - name: last_ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+    measures:
+      - name: count_lifetime_orders
+        description: Total count of orders per customer.
+        agg: sum
+      - name: lifetime_spend_pretax
+        description: Customer lifetime spend before taxes.
+        agg: sum
+      - name: lifetime_spend
+        agg: sum
+        description: Gross customer lifetime spend inclusive of taxes.
 
-    filters:
-      - field: is_paying
-        operator: '='
-        value: 'true'
-      - field: company_name
-        operator: '!='
-        value: "Acme', Inc"
-
-    meta: 
-      team: "Finance"
-      refresh_rate: "Bob's weekly run"
-
-  - name: derived_metric
-    label: New Customers marked 'paying'
-    description: "The number of paid customers using the product"
-
-    calculation_method: derived
-    expression: "{{ metric('new_customers') }} * 2" 
-
-    window:
-      count: 14
-      period: day
+metrics:
+  # Simple metrics
+  - name: customers_with_orders
+    description: "Distict count of customers placing orders"
+    type: simple
+    label: Customers w/ Orders
+    type_params:
+      measure: customers_with_orders
+  - name: new_customer
+    description: Unique count of new customers.
+    label: New Customers
+    type: simple
+    type_params:
+      measure: customers_with_orders
+    filter: |
+      {{ Dimension('customer__customer_type') }}  = 'new'
