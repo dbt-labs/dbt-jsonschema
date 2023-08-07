@@ -255,6 +255,9 @@
       "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
       "properties": {
+        "+alias": {
+          "$ref": "#/$defs/alias"
+        },
         "+bind": {
           "$ref": "#/$defs/boolean_or_jinja_string",
           "default": false
@@ -321,6 +324,9 @@
         },
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "alias": {
+          "$ref": "#/$defs/alias"
         },
         "bind": {
           "$ref": "#/$defs/boolean_or_jinja_string",
