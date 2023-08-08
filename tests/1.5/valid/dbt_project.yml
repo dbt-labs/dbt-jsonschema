@@ -34,6 +34,7 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+      +alias: walla_walla
     subdirectory:
       # same key without the plus
       materialized: table
