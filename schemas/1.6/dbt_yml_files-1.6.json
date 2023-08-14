@@ -188,102 +188,35 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "label", "calculation_method", "expression"],
-        "if": {
-          "properties": {
-            "calculation_method": {
-              "const": "derived"
-            }
-          }
-        },
-        "then": {
-          "required": ["name", "label", "calculation_method", "expression"]
-        },
-        "else": {
-          "required": [
-            "name",
-            "model",
-            "label",
-            "calculation_method",
-            "expression"
-          ]
-        },
+        "required": ["name", "label", "type", "type_params"],
         "properties": {
-          "config": {
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "treat_null_values_as_zero": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "group": {
-                "type": "string"
-              }
-            }
-          },
-          "calculation_method": {
-            "type": "string"
-          },
           "description": {
             "type": "string"
           },
-          "dimensions": {
-            "$ref": "#/$defs/array_of_strings"
-          },
-          "expression": {
+          "filter": {
             "type": "string"
-          },
-          "filters": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": ["field", "operator", "value"],
-              "properties": {
-                "field": {
-                  "type": "string"
-                },
-                "operator": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
           },
           "label": {
             "type": "string"
           },
-          "meta": {
-            "type": "object"
-          },
-          "model": {
-            "type": "string",
-            "default": "ref('')"
-          },
           "name": {
+            "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
             "type": "string"
           },
-          "time_grains": {
-            "$ref": "#/$defs/array_of_strings"
+          "type": {
+            "enum": [
+              "SIMPLE",
+              "RATIO",
+              "CUMULATIVE",
+              "DERIVED",
+              "simple",
+              "ratio",
+              "cumulative",
+              "derived"
+            ]
           },
-          "timestamp": {
-            "type": "string"
-          },
-          "window": {
-            "type": "object",
-            "properties": {
-              "count": {
-                "type": "integer"
-              },
-              "period": {
-                "type": "string",
-                "enum": ["day", "week", "month", "year"]
-              }
-            }
+          "type_params": {
+            "$ref": "#/$defs/metric_type_params"
           }
         },
         "additionalProperties": false
@@ -426,6 +359,57 @@
             "items": {
               "$ref": "#/$defs/tests"
             }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "semantic_models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "model"],
+        "properties": {
+          "defaults": {
+            "type": "object",
+            "properties": {
+              "agg_time_dimension": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": {
+            "type": "string"
+          },
+          "dimensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/dimension"
+            }
+          },
+          "entities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/entity"
+            }
+          },
+          "measures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/measure"
+            }
+          },
+          "model": {
+            "type": "string",
+            "default": "ref('')"
+          },
+          "name": {
+            "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+            "type": "string"
+          },
+          "primary_entity": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -656,6 +640,21 @@
   },
   "additionalProperties": false,
   "$defs": {
+    "aggregation_type_params": {
+      "type": "object",
+      "properties": {
+        "percentile": {
+          "type": "number"
+        },
+        "use_approximate_percentile": {
+          "type": "boolean"
+        },
+        "use_discrete_percentile": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
     "array_of_strings": {
       "type": "array",
       "items": {
@@ -742,6 +741,98 @@
         }
       }
     },
+    "dimension": {
+      "type": "object",
+      "required": ["name", "type"],
+      "anyOf": [
+        {
+          "not": {
+            "$ref": "#/$defs/is-time-dimension"
+          }
+        },
+        {
+          "required": ["type_params"]
+        }
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "expr": {
+          "type": ["string", "boolean"]
+        },
+        "is_partition": {
+          "type": "boolean"
+        },
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "type": "string"
+        },
+        "type": {
+          "enum": ["CATEGORICAL", "TIME", "categorical", "time"]
+        },
+        "type_params": {
+          "$ref": "#/$defs/dimension_type_params"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dimension_type_params": {
+      "type": "object",
+      "required": ["time_granularity"],
+      "properties": {
+        "time_granularity": {
+          "enum": [
+            "DAY",
+            "WEEK",
+            "MONTH",
+            "QUARTER",
+            "YEAR",
+            "day",
+            "week",
+            "month",
+            "quarter",
+            "year"
+          ]
+        },
+        "validity_params": {
+          "$ref": "#/$defs/validity_params"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entity": {
+      "required": ["name", "type"],
+      "type": "object",
+      "properties": {
+        "entity": {
+          "type": "string"
+        },
+        "expr": {
+          "type": ["string", "boolean"]
+        },
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "PRIMARY",
+            "UNIQUE",
+            "FOREIGN",
+            "NATURAL",
+            "primary",
+            "unique",
+            "foreign",
+            "natural"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "freshness_definition": {
       "default": {
         "warn_after": {
@@ -799,9 +890,145 @@
         }
       }
     },
+    "is-time-dimension": {
+      "properties": {
+        "type": {
+          "enum": ["TIME", "time"]
+        }
+      },
+      "required": ["type"]
+    },
     "jinja_string": {
       "type": "string",
       "pattern": "\\{\\{.*\\}\\}"
+    },
+    "measure": {
+      "required": ["name", "agg"],
+      "type": "object",
+      "properties": {
+        "agg": {
+          "enum": [
+            "SUM",
+            "MIN",
+            "MAX",
+            "AVERAGE",
+            "COUNT_DISTINCT",
+            "SUM_BOOLEAN",
+            "COUNT",
+            "PERCENTILE",
+            "MEDIAN",
+            "sum",
+            "min",
+            "max",
+            "average",
+            "count_distinct",
+            "sum_boolean",
+            "count",
+            "percentile",
+            "median"
+          ]
+        },
+        "agg_params": {
+          "$ref": "#/$defs/aggregation_type_params"
+        },
+        "agg_time_dimension": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "type": "string"
+        },
+        "create_metric": {
+          "type": "boolean"
+        },
+        "create_metric_display_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "expr": {
+          "type": ["string", "integer", "boolean"]
+        },
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "type": "string"
+        },
+        "non_additive_dimension": {
+          "$ref": "#/$defs/non_additive_dimension"
+        }
+      },
+      "additionalProperties": false
+    },
+    "metric_input_measure": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "alias": {
+              "type": "string"
+            },
+            "filter": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "metric_input_schema": {
+      "type": "object",
+      "properties": {
+        "alias": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "offset_to_grain": {
+          "type": "string"
+        },
+        "offset_window": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "metric_type_params": {
+      "type": "object",
+      "properties": {
+        "denominator": {
+          "$ref": "#/$defs/metric_input_measure"
+        },
+        "expr": {
+          "type": ["string", "boolean"]
+        },
+        "grain_to_date": {
+          "type": "string"
+        },
+        "measure": {
+          "$ref": "#/$defs/metric_input_measure"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/metric_input_schema"
+          },
+          "type": "array"
+        },
+        "numerator": {
+          "$ref": "#/$defs/metric_input_measure"
+        },
+        "window": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "model_configs": {
       "type": "object",
@@ -866,6 +1093,25 @@
           "type": "string"
         }
       }
+    },
+    "non_additive_dimension": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "window_choice": {
+          "enum": ["MIN", "MAX", "min", "max"]
+        },
+        "window_groupings": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false
     },
     "number_or_jinja_string": {
       "oneOf": [
@@ -1066,6 +1312,18 @@
           }
         }
       ]
+    },
+    "validity_params": {
+      "type": "object",
+      "properties": {
+        "is_end": {
+          "type": "boolean"
+        },
+        "is_start": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }
