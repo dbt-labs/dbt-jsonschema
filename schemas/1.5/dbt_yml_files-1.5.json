@@ -713,7 +713,8 @@
           "$ref": "#/$defs/string_or_array_of_strings"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "uniqueItems": true
     },
     "constraints": {
       "type": "array",
