@@ -23,6 +23,15 @@
       "type": "number",
       "default": 2
     },
+    "dbt-cloud": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "project-id": {
+          "type": "number"
+        }
+      }
+    },
     "dispatch": {
       "type": "array",
       "items": {
