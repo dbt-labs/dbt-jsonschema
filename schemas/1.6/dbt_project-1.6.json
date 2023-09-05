@@ -269,6 +269,9 @@
         "+materialized": {
           "$ref": "#/$defs/materialized"
         },
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
         "+on_schema_change": {
           "$ref": "#/$defs/on_schema_change"
         },
@@ -339,6 +342,9 @@
         "materialized": {
           "$ref": "#/$defs/materialized"
         },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        },
         "on_schema_change": {
           "$ref": "#/$defs/on_schema_change"
         },
@@ -404,6 +410,9 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
         "+persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
         },
@@ -430,6 +439,9 @@
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
         },
         "persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
@@ -483,6 +495,9 @@
         "+grants": {
           "$ref": "#/$defs/grants"
         },
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
         "+persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
         },
@@ -527,6 +542,9 @@
         },
         "grants": {
           "$ref": "#/$defs/grants"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
         },
         "persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
@@ -580,11 +598,17 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
         "+tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
         },
         "tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
@@ -634,6 +658,9 @@
         "+limit": {
           "$ref": "#/$defs/limit"
         },
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
         "+schema": {
           "$ref": "#/$defs/schema"
         },
@@ -660,6 +687,9 @@
         },
         "limit": {
           "$ref": "#/$defs/limit"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
         },
         "severity": {
           "$ref": "#/$defs/severity"
@@ -737,6 +767,9 @@
     "on_schema_change": {
       "type": "string",
       "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
+    },
+    "meta": {
+      "type": "object"
     },
     "schema": {
       "type": "string"
