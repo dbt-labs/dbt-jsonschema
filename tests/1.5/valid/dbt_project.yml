@@ -39,6 +39,9 @@ models:
       # same key without the plus
       materialized: table
     empty_subdirectory:
+    another_one:
+      meta: 
+        owner: Tony
     contracted_models:
       +contract:
         enforced: true
