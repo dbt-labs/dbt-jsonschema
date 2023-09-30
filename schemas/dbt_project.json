@@ -248,6 +248,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "model_configs": {
@@ -411,6 +414,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "persist_docs_config": {
@@ -509,6 +515,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "snapshot_configs": {
@@ -621,6 +630,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "source_configs": {
@@ -655,6 +667,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "string_or_array_of_strings": {
@@ -754,6 +769,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "database": {
