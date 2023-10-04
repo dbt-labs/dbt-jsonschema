@@ -261,7 +261,7 @@
           "$ref": "#/$defs/grant_access_to"
         },
         "+group": {
-          "type": "string"
+          "$ref": "#/$defs/group"
         },
         "+hours_to_expiration": {
           "$ref": "#/$defs/hours_to_expiration"
@@ -758,6 +758,9 @@
         },
         "additionalProperties": false
       }
+    },
+    "group": {
+      "type": "string"
     },
     "hours_to_expiration": {
       "type": "number",
