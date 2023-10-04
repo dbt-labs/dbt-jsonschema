@@ -25,9 +25,8 @@ node_types = ['model_configs', 'seed_configs', 'snapshot_configs', 'source_confi
 for filepath in PROJECT_SCHEMA_FILES:
     with open(filepath, "r") as f:
         data = json.load(f)
-        for node_type in node_types[:1]:
+        for node_type in node_types:
             node_properties = data["$defs"][node_type]["properties"]
             for key in node_properties.keys():
                 check_equivalency(key, node_type, node_properties)
             print(f"{filepath} {node_type} tests passed")
-            
