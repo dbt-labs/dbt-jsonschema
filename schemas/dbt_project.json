@@ -804,7 +804,7 @@
       "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
     },
     "schema": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "sql_header": {
       "type": "string"
