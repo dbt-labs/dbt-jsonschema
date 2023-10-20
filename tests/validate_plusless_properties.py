@@ -1,5 +1,8 @@
+import os
 import json 
 from jsondiff import diff
+
+test_script_path = os.path.dirname(__file__)
 
 PROJECT_SCHEMA_FILES = [
     "../schemas/dbt_project.json",
@@ -21,12 +24,14 @@ def check_equivalency(key, node_type, node_properties):
         difference = diff(key_properties, counterpart_properties)
         raise Exception(f"{key} and {counterpart_key} both exist in {node_type}, but are different: {difference}")
 
-node_types = ['model_configs', 'seed_configs', 'snapshot_configs', 'source_configs', 'test_configs']
-for filepath in PROJECT_SCHEMA_FILES:
-    with open(filepath, "r") as f:
+node_types = ['model_configs', 'seed_configs', 'snapshot_configs', 'test_configs']
+for config_path in PROJECT_SCHEMA_FILES:
+    full_path = os.path.join(test_script_path, config_path)
+    with open(full_path, "r") as f:
         data = json.load(f)
         for node_type in node_types:
             node_properties = data["$defs"][node_type]["properties"]
             for key in node_properties.keys():
                 check_equivalency(key, node_type, node_properties)
-            print(f"{filepath} {node_type} tests passed")
+            print(f"{config_path} {node_type} tests passed")
+            

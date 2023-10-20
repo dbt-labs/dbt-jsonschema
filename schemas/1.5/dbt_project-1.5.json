@@ -238,11 +238,17 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+treat_null_values_as_zero": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "treat_null_values_as_zero": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -368,6 +374,9 @@
         "grant_access_to": {
           "$ref": "#/$defs/grant_access_to"
         },
+        "group": {
+          "$ref": "#/$defs/group"
+        },
         "hours_to_expiration": {
           "$ref": "#/$defs/hours_to_expiration"
         },
@@ -454,6 +463,9 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
@@ -483,6 +495,9 @@
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "meta": {
           "$ref": "#/$defs/meta"
@@ -539,6 +554,9 @@
         "+grants": {
           "$ref": "#/$defs/grants"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
@@ -586,6 +604,9 @@
         },
         "grants": {
           "$ref": "#/$defs/grants"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "meta": {
           "$ref": "#/$defs/meta"
@@ -699,6 +720,9 @@
         "+fail_calc": {
           "$ref": "#/$defs/fail_calc"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+limit": {
           "$ref": "#/$defs/limit"
         },
@@ -728,6 +752,9 @@
         },
         "fail_calc": {
           "$ref": "#/$defs/fail_calc"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "limit": {
           "$ref": "#/$defs/limit"
