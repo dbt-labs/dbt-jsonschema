@@ -846,7 +846,7 @@
       "type": "object"
     },
     "schema": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "sql_header": {
       "type": "string"
