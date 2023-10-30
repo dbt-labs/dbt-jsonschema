@@ -57,7 +57,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           }
         }
       }
@@ -222,7 +222,7 @@
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
               "group": {
-                "type": "string"
+                "$ref": "#/$defs/group"
               }
             }
           },
@@ -258,7 +258,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           },
           "label": {
             "type": "string"
@@ -332,7 +332,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           },
           "latest_version": {
             "type": "number"
@@ -428,7 +428,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           },
           "tests": {
             "type": "array",
@@ -514,7 +514,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           },
           "meta": {
             "type": "object"
@@ -800,6 +800,9 @@
         }
       },
       "additionalProperties": false
+    },
+    "group": {
+      "type": "string"
     },
     "include_exclude": {
       "type": "object",
