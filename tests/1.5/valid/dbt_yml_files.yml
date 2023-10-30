@@ -3,6 +3,10 @@
 models:
   - name: my_first_dbt_model
     description: "A starter dbt model"
+    config:
+      grants:
+        privilege: role
+        privileges: ["select_user", "select_cruiser"]
     columns:
       - name: id
         description: "The primary key for this table"

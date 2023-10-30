@@ -49,6 +49,10 @@ models:
     contracted_models:
       +contract:
         enforced: true
+    granted_models:
+      +grants:
+        privilege: role
+        privileges: ["select_user", "select_cruiser"]
     
   test_bq:
     +labels:
