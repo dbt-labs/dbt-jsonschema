@@ -404,9 +404,6 @@
               "$ref": "#/$defs/entity"
             }
           },
-          "group": {
-            "type": "string"
-          },
           "measures": {
             "type": "array",
             "items": {
