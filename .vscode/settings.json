@@ -4,6 +4,7 @@
             "/tests/1.5/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
+            "!dbt_cloud.yml",
             "!packages.yml",
             "!selectors.yml",
             "!profile_template.yml",
@@ -11,6 +12,9 @@
         ],
         "./schemas/1.5/dbt_project-1.5.json": [
             "/tests/1.5/**/dbt_project.yml"
+        ],
+        "./schemas/1.5/dbt_cloud-1.5.json": [
+            "/tests/1.5/**/dbt_cloud.yml"
         ],
         "./schemas/1.5/selectors-1.5.json": [
             "/tests/1.5/**/selectors.yml"
@@ -23,6 +27,7 @@
             "/tests/1.6/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
+            "!dbt_cloud.yml",
             "!packages.yml",
             "!selectors.yml",
             "!dependencies.yml",
@@ -31,6 +36,9 @@
         ],
         "./schemas/1.6/dbt_project-1.6.json": [
             "/tests/1.6/**/dbt_project.yml"
+        ],
+        "./schemas/1.6/dbt_cloud-1.6.json": [
+            "/tests/1.6/**/dbt_cloud.yml"
         ],
         "./schemas/1.6/selectors-1.6.json": [
             "/tests/1.6/**/selectors.yml"

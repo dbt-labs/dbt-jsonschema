@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         dbt-version: ["1.5", "1.6"]
-        dbt-file-name: ["dbt_project", "packages", "selectors", "dbt_yml_files", "dependencies"]
+        dbt-file-name: ["dbt_project", "packages", "selectors", "dbt_yml_files", "dependencies", "dbt_cloud"]
         exclude:
           - dbt-version: "1.5"
             dbt-file-name: "dependencies"
