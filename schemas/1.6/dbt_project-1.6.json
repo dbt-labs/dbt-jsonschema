@@ -254,6 +254,9 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+grants": {
+          "$ref": "#/$defs/grants"
+        },
         "+file_format": {
           "$ref": "#/$defs/file_format"
         },
@@ -326,6 +329,9 @@
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "grants": {
+          "$ref": "#/$defs/grants"
         },
         "file_format": {
           "$ref": "#/$defs/file_format"
@@ -419,6 +425,9 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+grants": {
+          "$ref": "#/$defs/grants"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
@@ -448,6 +457,9 @@
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "grants": {
+          "$ref": "#/$defs/grants"
         },
         "meta": {
           "$ref": "#/$defs/meta"
@@ -756,6 +768,16 @@
         "additionalProperties": false
       }
     },
+    "grants": {
+      "type": "object",
+      "description": "flexible grant config. accepts any string key, expects a string or list of strings value",
+      "patternProperties": {
+          ".*": {
+            "$ref": "#/$defs/string_or_array_of_strings"
+          }
+        },
+        "additionalProperties": false
+    },
     "hours_to_expiration": {
       "type": "number",
       "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
@@ -796,9 +818,6 @@
     },
     "alias": {
       "type": "string"
-    },
-    "grants": {
-      "type": "object"
     },
     "strategy": {
       "type": "string"

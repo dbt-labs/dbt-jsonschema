@@ -347,17 +347,17 @@
                 "required": ["v"],
                 "properties": {
                   "v": {
-                    "type": "number" 
+                    "type": "number"
                   },
                   "config": {
-                    "$ref": "#/$defs/model_configs" 
+                    "$ref": "#/$defs/model_configs"
                   },
                   "columns": {
                     "type": "array",
                     "items": {
                       "anyOf": [
                         {
-                          "$ref": "#/$defs/include_exclude" 
+                          "$ref": "#/$defs/include_exclude"
                         },
                         {
                           "$ref": "#/$defs/column_properties"
@@ -401,6 +401,9 @@
                 },
                 "enabled": {
                   "$ref": "#/$defs/boolean_or_jinja_string"
+                },
+                "grants": {
+                  "$ref": "#/$defs/grants"
                 },
                 "quote_columns": {
                   "$ref": "#/$defs/boolean_or_jinja_string"
@@ -459,7 +462,7 @@
                     "$ref": "#/$defs/boolean_or_jinja_string"
                 },
                 "grants": {
-                    "type": "object"
+                    "$ref": "#/$defs/grants"
                 },
                 "persist_docs": {
                     "$ref": "#/$defs/persist_docs_config"
@@ -789,6 +792,16 @@
         },
         "additionalProperties": false
       },
+      "grants": {
+        "type": "object",
+        "description": "flexible grant config. accepts any string key, expects a string or list of strings value",
+        "patternProperties": {
+            ".*": {
+              "$ref": "#/$defs/string_or_array_of_strings"
+            }
+          },
+          "additionalProperties": false
+      },
       "include_exclude": {
         "type": "object",
         "properties": {
@@ -835,6 +848,9 @@
               },
               "additionalProperties": false
             }
+          },
+          "grants": {
+            "$ref": "#/$defs/grants"
           },
           "hours_to_expiration": {
             "type": "number",
