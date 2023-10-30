@@ -58,6 +58,7 @@
           },
           "group": {
             "type": "string"
+          }
         }
       }
     },
