@@ -55,6 +55,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "type": "string"
           }
         }
       }
@@ -254,6 +257,9 @@
               "additionalProperties": false
             }
           },
+          "group": {
+            "type": "string"
+          },
           "label": {
             "type": "string"
           },
@@ -421,6 +427,9 @@
               }
             }
           },
+          "group": {
+            "type": "string"
+          },
           "tests": {
             "type": "array",
             "items": {
@@ -503,6 +512,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "type": "string"
           },
           "meta": {
             "type": "object"
