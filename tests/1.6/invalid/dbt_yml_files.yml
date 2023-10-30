@@ -23,6 +23,11 @@ models:
           - unique
           - not_null
 
+semantic_models:
+  - model: ref('models')
+    name: model 
+    group: farmhands_only
+
 metrics:
   - name: new_customers
     label: New Customers marked 'paying'
