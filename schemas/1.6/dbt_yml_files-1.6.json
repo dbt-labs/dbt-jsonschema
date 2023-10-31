@@ -55,6 +55,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "$ref": "#/$defs/group"
           }
         }
       }
@@ -196,6 +199,9 @@
           "filter": {
             "type": "string"
           },
+          "group": {
+            "$ref": "#/$defs/group"
+          },
           "label": {
             "type": "string"
           },
@@ -259,7 +265,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           },
           "latest_version": {
             "type": "number"
@@ -353,6 +359,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "$ref": "#/$defs/group"
           },
           "tests": {
             "type": "array",
@@ -487,6 +496,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "$ref": "#/$defs/group"
           },
           "meta": {
             "type": "object"
@@ -879,6 +891,9 @@
         }
       },
       "additionalProperties": false
+    },
+    "group": {
+      "type": "string"
     },
     "include_exclude": {
       "type": "object",
