@@ -263,6 +263,9 @@
         "+grant_access_to": {
           "$ref": "#/$defs/grant_access_to"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+hours_to_expiration": {
           "$ref": "#/$defs/hours_to_expiration"
         },
@@ -338,6 +341,9 @@
         },
         "grant_access_to": {
           "$ref": "#/$defs/grant_access_to"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "hours_to_expiration": {
           "$ref": "#/$defs/hours_to_expiration"
@@ -428,6 +434,9 @@
         "+grants": {
           "$ref": "#/$defs/grants"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
@@ -460,6 +469,9 @@
         },
         "grants": {
           "$ref": "#/$defs/grants"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "meta": {
           "$ref": "#/$defs/meta"
@@ -516,6 +528,9 @@
         "+grants": {
           "$ref": "#/$defs/grants"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
@@ -563,6 +578,9 @@
         },
         "grants": {
           "$ref": "#/$defs/grants"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "meta": {
           "$ref": "#/$defs/meta"
@@ -676,6 +694,9 @@
         "+fail_calc": {
           "$ref": "#/$defs/fail_calc"
         },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
         "+limit": {
           "$ref": "#/$defs/limit"
         },
@@ -705,6 +726,9 @@
         },
         "fail_calc": {
           "$ref": "#/$defs/fail_calc"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
         },
         "limit": {
           "$ref": "#/$defs/limit"
@@ -776,7 +800,10 @@
             "$ref": "#/$defs/string_or_array_of_strings"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false        
+    },
+    "group": {
+      "type": "string"
     },
     "hours_to_expiration": {
       "type": "number",

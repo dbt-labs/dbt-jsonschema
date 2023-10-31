@@ -71,6 +71,7 @@ models:
 
 snapshots:
   - name: snapshot_name
+    group: analytics
     description: slowly changing dimension
     columns:
       - name: id 

@@ -44,6 +44,7 @@ models:
       materialized: table
     empty_subdirectory:
     another_one:
+      +group: real
       meta: 
         owner: Tony
     contracted_models:

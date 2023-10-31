@@ -44,6 +44,7 @@ models:
       materialized: table
     empty_subdirectory:
     another_one:
+      +group: real
       meta: 
         owner: Tony
     contracted_models:
@@ -61,6 +62,7 @@ models:
       jinja_key: "{{ target.name }}"
 
 seeds:
+  +group: sunflower
   test:
     +enabled: false
     empty_subdirectory:

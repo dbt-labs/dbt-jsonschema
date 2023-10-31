@@ -55,6 +55,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "$ref": "#/$defs/group"
           }
         }
       }
@@ -219,7 +222,7 @@
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
               "group": {
-                "type": "string"
+                "$ref": "#/$defs/group"
               }
             }
           },
@@ -253,6 +256,9 @@
               },
               "additionalProperties": false
             }
+          },
+          "group": {
+            "$ref": "#/$defs/group"
           },
           "label": {
             "type": "string"
@@ -326,7 +332,7 @@
             }
           },
           "group": {
-            "type": "string"
+            "$ref": "#/$defs/group"
           },
           "latest_version": {
             "type": "number"
@@ -424,6 +430,9 @@
               }
             }
           },
+          "group": {
+            "$ref": "#/$defs/group"
+          },
           "tests": {
             "type": "array",
             "items": {
@@ -506,6 +515,9 @@
                 "type": "boolean"
               }
             }
+          },
+          "group": {
+            "$ref": "#/$defs/group"
           },
           "meta": {
             "type": "object"
@@ -801,6 +813,9 @@
           }
         },
         "additionalProperties": false
+    },
+    "group": {
+      "type": "string"
     },
     "include_exclude": {
       "type": "object",
