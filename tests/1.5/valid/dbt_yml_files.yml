@@ -12,6 +12,9 @@ models:
 
   - name: my_second_dbt_model
     description: "A starter dbt model"
+    docs:
+      show: true
+      node_color: yellow
     columns:
       - name: id
         description: "The primary key for this table"
