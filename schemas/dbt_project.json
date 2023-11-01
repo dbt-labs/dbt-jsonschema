@@ -198,6 +198,9 @@
       },
       "additionalProperties": false
     },
+    "invalidate_hard_deletes": {
+      "$ref": "#/$defs/boolean_or_jinja_string"
+    },
     "jinja_string": {
       "type": "string",
       "pattern": "\\{\\{.*\\}\\}"
@@ -527,6 +530,9 @@
         "+grants": {
           "$ref": "#/$defs/grants"
         },
+        "+invalidate_hard_deletes": {
+          "$ref": "#/$defs/invalidate_hard_deletes"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
@@ -574,6 +580,9 @@
         },
         "grants": {
           "$ref": "#/$defs/grants"
+        },
+        "invalidate_hard_deletes": {
+          "$ref": "#/$defs/invalidate_hard_deletes"
         },
         "meta": {
           "$ref": "#/$defs/meta"
