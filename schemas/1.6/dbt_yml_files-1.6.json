@@ -48,13 +48,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "required": ["show"],
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "group": {
             "$ref": "#/$defs/group"
@@ -176,12 +170,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           }
         },
         "additionalProperties": false
@@ -257,12 +246,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "group": {
             "$ref": "#/$defs/group"
@@ -353,12 +337,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "group": {
             "$ref": "#/$defs/group"
@@ -490,12 +469,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "group": {
             "$ref": "#/$defs/group"
@@ -810,6 +784,23 @@
         },
         "validity_params": {
           "$ref": "#/$defs/validity_params"
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs_config": {
+      "title": "Docs config",
+      "type": "object",
+      "description": "Configurations for the appearance of nodes in the dbt documentation.",
+      "properties": {
+        "node_color": {
+          "type": "string",
+          "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+          "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
         }
       },
       "additionalProperties": false
