@@ -205,8 +205,7 @@
       "additionalProperties": false
     },
     "invalidate_hard_deletes": {
-      "type": "boolean",
-      "description": "Configuration specific to snapshots used to invalidate hard deletes."
+      "$ref": "#/$defs/boolean_or_jinja_string"
     },
     "jinja_string": {
       "type": "string",
