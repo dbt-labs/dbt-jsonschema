@@ -794,13 +794,13 @@
     },
     "grants": {
       "type": "object",
-      "description": "flexible grant config. accepts any string key, expects a string or list of strings value",
+      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
       "patternProperties": {
-          ".*": {
-            "$ref": "#/$defs/string_or_array_of_strings"
-          }
-        },
-        "additionalProperties": false        
+        ".*": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        }
+      },
+      "additionalProperties": false
     },
     "group": {
       "type": "string"
