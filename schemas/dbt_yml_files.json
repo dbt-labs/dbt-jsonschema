@@ -48,13 +48,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "required": ["show"],
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           }
         }
       }
@@ -135,7 +129,7 @@
                 "type": "string"
               }
             },
-            "additionalProperties": false
+            "additionalProperties": true
           }
         },
         "additionalProperties": false
@@ -173,12 +167,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           }
         },
         "additionalProperties": false
@@ -318,12 +307,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "group": {
             "type": "string"
@@ -402,9 +386,6 @@
               "enabled": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
-              "grants": {
-                "$ref": "#/$defs/grants"
-              },
               "quote_columns": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
@@ -417,12 +398,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "tests": {
             "type": "array",
@@ -500,12 +476,7 @@
             "type": "string"
           },
           "docs": {
-            "type": "object",
-            "properties": {
-              "show": {
-                "type": "boolean"
-              }
-            }
+            "$ref": "#/$defs/docs_config"
           },
           "meta": {
             "type": "object"

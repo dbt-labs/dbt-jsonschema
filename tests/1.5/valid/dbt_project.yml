@@ -84,6 +84,7 @@ tests:
 snapshots:
   test:
     +target_schema: schema
+    +invalidate_hard_deletes: true
     +target_database: database
     +grants:
       select: ["role"]
