@@ -386,6 +386,9 @@
               "enabled": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
+              "grants": {
+                "$ref": "#/$defs/grants"
+              },
               "quote_columns": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
@@ -716,6 +719,23 @@
           }
         }
       }
+    },
+    "docs_config": {
+      "title": "Docs config",
+      "type": "object",
+      "description": "Configurations for the appearance of nodes in the dbt documentation.",
+      "properties": {
+        "node_color": {
+          "type": "string",
+          "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+          "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
+        },
+        "show": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
     },
     "freshness_definition": {
       "default": {
