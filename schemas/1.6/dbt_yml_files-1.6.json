@@ -325,6 +325,9 @@
               "enabled": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
+              "grants": {
+                "$ref": "#/$defs/grants"
+              },
               "quote_columns": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
@@ -431,7 +434,7 @@
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
               "grants": {
-                "type": "object"
+                "$ref": "#/$defs/grants"
               },
               "persist_docs": {
                 "$ref": "#/$defs/persist_docs_config"
@@ -883,6 +886,16 @@
       },
       "additionalProperties": false
     },
+    "grants": {
+      "type": "object",
+      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
+      "patternProperties": {
+        ".*": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        }
+      },
+      "additionalProperties": false
+    },
     "group": {
       "type": "string"
     },
@@ -1068,6 +1081,9 @@
             },
             "additionalProperties": false
           }
+        },
+        "grants": {
+          "$ref": "#/$defs/grants"
         },
         "hours_to_expiration": {
           "type": "number",

@@ -39,6 +39,11 @@ models:
       +materialized: view
       +bogus_key: true
       bogus_key_no_plus: "shonuff"
+      +grants:
+        no_numbers: 55
+      
+      
+      
 
 seeds:
   test:

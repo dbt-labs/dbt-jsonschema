@@ -257,6 +257,9 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+grants": {
+          "$ref": "#/$defs/grants"
+        },
         "+file_format": {
           "$ref": "#/$defs/file_format"
         },
@@ -332,6 +335,9 @@
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "grants": {
+          "$ref": "#/$defs/grants"
         },
         "file_format": {
           "$ref": "#/$defs/file_format"
@@ -428,6 +434,9 @@
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+grants": {
+          "$ref": "#/$defs/grants"
+        },
         "+group": {
           "$ref": "#/$defs/group"
         },
@@ -460,6 +469,9 @@
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "grants": {
+          "$ref": "#/$defs/grants"
         },
         "group": {
           "$ref": "#/$defs/group"
@@ -789,6 +801,16 @@
         "additionalProperties": false
       }
     },
+    "grants": {
+      "type": "object",
+      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
+      "patternProperties": {
+        ".*": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        }
+      },
+      "additionalProperties": false
+    },
     "group": {
       "type": "string"
     },
@@ -832,9 +854,6 @@
     },
     "alias": {
       "type": "string"
-    },
-    "grants": {
-      "type": "object"
     },
     "strategy": {
       "type": "string"
