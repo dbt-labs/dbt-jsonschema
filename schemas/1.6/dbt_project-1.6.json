@@ -289,6 +289,9 @@
         },
         "+meta": {
           "$ref": "#/$defs/meta"
+        },        
+        "+on_configuration_change": {
+          "$ref": "#/$defs/on_configuration_change"
         },
         "+on_schema_change": {
           "$ref": "#/$defs/on_schema_change"
@@ -368,6 +371,9 @@
         },
         "meta": {
           "$ref": "#/$defs/meta"
+        },      
+        "on_configuration_change": {
+          "$ref": "#/$defs/on_configuration_change"
         },
         "on_schema_change": {
           "$ref": "#/$defs/on_schema_change"
@@ -830,6 +836,10 @@
     },
     "materialized": {
       "type": "string"
+    },
+    "on_configuration_change": {
+      "type": "string",
+      "enum": ["apply", "continue", "fail"]
     },
     "on_schema_change": {
       "type": "string",
