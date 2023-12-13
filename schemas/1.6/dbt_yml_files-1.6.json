@@ -1053,6 +1053,12 @@
     "model_configs": {
       "type": "object",
       "properties": {
+        "auto_refresh": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "backup": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
         "contract": {
           "type": "object",
           "properties": {
@@ -1111,9 +1117,24 @@
         },
         "materialized": {
           "type": "string"
+        },        
+        "on_configuration_change": {
+          "type": "string",
+          "enum": ["apply", "continue", "fail"]
+        },
+        "on_schema_change": {
+          "type": "string",
+          "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
         },
         "sql_header": {
           "type": "string"
+        },
+        "snowflake_warehouse":{
+          "type": "string"
+        },
+        "target_lag":{
+          "type": "string",
+          "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
         }
       }
     },

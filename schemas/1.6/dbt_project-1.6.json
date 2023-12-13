@@ -164,6 +164,12 @@
         "type": "string"
       }
     },
+    "auto_refresh":{
+      "$ref": "#/$defs/boolean_or_jinja_string"
+    },
+    "backup":{
+      "$ref": "#/$defs/boolean_or_jinja_string"
+    },
     "contract": {
       "type": "object",
       "required": ["enforced"],
@@ -238,6 +244,12 @@
         "+alias": {
           "$ref": "#/$defs/alias"
         },
+        "+auto_refresh":{
+            "$ref": "#/$defs/auto_refresh"
+        },
+        "+backup":{
+            "$ref": "#/$defs/backup"
+        },
         "+bind": {
           "$ref": "#/$defs/boolean_or_jinja_string",
           "default": false
@@ -289,6 +301,9 @@
         },
         "+meta": {
           "$ref": "#/$defs/meta"
+        },        
+        "+on_configuration_change": {
+          "$ref": "#/$defs/on_configuration_change"
         },
         "+on_schema_change": {
           "$ref": "#/$defs/on_schema_change"
@@ -308,14 +323,26 @@
         "+sql_header": {
           "$ref": "#/$defs/sql_header"
         },
+        "+snowflake_warehouse":{
+          "$ref": "#/$defs/snowflake_warehouse"
+        },
         "+tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "+target_lag":{
+          "$ref": "#/$defs/target_lag"
         },
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "alias": {
           "$ref": "#/$defs/alias"
+        },
+        "auto_refresh":{
+            "$ref": "#/$defs/auto_refresh"
+        },
+        "backup":{
+            "$ref": "#/$defs/backup"
         },
         "bind": {
           "$ref": "#/$defs/boolean_or_jinja_string",
@@ -368,6 +395,9 @@
         },
         "meta": {
           "$ref": "#/$defs/meta"
+        },      
+        "on_configuration_change": {
+          "$ref": "#/$defs/on_configuration_change"
         },
         "on_schema_change": {
           "$ref": "#/$defs/on_schema_change"
@@ -384,11 +414,17 @@
         "schema": {
           "$ref": "#/$defs/schema"
         },
+        "snowflake_warehouse": {
+          "$ref": "#/$defs/snowflake_warehouse"
+        },
         "sql_header": {
           "$ref": "#/$defs/sql_header"
         },
         "tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "target_lag": {
+          "$ref": "#/$defs/target_lag"
         },
         "transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -831,12 +867,16 @@
     "materialized": {
       "type": "string"
     },
+    "meta": {
+      "type": "object"
+    },
+    "on_configuration_change": {
+      "type": "string",
+      "enum": ["apply", "continue", "fail"]
+    },
     "on_schema_change": {
       "type": "string",
       "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
-    },
-    "meta": {
-      "type": "object"
     },
     "schema": {
       "type": ["string", "null"]
@@ -855,11 +895,18 @@
     "alias": {
       "type": "string"
     },
+    "snowflake_warehouse": {
+      "type": "string"
+    },
     "strategy": {
       "type": "string"
     },
     "target_database": {
       "type": "string"
+    },
+    "target_lag": {
+      "type": "string",
+      "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
     },
     "target_schema": {
       "type": "string"

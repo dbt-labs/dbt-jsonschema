@@ -54,6 +54,12 @@ models:
       +grants:
         privilege: role
         privileges: ["select_user", "select_cruiser"]
+    materialized_views:
+      +materialized: materialized_view
+      +auto_refresh: true
+      +backup: '{{ target.name == "prod" }}'
+      +target_lag: 20 minutes
+      +snowflake_warehouse: my_warehouse
     
   test_bq:
     +labels:

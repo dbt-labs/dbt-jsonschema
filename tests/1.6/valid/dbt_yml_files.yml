@@ -57,7 +57,7 @@ models:
       - v: 1
         config:
           alias: dim_customers
-  
+
   - name: my_model_level_contract_model
     config:
       contract:
@@ -70,7 +70,14 @@ models:
     - type: unique
       columns: [ color, date_day ]
       name: strange_uniqueness_requirement
-
+  
+  - name: my_materialized_view
+    config:
+      materialized: materialized_view
+      auto_refresh: true
+      backup: '{{ target.name == "prod" }}'
+      target_lag: downstream
+      snowflake_warehouse: my_warehouse
 
 snapshots:
   - name: snapshot_name
