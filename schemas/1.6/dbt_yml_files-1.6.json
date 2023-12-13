@@ -1053,6 +1053,12 @@
     "model_configs": {
       "type": "object",
       "properties": {
+        "auto_refresh": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "backup": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
         "contract": {
           "type": "object",
           "properties": {
@@ -1122,6 +1128,13 @@
         },
         "sql_header": {
           "type": "string"
+        },
+        "snowflake_warehouse":{
+          "type": "string"
+        },
+        "target_lag":{
+          "type": "string",
+          "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
         }
       }
     },
