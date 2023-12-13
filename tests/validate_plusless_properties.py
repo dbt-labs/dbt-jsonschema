@@ -5,6 +5,7 @@ PROJECT_SCHEMA_FILES = [
     "./schemas/dbt_project.json",
     "./schemas/1.5/dbt_project-1.5.json",
     "./schemas/1.6/dbt_project-1.6.json"
+    "./schemas/1.7/dbt_project-1.7.json"
 ]
 
 def check_equivalency(key, node_type, node_properties):
