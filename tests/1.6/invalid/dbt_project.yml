@@ -42,7 +42,11 @@ models:
       +grants:
         no_numbers: 55
       
-      
+  materialized_views:
+    materialized: materialized_view
+    config:
+      target_lag: 1 hour
+      snowflake_warehouse: 11
       
 
 seeds:
