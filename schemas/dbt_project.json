@@ -23,6 +23,16 @@
       "type": "number",
       "default": 2
     },
+    "dbt-cloud": {
+      "type": "object",
+      "description": "dbt cloud CLI configurations.",
+      "properties": {
+        "project-id": {
+          "description": "ID of the dbt cloud project which cloud CLI commands will be run against.",
+          "type": integer
+        }
+      }
+    },
     "dispatch": {
       "type": "array",
       "items": {
