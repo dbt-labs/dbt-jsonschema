@@ -1,0 +1,24 @@
+selectors:
+  - name: full_yml
+    definition:
+      method: tag
+      value: nightly
+      exclude:
+        - "@tag:daily"
+
+  - name: single_cli
+    definition:
+      '+my_model'
+  
+  - name: key_value_example
+    definition:
+      tag: blue_light_special
+
+  - name: full_yml_union_exclude
+    definition:
+      union:
+        - method: tag
+          value: nightly
+        - exclude:
+            - method: tag
+              value: daily

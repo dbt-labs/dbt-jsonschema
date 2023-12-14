@@ -1,0 +1,84 @@
+{
+    "title": "packages",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+        "packages"
+    ],
+    "properties": {
+        "packages": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "required": [
+                            "package",
+                            "version"
+                        ],
+                        "properties": {
+                            "version": {
+                                "title": "Package version",
+                                "type": [
+                                    "string",
+                                    "number",
+                                    "array"
+                                ],
+                                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]"
+                            },
+                            "install-prerelease": {
+                                "title": "Install Prerelease",
+                                "type": "boolean",
+                                "description": "Opt in to prerelease versions of a package"
+                            },
+                            "package": {
+                                "title": "Package identifier",
+                                "type": "string",
+                                "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
+                                "examples": [
+                                    "dbt-labs/dbt_utils"
+                                ],
+                                "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "git"
+                        ],
+                        "properties": {
+                            "git": {
+                                "title": "Git URL",
+                                "type": "string"
+                            },
+                            "revision": {
+                                "title": "Revision",
+                                "type": "string",
+                                "description": "Pin your package to a specific release by specifying a release name"
+                            },
+                            "subdirectory": {
+                                "title": "Subdirectory",
+                                "type": "string",
+                                "description": "Only required if the package is nested in a subdirectory of the git project"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "local": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                ]
+            },
+            "minItems": 1
+        }
+    },
+    "additionalProperties": false
+}
