@@ -241,6 +241,9 @@
       "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
       "properties": {
+        "+access":{
+          "$ref": "#/$defs/access"
+        },
         "+alias": {
           "$ref": "#/$defs/alias"
         },
@@ -334,6 +337,9 @@
         },
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "access":{
+          "$ref": "#/$defs/access"
         },
         "alias": {
           "$ref": "#/$defs/alias"
@@ -891,6 +897,10 @@
           "type": "string"
         }
       }
+    },
+    "access": {
+      "type": "string",
+      "enum": ["private", "protected", "public"]
     },
     "alias": {
       "type": "string"
