@@ -974,17 +974,30 @@
       "type": "string"
     },
     "unit_test_configs": {
-      "+meta": {
-        "$ref": "#/$defs/meta"
+      "properties" :{
+        
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
+        "+tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
       },
-      "+tags": {
-        "$ref": "#/$defs/tags"
-      },
-      "meta": {
-        "$ref": "#/$defs/meta"
-      },
-      "tags": {
-        "$ref": "#/$defs/tags"
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/unit_test_configs"
+          },
+          {
+            "$ref": "#/$defs/empty_directory"
+          }
+        ]
       }
     },
     "updated_at": {
