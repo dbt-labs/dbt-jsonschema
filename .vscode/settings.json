@@ -82,6 +82,7 @@
         "version",
         "title",
         "name",
+        "description",
         "type",
         "required",
         "if",
