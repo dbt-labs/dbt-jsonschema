@@ -23,6 +23,17 @@
       "type": "number",
       "default": 2
     },
+    "dbt-cloud": {
+      "type": "object",
+      "properties": {
+        "project-id": {
+          "type": "string"
+        },
+        "defer-env-id": {
+          "type": "string"
+        }
+      }
+    },
     "dispatch": {
       "type": "array",
       "items": {
