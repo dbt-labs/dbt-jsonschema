@@ -690,6 +690,51 @@
           "name": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "$ref": "#/$defs/string_or_array_of_strings"
+              },
+              "meta": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
+          },
+          "given":{
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "input":{
+                  "type": "string",
+                  "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
+                  "examples": ["ref('model_b')", "ref('upstream_project', 'model_b')", "source('schema', 'table')"]
+                },
+                "format": {
+                  "type": "string",
+                  "enum": ["dict", "csv"],
+                  "description": "Defaults to `dict`"
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "fixture": {
+                  "type": "string",
+                  "$comment": "TODO: make dependent on format"
+                },
+                "additionalProperties": false
+              },
+              "additionalProperties": false
+            }
+          },
           "model": {
             "description": "The name of the model whose behaviour you are testing. Does not need to wrapped in a ref.",
             "type": "string",
@@ -698,7 +743,8 @@
             ]
           },
           "additionalProperties": false
-        }
+        },
+        "additionalProperties": false
       }
     }
   },
