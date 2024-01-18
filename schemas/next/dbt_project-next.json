@@ -157,6 +157,9 @@
     "tests": {
       "$ref": "#/$defs/data_test_configs"
     },
+    "unit_tests": {
+      "$ref": "#/$defs/unit_test_configs"
+    },
     "vars": {
       "type": "object"
     }
@@ -255,7 +258,7 @@
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "+tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "+warn_if": {
           "$ref": "#/$defs/warn_if"
@@ -294,7 +297,7 @@
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "warn_if": {
           "$ref": "#/$defs/warn_if"
@@ -516,7 +519,7 @@
           "$ref": "#/$defs/sql_header"
         },
         "+tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "+target_lag": {
           "$ref": "#/$defs/target_lag"
@@ -613,7 +616,7 @@
           "$ref": "#/$defs/sql_header"
         },
         "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "target_lag": {
           "$ref": "#/$defs/target_lag"
@@ -710,7 +713,7 @@
           "$ref": "#/$defs/schema"
         },
         "+tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -749,7 +752,7 @@
           "$ref": "#/$defs/schema"
         },
         "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -821,7 +824,7 @@
           "$ref": "#/$defs/strategy"
         },
         "+tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "+target_database": {
           "$ref": "#/$defs/target_database"
@@ -875,7 +878,7 @@
           "$ref": "#/$defs/strategy"
         },
         "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "target_database": {
           "$ref": "#/$defs/target_database"
@@ -918,7 +921,7 @@
           "$ref": "#/$defs/meta"
         },
         "+tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -927,7 +930,7 @@
           "$ref": "#/$defs/meta"
         },
         "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "$ref": "#/$defs/tags"
         }
       },
       "additionalProperties": {
@@ -957,6 +960,9 @@
         }
       ]
     },
+    "tags": {
+      "$ref": "#/$defs/string_or_array_of_strings"
+    },
     "target_database": {
       "type": "string"
     },
@@ -966,6 +972,20 @@
     },
     "target_schema": {
       "type": "string"
+    },
+    "unit_test_configs": {
+      "+meta": {
+        "$ref": "#/$defs/meta"
+      },
+      "+tags": {
+        "$ref": "#/$defs/tags"
+      },
+      "meta": {
+        "$ref": "#/$defs/meta"
+      },
+      "tags": {
+        "$ref": "#/$defs/tags"
+      }
     },
     "updated_at": {
       "type": "string"

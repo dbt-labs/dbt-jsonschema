@@ -5,7 +5,8 @@ PROJECT_SCHEMA_FILES = [
     "./schemas/dbt_project.json",
     "./schemas/1.5/dbt_project-1.5.json",
     "./schemas/1.6/dbt_project-1.6.json",
-    "./schemas/1.7/dbt_project-1.7.json"
+    "./schemas/1.7/dbt_project-1.7.json",
+    "./schemas/next/dbt_project-next.json"
 ]
 
 def check_equivalency(key, node_type, node_properties):
@@ -23,7 +24,7 @@ def check_equivalency(key, node_type, node_properties):
         difference = diff(key_properties, counterpart_properties)
         raise Exception(f"{key} and {counterpart_key} both exist in {node_type}, but are different: {difference}")
 
-node_types = ['model_configs', 'seed_configs', 'snapshot_configs', 'source_configs', 'test_configs']
+node_types = ['model_configs', 'seed_configs', 'snapshot_configs', 'source_configs', 'test_configs', 'unit_test_configs']
 for filepath in PROJECT_SCHEMA_FILES:
     with open(filepath, "r") as f:
         data = json.load(f)
