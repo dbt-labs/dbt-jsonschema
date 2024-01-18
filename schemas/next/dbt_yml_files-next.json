@@ -11,7 +11,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -20,7 +22,9 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["name"],
+              "required": [
+                "name"
+              ],
               "properties": {
                 "name": {
                   "type": "string"
@@ -60,7 +64,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["depends_on", "name", "owner", "type"],
+        "required": [
+          "depends_on",
+          "name",
+          "owner",
+          "type"
+        ],
         "$comment": "NB: depends_on is not strictly required, but is _expected_ according to the documentation",
         "properties": {
           "name": {
@@ -72,7 +81,13 @@
           },
           "type": {
             "type": "string",
-            "enum": ["dashboard", "notebook", "analysis", "ml", "application"]
+            "enum": [
+              "dashboard",
+              "notebook",
+              "analysis",
+              "ml",
+              "application"
+            ]
           },
           "depends_on": {
             "type": "array",
@@ -85,14 +100,20 @@
           },
           "maturity": {
             "type": "string",
-            "enum": ["high", "medium", "low"]
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
           },
           "meta": {
             "type": "object"
           },
           "owner": {
             "type": "object",
-            "required": ["email"],
+            "required": [
+              "email"
+            ],
             "properties": {
               "name": {
                 "type": "string"
@@ -116,7 +137,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "owner"],
+        "required": [
+          "name",
+          "owner"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -142,7 +166,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -151,7 +177,9 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["name"],
+              "required": [
+                "name"
+              ],
               "properties": {
                 "name": {
                   "type": "string"
@@ -180,7 +208,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "label", "type", "type_params"],
+        "required": [
+          "name",
+          "label",
+          "type",
+          "type_params"
+        ],
         "properties": {
           "description": {
             "type": "string"
@@ -221,14 +254,20 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string"
           },
           "access": {
             "type": "string",
-            "enum": ["private", "protected", "public"]
+            "enum": [
+              "private",
+              "protected",
+              "public"
+            ]
           },
           "columns": {
             "type": "array",
@@ -267,7 +306,9 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["v"],
+              "required": [
+                "v"
+              ],
               "properties": {
                 "v": {
                   "type": "number"
@@ -299,7 +340,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -359,7 +402,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "model"],
+        "required": [
+          "name",
+          "model"
+        ],
         "properties": {
           "defaults": {
             "type": "object",
@@ -410,7 +456,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -494,7 +542,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -549,7 +599,9 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["name"],
+              "required": [
+                "name"
+              ],
               "properties": {
                 "name": {
                   "title": "Name",
@@ -625,6 +677,29 @@
           }
         }
       }
+    },
+    "unit_tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "model"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string",
+            "description": "The name of the model whose behaviour you are testing. Does not need to wrapped in a ref.",
+            "examples": [
+              "my_model"
+            ]
+          },
+          "additionalProperties": false
+        }
+      }
     }
   },
   "additionalProperties": false,
@@ -663,7 +738,9 @@
     },
     "column_properties": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
         "name": {
           "type": "string"
@@ -708,7 +785,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
           "columns": {
             "$ref": "#/$defs/string_or_array_of_strings"
@@ -733,7 +812,10 @@
     },
     "dimension": {
       "type": "object",
-      "required": ["name", "type"],
+      "required": [
+        "name",
+        "type"
+      ],
       "anyOf": [
         {
           "not": {
@@ -741,7 +823,9 @@
           }
         },
         {
-          "required": ["type_params"]
+          "required": [
+            "type_params"
+          ]
         }
       ],
       "properties": {
@@ -749,7 +833,10 @@
           "type": "string"
         },
         "expr": {
-          "type": ["string", "boolean"]
+          "type": [
+            "string",
+            "boolean"
+          ]
         },
         "is_partition": {
           "type": "boolean"
@@ -759,7 +846,12 @@
           "type": "string"
         },
         "type": {
-          "enum": ["CATEGORICAL", "TIME", "categorical", "time"]
+          "enum": [
+            "CATEGORICAL",
+            "TIME",
+            "categorical",
+            "time"
+          ]
         },
         "type_params": {
           "$ref": "#/$defs/dimension_type_params"
@@ -769,7 +861,9 @@
     },
     "dimension_type_params": {
       "type": "object",
-      "required": ["time_granularity"],
+      "required": [
+        "time_granularity"
+      ],
       "properties": {
         "time_granularity": {
           "enum": [
@@ -809,14 +903,20 @@
       "additionalProperties": false
     },
     "entity": {
-      "required": ["name", "type"],
+      "required": [
+        "name",
+        "type"
+      ],
       "type": "object",
       "properties": {
         "entity": {
           "type": "string"
         },
         "expr": {
-          "type": ["string", "boolean"]
+          "type": [
+            "string",
+            "boolean"
+          ]
         },
         "name": {
           "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
@@ -874,14 +974,21 @@
     },
     "freshness_rules": {
       "type": "object",
-      "required": ["count", "period"],
+      "required": [
+        "count",
+        "period"
+      ],
       "properties": {
         "count": {
           "$ref": "#/$defs/number_or_jinja_string"
         },
         "period": {
           "type": "string",
-          "enum": ["minute", "hour", "day"]
+          "enum": [
+            "minute",
+            "hour",
+            "day"
+          ]
         }
       },
       "additionalProperties": false
@@ -913,17 +1020,25 @@
     "is-time-dimension": {
       "properties": {
         "type": {
-          "enum": ["TIME", "time"]
+          "enum": [
+            "TIME",
+            "time"
+          ]
         }
       },
-      "required": ["type"]
+      "required": [
+        "type"
+      ]
     },
     "jinja_string": {
       "type": "string",
       "pattern": "\\{\\{.*\\}\\}"
     },
     "measure": {
-      "required": ["name", "agg"],
+      "required": [
+        "name",
+        "agg"
+      ],
       "type": "object",
       "properties": {
         "agg": {
@@ -965,7 +1080,11 @@
           "type": "string"
         },
         "expr": {
-          "type": ["string", "integer", "boolean"]
+          "type": [
+            "string",
+            "integer",
+            "boolean"
+          ]
         },
         "name": {
           "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
@@ -1027,7 +1146,10 @@
           "$ref": "#/$defs/metric_input_measure"
         },
         "expr": {
-          "type": ["string", "boolean"]
+          "type": [
+            "string",
+            "boolean"
+          ]
         },
         "grain_to_date": {
           "type": "string"
@@ -1076,7 +1198,10 @@
           "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
           "items": {
             "type": "object",
-            "required": ["database", "project"],
+            "required": [
+              "database",
+              "project"
+            ],
             "properties": {
               "database": {
                 "type": "string"
@@ -1117,22 +1242,31 @@
         },
         "materialized": {
           "type": "string"
-        },        
+        },
         "on_configuration_change": {
           "type": "string",
-          "enum": ["apply", "continue", "fail"]
+          "enum": [
+            "apply",
+            "continue",
+            "fail"
+          ]
         },
         "on_schema_change": {
           "type": "string",
-          "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
+          "enum": [
+            "append_new_columns",
+            "fail",
+            "ignore",
+            "sync_all_columns"
+          ]
         },
         "sql_header": {
           "type": "string"
         },
-        "snowflake_warehouse":{
+        "snowflake_warehouse": {
           "type": "string"
         },
-        "target_lag":{
+        "target_lag": {
           "type": "string",
           "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
         }
@@ -1140,13 +1274,20 @@
     },
     "non_additive_dimension": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
         "name": {
           "type": "string"
         },
         "window_choice": {
-          "enum": ["MIN", "MAX", "min", "max"]
+          "enum": [
+            "MIN",
+            "MAX",
+            "min",
+            "max"
+          ]
         },
         "window_groupings": {
           "items": {
@@ -1230,7 +1371,10 @@
             },
             {
               "type": "string",
-              "enum": ["warn", "error"]
+              "enum": [
+                "warn",
+                "error"
+              ]
             }
           ]
         },
@@ -1256,7 +1400,10 @@
           "properties": {
             "relationships": {
               "type": "object",
-              "required": ["to", "field"],
+              "required": [
+                "to",
+                "field"
+              ],
               "properties": {
                 "name": {
                   "type": "string"
@@ -1291,7 +1438,9 @@
           "properties": {
             "accepted_values": {
               "type": "object",
-              "required": ["values"],
+              "required": [
+                "values"
+              ],
               "properties": {
                 "name": {
                   "type": "string"
