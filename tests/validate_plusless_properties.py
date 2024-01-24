@@ -29,7 +29,7 @@ for filepath in PROJECT_SCHEMA_FILES:
     with open(filepath, "r") as f:
         data = json.load(f)
         for node_type in node_types:
-            node_properties = data["$defs"][node_type]["properties"]
+            node_properties = data["$defs"].get(node_type).get("properties")
             for key in node_properties.keys():
                 check_equivalency(key, node_type, node_properties)
 
