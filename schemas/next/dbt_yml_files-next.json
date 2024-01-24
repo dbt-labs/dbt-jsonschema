@@ -684,7 +684,9 @@
         "type": "object",
         "required": [
           "name",
-          "model"
+          "model",
+          "given",
+          "expect"
         ],
         "properties": {
           "name": {
@@ -744,15 +746,6 @@
                 "enum": [
                   "dict",
                   "csv"
-                ]
-              },
-              "input": {
-                "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
-                "type": "string",
-                "examples": [
-                  "ref('model_b')",
-                  "ref('upstream_project', 'model_b')",
-                  "source('schema', 'table')"
                 ]
               },
               "additionalProperties": false
@@ -820,6 +813,26 @@
             "examples": [
               "my_model"
             ]
+          },
+          "overrides": {
+            "type": "object",
+            "properties": {
+              "env_vars": {
+                "type": "object"
+              },
+              "macros": {
+                "type": "object",
+                "examples": [
+                  {
+                    "is_incremental": "true"
+                  }
+                ]
+              },
+              "vars": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
           },
           "additionalProperties": false
         },
