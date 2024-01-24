@@ -75,6 +75,35 @@
         ],
         "./schemas/1.7/dependencies-1.7.json": [
             "/tests/1.7/**/dependencies.yml"
+        ],
+
+        "./schemas/latest/dbt_yml_files-latest.json": [
+            "/tests/latest/**/*.yml",
+            "!profiles.yml",
+            "!dbt_project.yml",
+            "!dbt_cloud.yml",
+            "!packages.yml",
+            "!selectors.yml",
+            "!dependencies.yml",
+            "!package-lock.yml",
+            "!profile_template.yml",
+            "!/.github/**/*.yml"
+        ],
+
+        "./schemas/latest/dbt_project-latest.json": [
+            "/tests/latest/**/dbt_project.yml"
+        ],
+        "./schemas/latest/dbt_cloud-latest.json": [
+            "/tests/latest/**/dbt_cloud.yml"
+        ],
+        "./schemas/latest/selectors-latest.json": [
+            "/tests/latest/**/selectors.yml"
+        ],
+        "./schemas/latest/packages-latest.json": [
+            "/tests/latest/**/packages.yml"
+        ],
+        "./schemas/latest/dependencies-latest.json": [
+            "/tests/latest/**/dependencies.yml"
         ]
 
     },

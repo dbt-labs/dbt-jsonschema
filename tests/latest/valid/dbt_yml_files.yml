@@ -1,0 +1,178 @@
+# this file was generated with dbt init with dbt 1.2.1
+
+models:
+  - name: my_first_dbt_model
+    description: "A starter dbt model"
+    config:
+      grants:
+        privilege: role
+        privileges: ["select_user", "select_cruiser"]
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: my_second_dbt_model
+    description: "A starter dbt model"
+    docs:
+      show: true
+      node_color: yellow
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: my_contracted_dbt_model
+    description: "A dbt model with contracts"
+    access: public
+    group: analytics
+    latest_version: 2
+    config:
+      contract: 
+        enforced: true
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        data_type: int
+        constraints: 
+          - type: not_null
+          - type: unique
+          - type: check
+            expression: (id > 0)
+        tests:
+          - unique
+          - not_null
+    versions:
+      - v: 2
+        columns:
+          - include: '*'
+            exclude: country_name
+          - name: id  # included in addition the '*' set. if id were in the '*' set -> override it
+            description: This is the primary key
+            data_type: float
+      - v: 1
+        config:
+          alias: dim_customers
+
+  - name: my_model_level_contract_model
+    config:
+      contract:
+        enforced: true
+    constraints:
+    - type: check
+      expression: (id > 0)
+    - type: primary_key
+      columns: [ id ]
+    - type: unique
+      columns: [ color, date_day ]
+      name: strange_uniqueness_requirement
+  
+  - name: my_materialized_view
+    config:
+      materialized: materialized_view
+      auto_refresh: true
+      backup: '{{ target.name == "prod" }}'
+      target_lag: downstream
+      snowflake_warehouse: my_warehouse
+
+unit_tests:
+  - name: my_first_unit_test
+    expect:
+      fixture: a_seed_that_points_to_expected_output
+      format: csv
+    given:
+      - input: ref('model_b')
+        rows:
+          - {id: 1, code: 'abc'}
+          - {id: 2, code: 'def'}
+    model: my_first_dbt_model
+  
+  - name: my_second_unit_test
+    expect:
+      rows:
+        - {count: 2}
+      format: dict
+    model: my_second_dbt_model
+    config:
+      tags: ['tag_1', 'tag_2']
+    description: This checks the validity of the model
+    overrides:
+      macros: 
+        is_incremental: true
+      env_vars:
+        my_first_var: 12345
+      vars:
+        my_second_var: 689
+      
+
+snapshots:
+  - name: snapshot_name
+    group: analytics
+    description: slowly changing dimension
+    columns:
+      - name: id 
+        description: cool column, eh?
+
+
+# model groups 
+
+groups:
+  - name: analytics
+    owner:
+      name: dave
+
+semantic_models:
+  - name: customers
+    defaults:
+      agg_time_dimension: first_ordered_at
+    description: |
+      Customer grain mart.
+    model: ref('customers')
+    entities:
+      - name: customer
+        expr: customer_id
+        type: primary
+    dimensions:
+      - name: customer_name
+        type: categorical
+      - name: customer_type
+        type: categorical
+      - name: first_ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+      - name: last_ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+    measures:
+      - name: count_lifetime_orders
+        description: Total count of orders per customer.
+        agg: sum
+      - name: lifetime_spend_pretax
+        description: Customer lifetime spend before taxes.
+        agg: sum
+      - name: lifetime_spend
+        agg: sum
+        description: Gross customer lifetime spend inclusive of taxes.
+
+metrics:
+  # Simple metrics
+  - name: customers_with_orders
+    description: "Distict count of customers placing orders"
+    type: simple
+    label: Customers w/ Orders
+    type_params:
+      measure: customers_with_orders
+  - name: new_customer
+    description: Unique count of new customers.
+    label: New Customers
+    type: simple
+    type_params:
+      measure: customers_with_orders
+    filter: |
+      {{ Dimension('customer__customer_type') }}  = 'new'

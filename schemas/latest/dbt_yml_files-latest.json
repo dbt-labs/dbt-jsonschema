@@ -685,7 +685,6 @@
         "required": [
           "name",
           "model",
-          "given",
           "expect"
         ],
         "properties": {
