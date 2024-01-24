@@ -696,43 +696,122 @@
           "config": {
             "type": "object",
             "properties": {
-              "tags": {
-                "$ref": "#/$defs/string_or_array_of_strings"
-              },
               "meta": {
                 "type": "object"
+              },
+              "tags": {
+                "$ref": "#/$defs/string_or_array_of_strings"
               }
             },
             "additionalProperties": false
           },
-          "given":{
-            "type": "array",
-            "items": {
-              "type": "object",
+          "expect": {
+            "type": "object",
+            "if": {
               "properties": {
-                "input":{
-                  "type": "string",
-                  "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
-                  "examples": ["ref('model_b')", "ref('upstream_project', 'model_b')", "source('schema', 'table')"]
-                },
                 "format": {
-                  "type": "string",
-                  "enum": ["dict", "csv"],
-                  "description": "Defaults to `dict`"
-                },
+                  "const": "dict"
+                }
+              }
+            },
+            "then": {
+              "properties": {
                 "rows": {
+                  "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
                   "type": "array",
                   "items": {
                     "type": "object"
                   }
-                },
-                "fixture": {
-                  "type": "string",
-                  "$comment": "TODO: make dependent on format"
-                },
-                "additionalProperties": false
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "rows": {
+                  "description": "When `format` is csv, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
+                  "type": "string"
+                }
+              }
+            },
+            "properties": {
+              "fixture": {
+                "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
+                "type": "string"
+              },
+              "format": {
+                "description": "Defaults to `dict` when not specified",
+                "type": "string",
+                "enum": [
+                  "dict",
+                  "csv"
+                ]
+              },
+              "input": {
+                "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
+                "type": "string",
+                "examples": [
+                  "ref('model_b')",
+                  "ref('upstream_project', 'model_b')",
+                  "source('schema', 'table')"
+                ]
               },
               "additionalProperties": false
+            }
+          },
+          "given": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "if": {
+                "properties": {
+                  "format": {
+                    "const": "dict"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "rows": {
+                    "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "rows": {
+                    "description": "When `format` is csv, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
+                    "type": "string"
+                  }
+                }
+              },
+              "properties": {
+                "fixture": {
+                  "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
+                  "type": "string"
+                },
+                "format": {
+                  "description": "Defaults to `dict` when not specified",
+                  "type": "string",
+                  "enum": [
+                    "dict",
+                    "csv"
+                  ]
+                },
+                "input": {
+                  "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
+                  "type": "string",
+                  "examples": [
+                    "ref('model_b')",
+                    "ref('upstream_project', 'model_b')",
+                    "source('schema', 'table')"
+                  ]
+                },
+                "additionalProperties": false
+              }
             }
           },
           "model": {
