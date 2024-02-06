@@ -107,7 +107,21 @@ unit_tests:
         my_first_var: 12345
       vars:
         my_second_var: 689
-      
+    
+  - name: my_inline_csv_unit_test
+    given:
+      - input: ref('model_b')
+        format: csv
+        rows: |
+          column_1,column_2,column_3
+          value_1,value_2,value_3
+          value_4,value_5,value_6
+    model: my_model_1
+    expect:
+      format: csv
+      rows: |
+        count
+        2
 
 snapshots:
   - name: snapshot_name

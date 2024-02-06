@@ -65,3 +65,11 @@ metrics:
 
     calculation_method: derived
     expression: "{{ metric('new_customers') }} * 2" 
+
+
+unit_tests:
+  - name: some_unit_test
+    expect:
+      rows: |
+        col_1,col_2
+        val_1,val_2
