@@ -424,6 +424,10 @@
         "schema": {
           "$ref": "#/$defs/schema"
         },
+        "secure": {
+          "$ref": "#/$defs/boolean_or_jinja_string",
+          "default": false
+        },
         "snowflake_warehouse": {
           "$ref": "#/$defs/snowflake_warehouse"
         },
