@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "project-id": {
+      "type": "string"
+    },
+    "defer-env-id": {
+      "type": "string"
+    }
+  },
+  "required": ["project-id"],
+  "additionalProperties": false
+}

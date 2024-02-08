@@ -1,0 +1,75 @@
+# this file was generated with dbt init with dbt 1.2.1
+
+version: 2
+
+models:
+  - name: my_first_dbt_model
+    description: "A starter dbt model"
+    jarrod: saltalamachhia
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        nomar: garciaparra
+        tests:
+          - unique
+          - not_null
+
+  - name: my_second_dbt_model
+    description: "A starter dbt model"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+semantic_models:
+  - model: ref('models')
+    name: model 
+    group: farmhands_only
+
+metrics:
+  - name: new_customers
+    label: New Customers marked 'paying'
+    model: ref('dim_model_7')
+    description: "The number of paid customers using the product"
+
+    calculation_method: count
+    expression: user_id # superfluous here, but shown as an example
+
+    timestamp: signup_date
+    time_grains: [day, week, month]
+
+    dimensions:
+      - plan
+      - country
+
+    filters:
+      - field: is_paying
+        operator: '='
+        value: 'true'
+      - field: company_name
+        operator: '!='
+        value: "Acme', Inc"
+
+    meta: 
+      team: "Finance"
+      refresh_rate: "Bob's weekly run"
+    
+    invalid_key: true
+
+
+  - name: derived_with_model_name
+    label: New Customers marked 'paying'
+    description: "The number of paid customers using the product"
+
+    calculation_method: derived
+    expression: "{{ metric('new_customers') }} * 2" 
+
+
+unit_tests:
+  - name: some_unit_test
+    expect:
+      rows: |
+        col_1,col_2
+        val_1,val_2
