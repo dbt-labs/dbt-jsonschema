@@ -1,0 +1,110 @@
+# this file was generated with dbt init with dbt 1.2.1
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'test'
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'test'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/ directory
+# as tables. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+dbt-cloud:
+  project-id: 12345
+  extra: true
+
+models:
+  test:
+    # Config indicated by + and applies to all files under models/example/
+    example:
+      +materialized: view
+    subdirectory:
+      # same key without the plus
+      materialized: table
+    empty_subdirectory:
+    another_one:
+      +group: real
+      meta: 
+        owner: Tony
+    contracted_models:
+      +contract:
+        enforced: true
+    granted_models:
+      +grants:
+        privilege: role
+        privileges: ["select_user", "select_cruiser"]
+    materialized_views:
+      +materialized: materialized_view
+      +auto_refresh: true
+      +backup: '{{ target.name == "prod" }}'
+      +target_lag: 20 minutes
+      +snowflake_warehouse: my_warehouse
+    
+  test_bq:
+    +labels:
+      key: val
+      jinja_key: "{{ target.name }}"
+
+unit_tests:
+  meta:
+    pineapple: pizza
+
+seeds:
+  test:
+    +enabled: false
+    empty_subdirectory:
+
+tests:
+  test1:
+    +enabled: true
+    +severity: warn
+    empty_subdirectory:
+  test2:
+    +enabled: false
+    +severity: error
+    empty_subdirectory:
+  test3:
+    +enabled: "{{ env_var('DBT_ENABLE_TESTS', 'error') }}"
+    +severity: "{{ env_var('DBT_TEST_SEVERITY', 'error') }}"
+    empty_subdirectory:
+
+snapshots:
+  test:
+    +target_schema: schema
+    +target_database: database 
+    +invalidate_hard_deletes: true
+    +grants:
+      select: ['role']
+
+    empty_subdirectory:
+
+sources:
+  test: 
+    +enabled: true
+    empty_subdirectory:
+
+quoting:
+  database: true
+  schema: true
+  identifier: true

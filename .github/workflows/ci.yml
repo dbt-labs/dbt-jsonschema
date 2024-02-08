@@ -19,7 +19,7 @@ jobs:
   test-against-sample-dbt-files:
     strategy:
       matrix:
-        dbt-version: ["1.5", "1.6", "1.7"]
+        dbt-version: ["1.5", "1.6", "1.7", "latest"]
         dbt-file-name: ["dbt_project", "packages", "selectors", "dbt_yml_files", "dependencies", "dbt_cloud"]
         exclude:
           - dbt-version: "1.5"

@@ -1,0 +1,6 @@
+projects:
+  - name: my_dbt_project
+
+packages:
+  - package: dbt-labs/dbt-utils
+    version: 1.0.0
