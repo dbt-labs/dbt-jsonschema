@@ -284,6 +284,12 @@
           "constraints": {
             "$ref": "#/$defs/constraints"
           },
+          "data_tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/data_tests"
+            }
+          },
           "docs": {
             "$ref": "#/$defs/docs_config"
           },
@@ -299,7 +305,7 @@
           "tests": {
             "type": "array",
             "items": {
-              "$ref": "#/$defs/tests"
+              "$ref": "#/$defs/data_tests"
             }
           },
           "versions": {
@@ -365,6 +371,12 @@
               "copy_grants": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
+              "data_tests": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/data_tests"
+                }
+              },
               "database": {
                 "type": "string"
               },
@@ -391,7 +403,7 @@
           "tests": {
             "type": "array",
             "items": {
-              "$ref": "#/$defs/tests"
+              "$ref": "#/$defs/data_tests"
             }
           }
         },
@@ -519,6 +531,12 @@
               }
             }
           },
+          "data_tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/data_tests"
+            }
+          },
           "docs": {
             "$ref": "#/$defs/docs_config"
           },
@@ -531,7 +549,7 @@
           "tests": {
             "type": "array",
             "items": {
-              "$ref": "#/$defs/tests"
+              "$ref": "#/$defs/data_tests"
             }
           }
         },
@@ -555,6 +573,12 @@
           },
           "config": {
             "type": "object"
+          },
+          "data_tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/data_tests"
+            }
           },
           "database": {
             "type": "string"
@@ -659,7 +683,7 @@
                 "tests": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/$defs/tests"
+                    "$ref": "#/$defs/data_tests"
                   }
                 }
               },
@@ -672,7 +696,7 @@
           "tests": {
             "type": "array",
             "items": {
-              "$ref": "#/$defs/tests"
+              "$ref": "#/$defs/data_tests"
             }
           }
         }
@@ -889,6 +913,12 @@
         "constraints": {
           "$ref": "#/$defs/constraints"
         },
+        "data_tests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/data_tests"
+          }
+        },
         "data_type": {
           "type": "string"
         },
@@ -912,7 +942,7 @@
         "tests": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/tests"
+            "$ref": "#/$defs/data_tests"
           }
         }
       },
@@ -1526,7 +1556,7 @@
         }
       }
     },
-    "tests": {
+    "data_tests": {
       "anyOf": [
         {
           "type": "string"
