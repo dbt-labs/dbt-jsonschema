@@ -977,6 +977,123 @@
         }
       }
     },
+    "data_tests": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "title": "Relationships Test",
+          "type": "object",
+          "properties": {
+            "relationships": {
+              "type": "object",
+              "required": [
+                "to",
+                "field"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "config": {
+                  "$ref": "#/$defs/test_configs"
+                },
+                "field": {
+                  "title": "Relationships: Field",
+                  "description": "The foreign key column",
+                  "type": "string",
+                  "default": "<FOREIGN_KEY_COLUMN>"
+                },
+                "to": {
+                  "type": "string",
+                  "default": "ref('')",
+                  "examples": [
+                    "ref('parent_model')",
+                    "source('parent_schema', 'parent_table')"
+                  ]
+                },
+                "where": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Accepted Values Test",
+          "type": "object",
+          "properties": {
+            "accepted_values": {
+              "type": "object",
+              "required": [
+                "values"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "config": {
+                  "$ref": "#/$defs/test_configs"
+                },
+                "quote": {
+                  "type": "boolean"
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "where": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Not Null Test",
+          "type": "object",
+          "properties": {
+            "not_null": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "config": {
+                  "$ref": "#/$defs/test_configs"
+                },
+                "where": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Unique Test",
+          "type": "object",
+          "properties": {
+            "unique": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "config": {
+                  "$ref": "#/$defs/test_configs"
+                },
+                "where": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "dimension": {
       "type": "object",
       "required": [
@@ -1555,123 +1672,6 @@
           "type": "string"
         }
       }
-    },
-    "data_tests": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "title": "Relationships Test",
-          "type": "object",
-          "properties": {
-            "relationships": {
-              "type": "object",
-              "required": [
-                "to",
-                "field"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "field": {
-                  "title": "Relationships: Field",
-                  "description": "The foreign key column",
-                  "type": "string",
-                  "default": "<FOREIGN_KEY_COLUMN>"
-                },
-                "to": {
-                  "type": "string",
-                  "default": "ref('')",
-                  "examples": [
-                    "ref('parent_model')",
-                    "source('parent_schema', 'parent_table')"
-                  ]
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Accepted Values Test",
-          "type": "object",
-          "properties": {
-            "accepted_values": {
-              "type": "object",
-              "required": [
-                "values"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "quote": {
-                  "type": "boolean"
-                },
-                "values": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Not Null Test",
-          "type": "object",
-          "properties": {
-            "not_null": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Unique Test",
-          "type": "object",
-          "properties": {
-            "unique": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      ]
     },
     "validity_params": {
       "type": "object",
