@@ -24,6 +24,9 @@
     "config-version": {
       "type": "number",
       "default": 2
+    },    
+    "data_tests": {
+      "$ref": "#/$defs/data_test_configs"
     },
     "dbt-cloud": {
       "type": "object",
