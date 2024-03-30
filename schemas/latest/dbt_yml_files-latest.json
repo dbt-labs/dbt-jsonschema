@@ -111,9 +111,10 @@
           },
           "owner": {
             "type": "object",
-            "required": [
-              "email"
-            ],
+            "anyOf": [
+              {"required": ["email"]},
+              {"required": ["name"]}
+              ],
             "properties": {
               "name": {
                 "type": "string"
