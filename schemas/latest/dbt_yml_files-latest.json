@@ -831,7 +831,7 @@
             }
           },
           "model": {
-            "description": "The name of the model whose behaviour you are testing. Does not need to wrapped in a ref.",
+            "description": "The name of the model whose behaviour you are testing. Does not need to be wrapped in a ref.",
             "type": "string",
             "examples": [
               "my_model"
