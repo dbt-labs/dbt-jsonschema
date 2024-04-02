@@ -1190,7 +1190,7 @@
               "type": "string"
             }
           },
-          "addtionalProperties": true
+          "additionalProperties": true
         }
       },
       "additionalProperties": false
