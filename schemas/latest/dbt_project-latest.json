@@ -24,7 +24,7 @@
     "config-version": {
       "type": "number",
       "default": 2
-    },    
+    },
     "data_tests": {
       "$ref": "#/$defs/data_test_configs"
     },
@@ -224,8 +224,8 @@
     },
     "data_test_configs": {
       "title": "Data test configs",
-      "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
+      "type": "object",
       "properties": {
         "+alias": {
           "$ref": "#/$defs/alias"
@@ -322,12 +322,12 @@
     },
     "docs_config": {
       "title": "Docs config",
-      "type": "object",
       "description": "Configurations for the appearance of nodes in the dbt documentation.",
+      "type": "object",
       "properties": {
         "node_color": {
-          "type": "string",
           "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+          "type": "string",
           "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
         },
         "show": {
@@ -351,8 +351,8 @@
     },
     "grant_access_to": {
       "title": "Authorized views",
-      "type": "array",
       "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
+      "type": "array",
       "items": {
         "type": "object",
         "properties": {
@@ -367,8 +367,8 @@
       }
     },
     "grants": {
-      "type": "object",
       "description": "grant config. each key is a database permission and the value is the grantee of that permission",
+      "type": "object",
       "patternProperties": {
         ".*": {
           "$ref": "#/$defs/string_or_array_of_strings"
@@ -380,8 +380,8 @@
       "type": "string"
     },
     "hours_to_expiration": {
-      "type": "number",
-      "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
+      "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
+      "type": "number"
     },
     "incremental_strategy": {
       "type": "string"
@@ -394,13 +394,13 @@
       "pattern": "\\{\\{.*\\}\\}"
     },
     "kms_key_name": {
-      "type": "string",
-      "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
+      "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption.",
+      "type": "string"
     },
     "label_configs": {
       "title": "Label configs",
-      "type": "object",
       "description": "Configurations specific to BigQuery adapter used to add labels and tags to tables & views created by dbt.",
+      "type": "object",
       "patternProperties": {
         "^[a-z][a-z0-9_-]{0,63}$": {
           "oneOf": [
@@ -430,8 +430,8 @@
     },
     "model_configs": {
       "title": "Model configs",
-      "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
+      "type": "object",
       "properties": {
         "+access": {
           "$ref": "#/$defs/access"
@@ -466,6 +466,9 @@
         },
         "+file_format": {
           "$ref": "#/$defs/file_format"
+        },
+        "+full_refresh": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "+grant_access_to": {
           "$ref": "#/$defs/grant_access_to"
@@ -568,6 +571,9 @@
         "file_format": {
           "$ref": "#/$defs/file_format"
         },
+        "full_refresh": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
         "grant_access_to": {
           "$ref": "#/$defs/grant_access_to"
         },
@@ -666,8 +672,8 @@
     },
     "persist_docs_config": {
       "title": "Persist docs config",
-      "type": "object",
       "description": "Configurations for the persistence of the dbt documentation.",
+      "type": "object",
       "properties": {
         "columns": {
           "$ref": "#/$defs/boolean_or_jinja_string",
@@ -985,8 +991,7 @@
       "type": "string"
     },
     "unit_test_configs": {
-      "properties" :{
-        
+      "properties": {
         "+meta": {
           "$ref": "#/$defs/meta"
         },
