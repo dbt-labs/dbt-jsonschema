@@ -19,7 +19,7 @@ This repository contains schemata for:
 ```json
 {    
     "yaml.schemas": {
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json": [
             "/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
@@ -27,13 +27,13 @@ This repository contains schemata for:
             "!selectors.yml",
             "!profile_template.yml"
         ],
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json": [
             "dbt_project.yml"
         ],
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json": [
             "selectors.yml"
         ],
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json": [
             "packages.yml"
         ]
     },
@@ -56,7 +56,7 @@ This repository contains schemata for:
 ```json
 {    
     "yaml.schemas": {
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json": [
             "/**/*.yml",
             "!profiles.yml",
             "!dbt_project.yml",
@@ -64,13 +64,13 @@ This repository contains schemata for:
             "!selectors.yml",
             "!profile_template.yml"
         ],
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json": [
             "dbt_project.yml"
         ],
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json": [
             "selectors.yml"
         ],
-        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages.json": [
+        "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json": [
             "packages.yml"
         ]
     },
@@ -89,19 +89,19 @@ As we have to manually configure them one by one, we just describe values of the
 If you want to know the details, the [dbt YAML validator in JetBrains article](https://yu-ishikawa.medium.com/dbt-yaml-validator-in-jetbrains-b5ef25e9253e) describes how to configure the JSON schema mapping in details.
 
 - Project definition files
-    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project.json`
+    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json`
     - Schema version: JSON schema version 7
     - Mapping: `dbt_project.yml`
 - Package files
-    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages.json`
+    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/packages-latest.json`
     - Schema version: JSON schema version 7
     - Mapping: `packages.yml`
 - Selectors files
-    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors.json`
+    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/selectors-latest.json`
     - Schema version: JSON schema version 7
     - Mapping: `selectors.yml`
 - Property files
-    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files.json`
+    - URL: `https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json`
     - Schema version: JSON schema version 7
     - Mapping: `models/**/*.yml`, `analysis/**/*.yml`, `snapshots/**/*.yml`
 
