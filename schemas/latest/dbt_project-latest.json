@@ -747,6 +747,9 @@
         "database": {
           "$ref": "#/$defs/database"
         },
+        "docs": {
+          "$ref": "#/$defs/docs_config"
+        },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -869,6 +872,9 @@
         },
         "check_cols": {
           "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "docs": {
+          "$ref": "#/$defs/docs_config"
         },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
