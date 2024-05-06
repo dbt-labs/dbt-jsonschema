@@ -181,12 +181,30 @@ metrics:
     type: simple
     label: Customers w/ Orders
     type_params:
-      measure: customers_with_orders
+      measure:
+        name: customers_with_orders
+        fill_nulls_with: 0
+        join_to_timespine: true
   - name: new_customer
     description: Unique count of new customers.
     label: New Customers
     type: simple
     type_params:
-      measure: customers_with_orders
+      measure: 
+        name: customers_with_orders
     filter: |
       {{ Dimension('customer__customer_type') }}  = 'new'
+
+  - name: average_transaction_total_us
+    description: "The average total for each transaction in the US"
+    label: Transaction Total Average US
+    type: ratio
+    type_params:
+      numerator:
+        name: transaction_total
+        filter: |
+          "{{ Dimension('transaction__location') }} = 'US'"
+      denominator:
+        name: transactions
+        filter: |
+          "{{ Dimension('transaction__location') }} = 'US'"
