@@ -215,6 +215,84 @@
           "type",
           "type_params"
         ],
+        "if": {
+          "properties": {
+            "type": {
+              "enum": ["SIMPLE", "simple"]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "type_params": {
+              "$ref": "#/$defs/simple_metric_type_params"
+            }
+          }
+        },
+        "else": {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": ["derived", "DERIVED"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "type_params": {
+                "$ref": "#/$defs/derived_metric_type_params"
+              }
+            }
+          },
+          "else": {
+            "if": {
+              "properties": {
+                "type": {
+                  "enum": ["cumulative", "CUMULATIVE"]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "type_params": {
+                  "$ref": "#/$defs/cumulative_metric_type_params"
+                }
+              }
+            },
+            "else": {
+              "if": {
+                "properties": {
+                  "type": {
+                    "enum": ["conversion", "CONVERSION"]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "type_params": {
+                    "$ref": "#/$defs/conversion_metric_type_params"
+                  }
+                }
+              },
+              "else": {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "enum": ["ratio", "RATIO"]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "type_params": {
+                      "$ref": "#/$defs/ratio_metric_type_params"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "properties": {
           "name": {
             "type": "string",
@@ -245,66 +323,6 @@
           },
           "label": {
             "type": "string"
-          },
-          "type_params": {
-            "if": {
-              "properties": {
-                "type": {
-                  "enum": ["SIMPLE", "simple"]
-                }
-              }
-            },
-            "then": {
-              "$ref": "#/$defs/simple_metric_type_params"
-            },
-            "else": {
-              "if": {
-                "properties": {
-                  "type": {
-                    "enum": ["derived", "DERIVED"]
-                  }
-                }
-              },
-              "then": {
-                "$ref": "#/$defs/derived_metric_type_params"
-              },
-              "else": {
-                "if": {
-                  "properties": {
-                    "type": {
-                      "enum": ["cumulative", "CUMULATIVE"]
-                    }
-                  }
-                },
-                "then": {
-                  "$ref": "#/$defs/cumulative_metric_type_params"
-                },
-                "else": {
-                  "if": {
-                    "properties": {
-                      "type": {
-                        "enum": ["conversion", "CONVERSION"]
-                      }
-                    }
-                  },
-                  "then": {
-                    "$ref": "#/$defs/conversion_metric_type_params"
-                  },
-                  "else": {
-                    "if": {
-                      "properties": {
-                        "type": {
-                          "enum": ["ratio", "RATIO"]
-                        }
-                      }
-                    },
-                    "then": {
-                      "$ref": "#/$defs/ratio_metric_type_params"
-                    }
-                  }
-                }
-              }
-            }
           }
         },
         "additionalProperties": false
@@ -1447,7 +1465,14 @@
           "type": "string"
         },
         "fill_nulls_with": {
-          "type": ["string", "integer"]
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
         },
         "filter": {
           "type": "string"
