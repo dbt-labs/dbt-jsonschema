@@ -265,6 +265,9 @@
           "description": {
             "type": "string"
           },
+          "deprecation_date": {
+            "type": "string"
+          },
           "access": {
             "type": "string",
             "enum": [
