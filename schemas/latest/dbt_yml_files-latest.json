@@ -905,7 +905,7 @@
             "else": {
               "properties": {
                 "rows": {
-                  "description": "When `format` is csv, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
+                  "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
                   "type": "string"
                 }
               }
@@ -920,6 +920,7 @@
                 "type": "string",
                 "enum": [
                   "dict",
+                  "sql",
                   "csv"
                 ]
               },
@@ -951,7 +952,7 @@
               "else": {
                 "properties": {
                   "rows": {
-                    "description": "When `format` is csv, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
+                    "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
                     "type": "string"
                   }
                 }
@@ -966,7 +967,8 @@
                   "type": "string",
                   "enum": [
                     "dict",
-                    "csv"
+                    "csv",
+                    "sql"
                   ]
                 },
                 "input": {
