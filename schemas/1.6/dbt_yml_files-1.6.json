@@ -248,6 +248,9 @@
           "description": {
             "type": "string"
           },
+          "deprecation_date": {
+            "type": "string"
+          },
           "docs": {
             "$ref": "#/$defs/docs_config"
           },
