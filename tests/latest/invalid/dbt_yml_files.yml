@@ -66,6 +66,66 @@ metrics:
     calculation_method: derived
     expression: "{{ metric('new_customers') }} * 2" 
 
+  - name: new_customer
+    description: Unique count of new customers.
+    label: New Customers
+    type: simple
+    type_params:
+      measure: 
+        name: customers_with_orders
+      metrics:
+        - name: order_total
+          alias: revenue
+          filter: |
+            {{ Dimension('order__is_food_order') }} = True
+      window: 1 month
+    filter: |
+      {{ Dimension('customer__customer_type') }}  = 'new'
+
+  - name: food_order_gross_profit
+    label: Food order gross profit
+    description: "The gross profit for each food order."
+    type: derived
+    type_params:
+      expr: revenue - cost
+      measure: 
+        name: customers_with_orders
+      metrics:
+        - name: order_total
+          alias: revenue
+          filter: |
+            {{ Dimension('order__is_food_order') }} = True
+        - name: order_cost
+          alias: cost
+          filter: |
+            {{ Dimension('order__is_food_order') }} = True
+
+  - name: cumulative_order_total_l1m
+    label: Cumulative Order total (L1M)   
+    description: Trailing 1-month cumulative order amount
+    type: joel
+    type_params:
+      measure: 
+        name: order_total
+        fill_nulls_with: 0
+      window: 1 month
+
+  - name: visit_to_buy_conversion_rate_7_day_window
+    description: "Conversion rate from viewing a page to making a purchase"
+    type: conversion
+    label: Visit to Seller Conversion Rate (7 day window)
+    type_params:
+      conversion_type_params:
+        expr: revenue - cost
+        calculation: conversions
+        base_measure:
+          name: visits
+        conversion_measure: 
+          name: buys
+          fill_nulls_with: 0
+        entity: user
+        window: 7 days 
+
 
 unit_tests:
   - name: some_unit_test

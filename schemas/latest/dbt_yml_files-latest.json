@@ -346,6 +346,9 @@
           },
           "label": {
             "type": "string"
+          },
+          "type_params": {
+            "type": "object"
           }
         },
         "additionalProperties": false
@@ -363,9 +366,6 @@
             "type": "string"
           },
           "description": {
-            "type": "string"
-          },
-          "deprecation_date": {
             "type": "string"
           },
           "access": {
@@ -393,6 +393,9 @@
             "items": {
               "$ref": "#/$defs/data_tests"
             }
+          },
+          "deprecation_date": {
+            "type": "string"
           },
           "docs": {
             "$ref": "#/$defs/docs_config"
@@ -1129,20 +1132,59 @@
     "conversion_metric_type_params": {
       "type": "object",
       "properties": {
-        "measure": {
-          "$ref": "#/$defs/metric_input_measure"
-        },
-        "metrics": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/metric_input_schema"
-          }
-        },
-        "numerator": {
-          "$ref": "#/$defs/metric_input_measure"
-        },
-        "window": {
-          "type": "string"
+        "conversion_type_params": {
+          "type": "object",
+          "required": [
+            "entity",
+            "base_measure",
+            "conversion_measure"
+          ],
+          "properties": {
+            "base_measure": {
+              "$ref": "#/$defs/metric_input_measure"
+            },
+            "calculation": {
+              "type": "string",
+              "default": "conversion_rate",
+              "enum": [
+                "conversions",
+                "conversion_rate",
+                "CONVERSIONS",
+                "CONVERSION_RATE"
+              ]
+            },
+            "constant_properties": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "base_property",
+                  "conversion_property"
+                ],
+                "properties": {
+                  "base_property": {
+                    "description": "DIMENSION or ENTITY",
+                    "type": "string"
+                  },
+                  "conversion_property": {
+                    "description": "DIMENSION or ENTITY",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "conversion_measure": {
+              "$ref": "#/$defs/metric_input_measure"
+            },
+            "entity": {
+              "description": "The entity to calculate over",
+              "type": "string"
+            },
+            "window": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
