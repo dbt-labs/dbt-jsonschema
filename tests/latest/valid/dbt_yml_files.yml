@@ -181,16 +181,75 @@ metrics:
     type: simple
     label: Customers w/ Orders
     type_params:
-      measure: customers_with_orders
+      measure:
+        name: customers_with_orders
+        fill_nulls_with: 0
+        join_to_timespine: true
+
   - name: new_customer
     description: Unique count of new customers.
     label: New Customers
     type: simple
     type_params:
-      measure: customers_with_orders
+      measure: 
+        name: customers_with_orders
     filter: |
       {{ Dimension('customer__customer_type') }}  = 'new'
 
+  - name: average_transaction_total_us
+    description: "The average total for each transaction in the US"
+    label: Transaction Total Average US
+    type: ratio
+    type_params:
+      numerator:
+        name: transaction_total
+        filter: |
+          "{{ Dimension('transaction__location') }} = 'US'"
+      denominator:
+        name: transactions
+        filter: |
+          "{{ Dimension('transaction__location') }} = 'US'"
+
+  - name: food_order_gross_profit
+    label: Food order gross profit
+    description: "The gross profit for each food order."
+    type: derived
+    type_params:
+      expr: revenue - cost
+      metrics:
+        - name: order_total
+          alias: revenue
+          filter: |
+            {{ Dimension('order__is_food_order') }} = True
+        - name: order_cost
+          alias: cost
+          filter: |
+            {{ Dimension('order__is_food_order') }} = True
+
+  - name: cumulative_order_total_l1m
+    label: Cumulative Order total (L1M)   
+    description: Trailing 1-month cumulative order amount
+    type: cumulative
+    type_params:
+      measure: 
+        name: order_total
+        fill_nulls_with: 0
+      window: 1 month
+
+  - name: visit_to_buy_conversion_rate_7_day_window
+    description: "Conversion rate from viewing a page to making a purchase"
+    type: conversion
+    label: Visit to Seller Conversion Rate (7 day window)
+    type_params:
+      conversion_type_params:
+        calculation: conversions
+        base_measure:
+          name: visits
+        conversion_measure: 
+          name: buys
+          fill_nulls_with: 0
+        entity: user
+        window: 7 days 
 
 saved_queries:
   - name: test_saved_query

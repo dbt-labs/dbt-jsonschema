@@ -223,6 +223,99 @@
           "type",
           "type_params"
         ],
+        "if": {
+          "properties": {
+            "type": {
+              "enum": [
+                "SIMPLE",
+                "simple"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "type_params": {
+              "$ref": "#/$defs/simple_metric_type_params"
+            }
+          }
+        },
+        "else": {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "derived",
+                  "DERIVED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "type_params": {
+                "$ref": "#/$defs/derived_metric_type_params"
+              }
+            }
+          },
+          "else": {
+            "if": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "cumulative",
+                    "CUMULATIVE"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "type_params": {
+                  "$ref": "#/$defs/cumulative_metric_type_params"
+                }
+              }
+            },
+            "else": {
+              "if": {
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "conversion",
+                      "CONVERSION"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "type_params": {
+                    "$ref": "#/$defs/conversion_metric_type_params"
+                  }
+                }
+              },
+              "else": {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "ratio",
+                        "RATIO"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "type_params": {
+                      "$ref": "#/$defs/ratio_metric_type_params"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "properties": {
           "name": {
             "type": "string",
@@ -237,10 +330,12 @@
               "RATIO",
               "CUMULATIVE",
               "DERIVED",
+              "CONVERSION",
               "simple",
               "ratio",
               "cumulative",
-              "derived"
+              "derived",
+              "conversion"
             ]
           },
           "filter": {
@@ -253,7 +348,7 @@
             "type": "string"
           },
           "type_params": {
-            "$ref": "#/$defs/metric_type_params"
+            "type": "object"
           }
         },
         "additionalProperties": false
@@ -271,9 +366,6 @@
             "type": "string"
           },
           "description": {
-            "type": "string"
-          },
-          "deprecation_date": {
             "type": "string"
           },
           "access": {
@@ -301,6 +393,9 @@
             "items": {
               "$ref": "#/$defs/data_tests"
             }
+          },
+          "deprecation_date": {
+            "type": "string"
           },
           "docs": {
             "$ref": "#/$defs/docs_config"
@@ -1034,6 +1129,87 @@
         }
       }
     },
+    "conversion_metric_type_params": {
+      "type": "object",
+      "properties": {
+        "conversion_type_params": {
+          "type": "object",
+          "required": [
+            "entity",
+            "base_measure",
+            "conversion_measure"
+          ],
+          "properties": {
+            "base_measure": {
+              "$ref": "#/$defs/metric_input_measure"
+            },
+            "calculation": {
+              "type": "string",
+              "default": "conversion_rate",
+              "enum": [
+                "conversions",
+                "conversion_rate",
+                "CONVERSIONS",
+                "CONVERSION_RATE"
+              ]
+            },
+            "constant_properties": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "base_property",
+                  "conversion_property"
+                ],
+                "properties": {
+                  "base_property": {
+                    "description": "DIMENSION or ENTITY",
+                    "type": "string"
+                  },
+                  "conversion_property": {
+                    "description": "DIMENSION or ENTITY",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "conversion_measure": {
+              "$ref": "#/$defs/metric_input_measure"
+            },
+            "entity": {
+              "description": "The entity to calculate over",
+              "type": "string"
+            },
+            "window": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "cumulative_metric_type_params": {
+      "type": "object",
+      "properties": {
+        "grain_to_date": {
+          "enum": [
+            "day",
+            "week",
+            "month",
+            "quarter",
+            "year"
+          ]
+        },
+        "measure": {
+          "$ref": "#/$defs/metric_input_measure"
+        },
+        "window": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "data_tests": {
       "anyOf": [
         {
@@ -1150,6 +1326,21 @@
           }
         }
       ]
+    },
+    "derived_metric_type_params": {
+      "type": "object",
+      "properties": {
+        "expr": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/metric_input_schema"
+          }
+        }
+      },
+      "additionalProperties": false
     },
     "dimension": {
       "type": "object",
@@ -1274,9 +1465,6 @@
             "string",
             "boolean"
           ]
-        },
-        "role": {
-          "type": "string"
         }
       },
       "additionalProperties": false
@@ -1425,7 +1613,7 @@
             "SUM",
             "MIN",
             "MAX",
-            "AVERAGE",
+            "AVG",
             "COUNT_DISTINCT",
             "SUM_BOOLEAN",
             "COUNT",
@@ -1434,7 +1622,7 @@
             "sum",
             "min",
             "max",
-            "average",
+            "avg",
             "count_distinct",
             "sum_boolean",
             "count",
@@ -1462,6 +1650,9 @@
             "boolean"
           ]
         },
+        "label": {
+          "type": "string"
+        },
         "non_additive_dimension": {
           "$ref": "#/$defs/non_additive_dimension"
         }
@@ -1469,26 +1660,29 @@
       "additionalProperties": false
     },
     "metric_input_measure": {
-      "oneOf": [
-        {
+      "type": "object",
+      "properties": {
+        "name": {
           "type": "string"
         },
-        {
-          "type": "object",
-          "properties": {
-            "name": {
+        "fill_nulls_with": {
+          "anyOf": [
+            {
               "type": "string"
             },
-            "alias": {
-              "type": "string"
-            },
-            "filter": {
-              "type": "string"
+            {
+              "type": "integer"
             }
-          },
-          "additionalProperties": false
+          ]
+        },
+        "filter": {
+          "type": "string"
+        },
+        "join_to_timespine": {
+          "type": "boolean"
         }
-      ]
+      },
+      "additionalProperties": false
     },
     "metric_input_schema": {
       "type": "object",
@@ -1502,43 +1696,7 @@
         "filter": {
           "type": "string"
         },
-        "offset_to_grain": {
-          "type": "string"
-        },
         "offset_window": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "metric_type_params": {
-      "type": "object",
-      "properties": {
-        "denominator": {
-          "$ref": "#/$defs/metric_input_measure"
-        },
-        "expr": {
-          "type": [
-            "string",
-            "boolean"
-          ]
-        },
-        "grain_to_date": {
-          "type": "string"
-        },
-        "measure": {
-          "$ref": "#/$defs/metric_input_measure"
-        },
-        "metrics": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/metric_input_schema"
-          }
-        },
-        "numerator": {
-          "$ref": "#/$defs/metric_input_measure"
-        },
-        "window": {
           "type": "string"
         }
       },
@@ -1693,6 +1851,30 @@
         "relation": {
           "$ref": "#/$defs/boolean_or_jinja_string",
           "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ratio_metric_type_params": {
+      "type": "object",
+      "properties": {
+        "denominator": {
+          "$ref": "#/$defs/metric_input_schema"
+        },
+        "filter": {
+          "type": "string"
+        },
+        "numerator": {
+          "$ref": "#/$defs/metric_input_schema"
+        }
+      },
+      "additionalProperties": false
+    },
+    "simple_metric_type_params": {
+      "type": "object",
+      "properties": {
+        "measure": {
+          "$ref": "#/$defs/metric_input_measure"
         }
       },
       "additionalProperties": false
