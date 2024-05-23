@@ -112,9 +112,17 @@
           "owner": {
             "type": "object",
             "anyOf": [
-              {"required": ["email"]},
-              {"required": ["name"]}
-              ],
+              {
+                "required": [
+                  "email"
+                ]
+              },
+              {
+                "required": [
+                  "name"
+                ]
+              }
+            ],
             "properties": {
               "name": {
                 "type": "string"
@@ -337,6 +345,51 @@
                   "type": "number"
                 }
               }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "saved_queries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "label",
+          "query_params"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "exports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/export"
+            }
+          },
+          "label": {
+            "type": "string"
+          },
+          "query_params": {
+            "type": "object",
+            "properties": {
+              "dimensions": {
+                "$ref": "#/$defs/array_of_strings"
+              },
+              "metrics": {
+                "$ref": "#/$defs/array_of_strings"
+              },
+              "where": {
+                "$ref": "#/$defs/array_of_strings"
+              },
+              "additionalProperties": false
             }
           }
         },
@@ -1221,6 +1274,37 @@
         },
         "role": {
           "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "export": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "alias": {
+              "type": "string"
+            },
+            "export_as": {
+              "enum": [
+                "table",
+                "view",
+                "cache"
+              ]
+            },
+            "schema": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
         }
       },
       "additionalProperties": false
