@@ -123,6 +123,26 @@ unit_tests:
         count
         2
 
+  - name: my_sql_unit_test
+    model: unit_reworked_compare_struct
+    given:
+      - input: ref('unit_test_struct_model_a')
+        format: sql
+        rows: |
+          select 1 as id, 'John Doe' as col1, object_construct('street', '123 Main St', 'city', 'Anytown', 'state', 'CA') as col2
+      - input: ref('unit_test_struct_model_b')
+        format: sql
+        rows: |
+          select 1 as id, 'John Doe' as col1, object_construct('street', '123 Main St', 'city', 'Anytown', 'state', 'CA') as col2
+    expect:
+      rows:
+        - {"id": 1, "dbt_audit_row_status": "identical", "dbt_audit_num_rows_in_status": 1}
+    overrides:
+      vars:
+        reworked_compare__columns: ['id', 'col1', 'col2']
+        reworked_compare__event_time:
+        reworked_compare__primary_key_columns: ['id']
+
 snapshots:
   - name: snapshot_name
     group: analytics
