@@ -42,6 +42,20 @@
     "docs-paths": {
       "$ref": "#/$defs/array_of_strings"
     },
+    "flags": {
+      "type": "object",
+      "properties": {
+        "require_explicit_package_overrides_for_builtin_materializations": {
+          "type": "boolean"
+        },
+        "require_resource_names_without_spaces": {
+          "type": "boolean"
+        },
+        "source_freshness_run_project_hooks": {
+          "type": "string"
+        }
+      }
+    },
     "log-path": {
       "type": "string"
     },
