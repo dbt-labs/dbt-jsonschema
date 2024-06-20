@@ -53,7 +53,27 @@
         },
         "source_freshness_run_project_hooks": {
           "type": "string"
-        }
+        },
+        "cache_selected_only": {"type": "boolean"},
+        "debug": {"type": "boolean"},
+        "fail_fast": {"type": "boolean"},
+        "indirect_selection": {"type": "boolean"},
+        "log_format": {"type": "boolean"},
+        "log_format_file": {"type": "boolean"},
+        "log_level": {"type": "boolean"},
+        "log_level_file": {"type": "boolean"},
+        "partial_parse": {"type": "boolean"},
+        "populate_cache": {"type": "boolean"},
+        "printer_width": {"type": "boolean"},
+        "send_anonymous_usage_stats": {"type": "boolean"},
+        "static_parser": {"type": "boolean"},
+        "use_colors": {"type": "boolean"},
+        "use_colors_file": {"type": "boolean"},
+        "use_experimental_parser": {"type": "boolean"},
+        "version_check": {"type": "boolean"},
+        "warn_error": {"type": "boolean"},
+        "warn_error_options": {"type": "boolean"},
+        "write_json": {"type": "boolean"}
       }
     },
     "log-path": {
