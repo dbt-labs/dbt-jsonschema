@@ -42,40 +42,6 @@
     "docs-paths": {
       "$ref": "#/$defs/array_of_strings"
     },
-    "flags": {
-      "type": "object",
-      "properties": {
-        "require_explicit_package_overrides_for_builtin_materializations": {
-          "type": "boolean"
-        },
-        "require_resource_names_without_spaces": {
-          "type": "boolean"
-        },
-        "source_freshness_run_project_hooks": {
-          "type": "string"
-        },
-        "cache_selected_only": {"type": "boolean"},
-        "debug": {"type": "boolean"},
-        "fail_fast": {"type": "boolean"},
-        "indirect_selection": {"type": "string"},
-        "log_format": {"type": "string"},
-        "log_format_file": {"type": "string"},
-        "log_level": {"type": "string"},
-        "log_level_file": {"type": "string"},
-        "partial_parse": {"type": "boolean"},
-        "populate_cache": {"type": "boolean"},
-        "printer_width": {"type": "integer"},
-        "send_anonymous_usage_stats": {"type": "boolean"},
-        "static_parser": {"type": "boolean"},
-        "use_colors": {"type": "boolean"},
-        "use_colors_file": {"type": "boolean"},
-        "use_experimental_parser": {"type": "boolean"},
-        "version_check": {"type": "boolean"},
-        "warn_error": {"type": "boolean"},
-        "warn_error_options": {"type": "object"},
-        "write_json": {"type": "boolean"}
-      }
-    },
     "log-path": {
       "type": "string"
     },
