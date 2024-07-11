@@ -105,7 +105,7 @@
           "type": "boolean"
         },
         "source_freshness_run_project_hooks": {
-          "type": "string"
+          "type": "boolean"
         },
         "static_parser": {
           "type": "boolean"
