@@ -55,7 +55,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           }
         }
       }
@@ -110,28 +110,7 @@
             "type": "object"
           },
           "owner": {
-            "type": "object",
-            "anyOf": [
-              {
-                "required": [
-                  "email"
-                ]
-              },
-              {
-                "required": [
-                  "name"
-                ]
-              }
-            ],
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/$defs/owner"
           },
           "tags": {
             "$ref": "#/$defs/string_or_array_of_strings"
@@ -155,17 +134,7 @@
             "type": "string"
           },
           "owner": {
-            "type": "object",
-            "minProperties": 1,
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": true
+            "$ref": "#/$defs/owner"
           }
         },
         "additionalProperties": false
@@ -325,6 +294,7 @@
             "type": "string"
           },
           "type": {
+            "title": "Metric Type",
             "enum": [
               "SIMPLE",
               "RATIO",
@@ -342,7 +312,7 @@
             "type": "string"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "label": {
             "type": "string"
@@ -401,7 +371,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "latest_version": {
             "type": "number"
@@ -515,6 +485,7 @@
             }
           },
           "config": {
+            "title": "Seed Config",
             "type": "object",
             "properties": {
               "column_types": {
@@ -550,7 +521,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "tests": {
             "type": "array",
@@ -637,6 +608,7 @@
             }
           },
           "config": {
+            "title": "Snapshot Config",
             "type": "object",
             "properties": {
               "alias": {
@@ -693,7 +665,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "meta": {
             "type": "object"
@@ -871,6 +843,7 @@
             "type": "string"
           },
           "config": {
+            "title": "Unit Test Config",
             "type": "object",
             "properties": {
               "meta": {
@@ -919,9 +892,9 @@
                 "description": "Defaults to `dict` when not specified",
                 "type": "string",
                 "enum": [
+                  "csv",
                   "dict",
-                  "sql",
-                  "csv"
+                  "sql"
                 ]
               },
               "additionalProperties": false
@@ -966,8 +939,8 @@
                   "description": "Defaults to `dict` when not specified",
                   "type": "string",
                   "enum": [
-                    "dict",
                     "csv",
+                    "dict",
                     "sql"
                   ]
                 },
@@ -1371,6 +1344,7 @@
           "type": "string"
         },
         "type": {
+          "title": "Dimension Type",
           "enum": [
             "CATEGORICAL",
             "TIME",
@@ -1448,6 +1422,7 @@
           "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
         },
         "type": {
+          "title": "Entity Type",
           "enum": [
             "PRIMARY",
             "UNIQUE",
@@ -1481,6 +1456,7 @@
           "type": "string"
         },
         "config": {
+          "title": "Export Config",
           "type": "object",
           "properties": {
             "alias": {
@@ -1565,7 +1541,7 @@
       },
       "additionalProperties": false
     },
-    "group": {
+    "group_name": {
       "type": "string"
     },
     "include_exclude": {
@@ -1803,6 +1779,30 @@
           "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
         }
       }
+    },
+    "owner": {
+      "type": "object",
+      "anyOf": [
+        {
+          "required": [
+            "email"
+          ]
+        },
+        {
+          "required": [
+            "name"
+          ]
+        }
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "non_additive_dimension": {
       "type": "object",
