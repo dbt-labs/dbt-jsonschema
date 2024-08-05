@@ -1,1112 +1,3043 @@
 {
-  "title": "dbt_project",
-  "type": "object",
-  "required": [
-    "name"
-  ],
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "properties": {
-    "version": {
-      "type": "string"
-    },
-    "name": {
-      "type": "string"
-    },
-    "analysis-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "asset-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "clean-targets": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "config-version": {
-      "type": "number",
-      "default": 2
-    },
-    "data_tests": {
-      "$ref": "#/$defs/data_test_configs"
-    },
-    "dbt-cloud": {
-      "type": "object",
-      "properties": {
-        "project-id": {
-          "type": "number"
-        }
-      },
-      "additionalProperties": true
-    },
-    "dispatch": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "macro_namespace",
-          "search_order"
-        ],
-        "properties": {
-          "macro_namespace": {
-            "type": "string"
-          },
-          "search_order": {
-            "$ref": "#/$defs/array_of_strings"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "docs-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "flags": {
-      "type": "object",
-      "properties": {
-        "cache_selected_only": {
-          "type": "boolean"
-        },
-        "debug": {
-          "type": "boolean"
-        },
-        "fail_fast": {
-          "type": "boolean"
-        },
-        "indirect_selection": {
-          "type": "string"
-        },
-        "log_format": {
-          "type": "string"
-        },
-        "log_format_file": {
-          "type": "string"
-        },
-        "log_level": {
-          "type": "string"
-        },
-        "log_level_file": {
-          "type": "string"
-        },
-        "partial_parse": {
-          "type": "boolean"
-        },
-        "populate_cache": {
-          "type": "boolean"
-        },
-        "printer_width": {
-          "type": "integer"
-        },
-        "require_explicit_package_overrides_for_builtin_materializations": {
-          "type": "boolean"
-        },
-        "require_resource_names_without_spaces": {
-          "type": "boolean"
-        },
-        "send_anonymous_usage_stats": {
-          "type": "boolean"
-        },
-        "source_freshness_run_project_hooks": {
-          "type": "boolean"
-        },
-        "static_parser": {
-          "type": "boolean"
-        },
-        "use_colors": {
-          "type": "boolean"
-        },
-        "use_colors_file": {
-          "type": "boolean"
-        },
-        "use_experimental_parser": {
-          "type": "boolean"
-        },
-        "version_check": {
-          "type": "boolean"
-        },
-        "warn_error": {
-          "type": "boolean"
-        },
-        "warn_error_options": {
-          "type": "object"
-        },
-        "write_json": {
-          "type": "boolean"
-        }
-      }
-    },
-    "log-path": {
-      "type": "string"
-    },
-    "macro-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "model-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "models": {
-      "$ref": "#/$defs/model_configs"
-    },
-    "on-run-end": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/array_of_strings"
-        },
-        {
-          "type": "string"
-        }
-      ]
-    },
-    "on-run-start": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/array_of_strings"
-        },
-        {
-          "type": "string"
-        }
-      ]
-    },
-    "packages-install-path": {
-      "type": "string"
-    },
-    "profile": {
-      "type": "string"
-    },
-    "query-comment": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "append": {
-              "$ref": "#/$defs/boolean_or_jinja_string"
-            },
-            "comment": {
-              "type": "string"
-            },
-            "job-label": {
-              "$ref": "#/$defs/boolean_or_jinja_string"
-            }
-          },
-          "additionalProperties": false
-        }
-      ]
-    },
-    "quoting": {
-      "type": "object",
-      "properties": {
-        "database": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "identifier": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "schema": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        }
-      }
-    },
-    "require-dbt-version": {
-      "$ref": "#/$defs/string_or_array_of_strings"
-    },
-    "seed-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "seeds": {
-      "$ref": "#/$defs/seed_configs"
-    },
-    "snapshot-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "snapshots": {
-      "$ref": "#/$defs/snapshot_configs"
-    },
-    "sources": {
-      "$ref": "#/$defs/source_configs"
-    },
-    "target-path": {
-      "type": "string"
-    },
-    "test-paths": {
-      "$ref": "#/$defs/array_of_strings"
-    },
-    "tests": {
-      "$ref": "#/$defs/data_test_configs"
-    },
-    "unit_tests": {
-      "$ref": "#/$defs/unit_test_configs"
-    },
-    "vars": {
-      "type": "object"
-    }
-  },
-  "additionalProperties": false,
   "$defs": {
-    "access": {
-      "type": "string",
+    "Access": {
       "enum": [
         "private",
         "protected",
         "public"
-      ]
-    },
-    "alias": {
+      ],
+      "title": "Access",
       "type": "string"
     },
-    "array_of_strings": {
-      "type": "array",
+    "Alias": {
+      "title": "Alias",
+      "type": "string"
+    },
+    "ArrayOfStrings": {
       "items": {
         "type": "string"
-      }
+      },
+      "title": "ArrayOfStrings",
+      "type": "array"
     },
-    "auto_refresh": {
-      "$ref": "#/$defs/boolean_or_jinja_string"
+    "AuthorizedView": {
+      "additionalProperties": false,
+      "properties": {
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Database"
+        },
+        "project": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project"
+        }
+      },
+      "title": "AuthorizedView",
+      "type": "object"
     },
-    "backup": {
-      "$ref": "#/$defs/boolean_or_jinja_string"
+    "AuthorizedViews": {
+      "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
+      "items": {
+        "$ref": "#/$defs/AuthorizedView"
+      },
+      "title": "AuthorizedViews",
+      "type": "array"
     },
-    "boolean_or_jinja_string": {
-      "oneOf": [
+    "AutoRefresh": {
+      "allOf": [
         {
-          "$ref": "#/$defs/jinja_string"
+          "$ref": "#/$defs/BooleanOrJinjaString"
+        }
+      ],
+      "title": "AutoRefresh"
+    },
+    "Backup": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BooleanOrJinjaString"
+        }
+      ],
+      "title": "Backup"
+    },
+    "BooleanOrJinjaString": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/JinjaString"
         },
         {
           "type": "boolean"
         }
-      ]
+      ],
+      "title": "BooleanOrJinjaString"
     },
-    "column_types": {
-      "type": "object",
-      "patternProperties": {
-        "": {
-          "type": "string"
+    "ColumnTypes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "ColumnTypes",
+      "type": "object"
+    },
+    "Contract": {
+      "properties": {
+        "enforced": {
+          "$ref": "#/$defs/BooleanOrJinjaString"
         }
-      }
-    },
-    "contract": {
-      "type": "object",
+      },
       "required": [
         "enforced"
       ],
-      "properties": {
-        "enforced": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
-          "default": "true"
-        }
-      }
-    },
-    "data_test_configs": {
-      "title": "Data test configs",
-      "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
-      "type": "object",
-      "properties": {
-        "+alias": {
-          "$ref": "#/$defs/alias"
-        },
-        "+database": {
-          "$ref": "#/$defs/database"
-        },
-        "+enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+error_if": {
-          "$ref": "#/$defs/error_if"
-        },
-        "+fail_calc": {
-          "$ref": "#/$defs/fail_calc"
-        },
-        "+group": {
-          "$ref": "#/$defs/group"
-        },
-        "+limit": {
-          "$ref": "#/$defs/limit"
-        },
-        "+meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "+schema": {
-          "$ref": "#/$defs/schema"
-        },
-        "+severity": {
-          "$ref": "#/$defs/severity"
-        },
-        "+store_failures": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "+warn_if": {
-          "$ref": "#/$defs/warn_if"
-        },
-        "alias": {
-          "$ref": "#/$defs/alias"
-        },
-        "database": {
-          "$ref": "#/$defs/database"
-        },
-        "enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "error_if": {
-          "$ref": "#/$defs/error_if"
-        },
-        "fail_calc": {
-          "$ref": "#/$defs/fail_calc"
-        },
-        "group": {
-          "$ref": "#/$defs/group"
-        },
-        "limit": {
-          "$ref": "#/$defs/limit"
-        },
-        "meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "schema": {
-          "$ref": "#/$defs/schema"
-        },
-        "severity": {
-          "$ref": "#/$defs/severity"
-        },
-        "store_failures": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "warn_if": {
-          "$ref": "#/$defs/warn_if"
-        }
-      },
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/data_test_configs"
-          },
-          {
-            "$ref": "#/$defs/empty_directory"
-          }
-        ]
-      }
-    },
-    "database": {
-      "type": "string"
-    },
-    "docs_config": {
-      "title": "Docs config",
-      "description": "Configurations for the appearance of nodes in the dbt documentation.",
-      "type": "object",
-      "properties": {
-        "node_color": {
-          "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
-          "type": "string",
-          "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
-        },
-        "show": {
-          "type": "boolean",
-          "default": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "empty_directory": {
-      "type": "null"
-    },
-    "error_if": {
-      "type": "string"
-    },
-    "fail_calc": {
-      "type": "string"
-    },
-    "file_format": {
-      "type": "string"
-    },
-    "grant_access_to": {
-      "title": "Authorized views",
-      "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "database": {
-            "type": "string"
-          },
-          "project": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "grants": {
-      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
-      "type": "object",
-      "patternProperties": {
-        ".*": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        }
-      },
-      "additionalProperties": false
-    },
-    "group": {
-      "type": "string"
-    },
-    "hours_to_expiration": {
-      "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
-      "type": "number"
-    },
-    "incremental_strategy": {
-      "type": "string"
-    },
-    "invalidate_hard_deletes": {
-      "$ref": "#/$defs/boolean_or_jinja_string"
-    },
-    "jinja_string": {
-      "type": "string",
-      "pattern": "\\{\\{.*\\}\\}"
-    },
-    "kms_key_name": {
-      "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption.",
-      "type": "string"
-    },
-    "label_configs": {
-      "title": "Label configs",
-      "description": "Configurations specific to BigQuery adapter used to add labels and tags to tables & views created by dbt.",
-      "type": "object",
-      "patternProperties": {
-        "^[a-z][a-z0-9_-]{0,63}$": {
-          "oneOf": [
-            {
-              "type": "string",
-              "pattern": "^[a-z0-9_-]{0,64}$"
-            },
-            {
-              "$ref": "#/$defs/jinja_string"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "limit": {
-      "type": "number"
-    },
-    "location": {
-      "type": "string"
-    },
-    "materialized": {
-      "type": "string"
-    },
-    "meta": {
+      "title": "Contract",
       "type": "object"
     },
-    "model_configs": {
-      "title": "Model configs",
-      "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
-      "type": "object",
+    "DataTestConfigs": {
+      "properties": {
+        "+alias": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Alias"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Database"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+error_if": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorIf"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+fail_calc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FailCalc"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+limit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Limit"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Schema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+severity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Severity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+store_failures": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+warn_if": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WarnIf"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Alias"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Database"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "error_if": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorIf"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "fail_calc": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FailCalc"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Limit"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Schema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Severity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "store_failures": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "warn_if": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WarnIf"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "DataTestConfigs",
+      "type": "object"
+    },
+    "Database": {
+      "title": "Database",
+      "type": "string"
+    },
+    "DbtCloud": {
+      "additionalProperties": true,
+      "properties": {
+        "project-id": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project-Id"
+        }
+      },
+      "title": "DbtCloud",
+      "type": "object"
+    },
+    "DispatchItem": {
+      "additionalProperties": false,
+      "properties": {
+        "macro_namespace": {
+          "title": "Macro Namespace",
+          "type": "string"
+        },
+        "search_order": {
+          "$ref": "#/$defs/ArrayOfStrings"
+        }
+      },
+      "required": [
+        "macro_namespace",
+        "search_order"
+      ],
+      "title": "DispatchItem",
+      "type": "object"
+    },
+    "DocsConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "node_color": {
+          "anyOf": [
+            {
+              "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+          "title": "Node Color"
+        },
+        "show": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": true,
+          "title": "Show"
+        }
+      },
+      "title": "DocsConfig",
+      "type": "object"
+    },
+    "ErrorIf": {
+      "title": "ErrorIf",
+      "type": "string"
+    },
+    "FailCalc": {
+      "title": "FailCalc",
+      "type": "string"
+    },
+    "FileFormat": {
+      "title": "FileFormat",
+      "type": "string"
+    },
+    "Flags": {
+      "properties": {
+        "cache_selected_only": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Selected Only"
+        },
+        "debug": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Debug"
+        },
+        "fail_fast": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fail Fast"
+        },
+        "indirect_selection": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Indirect Selection"
+        },
+        "log_format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Log Format"
+        },
+        "log_format_file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Log Format File"
+        },
+        "log_level": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Log Level"
+        },
+        "log_level_file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Log Level File"
+        },
+        "partial_parse": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Partial Parse"
+        },
+        "populate_cache": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Populate Cache"
+        },
+        "printer_width": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Printer Width"
+        },
+        "require_explicit_package_overrides_for_builtin_materializations": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Require Explicit Package Overrides For Builtin Materializations"
+        },
+        "require_resource_names_without_spaces": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Require Resource Names Without Spaces"
+        },
+        "send_anonymous_usage_stats": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Send Anonymous Usage Stats"
+        },
+        "source_freshness_run_project_hooks": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Freshness Run Project Hooks"
+        },
+        "static_parser": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Static Parser"
+        },
+        "use_colors": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Use Colors"
+        },
+        "use_colors_file": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Use Colors File"
+        },
+        "use_experimental_parser": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Use Experimental Parser"
+        },
+        "version_check": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version Check"
+        },
+        "warn_error": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Warn Error"
+        },
+        "warn_error_options": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Warn Error Options"
+        },
+        "write_json": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Write Json"
+        }
+      },
+      "title": "Flags",
+      "type": "object"
+    },
+    "Grants": {
+      "additionalProperties": {
+        "$ref": "#/$defs/StringOrArrayOfStrings"
+      },
+      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
+      "title": "Grants",
+      "type": "object"
+    },
+    "Group": {
+      "title": "Group",
+      "type": "string"
+    },
+    "HoursToExpiration": {
+      "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
+      "title": "HoursToExpiration",
+      "type": "number"
+    },
+    "IncrementalStrategy": {
+      "title": "IncrementalStrategy",
+      "type": "string"
+    },
+    "InvalidateHardDeletes": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BooleanOrJinjaString"
+        }
+      ],
+      "title": "InvalidateHardDeletes"
+    },
+    "JinjaString": {
+      "pattern": "\\{\\{.*\\}\\}",
+      "title": "JinjaString",
+      "type": "string"
+    },
+    "KmsKeyName": {
+      "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption.",
+      "title": "KmsKeyName",
+      "type": "string"
+    },
+    "LabelConfigs": {
+      "pattern": "^[a-z0-9_-]{0,64}$",
+      "title": "LabelConfigs",
+      "type": "string"
+    },
+    "LabelConfigs1": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/LabelConfigs"
+          },
+          {
+            "$ref": "#/$defs/JinjaString"
+          }
+        ]
+      },
+      "description": "Configurations specific to BigQuery adapter used to add labels and tags to tables & views created by dbt.",
+      "title": "LabelConfigs1",
+      "type": "object"
+    },
+    "Limit": {
+      "title": "Limit",
+      "type": "number"
+    },
+    "Location": {
+      "title": "Location",
+      "type": "string"
+    },
+    "Materialized": {
+      "title": "Materialized",
+      "type": "string"
+    },
+    "Meta": {
+      "properties": {},
+      "title": "Meta",
+      "type": "object"
+    },
+    "ModelConfigs": {
       "properties": {
         "+access": {
-          "$ref": "#/$defs/access"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Access"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+alias": {
-          "$ref": "#/$defs/alias"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Alias"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+auto_refresh": {
-          "$ref": "#/$defs/auto_refresh"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AutoRefresh"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+backup": {
-          "$ref": "#/$defs/backup"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Backup"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+bind": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "default": false
         },
         "+contract": {
-          "$ref": "#/$defs/contract"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Contract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+copy_grants": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+database": {
-          "$ref": "#/$defs/database"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Database"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+docs": {
-          "$ref": "#/$defs/docs_config"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+file_format": {
-          "$ref": "#/$defs/file_format"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FileFormat"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+full_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+grant_access_to": {
-          "$ref": "#/$defs/grant_access_to"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AuthorizedViews"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+grants": {
-          "$ref": "#/$defs/grants"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+group": {
-          "$ref": "#/$defs/group"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+hours_to_expiration": {
-          "$ref": "#/$defs/hours_to_expiration"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HoursToExpiration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+incremental_strategy": {
-          "$ref": "#/$defs/incremental_strategy"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IncrementalStrategy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+kms_key_name": {
-          "$ref": "#/$defs/kms_key_name"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KmsKeyName"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+labels": {
-          "$ref": "#/$defs/label_configs"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LabelConfigs1"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+location": {
-          "$ref": "#/$defs/location"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+materialized": {
-          "$ref": "#/$defs/materialized"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Materialized"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+meta": {
-          "$ref": "#/$defs/meta"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+on_configuration_change": {
-          "$ref": "#/$defs/on_configuration_change"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnConfigurationChange"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+on_schema_change": {
-          "$ref": "#/$defs/on_schema_change"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnSchemaChange"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+persist_docs": {
-          "$ref": "#/$defs/persist_docs_config"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+post-hook": {
-          "$ref": "#/$defs/array_of_strings"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+pre-hook": {
-          "$ref": "#/$defs/array_of_strings"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+schema": {
-          "$ref": "#/$defs/schema"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Schema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+secure": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "default": false
         },
         "+snowflake_warehouse": {
-          "$ref": "#/$defs/snowflake_warehouse"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SnowflakeWarehouse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+sql_header": {
-          "$ref": "#/$defs/sql_header"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SqlHeader"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+tags": {
-          "$ref": "#/$defs/tags"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+target_lag": {
-          "$ref": "#/$defs/target_lag"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetLag"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+transient": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "access": {
-          "$ref": "#/$defs/access"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Access"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "alias": {
-          "$ref": "#/$defs/alias"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Alias"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "auto_refresh": {
-          "$ref": "#/$defs/auto_refresh"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AutoRefresh"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "backup": {
-          "$ref": "#/$defs/backup"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Backup"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "bind": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "default": false
         },
         "contract": {
-          "$ref": "#/$defs/contract"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Contract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "copy_grants": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "database": {
-          "$ref": "#/$defs/database"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Database"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "docs": {
-          "$ref": "#/$defs/docs_config"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "file_format": {
-          "$ref": "#/$defs/file_format"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FileFormat"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "full_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "grant_access_to": {
-          "$ref": "#/$defs/grant_access_to"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AuthorizedViews"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "grants": {
-          "$ref": "#/$defs/grants"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "group": {
-          "$ref": "#/$defs/group"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "hours_to_expiration": {
-          "$ref": "#/$defs/hours_to_expiration"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HoursToExpiration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "incremental_strategy": {
-          "$ref": "#/$defs/incremental_strategy"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IncrementalStrategy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "kms_key_name": {
-          "$ref": "#/$defs/kms_key_name"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KmsKeyName"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "labels": {
-          "$ref": "#/$defs/label_configs"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LabelConfigs1"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "location": {
-          "$ref": "#/$defs/location"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "materialized": {
-          "$ref": "#/$defs/materialized"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Materialized"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "meta": {
-          "$ref": "#/$defs/meta"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "on_configuration_change": {
-          "$ref": "#/$defs/on_configuration_change"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnConfigurationChange"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "on_schema_change": {
-          "$ref": "#/$defs/on_schema_change"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnSchemaChange"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "persist_docs": {
-          "$ref": "#/$defs/persist_docs_config"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "post-hook": {
-          "$ref": "#/$defs/array_of_strings"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "pre-hook": {
-          "$ref": "#/$defs/array_of_strings"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "schema": {
-          "$ref": "#/$defs/schema"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Schema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "secure": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "default": false
         },
         "snowflake_warehouse": {
-          "$ref": "#/$defs/snowflake_warehouse"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SnowflakeWarehouse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "sql_header": {
-          "$ref": "#/$defs/sql_header"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SqlHeader"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "tags": {
-          "$ref": "#/$defs/tags"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "target_lag": {
-          "$ref": "#/$defs/target_lag"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetLag"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "transient": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/model_configs"
-          },
-          {
-            "$ref": "#/$defs/empty_directory"
-          }
-        ]
-      }
+      "title": "ModelConfigs",
+      "type": "object"
     },
-    "on_configuration_change": {
-      "type": "string",
+    "OnConfigurationChange": {
       "enum": [
         "apply",
         "continue",
         "fail"
-      ]
+      ],
+      "title": "OnConfigurationChange",
+      "type": "string"
     },
-    "on_schema_change": {
-      "type": "string",
+    "OnSchemaChange": {
       "enum": [
         "append_new_columns",
         "fail",
         "ignore",
         "sync_all_columns"
-      ]
+      ],
+      "title": "OnSchemaChange",
+      "type": "string"
     },
-    "persist_docs_config": {
-      "title": "Persist docs config",
-      "description": "Configurations for the persistence of the dbt documentation.",
-      "type": "object",
+    "PersistDocsConfig": {
+      "additionalProperties": false,
       "properties": {
         "columns": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
-          "default": true
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "relation": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
-          "default": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "schema": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "seed_configs": {
-      "title": "Seed configs",
-      "type": "object",
-      "properties": {
-        "+column_types": {
-          "$ref": "#/$defs/column_types"
-        },
-        "+copy_grants": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+database": {
-          "$ref": "#/$defs/database"
-        },
-        "+docs": {
-          "$ref": "#/$defs/docs_config"
-        },
-        "+enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+full_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+grants": {
-          "$ref": "#/$defs/grants"
-        },
-        "+group": {
-          "$ref": "#/$defs/group"
-        },
-        "+meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "+persist_docs": {
-          "$ref": "#/$defs/persist_docs_config"
-        },
-        "+quote_columns": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+schema": {
-          "$ref": "#/$defs/schema"
-        },
-        "+tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "+transient": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "column_types": {
-          "$ref": "#/$defs/column_types"
-        },
-        "copy_grants": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "database": {
-          "$ref": "#/$defs/database"
-        },
-        "docs": {
-          "$ref": "#/$defs/docs_config"
-        },
-        "enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "full_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "grants": {
-          "$ref": "#/$defs/grants"
-        },
-        "group": {
-          "$ref": "#/$defs/group"
-        },
-        "meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "persist_docs": {
-          "$ref": "#/$defs/persist_docs_config"
-        },
-        "quote_columns": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "schema": {
-          "$ref": "#/$defs/schema"
-        },
-        "tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "transient": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        }
-      },
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/seed_configs"
-          },
-          {
-            "$ref": "#/$defs/empty_directory"
-          }
-        ]
-      }
-    },
-    "severity": {
-      "oneOf": [
-        {
-          "$ref": "#/$defs/jinja_string"
-        },
-        {
-          "type": "string",
-          "enum": [
-            "warn",
-            "error"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
-      ]
+      },
+      "title": "PersistDocsConfig",
+      "type": "object"
     },
-    "snapshot_configs": {
-      "title": "Snapshot configs",
-      "type": "object",
+    "QueryComment": {
+      "additionalProperties": false,
       "properties": {
-        "+alias": {
-          "$ref": "#/$defs/alias"
+        "append": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
-        "+check_cols": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
         },
-        "+docs": {
-          "$ref": "#/$defs/docs_config"
-        },
-        "+enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+grants": {
-          "$ref": "#/$defs/grants"
-        },
-        "+group": {
-          "$ref": "#/$defs/group"
-        },
-        "+invalidate_hard_deletes": {
-          "$ref": "#/$defs/invalidate_hard_deletes"
-        },
-        "+meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "+persist_docs": {
-          "$ref": "#/$defs/persist_docs_config"
-        },
-        "+post-hook": {
-          "$ref": "#/$defs/array_of_strings"
-        },
-        "+pre-hook": {
-          "$ref": "#/$defs/array_of_strings"
-        },
-        "+quote_columns": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+strategy": {
-          "$ref": "#/$defs/strategy"
-        },
-        "+tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "+target_database": {
-          "$ref": "#/$defs/target_database"
-        },
-        "+target_schema": {
-          "$ref": "#/$defs/target_schema"
-        },
-        "+transient": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "+unique_key": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "+updated_at": {
-          "$ref": "#/$defs/updated_at"
-        },
-        "alias": {
-          "$ref": "#/$defs/alias"
-        },
-        "check_cols": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "docs": {
-          "$ref": "#/$defs/docs_config"
-        },
-        "enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "grants": {
-          "$ref": "#/$defs/grants"
-        },
-        "group": {
-          "$ref": "#/$defs/group"
-        },
-        "invalidate_hard_deletes": {
-          "$ref": "#/$defs/invalidate_hard_deletes"
-        },
-        "meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "persist_docs": {
-          "$ref": "#/$defs/persist_docs_config"
-        },
-        "post-hook": {
-          "$ref": "#/$defs/array_of_strings"
-        },
-        "pre-hook": {
-          "$ref": "#/$defs/array_of_strings"
-        },
-        "quote_columns": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "strategy": {
-          "$ref": "#/$defs/strategy"
-        },
-        "tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "target_database": {
-          "$ref": "#/$defs/target_database"
-        },
-        "target_schema": {
-          "$ref": "#/$defs/target_schema"
-        },
-        "transient": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "unique_key": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "updated_at": {
-          "$ref": "#/$defs/updated_at"
+        "job-label": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/snapshot_configs"
-          },
-          {
-            "$ref": "#/$defs/empty_directory"
-          }
-        ]
-      }
+      "title": "QueryComment",
+      "type": "object"
     },
-    "snowflake_warehouse": {
-      "type": "string"
-    },
-    "source_configs": {
-      "title": "Source configs",
-      "type": "object",
+    "Quoting": {
       "properties": {
-        "+enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+        "database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
-        "+meta": {
-          "$ref": "#/$defs/meta"
+        "identifier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
-        "+tags": {
-          "$ref": "#/$defs/tags"
-        },
-        "enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "meta": {
-          "$ref": "#/$defs/meta"
-        },
-        "tags": {
-          "$ref": "#/$defs/tags"
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/source_configs"
-          },
-          {
-            "$ref": "#/$defs/empty_directory"
-          }
-        ]
-      }
+      "title": "Quoting",
+      "type": "object"
     },
-    "sql_header": {
-      "type": "string"
-    },
-    "strategy": {
-      "type": "string"
-    },
-    "string_or_array_of_strings": {
-      "oneOf": [
+    "Schema": {
+      "anyOf": [
         {
           "type": "string"
         },
         {
-          "$ref": "#/$defs/array_of_strings"
+          "type": "null"
         }
-      ]
+      ],
+      "title": "Schema"
     },
-    "tags": {
-      "$ref": "#/$defs/string_or_array_of_strings"
-    },
-    "target_database": {
-      "type": "string"
-    },
-    "target_lag": {
-      "type": "string",
-      "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
-    },
-    "target_schema": {
-      "type": "string"
-    },
-    "unit_test_configs": {
+    "SeedConfigs": {
       "properties": {
+        "+column_types": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ColumnTypes"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+copy_grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Database"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+full_refresh": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "+meta": {
-          "$ref": "#/$defs/meta"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+quote_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Schema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "+tags": {
-          "$ref": "#/$defs/tags"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+transient": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "column_types": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ColumnTypes"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "copy_grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Database"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "full_refresh": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "meta": {
-          "$ref": "#/$defs/meta"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "quote_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Schema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "tags": {
-          "$ref": "#/$defs/tags"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "transient": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/unit_test_configs"
-          },
-          {
-            "$ref": "#/$defs/empty_directory"
-          }
-        ]
-      }
+      "title": "SeedConfigs",
+      "type": "object"
     },
-    "updated_at": {
+    "Severity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/JinjaString"
+        },
+        {
+          "$ref": "#/$defs/Severity1"
+        }
+      ],
+      "title": "Severity"
+    },
+    "Severity1": {
+      "enum": [
+        "warn",
+        "error"
+      ],
+      "title": "Severity1",
       "type": "string"
     },
-    "warn_if": {
+    "SnapshotConfigs": {
+      "properties": {
+        "+alias": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Alias"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+check_cols": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+invalidate_hard_deletes": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InvalidateHardDeletes"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+quote_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+strategy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Strategy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+target_database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetDatabase"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+target_schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+transient": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+unique_key": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+updated_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UpdatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "alias": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Alias"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "check_cols": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Group"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "invalidate_hard_deletes": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InvalidateHardDeletes"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "quote_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "strategy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Strategy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "target_database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetDatabase"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "target_schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TargetSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "transient": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unique_key": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UpdatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "SnapshotConfigs",
+      "type": "object"
+    },
+    "SnowflakeWarehouse": {
+      "title": "SnowflakeWarehouse",
+      "type": "string"
+    },
+    "SourceConfigs": {
+      "properties": {
+        "+enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "SourceConfigs",
+      "type": "object"
+    },
+    "SqlHeader": {
+      "title": "SqlHeader",
+      "type": "string"
+    },
+    "Strategy": {
+      "title": "Strategy",
+      "type": "string"
+    },
+    "StringOrArrayOfStrings": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        }
+      ],
+      "title": "StringOrArrayOfStrings"
+    },
+    "Tags": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/StringOrArrayOfStrings"
+        }
+      ],
+      "title": "Tags"
+    },
+    "TargetDatabase": {
+      "title": "TargetDatabase",
+      "type": "string"
+    },
+    "TargetLag": {
+      "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$",
+      "title": "TargetLag",
+      "type": "string"
+    },
+    "TargetSchema": {
+      "title": "TargetSchema",
+      "type": "string"
+    },
+    "UnitTestConfigs": {
+      "properties": {
+        "+meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Meta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tags"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "UnitTestConfigs",
+      "type": "object"
+    },
+    "UpdatedAt": {
+      "title": "UpdatedAt",
+      "type": "string"
+    },
+    "WarnIf": {
+      "title": "WarnIf",
       "type": "string"
     }
-  }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Version"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "analysis-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "asset-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "clean-targets": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "config-version": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": 2,
+      "title": "Config-Version"
+    },
+    "data_tests": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DataTestConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "dbt-cloud": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DbtCloud"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "dispatch": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/DispatchItem"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dispatch"
+    },
+    "docs-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "flags": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Flags"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "log-path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Log-Path"
+    },
+    "macro-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "model-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "models": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ModelConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "on-run-end": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "On-Run-End"
+    },
+    "on-run-start": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "On-Run-Start"
+    },
+    "packages-install-path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Packages-Install-Path"
+    },
+    "profile": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Profile"
+    },
+    "query-comment": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/QueryComment"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Query-Comment"
+    },
+    "quoting": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Quoting"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "require-dbt-version": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StringOrArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "seed-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "seeds": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SeedConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "snapshot-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "snapshots": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SnapshotConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "sources": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SourceConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "target-path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target-Path"
+    },
+    "test-paths": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "tests": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DataTestConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "unit_tests": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UnitTestConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "vars": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Vars"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "title": "DbtProject",
+  "type": "object"
 }

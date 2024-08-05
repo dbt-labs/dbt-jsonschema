@@ -1,1 +1,2 @@
-datamodel-code-generator
+# datamodel-code-generator
+pydantic<3.0.0

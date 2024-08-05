@@ -116,5 +116,5 @@ These schemas are generated from [pydantic models](https://docs.pydantic.dev/lat
 
 1. Create a virtual environment and install the dependencies: `pip install -r requirements.txt`
 2. Make changes to the corresponding pydantic models in `src/latest.py`
-3. Run the generation script: `python3 src/generate.py`
+3. Run the generation script: `python3 generate.py`
 4. Add tests for valid and invalid JSON files in `tests/latest`
