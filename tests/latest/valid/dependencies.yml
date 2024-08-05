@@ -1,6 +1,10 @@
 projects:
   - name: my_dbt_project
+  - name: other_project
 
 packages:
   - package: dbt-labs/dbt-utils
     version: 1.0.0
+  - local: ../my_local_package
+  - git: "https://github.com/dbt-labs/dbt-utils.git"
+    revision: 0.9.2
