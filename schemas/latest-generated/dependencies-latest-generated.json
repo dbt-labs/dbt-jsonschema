@@ -1,0 +1,172 @@
+{
+  "$defs": {
+    "GitPackages": {
+      "additionalProperties": false,
+      "properties": {
+        "git": {
+          "title": "Git URL",
+          "type": "string"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Pin your package to a specific release by specifying a release name",
+          "title": "Revision"
+        },
+        "subdirectory": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only required if the package is nested in a subdirectory of the git project",
+          "title": "Subdirectory"
+        }
+      },
+      "required": [
+        "git"
+      ],
+      "title": "GitPackages",
+      "type": "object"
+    },
+    "HubPackages": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "items": {},
+              "type": "array"
+            }
+          ],
+          "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]",
+          "title": "Package version"
+        },
+        "install-prerelease": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Opt in to prerelease versions of a package",
+          "title": "Install Prerelease"
+        },
+        "package": {
+          "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
+          "examples": [
+            "dbt-labs/dbt_utils"
+          ],
+          "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$",
+          "title": "Package identifier",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "package"
+      ],
+      "title": "HubPackages",
+      "type": "object"
+    },
+    "LocalPackage": {
+      "additionalProperties": false,
+      "properties": {
+        "local": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local"
+        }
+      },
+      "title": "LocalPackage",
+      "type": "object"
+    },
+    "Project": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Project",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "packages": {
+      "anyOf": [
+        {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/HubPackages"
+              },
+              {
+                "$ref": "#/$defs/GitPackages"
+              },
+              {
+                "$ref": "#/$defs/LocalPackage"
+              }
+            ]
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Packages"
+    },
+    "projects": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Project"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Projects"
+    }
+  },
+  "title": "Dependencies",
+  "type": "object"
+}

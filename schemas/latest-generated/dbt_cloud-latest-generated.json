@@ -1,0 +1,26 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "project-id": {
+      "title": "Project-Id",
+      "type": "string"
+    },
+    "defer-env-id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Defer-Env-Id"
+    }
+  },
+  "required": [
+    "project-id"
+  ],
+  "title": "DbtCloud",
+  "type": "object"
+}
