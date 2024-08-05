@@ -112,4 +112,9 @@ _Do you use a different IDE which also supports JSON Schema? Please open a PR wi
 ## Contributing 
 PRs that improve these schemata are welcome! 
 
-Please ensure that JSON keys are sorted by [vscode-sort-json](https://marketplace.visualstudio.com/items?itemName=richie5um2.vscode-sort-json) according to the rules in `.vscode/settings`. 
+These schemas are generated from [pydantic models](https://docs.pydantic.dev/latest/concepts/json_schema/). To make updates, the process is as follows:
+
+1. Create a virtual environment and install the dependencies: `pip install -r requirements.txt`
+2. Make changes to the corresponding pydantic models in `src/latest.py`
+3. Run the generation script: `python3 src/generate.py`
+4. Add tests for valid and invalid JSON files in `tests/latest`
