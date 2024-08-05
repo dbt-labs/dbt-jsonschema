@@ -11,9 +11,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "type": "string"
@@ -25,9 +23,7 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": [
-                "name"
-              ],
+              "required": ["name"],
               "properties": {
                 "name": {
                   "type": "string"
@@ -55,7 +51,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           }
         }
       }
@@ -64,12 +60,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "depends_on",
-          "name",
-          "owner",
-          "type"
-        ],
+        "required": ["depends_on", "name", "owner", "type"],
         "$comment": "NB: depends_on is not strictly required, but is _expected_ according to the documentation",
         "properties": {
           "name": {
@@ -80,13 +71,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "dashboard",
-              "notebook",
-              "analysis",
-              "ml",
-              "application"
-            ]
+            "enum": ["dashboard", "notebook", "analysis", "ml", "application"]
           },
           "depends_on": {
             "type": "array",
@@ -100,38 +85,13 @@
           },
           "maturity": {
             "type": "string",
-            "enum": [
-              "high",
-              "medium",
-              "low"
-            ]
+            "enum": ["high", "medium", "low"]
           },
           "meta": {
             "type": "object"
           },
           "owner": {
-            "type": "object",
-            "anyOf": [
-              {
-                "required": [
-                  "email"
-                ]
-              },
-              {
-                "required": [
-                  "name"
-                ]
-              }
-            ],
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false
+            "$ref": "#/$defs/owner"
           },
           "tags": {
             "$ref": "#/$defs/string_or_array_of_strings"
@@ -146,26 +106,13 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name",
-          "owner"
-        ],
+        "required": ["name", "owner"],
         "properties": {
           "name": {
             "type": "string"
           },
           "owner": {
-            "type": "object",
-            "minProperties": 1,
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": true
+            "$ref": "#/$defs/owner"
           }
         },
         "additionalProperties": false
@@ -175,9 +122,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "type": "string"
@@ -189,9 +134,7 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": [
-                "name"
-              ],
+              "required": ["name"],
               "properties": {
                 "name": {
                   "type": "string"
@@ -217,19 +160,11 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name",
-          "label",
-          "type",
-          "type_params"
-        ],
+        "required": ["name", "label", "type", "type_params"],
         "if": {
           "properties": {
             "type": {
-              "enum": [
-                "SIMPLE",
-                "simple"
-              ]
+              "enum": ["SIMPLE", "simple"]
             }
           }
         },
@@ -244,10 +179,7 @@
           "if": {
             "properties": {
               "type": {
-                "enum": [
-                  "derived",
-                  "DERIVED"
-                ]
+                "enum": ["derived", "DERIVED"]
               }
             }
           },
@@ -262,10 +194,7 @@
             "if": {
               "properties": {
                 "type": {
-                  "enum": [
-                    "cumulative",
-                    "CUMULATIVE"
-                  ]
+                  "enum": ["cumulative", "CUMULATIVE"]
                 }
               }
             },
@@ -280,10 +209,7 @@
               "if": {
                 "properties": {
                   "type": {
-                    "enum": [
-                      "conversion",
-                      "CONVERSION"
-                    ]
+                    "enum": ["conversion", "CONVERSION"]
                   }
                 }
               },
@@ -298,10 +224,7 @@
                 "if": {
                   "properties": {
                     "type": {
-                      "enum": [
-                        "ratio",
-                        "RATIO"
-                      ]
+                      "enum": ["ratio", "RATIO"]
                     }
                   }
                 },
@@ -325,6 +248,7 @@
             "type": "string"
           },
           "type": {
+            "title": "Metric Type",
             "enum": [
               "SIMPLE",
               "RATIO",
@@ -342,7 +266,7 @@
             "type": "string"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "label": {
             "type": "string"
@@ -358,9 +282,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "type": "string"
@@ -370,11 +292,7 @@
           },
           "access": {
             "type": "string",
-            "enum": [
-              "private",
-              "protected",
-              "public"
-            ]
+            "enum": ["private", "protected", "public"]
           },
           "columns": {
             "type": "array",
@@ -401,7 +319,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "latest_version": {
             "type": "number"
@@ -419,9 +337,7 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": [
-                "v"
-              ],
+              "required": ["v"],
               "properties": {
                 "columns": {
                   "type": "array",
@@ -453,12 +369,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name",
-          "description",
-          "label",
-          "query_params"
-        ],
+        "required": ["name", "description", "label", "query_params"],
         "properties": {
           "name": {
             "type": "string"
@@ -498,9 +409,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "type": "string"
@@ -515,6 +424,7 @@
             }
           },
           "config": {
+            "title": "Seed Config",
             "type": "object",
             "properties": {
               "column_types": {
@@ -550,7 +460,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "tests": {
             "type": "array",
@@ -566,10 +476,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name",
-          "model"
-        ],
+        "required": ["name", "model"],
         "properties": {
           "name": {
             "type": "string",
@@ -620,9 +527,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "type": "string"
@@ -637,6 +542,7 @@
             }
           },
           "config": {
+            "title": "Snapshot Config",
             "type": "object",
             "properties": {
               "alias": {
@@ -693,7 +599,7 @@
             "$ref": "#/$defs/docs_config"
           },
           "group": {
-            "$ref": "#/$defs/group"
+            "$ref": "#/$defs/group_name"
           },
           "meta": {
             "type": "object"
@@ -712,9 +618,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "description": "How you will identify the schema in {{ source() }} calls. Unless `schema` is also set, this will be the name of the schema in the database.",
@@ -775,9 +679,7 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": [
-                "name"
-              ],
+              "required": ["name"],
               "properties": {
                 "name": {
                   "title": "Name",
@@ -858,11 +760,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "name",
-          "model",
-          "expect"
-        ],
+        "required": ["name", "model", "expect"],
         "properties": {
           "name": {
             "type": "string"
@@ -871,6 +769,7 @@
             "type": "string"
           },
           "config": {
+            "title": "Unit Test Config",
             "type": "object",
             "properties": {
               "meta": {
@@ -918,11 +817,7 @@
               "format": {
                 "description": "Defaults to `dict` when not specified",
                 "type": "string",
-                "enum": [
-                  "dict",
-                  "sql",
-                  "csv"
-                ]
+                "enum": ["csv", "dict", "sql"]
               },
               "additionalProperties": false
             }
@@ -965,11 +860,7 @@
                 "format": {
                   "description": "Defaults to `dict` when not specified",
                   "type": "string",
-                  "enum": [
-                    "dict",
-                    "csv",
-                    "sql"
-                  ]
+                  "enum": ["csv", "dict", "sql"]
                 },
                 "input": {
                   "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
@@ -987,9 +878,7 @@
           "model": {
             "description": "The name of the model whose behaviour you are testing. Does not need to be wrapped in a ref.",
             "type": "string",
-            "examples": [
-              "my_model"
-            ]
+            "examples": ["my_model"]
           },
           "overrides": {
             "type": "object",
@@ -1053,9 +942,7 @@
     },
     "column_properties": {
       "type": "object",
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "uniqueItems": true,
       "properties": {
         "name": {
@@ -1106,9 +993,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "properties": {
           "name": {
             "type": "string"
@@ -1136,11 +1021,7 @@
       "properties": {
         "conversion_type_params": {
           "type": "object",
-          "required": [
-            "entity",
-            "base_measure",
-            "conversion_measure"
-          ],
+          "required": ["entity", "base_measure", "conversion_measure"],
           "properties": {
             "base_measure": {
               "$ref": "#/$defs/metric_input_measure"
@@ -1159,10 +1040,7 @@
               "type": "array",
               "items": {
                 "type": "object",
-                "required": [
-                  "base_property",
-                  "conversion_property"
-                ],
+                "required": ["base_property", "conversion_property"],
                 "properties": {
                   "base_property": {
                     "description": "DIMENSION or ENTITY",
@@ -1195,13 +1073,7 @@
       "type": "object",
       "properties": {
         "grain_to_date": {
-          "enum": [
-            "day",
-            "week",
-            "month",
-            "quarter",
-            "year"
-          ]
+          "enum": ["day", "week", "month", "quarter", "year"]
         },
         "measure": {
           "$ref": "#/$defs/metric_input_measure"
@@ -1223,10 +1095,7 @@
           "properties": {
             "relationships": {
               "type": "object",
-              "required": [
-                "to",
-                "field"
-              ],
+              "required": ["to", "field"],
               "properties": {
                 "name": {
                   "type": "string"
@@ -1261,9 +1130,7 @@
           "properties": {
             "accepted_values": {
               "type": "object",
-              "required": [
-                "values"
-              ],
+              "required": ["values"],
               "properties": {
                 "name": {
                   "type": "string"
@@ -1346,10 +1213,7 @@
     },
     "dimension": {
       "type": "object",
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "anyOf": [
         {
           "not": {
@@ -1357,9 +1221,7 @@
           }
         },
         {
-          "required": [
-            "type_params"
-          ]
+          "required": ["type_params"]
         }
       ],
       "properties": {
@@ -1371,18 +1233,11 @@
           "type": "string"
         },
         "type": {
-          "enum": [
-            "CATEGORICAL",
-            "TIME",
-            "categorical",
-            "time"
-          ]
+          "title": "Dimension Type",
+          "enum": ["CATEGORICAL", "TIME", "categorical", "time"]
         },
         "expr": {
-          "type": [
-            "string",
-            "boolean"
-          ]
+          "type": ["string", "boolean"]
         },
         "is_partition": {
           "type": "boolean"
@@ -1395,9 +1250,7 @@
     },
     "dimension_type_params": {
       "type": "object",
-      "required": [
-        "time_granularity"
-      ],
+      "required": ["time_granularity"],
       "properties": {
         "time_granularity": {
           "enum": [
@@ -1438,16 +1291,14 @@
     },
     "entity": {
       "type": "object",
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "properties": {
         "name": {
           "type": "string",
           "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
         },
         "type": {
+          "title": "Entity Type",
           "enum": [
             "PRIMARY",
             "UNIQUE",
@@ -1463,35 +1314,27 @@
           "type": "string"
         },
         "expr": {
-          "type": [
-            "string",
-            "boolean"
-          ]
+          "type": ["string", "boolean"]
         }
       },
       "additionalProperties": false
     },
     "export": {
       "type": "object",
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "properties": {
         "name": {
           "type": "string"
         },
         "config": {
+          "title": "Export Config",
           "type": "object",
           "properties": {
             "alias": {
               "type": "string"
             },
             "export_as": {
-              "enum": [
-                "table",
-                "view",
-                "cache"
-              ]
+              "enum": ["table", "view", "cache"]
             },
             "schema": {
               "type": "string"
@@ -1536,21 +1379,14 @@
     },
     "freshness_rules": {
       "type": "object",
-      "required": [
-        "count",
-        "period"
-      ],
+      "required": ["count", "period"],
       "properties": {
         "count": {
           "$ref": "#/$defs/number_or_jinja_string"
         },
         "period": {
           "type": "string",
-          "enum": [
-            "minute",
-            "hour",
-            "day"
-          ]
+          "enum": ["minute", "hour", "day"]
         }
       },
       "additionalProperties": false
@@ -1565,7 +1401,7 @@
       },
       "additionalProperties": false
     },
-    "group": {
+    "group_name": {
       "type": "string"
     },
     "include_exclude": {
@@ -1580,15 +1416,10 @@
       }
     },
     "is-time-dimension": {
-      "required": [
-        "type"
-      ],
+      "required": ["type"],
       "properties": {
         "type": {
-          "enum": [
-            "TIME",
-            "time"
-          ]
+          "enum": ["TIME", "time"]
         }
       }
     },
@@ -1598,10 +1429,7 @@
     },
     "measure": {
       "type": "object",
-      "required": [
-        "name",
-        "agg"
-      ],
+      "required": ["name", "agg"],
       "properties": {
         "name": {
           "type": "string",
@@ -1646,11 +1474,7 @@
           "type": "string"
         },
         "expr": {
-          "type": [
-            "string",
-            "integer",
-            "boolean"
-          ]
+          "type": ["string", "integer", "boolean"]
         },
         "label": {
           "type": "string"
@@ -1730,10 +1554,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "database",
-              "project"
-            ],
+            "required": ["database", "project"],
             "properties": {
               "database": {
                 "type": "string"
@@ -1777,20 +1598,11 @@
         },
         "on_configuration_change": {
           "type": "string",
-          "enum": [
-            "apply",
-            "continue",
-            "fail"
-          ]
+          "enum": ["apply", "continue", "fail"]
         },
         "on_schema_change": {
           "type": "string",
-          "enum": [
-            "append_new_columns",
-            "fail",
-            "ignore",
-            "sync_all_columns"
-          ]
+          "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
         },
         "snowflake_warehouse": {
           "type": "string"
@@ -1804,22 +1616,35 @@
         }
       }
     },
-    "non_additive_dimension": {
+    "owner": {
       "type": "object",
-      "required": [
-        "name"
+      "anyOf": [
+        {
+          "required": ["email"]
+        },
+        {
+          "required": ["name"]
+        }
       ],
       "properties": {
         "name": {
           "type": "string"
         },
+        "email": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "non_additive_dimension": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
         "window_choice": {
-          "enum": [
-            "MIN",
-            "MAX",
-            "min",
-            "max"
-          ]
+          "enum": ["MIN", "MAX", "min", "max"]
         },
         "window_groupings": {
           "type": "array",
@@ -1927,10 +1752,7 @@
             },
             {
               "type": "string",
-              "enum": [
-                "warn",
-                "error"
-              ]
+              "enum": ["warn", "error"]
             }
           ]
         },
