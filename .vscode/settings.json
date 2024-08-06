@@ -106,22 +106,5 @@
             "/tests/latest/**/dependencies.yml"
         ]
 
-    },
-    "sortJSON.orderOverride": [
-        "version",
-        "title",
-        "name",
-        "description",
-        "type",
-        "required",
-        "if",
-        "then",
-        "else"
-    ],
-    "sortJSON.orderUnderride": [
-        "properties",
-        "patternProperties",
-        "additionalProperties",
-        "$defs"
-    ]
+    }
 }
