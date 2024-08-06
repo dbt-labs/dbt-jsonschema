@@ -156,7 +156,7 @@
       "title": "AggregationTypeParams",
       "type": "object"
     },
-    "Analyse": {
+    "Analysis": {
       "properties": {
         "name": {
           "title": "Name",
@@ -226,7 +226,7 @@
       "required": [
         "name"
       ],
-      "title": "Analyse",
+      "title": "Analysis",
       "type": "object"
     },
     "Argument": {
@@ -4510,200 +4510,116 @@
       "type": "integer"
     },
     "analyses": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Analyse"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Analyses"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Analysis"
+      },
+      "title": "Analyses",
+      "type": "array"
     },
     "exposures": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Exposure"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Exposures"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Exposure"
+      },
+      "title": "Exposures",
+      "type": "array"
     },
     "groups": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Group"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Groups"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Group"
+      },
+      "title": "Groups",
+      "type": "array"
     },
     "macros": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Macro"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Macros"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Macro"
+      },
+      "title": "Macros",
+      "type": "array"
     },
     "metrics": {
-      "anyOf": [
-        {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/SimpleMetric"
-              },
-              {
-                "$ref": "#/$defs/DerivedMetric"
-              },
-              {
-                "$ref": "#/$defs/CumulativeMetric"
-              },
-              {
-                "$ref": "#/$defs/ConversionMetric"
-              },
-              {
-                "$ref": "#/$defs/RatioMetric"
-              }
-            ]
+      "default": [],
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/SimpleMetric"
           },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Metrics"
+          {
+            "$ref": "#/$defs/DerivedMetric"
+          },
+          {
+            "$ref": "#/$defs/CumulativeMetric"
+          },
+          {
+            "$ref": "#/$defs/ConversionMetric"
+          },
+          {
+            "$ref": "#/$defs/RatioMetric"
+          }
+        ]
+      },
+      "title": "Metrics",
+      "type": "array"
     },
     "models": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Model"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Models"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Model"
+      },
+      "title": "Models",
+      "type": "array"
     },
     "saved_queries": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/SavedQuery"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Saved Queries"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SavedQuery"
+      },
+      "title": "Saved Queries",
+      "type": "array"
     },
     "seeds": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Seed"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Seeds"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Seed"
+      },
+      "title": "Seeds",
+      "type": "array"
     },
     "semantic_models": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/SemanticModel"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Semantic Models"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SemanticModel"
+      },
+      "title": "Semantic Models",
+      "type": "array"
     },
     "snapshots": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Snapshot"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Snapshots"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Snapshot"
+      },
+      "title": "Snapshots",
+      "type": "array"
     },
     "sources": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/Source"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Sources"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Source"
+      },
+      "title": "Sources",
+      "type": "array"
     },
     "unit_tests": {
-      "anyOf": [
-        {
-          "items": {
-            "$ref": "#/$defs/UnitTest"
-          },
-          "type": "array"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Unit Tests"
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/UnitTest"
+      },
+      "title": "Unit Tests",
+      "type": "array"
     }
   },
   "title": "DbtYmlFiles",
