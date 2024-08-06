@@ -22,4 +22,5 @@ if __name__ == "__main__":
         schema_file = output_directory /  f"{file_name}-latest.json"
         schema_file.parent.mkdir(parents=True, exist_ok=True)
         schema = model.model_json_schema(mode="validation")
+        print("Generating" , schema_file)
         schema_file.write_text(json.dumps(schema, indent=2))
