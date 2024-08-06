@@ -383,7 +383,7 @@ class Config(BaseModel):
     tags: Optional[StringOrArrayOfStrings] = None
 
 
-class Analyse(BaseModel):
+class Analysis(BaseModel):
     name: str
     description: Optional[str] = None
     columns: Optional[List[Column]] = None
@@ -998,15 +998,15 @@ class DbtYmlFiles(BaseModel):
         extra="forbid",
     )
     version: Literal[2] = 2
-    analyses: Optional[List[Analyse]] = None
-    exposures: Optional[List[Exposure]] = None
-    groups: Optional[List[Group]] = None
-    macros: Optional[List[Macro]] = None
-    metrics: Optional[List[Metric]] = None
-    models: Optional[List[Model]] = None
-    saved_queries: Optional[List[SavedQuery]] = None
-    seeds: Optional[List[Seed]] = None
-    semantic_models: Optional[List[SemanticModel]] = None
-    snapshots: Optional[List[Snapshot]] = None
-    sources: Optional[List[Source]] = None
-    unit_tests: Optional[List[UnitTest]] = None
+    analyses: List[Analysis] = []
+    exposures: List[Exposure] = []
+    groups: List[Group] = []
+    macros: List[Macro] = []
+    metrics: List[Metric] = []
+    models: List[Model] = []
+    saved_queries: List[SavedQuery] = []
+    seeds: List[Seed] = []
+    semantic_models: List[SemanticModel] = []
+    snapshots: List[Snapshot] = []
+    sources: List[Source] = []
+    unit_tests: List[UnitTest] = []
