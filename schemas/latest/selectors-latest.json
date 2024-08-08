@@ -1,153 +1,272 @@
 {
-    "title": "selectors",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "required": [
-        "selectors"
-    ],
-    "properties": {
-        "selectors": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "default": {
-                        "oneOf": [
-                            {
-                                "type": "string",
-                                "pattern": "\\{\\{.*\\}\\}"
-                            },
-                            {
-                                "type": "boolean"
-                            }
-                        ],
-                        "additionalProperties": false
-                    },
-                    "definition": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/$defs/definition_block"
-                            },
-                            {
-                                "type": "string"
-                            },
-                            {
-                              "$ref": "#/$defs/union_block"
-                            }
-                        ]
-                    }
-                },
-                "additionalProperties": false
-            },
-            "minItems": 1
-        }
-    },
-    "additionalProperties": false,
-    "$defs": {
-      "boolean_or_jinja_string": {
-        "oneOf": [
-          {
-            "$ref": "#/$defs/jinja_string"
-          },
-          {
-            "type": "boolean"
-          }
-        ],
-        "additionalProperties": false
-      },
-      "definition_block": {
-        "type": "object",
-        "properties": {
-          "method": {
-            "type": "string",
-            "enum": [
-              "tag",
-              "source",
-              "path",
-              "file",
-              "fqn",
-              "package",
-              "config",
-              "test_type",
-              "test_name",
-              "state",
-              "exposure",
-              "metric",
-              "result",
-              "source_status",
-              "group",
-              "wildcard"
-            ]
-          },
-          "value": {
-            "type": "string"
-          },
-          "children": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-          },
-          "parents": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-          },
-          "children_depth": {
-            "type": "number"
-          },
-          "parents_depth": {
-            "type": "number"
-          },
-          "childrens_parents": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-          },
-          "indirect_selection": {
-            "type": "string",
-            "enum": ["buildable", "cautious", "eager"]
-          }
+  "$defs": {
+    "BooleanOrJinjaString": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/JinjaString"
         },
-        "additionalProperties": true
-      },
-      "exclude_block": {
-        "type": "array",
-        "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/intersection_block"
-              },
-              {
-                "$ref": "#/$defs/definition_block"
-              }
-            ]
+        {
+          "type": "boolean"
         }
-      },
-      "intersection_block": {
-        "type": "array",
-        "items": {
-          "$ref": "#/$defs/definition_block"
-        }
-      },
-      "jinja_string": {
-        "type": "string",
-        "pattern": "\\{\\{.*\\}\\}"
-      },
-      "union_block": {
-        "type": "array",
-        "items": {
+      ],
+      "title": "BooleanOrJinjaString"
+    },
+    "Default": {
+      "pattern": "\\{\\{.*\\}\\}",
+      "title": "Default",
+      "type": "string"
+    },
+    "DefinitionBlock": {
+      "additionalProperties": true,
+      "properties": {
+        "method": {
           "anyOf": [
             {
-              "$ref": "#/$defs/intersection_block"
+              "$ref": "#/$defs/Method"
             },
             {
-              "$ref": "#/$defs/definition_block"
-            },
-            {
-              "$ref": "#/$defs/exclude_block"
+              "type": "null"
             }
-          ]
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "children": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "parents": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "children_depth": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Children Depth"
+        },
+        "parents_depth": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parents Depth"
+        },
+        "childrens_parents": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "indirect_selection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IndirectSelection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
-      }
+      },
+      "title": "DefinitionBlock",
+      "type": "object"
+    },
+    "ExcludeBlock": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/IntersectionBlock"
+          },
+          {
+            "$ref": "#/$defs/DefinitionBlock"
+          }
+        ]
+      },
+      "title": "ExcludeBlock",
+      "type": "array"
+    },
+    "IndirectSelection": {
+      "enum": [
+        "buildable",
+        "cautious",
+        "eager"
+      ],
+      "title": "IndirectSelection",
+      "type": "string"
+    },
+    "IntersectionBlock": {
+      "items": {
+        "$ref": "#/$defs/DefinitionBlock"
+      },
+      "title": "IntersectionBlock",
+      "type": "array"
+    },
+    "JinjaString": {
+      "pattern": "\\{\\{.*\\}\\}",
+      "title": "JinjaString",
+      "type": "string"
+    },
+    "Method": {
+      "enum": [
+        "tag",
+        "source",
+        "path",
+        "file",
+        "fqn",
+        "package",
+        "config",
+        "test_type",
+        "test_name",
+        "state",
+        "exposure",
+        "metric",
+        "result",
+        "source_status",
+        "group",
+        "wildcard"
+      ],
+      "title": "Method",
+      "type": "string"
+    },
+    "Selector": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "default": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Default"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default"
+        },
+        "definition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DefinitionBlock"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/UnionBlock"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Definition"
+        }
+      },
+      "title": "Selector",
+      "type": "object"
+    },
+    "UnionBlock": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/IntersectionBlock"
+          },
+          {
+            "$ref": "#/$defs/DefinitionBlock"
+          },
+          {
+            "$ref": "#/$defs/ExcludeBlock"
+          }
+        ]
+      },
+      "title": "UnionBlock",
+      "type": "array"
     }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "selectors": {
+      "items": {
+        "$ref": "#/$defs/Selector"
+      },
+      "minItems": 1,
+      "title": "Selectors",
+      "type": "array"
+    }
+  },
+  "required": [
+    "selectors"
+  ],
+  "title": "Selectors",
+  "type": "object"
 }

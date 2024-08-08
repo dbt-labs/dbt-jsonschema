@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "redhat.vscode-yaml",
-        "richie5um2.vscode-sort-json"
+        "redhat.vscode-yaml"
     ]
 }
