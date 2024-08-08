@@ -190,11 +190,6 @@ class Severity1(Enum):
 class Severity(RootModel[Union[JinjaString, Severity1]]):
     root: Union[JinjaString, Severity1]
 
-
-class SnowflakeWarehouse(RootModel[str]):
-    root: str
-
-
 class SqlHeader(RootModel[str]):
     root: str
 
@@ -474,7 +469,7 @@ class ModelConfigs(BaseModel):
     field_pre_hook: Optional[ArrayOfStrings] = Field(None, alias='+pre-hook')
     field_schema: Optional[Schema] = Field(None, alias='+schema')
     field_secure: Optional[BooleanOrJinjaString] = Field(False, alias='+secure')
-    field_snowflake_warehouse: Optional[SnowflakeWarehouse] = Field(
+    field_snowflake_warehouse: Optional[str] = Field(
         None, alias='+snowflake_warehouse'
     )
     field_sql_header: Optional[SqlHeader] = Field(None, alias='+sql_header')
@@ -510,7 +505,7 @@ class ModelConfigs(BaseModel):
     pre_hook: Optional[ArrayOfStrings] = Field(None, alias='pre-hook')
     schema_: Optional[Schema] = Field(None, alias='schema')
     secure: Optional[BooleanOrJinjaString] = False
-    snowflake_warehouse: Optional[SnowflakeWarehouse] = None
+    snowflake_warehouse: str = ""
     sql_header: Optional[SqlHeader] = None
     tags: Optional[Tags] = None
     target_lag: Optional[TargetLag] = None

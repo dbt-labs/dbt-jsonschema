@@ -1165,13 +1165,14 @@
         "+snowflake_warehouse": {
           "anyOf": [
             {
-              "$ref": "#/$defs/SnowflakeWarehouse"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "title": "+Snowflake Warehouse"
         },
         "+sql_header": {
           "anyOf": [
@@ -1537,15 +1538,9 @@
           "default": false
         },
         "snowflake_warehouse": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/SnowflakeWarehouse"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+          "default": "",
+          "title": "Snowflake Warehouse",
+          "type": "string"
         },
         "sql_header": {
           "anyOf": [
@@ -2488,10 +2483,6 @@
       },
       "title": "SnapshotConfigs",
       "type": "object"
-    },
-    "SnowflakeWarehouse": {
-      "title": "SnowflakeWarehouse",
-      "type": "string"
     },
     "SourceConfigs": {
       "properties": {
