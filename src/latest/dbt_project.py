@@ -50,21 +50,12 @@ class Access(Enum):
     protected = 'protected'
     public = 'public'
 
-
-class Alias(RootModel[str]):
-    root: str
-
-
 class ArrayOfStrings(RootModel[List[str]]):
     root: List[str]
 
 
 class ColumnTypes(RootModel[Dict[str, str]]):
     root: Dict[str, str]
-
-
-class Database(RootModel[str]):
-    root: str
 
 
 class DocsConfig(BaseModel):
@@ -109,11 +100,6 @@ class AuthorizedViews(RootModel[List[AuthorizedView]]):
         description='Configuration, specific to BigQuery adapter, used to setup authorized views.',
         title='Authorized views',
     )
-
-
-class Group(RootModel[str]):
-    root: str
-
 
 class HoursToExpiration(RootModel[float]):
     root: float = Field(
@@ -176,10 +162,6 @@ class OnSchemaChange(Enum):
     fail = 'fail'
     ignore = 'ignore'
     sync_all_columns = 'sync_all_columns'
-
-
-class Schema(RootModel[Optional[str]]):
-    root: Optional[str]
 
 
 class Severity1(Enum):
@@ -252,30 +234,30 @@ class Contract(BaseModel):
 
 
 class DataTestConfigs(BaseModel):
-    field_alias: Optional[Alias] = Field(None, alias='+alias')
-    field_database: Optional[Database] = Field(None, alias='+database')
+    field_alias: Optional[str] = Field("", alias='+alias')
+    field_database: Optional[str] = Field("", alias='+database')
     field_enabled: Optional[BooleanOrJinjaString] = Field(None, alias='+enabled')
     field_error_if: Optional[ErrorIf] = Field(None, alias='+error_if')
     field_fail_calc: Optional[FailCalc] = Field(None, alias='+fail_calc')
-    field_group: Optional[Group] = Field(None, alias='+group')
+    field_group: Optional[str] = Field("", alias='+group')
     field_limit: Optional[Limit] = Field(None, alias='+limit')
     field_meta: Optional[Meta] = Field(None, alias='+meta')
-    field_schema: Optional[Schema] = Field(None, alias='+schema')
+    field_schema: Optional[str] = Field("", alias='+schema')
     field_severity: Optional[Severity] = Field(None, alias='+severity')
     field_store_failures: Optional[BooleanOrJinjaString] = Field(
         None, alias='+store_failures'
     )
     field_tags: Optional[Tags] = Field(None, alias='+tags')
     field_warn_if: Optional[WarnIf] = Field(None, alias='+warn_if')
-    alias: Optional[Alias] = None
-    database: Optional[Database] = None
+    alias: Optional[str] = ""
+    database: Optional[str] = ""
     enabled: Optional[BooleanOrJinjaString] = None
     error_if: Optional[ErrorIf] = None
     fail_calc: Optional[FailCalc] = None
-    group: Optional[Group] = None
+    group: Optional[str] = ""
     limit: Optional[Limit] = None
     meta: Optional[Meta] = None
-    schema_: Optional[Schema] = Field(None, alias='schema')
+    schema_: Optional[str] = Field("", alias='schema')
     severity: Optional[Severity] = None
     store_failures: Optional[BooleanOrJinjaString] = None
     tags: Optional[Tags] = None
@@ -310,47 +292,47 @@ class SeedConfigs(BaseModel):
     field_copy_grants: Optional[BooleanOrJinjaString] = Field(
         None, alias='+copy_grants'
     )
-    field_database: Optional[Database] = Field(None, alias='+database')
+    field_database: Optional[str] = Field("", alias='+database')
     field_docs: Optional[DocsConfig] = Field(None, alias='+docs')
     field_enabled: Optional[BooleanOrJinjaString] = Field(None, alias='+enabled')
     field_full_refresh: Optional[BooleanOrJinjaString] = Field(
         None, alias='+full_refresh'
     )
     field_grants: Optional[Grants] = Field(None, alias='+grants')
-    field_group: Optional[Group] = Field(None, alias='+group')
+    field_group: Optional[str] = Field("", alias='+group')
     field_meta: Optional[Meta] = Field(None, alias='+meta')
     field_persist_docs: Optional[PersistDocsConfig] = Field(None, alias='+persist_docs')
     field_quote_columns: Optional[BooleanOrJinjaString] = Field(
         None, alias='+quote_columns'
     )
-    field_schema: Optional[Schema] = Field(None, alias='+schema')
+    field_schema: Optional[str] = Field("", alias='+schema')
     field_tags: Optional[Tags] = Field(None, alias='+tags')
     field_transient: Optional[BooleanOrJinjaString] = Field(None, alias='+transient')
     column_types: Optional[ColumnTypes] = None
     copy_grants: Optional[BooleanOrJinjaString] = None
-    database: Optional[Database] = None
+    database: Optional[str] = ""
     docs: Optional[DocsConfig] = None
     enabled: Optional[BooleanOrJinjaString] = None
     full_refresh: Optional[BooleanOrJinjaString] = None
     grants: Optional[Grants] = None
-    group: Optional[Group] = None
+    group: Optional[str] = ""
     meta: Optional[Meta] = None
     persist_docs: Optional[PersistDocsConfig] = None
     quote_columns: Optional[BooleanOrJinjaString] = None
-    schema_: Optional[Schema] = Field(None, alias='schema')
+    schema_: Optional[str] = Field("", alias='schema')
     tags: Optional[Tags] = None
     transient: Optional[BooleanOrJinjaString] = None
 
 
 class SnapshotConfigs(BaseModel):
-    field_alias: Optional[Alias] = Field(None, alias='+alias')
+    field_alias: Optional[str] = Field("", alias='+alias')
     field_check_cols: Optional[StringOrArrayOfStrings] = Field(
         None, alias='+check_cols'
     )
     field_docs: Optional[DocsConfig] = Field(None, alias='+docs')
     field_enabled: Optional[BooleanOrJinjaString] = Field(None, alias='+enabled')
     field_grants: Optional[Grants] = Field(None, alias='+grants')
-    field_group: Optional[Group] = Field(None, alias='+group')
+    field_group: Optional[str] = Field("", alias='+group')
     field_invalidate_hard_deletes: Optional[InvalidateHardDeletes] = Field(
         None, alias='+invalidate_hard_deletes'
     )
@@ -372,12 +354,12 @@ class SnapshotConfigs(BaseModel):
         None, alias='+unique_key'
     )
     field_updated_at: Optional[UpdatedAt] = Field(None, alias='+updated_at')
-    alias: Optional[Alias] = None
+    alias: Optional[str] = ""
     check_cols: Optional[StringOrArrayOfStrings] = None
     docs: Optional[DocsConfig] = None
     enabled: Optional[BooleanOrJinjaString] = None
     grants: Optional[Grants] = None
-    group: Optional[Group] = None
+    group: Optional[str] = ""
     invalidate_hard_deletes: Optional[InvalidateHardDeletes] = None
     meta: Optional[Meta] = None
     persist_docs: Optional[PersistDocsConfig] = None
@@ -427,7 +409,7 @@ class Backup(RootModel[BooleanOrJinjaString]):
 
 class ModelConfigs(BaseModel):
     field_access: Optional[Access] = Field(None, alias='+access')
-    field_alias: Optional[Alias] = Field(None, alias='+alias')
+    field_alias: Optional[str] = Field("", alias='+alias')
     field_auto_refresh: Optional[AutoRefresh] = Field(None, alias='+auto_refresh')
     field_backup: Optional[Backup] = Field(None, alias='+backup')
     field_bind: Optional[BooleanOrJinjaString] = Field(False, alias='+bind')
@@ -435,7 +417,7 @@ class ModelConfigs(BaseModel):
     field_copy_grants: Optional[BooleanOrJinjaString] = Field(
         None, alias='+copy_grants'
     )
-    field_database: Optional[Database] = Field(None, alias='+database')
+    field_database: Optional[str] = Field("", alias='+database')
     field_docs: Optional[DocsConfig] = Field(None, alias='+docs')
     field_enabled: Optional[BooleanOrJinjaString] = Field(None, alias='+enabled')
     field_file_format: Optional[FileFormat] = Field(None, alias='+file_format')
@@ -446,7 +428,7 @@ class ModelConfigs(BaseModel):
         None, alias='+grant_access_to'
     )
     field_grants: Optional[Grants] = Field(None, alias='+grants')
-    field_group: Optional[Group] = Field(None, alias='+group')
+    field_group: Optional[str] = Field("", alias='+group')
     field_hours_to_expiration: Optional[HoursToExpiration] = Field(
         None, alias='+hours_to_expiration'
     )
@@ -467,7 +449,7 @@ class ModelConfigs(BaseModel):
     field_persist_docs: Optional[PersistDocsConfig] = Field(None, alias='+persist_docs')
     field_post_hook: Optional[ArrayOfStrings] = Field(None, alias='+post-hook')
     field_pre_hook: Optional[ArrayOfStrings] = Field(None, alias='+pre-hook')
-    field_schema: Optional[Schema] = Field(None, alias='+schema')
+    field_schema: Optional[str] = Field("", alias='+schema')
     field_secure: Optional[BooleanOrJinjaString] = Field(False, alias='+secure')
     field_snowflake_warehouse: Optional[str] = Field(
         None, alias='+snowflake_warehouse'
@@ -477,20 +459,20 @@ class ModelConfigs(BaseModel):
     field_target_lag: Optional[TargetLag] = Field(None, alias='+target_lag')
     field_transient: Optional[BooleanOrJinjaString] = Field(None, alias='+transient')
     access: Optional[Access] = None
-    alias: Optional[Alias] = None
+    alias: Optional[str] = ""
     auto_refresh: Optional[AutoRefresh] = None
     backup: Optional[Backup] = None
     bind: Optional[BooleanOrJinjaString] = False
     contract: Optional[Contract] = None
     copy_grants: Optional[BooleanOrJinjaString] = None
-    database: Optional[Database] = None
+    database: Optional[str] = ""
     docs: Optional[DocsConfig] = None
     enabled: Optional[BooleanOrJinjaString] = None
     file_format: Optional[FileFormat] = None
     full_refresh: Optional[BooleanOrJinjaString] = None
     grant_access_to: Optional[AuthorizedViews] = None
     grants: Optional[Grants] = None
-    group: Optional[Group] = None
+    group: Optional[str] = ""
     hours_to_expiration: Optional[HoursToExpiration] = None
     incremental_strategy: Optional[IncrementalStrategy] = None
     kms_key_name: Optional[KmsKeyName] = None
@@ -503,7 +485,7 @@ class ModelConfigs(BaseModel):
     persist_docs: Optional[PersistDocsConfig] = None
     post_hook: Optional[ArrayOfStrings] = Field(None, alias='post-hook')
     pre_hook: Optional[ArrayOfStrings] = Field(None, alias='pre-hook')
-    schema_: Optional[Schema] = Field(None, alias='schema')
+    schema_: Optional[str] = Field("", alias='schema')
     secure: Optional[BooleanOrJinjaString] = False
     snowflake_warehouse: str = ""
     sql_header: Optional[SqlHeader] = None

@@ -9,10 +9,6 @@
       "title": "Access",
       "type": "string"
     },
-    "Alias": {
-      "title": "Alias",
-      "type": "string"
-    },
     "ArrayOfStrings": {
       "items": {
         "type": "string"
@@ -110,24 +106,26 @@
         "+alias": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Alias"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Alias"
         },
         "+database": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Database"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Database"
         },
         "+enabled": {
           "anyOf": [
@@ -165,13 +163,14 @@
         "+group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Group"
         },
         "+limit": {
           "anyOf": [
@@ -198,13 +197,14 @@
         "+schema": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Schema"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Schema"
         },
         "+severity": {
           "anyOf": [
@@ -253,24 +253,26 @@
         "alias": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Alias"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Alias"
         },
         "database": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Database"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Database"
         },
         "enabled": {
           "anyOf": [
@@ -308,13 +310,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "limit": {
           "anyOf": [
@@ -341,13 +344,14 @@
         "schema": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Schema"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Schema"
         },
         "severity": {
           "anyOf": [
@@ -396,10 +400,6 @@
       },
       "title": "DataTestConfigs",
       "type": "object"
-    },
-    "Database": {
-      "title": "Database",
-      "type": "string"
     },
     "DbtCloud": {
       "additionalProperties": true,
@@ -773,10 +773,6 @@
       "title": "Grants",
       "type": "object"
     },
-    "Group": {
-      "title": "Group",
-      "type": "string"
-    },
     "HoursToExpiration": {
       "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
       "title": "HoursToExpiration",
@@ -857,13 +853,14 @@
         "+alias": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Alias"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Alias"
         },
         "+auto_refresh": {
           "anyOf": [
@@ -923,13 +920,14 @@
         "+database": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Database"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Database"
         },
         "+docs": {
           "anyOf": [
@@ -1000,13 +998,14 @@
         "+group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Group"
         },
         "+hours_to_expiration": {
           "anyOf": [
@@ -1143,13 +1142,14 @@
         "+schema": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Schema"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Schema"
         },
         "+secure": {
           "anyOf": [
@@ -1232,13 +1232,14 @@
         "alias": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Alias"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Alias"
         },
         "auto_refresh": {
           "anyOf": [
@@ -1298,13 +1299,14 @@
         "database": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Database"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Database"
         },
         "docs": {
           "anyOf": [
@@ -1375,13 +1377,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "hours_to_expiration": {
           "anyOf": [
@@ -1518,13 +1521,14 @@
         "schema": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Schema"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Schema"
         },
         "secure": {
           "anyOf": [
@@ -1716,17 +1720,6 @@
       "title": "Quoting",
       "type": "object"
     },
-    "Schema": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "title": "Schema"
-    },
     "SeedConfigs": {
       "properties": {
         "+column_types": {
@@ -1754,13 +1747,14 @@
         "+database": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Database"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Database"
         },
         "+docs": {
           "anyOf": [
@@ -1809,13 +1803,14 @@
         "+group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Group"
         },
         "+meta": {
           "anyOf": [
@@ -1853,13 +1848,14 @@
         "+schema": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Schema"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Schema"
         },
         "+tags": {
           "anyOf": [
@@ -1908,13 +1904,14 @@
         "database": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Database"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Database"
         },
         "docs": {
           "anyOf": [
@@ -1963,13 +1960,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "meta": {
           "anyOf": [
@@ -2007,13 +2005,14 @@
         "schema": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Schema"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Schema"
         },
         "tags": {
           "anyOf": [
@@ -2065,13 +2064,14 @@
         "+alias": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Alias"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Alias"
         },
         "+check_cols": {
           "anyOf": [
@@ -2120,13 +2120,14 @@
         "+group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "+Group"
         },
         "+invalidate_hard_deletes": {
           "anyOf": [
@@ -2274,13 +2275,14 @@
         "alias": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Alias"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Alias"
         },
         "check_cols": {
           "anyOf": [
@@ -2329,13 +2331,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Group"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "invalidate_hard_deletes": {
           "anyOf": [

@@ -236,10 +236,6 @@ class Period(Enum):
     day = "day"
 
 
-class GroupName(RootModel[str]):
-    root: str
-
-
 class JinjaString(RootModel[str]):
     root: str = Field(..., pattern="\\{\\{.*\\}\\}")
 
@@ -389,7 +385,7 @@ class Analysis(BaseModel):
     columns: Optional[List[Column]] = None
     config: Optional[Config] = None
     docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
+    group: Optional[str] = ""
 
 
 class Exposure(BaseModel):
@@ -456,7 +452,7 @@ class MetricBase(BaseModel):
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     description: Optional[str] = None
     filter: Optional[str] = None
-    group: Optional[GroupName] = None
+    group: Optional[str] = ""
     label: str
 
 
@@ -900,7 +896,7 @@ class Model(BaseModel):
     data_tests: Optional[List[DataTests]] = None
     deprecation_date: Optional[str] = None
     docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
+    group: Optional[str] = ""
     latest_version: Optional[float] = None
     meta: Optional[Dict[str, Any]] = None
     tests: Optional[List[DataTests]] = None
@@ -916,7 +912,7 @@ class Seed(BaseModel):
     columns: Optional[List[ColumnProperties]] = None
     config: Optional[SeedConfig] = Field(None, title="Seed Config")
     docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
+    group: Optional[str] = ""
     tests: Optional[List[DataTests]] = None
 
 
@@ -930,7 +926,7 @@ class Snapshot(BaseModel):
     config: Optional[SnapshotConfig] = Field(None, title="Snapshot Config")
     data_tests: Optional[List[DataTests]] = None
     docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
+    group: Optional[str] = ""
     meta: Optional[Dict[str, Any]] = None
     tests: Optional[List[DataTests]] = None
 

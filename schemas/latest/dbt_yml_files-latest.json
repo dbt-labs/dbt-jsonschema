@@ -214,13 +214,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         }
       },
       "required": [
@@ -714,13 +715,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "label": {
           "title": "Label",
@@ -864,13 +866,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "label": {
           "title": "Label",
@@ -1015,13 +1018,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "label": {
           "title": "Label",
@@ -1692,10 +1696,6 @@
       "title": "Group",
       "type": "object"
     },
-    "GroupName": {
-      "title": "GroupName",
-      "type": "string"
-    },
     "IncludeExclude": {
       "properties": {
         "exclude": {
@@ -2131,13 +2131,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "latest_version": {
           "anyOf": [
@@ -2768,13 +2769,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "label": {
           "title": "Label",
@@ -3023,13 +3025,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "tests": {
           "anyOf": [
@@ -3297,13 +3300,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "label": {
           "title": "Label",
@@ -3426,13 +3430,14 @@
         "group": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GroupName"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "",
+          "title": "Group"
         },
         "meta": {
           "anyOf": [
