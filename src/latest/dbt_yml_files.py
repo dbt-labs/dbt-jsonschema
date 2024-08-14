@@ -384,7 +384,7 @@ class Analysis(BaseModel):
     columns: Optional[List[Column]] = None
     config: Optional[Config] = None
     docs: Optional[DocsConfig] = None
-    group: Optional[str] = ""
+    group: str = ""
 
 
 class Exposure(BaseModel):
@@ -451,7 +451,7 @@ class MetricBase(BaseModel):
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     description: str = ""
     filter: str = ""
-    group: Optional[str] = ""
+    group: str = ""
     label: str
 
 
@@ -661,7 +661,7 @@ class ModelConfigs(BaseModel):
     on_configuration_change: OnConfigurationChange = OnConfigurationChange.fail
     on_schema_change: Optional[OnSchemaChange] = OnSchemaChange.append_new_columns
     snowflake_warehouse: str = ""
-    sql_header: Optional[str] = ""
+    sql_header: str = ""
     target_lag: str = Field(
         "", pattern="^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
     )
@@ -893,7 +893,7 @@ class Model(BaseModel):
     data_tests: Optional[List[DataTests]] = None
     deprecation_date: str = ""
     docs: Optional[DocsConfig] = None
-    group: Optional[str] = ""
+    group: str = ""
     latest_version: Optional[float] = None
     meta: Optional[Dict[str, Any]] = None
     tests: Optional[List[DataTests]] = None
@@ -909,7 +909,7 @@ class Seed(BaseModel):
     columns: Optional[List[ColumnProperties]] = None
     config: Optional[SeedConfig] = Field(None, title="Seed Config")
     docs: Optional[DocsConfig] = None
-    group: Optional[str] = ""
+    group: str = ""
     tests: Optional[List[DataTests]] = None
 
 
@@ -923,7 +923,7 @@ class Snapshot(BaseModel):
     config: Optional[SnapshotConfig] = Field(None, title="Snapshot Config")
     data_tests: Optional[List[DataTests]] = None
     docs: Optional[DocsConfig] = None
-    group: Optional[str] = ""
+    group: str = ""
     meta: Optional[Dict[str, Any]] = None
     tests: Optional[List[DataTests]] = None
 

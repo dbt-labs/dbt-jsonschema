@@ -191,16 +191,9 @@
           "default": null
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         }
       },
       "required": [
@@ -620,16 +613,9 @@
           "type": "string"
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "label": {
           "title": "Label",
@@ -750,16 +736,9 @@
           "type": "string"
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "label": {
           "title": "Label",
@@ -874,16 +853,9 @@
           "type": "string"
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "label": {
           "title": "Label",
@@ -1389,16 +1361,6 @@
           ],
           "title": "Input",
           "type": "string"
-        },
-        "additionalProperties": {
-          "anyOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Additionalproperties"
         }
       },
       "title": "GivenItem",
@@ -1791,16 +1753,9 @@
           "default": null
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "latest_version": {
           "anyOf": [
@@ -1982,16 +1937,9 @@
           "type": "string"
         },
         "sql_header": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Sql Header"
+          "title": "Sql Header",
+          "type": "string"
         },
         "target_lag": {
           "default": "",
@@ -2263,16 +2211,6 @@
             }
           ],
           "default": null
-        },
-        "additionalProperties": {
-          "anyOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Additionalproperties"
         }
       },
       "title": "QueryParams",
@@ -2337,16 +2275,9 @@
           "type": "string"
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "label": {
           "title": "Label",
@@ -2565,16 +2496,9 @@
           "default": null
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "tests": {
           "anyOf": [
@@ -2798,16 +2722,9 @@
           "type": "string"
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "label": {
           "title": "Label",
@@ -2921,16 +2838,9 @@
           "default": null
         },
         "group": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Group"
+          "title": "Group",
+          "type": "string"
         },
         "meta": {
           "anyOf": [
@@ -3683,16 +3593,6 @@
             }
           ],
           "default": null
-        },
-        "additionalProperties": {
-          "anyOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Additionalproperties"
         }
       },
       "required": [
