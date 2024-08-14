@@ -113,7 +113,6 @@ class GivenItem(BaseModel):
             "source('schema', 'table')",
         ],
     )
-    additionalProperties: Optional[Any] = None
 
 
 class Overrides(BaseModel):
@@ -490,7 +489,6 @@ class QueryParams(BaseModel):
     dimensions: Optional[ArrayOfStrings] = None
     metrics: Optional[ArrayOfStrings] = None
     where: Optional[ArrayOfStrings] = None
-    additionalProperties: Optional[Any] = None
 
 
 class SavedQuery(BaseModel):
@@ -527,7 +525,6 @@ class UnitTest(BaseModel):
         examples=["my_model"],
     )
     overrides: Optional[Overrides] = None
-    additionalProperties: Optional[Any] = None
 
 
 class BooleanOrJinjaString(RootModel[Union[JinjaString, bool]]):
