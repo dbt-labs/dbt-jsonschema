@@ -631,13 +631,13 @@ class Measure(BaseModel):
 
 
 class Contract(BaseModel):
-    enforced: Optional[BooleanOrJinjaString] = None
-
+    enforced: BooleanOrJinjaString = True
+    alias_types: BooleanOrJinjaString = False
 
 class ModelConfigs(BaseModel):
-    auto_refresh: Optional[BooleanOrJinjaString] = None
-    backup: Optional[BooleanOrJinjaString] = None
-    contract: Optional[Contract] = None
+    auto_refresh: BooleanOrJinjaString = True
+    backup: BooleanOrJinjaString = False
+    contract: Contract = {"enforced": True}
     file_format: Optional[str] = None
     grant_access_to: Optional[List[AuthorizedView]] = Field(
         None,
@@ -645,28 +645,28 @@ class ModelConfigs(BaseModel):
         title="Authorized views",
     )
     grants: Optional[Grants] = None
-    hours_to_expiration: Optional[float] = Field(
-        None,
+    hours_to_expiration: float = Field(
+        "",
         description="Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
     )
     kms_key_name: Optional[str] = Field(
-        None,
+        "",
         description="Configuration of the KMS key name, specific to BigQuery adapter.",
         pattern="projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*",
     )
-    labels: Optional[Dict[str, str]] = Field(
-        None,
+    labels: Dict[str, str] = Field(
+        {"key":"value"},
         description="Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
         title="Label configs",
     )
     location: Optional[str] = None
     materialized: Optional[str] = None
-    on_configuration_change: Optional[OnConfigurationChange] = None
-    on_schema_change: Optional[OnSchemaChange] = None
-    snowflake_warehouse: Optional[str] = None
-    sql_header: Optional[str] = None
+    on_configuration_change: OnConfigurationChange = OnConfigurationChange.fail
+    on_schema_change: Optional[OnSchemaChange] = OnSchemaChange.append_new_columns
+    snowflake_warehouse: str = ""
+    sql_header: Optional[str] = ""
     target_lag: Optional[str] = Field(
-        None, pattern="^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
+        "", pattern="^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
     )
 
 

@@ -666,15 +666,20 @@
     "Contract": {
       "properties": {
         "enforced": {
-          "anyOf": [
+          "allOf": [
             {
               "$ref": "#/$defs/BooleanOrJinjaString"
-            },
-            {
-              "type": "null"
             }
           ],
-          "default": null
+          "default": true
+        },
+        "alias_types": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": false
         }
       },
       "title": "Contract",
@@ -2204,37 +2209,30 @@
     "ModelConfigs": {
       "properties": {
         "auto_refresh": {
-          "anyOf": [
+          "allOf": [
             {
               "$ref": "#/$defs/BooleanOrJinjaString"
-            },
-            {
-              "type": "null"
             }
           ],
-          "default": null
+          "default": true
         },
         "backup": {
-          "anyOf": [
+          "allOf": [
             {
               "$ref": "#/$defs/BooleanOrJinjaString"
-            },
-            {
-              "type": "null"
             }
           ],
-          "default": null
+          "default": false
         },
         "contract": {
-          "anyOf": [
+          "allOf": [
             {
               "$ref": "#/$defs/Contract"
-            },
-            {
-              "type": "null"
             }
           ],
-          "default": null
+          "default": {
+            "enforced": true
+          }
         },
         "file_format": {
           "anyOf": [
@@ -2276,17 +2274,10 @@
           "default": null
         },
         "hours_to_expiration": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
-          "title": "Hours To Expiration"
+          "title": "Hours To Expiration",
+          "type": "number"
         },
         "kms_key_name": {
           "anyOf": [
@@ -2298,25 +2289,20 @@
               "type": "null"
             }
           ],
-          "default": null,
+          "default": "",
           "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
           "title": "Kms Key Name"
         },
         "labels": {
-          "anyOf": [
-            {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {
+            "key": "value"
+          },
           "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
-          "title": "Label configs"
+          "title": "Label configs",
+          "type": "object"
         },
         "location": {
           "anyOf": [
@@ -2343,15 +2329,12 @@
           "title": "Materialized"
         },
         "on_configuration_change": {
-          "anyOf": [
+          "allOf": [
             {
               "$ref": "#/$defs/OnConfigurationChange"
-            },
-            {
-              "type": "null"
             }
           ],
-          "default": null
+          "default": "fail"
         },
         "on_schema_change": {
           "anyOf": [
@@ -2362,19 +2345,12 @@
               "type": "null"
             }
           ],
-          "default": null
+          "default": "append_new_columns"
         },
         "snowflake_warehouse": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Snowflake Warehouse"
+          "default": "",
+          "title": "Snowflake Warehouse",
+          "type": "string"
         },
         "sql_header": {
           "anyOf": [
@@ -2385,7 +2361,7 @@
               "type": "null"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Sql Header"
         },
         "target_lag": {
@@ -2398,7 +2374,7 @@
               "type": "null"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Target Lag"
         }
       },
