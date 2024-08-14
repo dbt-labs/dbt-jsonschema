@@ -3,16 +3,9 @@
     "AcceptedValues": {
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "config": {
           "anyOf": [
@@ -45,16 +38,9 @@
           "type": "array"
         },
         "where": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Where"
+          "default": "",
+          "title": "Where",
+          "type": "string"
         }
       },
       "required": [
@@ -163,16 +149,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "columns": {
           "anyOf": [
@@ -238,28 +217,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Type"
+          "default": "",
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -324,16 +289,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "expr": {
           "anyOf": [
@@ -389,28 +347,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "data_type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Data Type"
+          "default": "",
+          "title": "Data Type",
+          "type": "string"
         }
       },
       "required": [
@@ -427,16 +371,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "constraints": {
           "anyOf": [
@@ -465,16 +402,9 @@
           "title": "Data Tests"
         },
         "data_type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Data Type"
+          "default": "",
+          "title": "Data Type",
+          "type": "string"
         },
         "meta": {
           "anyOf": [
@@ -589,16 +519,9 @@
     "Constraint": {
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "type": {
           "title": "Type",
@@ -616,16 +539,9 @@
           "default": null
         },
         "expression": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Expression"
+          "default": "",
+          "title": "Expression",
+          "type": "string"
         },
         "warn_unenforced": {
           "anyOf": [
@@ -694,28 +610,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "group": {
           "anyOf": [
@@ -816,16 +718,9 @@
           "type": "string"
         },
         "window": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Window"
+          "default": "",
+          "title": "Window",
+          "type": "string"
         }
       },
       "required": [
@@ -845,28 +740,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "group": {
           "anyOf": [
@@ -934,16 +815,9 @@
           "default": null
         },
         "window": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Window"
+          "default": "",
+          "title": "Window",
+          "type": "string"
         }
       },
       "title": "CumulativeMetricTypeParams",
@@ -973,16 +847,9 @@
       "additionalProperties": false,
       "properties": {
         "agg_time_dimension": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Agg Time Dimension"
+          "default": "",
+          "title": "Agg Time Dimension",
+          "type": "string"
         }
       },
       "title": "Defaults",
@@ -997,28 +864,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "group": {
           "anyOf": [
@@ -1064,16 +917,9 @@
       "additionalProperties": false,
       "properties": {
         "expr": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Expr"
+          "default": "",
+          "title": "Expr",
+          "type": "string"
         },
         "metrics": {
           "anyOf": [
@@ -1133,18 +979,11 @@
       "additionalProperties": false,
       "properties": {
         "node_color": {
-          "anyOf": [
-            {
-              "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
-          "title": "Node Color"
+          "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$",
+          "title": "Node Color",
+          "type": "string"
         },
         "show": {
           "anyOf": [
@@ -1179,16 +1018,9 @@
           "title": "Entity Type"
         },
         "entity": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entity"
+          "default": "",
+          "title": "Entity",
+          "type": "string"
         },
         "expr": {
           "anyOf": [
@@ -1239,30 +1071,16 @@
           "type": "string"
         },
         "rows": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-          "title": "Rows"
+          "title": "Rows",
+          "type": "string"
         },
         "fixture": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Specify the name of a fixture instead of providing `rows`.",
-          "title": "Fixture"
+          "title": "Fixture",
+          "type": "string"
         }
       },
       "title": "ExpectCSV",
@@ -1306,30 +1124,16 @@
           "type": "string"
         },
         "rows": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-          "title": "Rows"
+          "title": "Rows",
+          "type": "string"
         },
         "fixture": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Specify the name of a fixture instead of providing `rows`.",
-          "title": "Fixture"
+          "title": "Fixture",
+          "type": "string"
         }
       },
       "title": "ExpectSQL",
@@ -1374,16 +1178,9 @@
       "additionalProperties": true,
       "properties": {
         "alias": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Alias"
+          "default": "",
+          "title": "Alias",
+          "type": "string"
         },
         "export_as": {
           "anyOf": [
@@ -1397,16 +1194,9 @@
           "default": null
         },
         "schema": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": null,
-          "title": "Schema"
+          "title": "Schema",
+          "type": "string"
         }
       },
       "title": "ExportConfig",
@@ -1419,16 +1209,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "type": {
           "$ref": "#/$defs/Type"
@@ -1441,16 +1224,9 @@
           "type": "array"
         },
         "label": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Label"
+          "default": "",
+          "title": "Label",
+          "type": "string"
         },
         "maturity": {
           "anyOf": [
@@ -1498,16 +1274,9 @@
           "default": null
         },
         "url": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Url"
+          "default": "",
+          "title": "Url",
+          "type": "string"
         }
       },
       "required": [
@@ -1554,16 +1323,9 @@
           "default": null
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "warn_after": {
           "anyOf": [
@@ -1600,17 +1362,10 @@
     "GivenItem": {
       "properties": {
         "fixture": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
-          "title": "Fixture"
+          "title": "Fixture",
+          "type": "string"
         },
         "format": {
           "anyOf": [
@@ -1625,22 +1380,15 @@
           "description": "Defaults to `dict` when not specified"
         },
         "input": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
           "examples": [
             "ref('model_b')",
             "ref('upstream_project', 'model_b')",
             "source('schema', 'table')"
           ],
-          "title": "Input"
+          "title": "Input",
+          "type": "string"
         },
         "additionalProperties": {
           "anyOf": [
@@ -1742,16 +1490,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "arguments": {
           "anyOf": [
@@ -1804,16 +1545,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "agg": {
           "$ref": "#/$defs/Agg"
@@ -1830,17 +1564,10 @@
           "default": null
         },
         "agg_time_dimension": {
-          "anyOf": [
-            {
-              "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Agg Time Dimension"
+          "default": "",
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Agg Time Dimension",
+          "type": "string"
         },
         "create_metric": {
           "anyOf": [
@@ -1855,16 +1582,9 @@
           "title": "Create Metric"
         },
         "create_metric_display_name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Create Metric Display Name"
+          "default": "",
+          "title": "Create Metric Display Name",
+          "type": "string"
         },
         "expr": {
           "anyOf": [
@@ -1885,16 +1605,9 @@
           "title": "Expr"
         },
         "label": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Label"
+          "default": "",
+          "title": "Label",
+          "type": "string"
         },
         "non_additive_dimension": {
           "anyOf": [
@@ -1919,16 +1632,9 @@
       "additionalProperties": false,
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "fill_nulls_with": {
           "anyOf": [
@@ -1946,16 +1652,9 @@
           "title": "Fill Nulls With"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "join_to_timespine": {
           "anyOf": [
@@ -1977,52 +1676,24 @@
       "additionalProperties": false,
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "alias": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Alias"
+          "default": "",
+          "title": "Alias",
+          "type": "string"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "offset_window": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Offset Window"
+          "default": "",
+          "title": "Offset Window",
+          "type": "string"
         }
       },
       "title": "MetricInputSchema",
@@ -2036,16 +1707,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "access": {
           "anyOf": [
@@ -2111,16 +1775,9 @@
           "title": "Data Tests"
         },
         "deprecation_date": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Deprecation Date"
+          "default": "",
+          "title": "Deprecation Date",
+          "type": "string"
         },
         "docs": {
           "anyOf": [
@@ -2235,16 +1892,9 @@
           }
         },
         "file_format": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "File Format"
+          "default": "",
+          "title": "File Format",
+          "type": "string"
         },
         "grant_access_to": {
           "anyOf": [
@@ -2280,18 +1930,11 @@
           "type": "number"
         },
         "kms_key_name": {
-          "anyOf": [
-            {
-              "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
           "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
-          "title": "Kms Key Name"
+          "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*",
+          "title": "Kms Key Name",
+          "type": "string"
         },
         "labels": {
           "additionalProperties": {
@@ -2305,28 +1948,14 @@
           "type": "object"
         },
         "location": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Location"
+          "default": "",
+          "title": "Location",
+          "type": "string"
         },
         "materialized": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Materialized"
+          "default": "",
+          "title": "Materialized",
+          "type": "string"
         },
         "on_configuration_change": {
           "allOf": [
@@ -2365,17 +1994,10 @@
           "title": "Sql Header"
         },
         "target_lag": {
-          "anyOf": [
-            {
-              "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": "",
-          "title": "Target Lag"
+          "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$",
+          "title": "Target Lag",
+          "type": "string"
         }
       },
       "title": "ModelConfigs",
@@ -2424,16 +2046,9 @@
     "NotNull": {
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "config": {
           "anyOf": [
@@ -2447,16 +2062,9 @@
           "default": null
         },
         "where": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Where"
+          "default": "",
+          "title": "Where",
+          "type": "string"
         }
       },
       "title": "NotNull",
@@ -2719,28 +2327,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "group": {
           "anyOf": [
@@ -2797,16 +2391,9 @@
           "default": null
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "numerator": {
           "anyOf": [
@@ -2826,16 +2413,9 @@
     "Relationships": {
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "config": {
           "anyOf": [
@@ -2862,16 +2442,9 @@
           "type": "string"
         },
         "where": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Where"
+          "default": "",
+          "title": "Where",
+          "type": "string"
         }
       },
       "required": [
@@ -2949,16 +2522,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "columns": {
           "anyOf": [
@@ -3073,16 +2639,9 @@
           "title": "Data Tests"
         },
         "database": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Database"
+          "default": "",
+          "title": "Database",
+          "type": "string"
         },
         "enabled": {
           "anyOf": [
@@ -3118,16 +2677,9 @@
           "default": null
         },
         "schema": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
           "default": null,
-          "title": "Schema"
+          "title": "Schema",
+          "type": "string"
         }
       },
       "title": "SeedConfig",
@@ -3142,16 +2694,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "defaults": {
           "anyOf": [
@@ -3214,16 +2759,9 @@
           "type": "string"
         },
         "primary_entity": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Primary Entity"
+          "default": "",
+          "title": "Primary Entity",
+          "type": "string"
         }
       },
       "required": [
@@ -3250,28 +2788,14 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "filter": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Filter"
+          "default": "",
+          "title": "Filter",
+          "type": "string"
         },
         "group": {
           "anyOf": [
@@ -3339,16 +2863,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "columns": {
           "anyOf": [
@@ -3452,16 +2969,9 @@
     "SnapshotConfig": {
       "properties": {
         "alias": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Alias"
+          "default": "",
+          "title": "Alias",
+          "type": "string"
         },
         "check_cols": {
           "anyOf": [
@@ -3541,16 +3051,9 @@
           "default": null
         },
         "strategy": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Strategy"
+          "default": "",
+          "title": "Strategy",
+          "type": "string"
         },
         "tags": {
           "anyOf": [
@@ -3564,28 +3067,14 @@
           "default": null
         },
         "target_database": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Target Database"
+          "default": "",
+          "title": "Target Database",
+          "type": "string"
         },
         "target_schema": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Target Schema"
+          "default": "",
+          "title": "Target Schema",
+          "type": "string"
         },
         "unique_key": {
           "anyOf": [
@@ -3599,16 +3088,9 @@
           "default": null
         },
         "updated_at": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Updated At"
+          "default": "",
+          "title": "Updated At",
+          "type": "string"
         }
       },
       "title": "SnapshotConfig",
@@ -3622,16 +3104,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "config": {
           "anyOf": [
@@ -3661,16 +3136,9 @@
           "title": "Data Tests"
         },
         "database": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Database"
+          "default": "",
+          "title": "Database",
+          "type": "string"
         },
         "freshness": {
           "anyOf": [
@@ -3684,28 +3152,14 @@
           "default": null
         },
         "loaded_at_field": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Loaded At Field"
+          "default": "",
+          "title": "Loaded At Field",
+          "type": "string"
         },
         "loader": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Loader"
+          "default": "",
+          "title": "Loader",
+          "type": "string"
         },
         "meta": {
           "anyOf": [
@@ -3720,17 +3174,10 @@
           "title": "Meta"
         },
         "overrides": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "The name of another package installed in your project. If that package has a source with the same name as this one, its properties will be applied on top of the base properties of the overridden source. https://docs.getdbt.com/reference/resource-properties/overrides",
-          "title": "Package to Override"
+          "title": "Package to Override",
+          "type": "string"
         },
         "quoting": {
           "anyOf": [
@@ -3744,17 +3191,10 @@
           "default": null
         },
         "schema": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "The schema name as stored in the database. Only needed if you want to use a different `name` than what exists in the database (otherwise `name` is used by default)",
-          "title": "Schema"
+          "title": "Schema",
+          "type": "string"
         },
         "tables": {
           "anyOf": [
@@ -3824,16 +3264,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "columns": {
           "anyOf": [
@@ -3874,42 +3307,21 @@
           "default": null
         },
         "identifier": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)",
-          "title": "Identifier"
+          "title": "Identifier",
+          "type": "string"
         },
         "loaded_at_field": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall.",
-          "title": "Loaded At Field"
+          "title": "Loaded At Field",
+          "type": "string"
         },
         "loader": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Loader"
+          "default": "",
+          "title": "Loader",
+          "type": "string"
         },
         "meta": {
           "anyOf": [
@@ -3970,30 +3382,16 @@
     "TestConfigs": {
       "properties": {
         "alias": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Only relevant when `store_failures` is true",
-          "title": "Alias"
+          "title": "Alias",
+          "type": "string"
         },
         "database": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Only relevant when `store_failures` is true",
-          "title": "Database"
+          "title": "Database",
+          "type": "string"
         },
         "enabled": {
           "anyOf": [
@@ -4007,28 +3405,14 @@
           "default": null
         },
         "error_if": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Error If"
+          "default": "",
+          "title": "Error If",
+          "type": "string"
         },
         "fail_calc": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Fail Calc"
+          "default": "",
+          "title": "Fail Calc",
+          "type": "string"
         },
         "limit": {
           "anyOf": [
@@ -4043,17 +3427,10 @@
           "title": "Limit"
         },
         "schema": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
+          "default": "",
           "description": "Only relevant when `store_failures` is true",
-          "title": "Schema"
+          "title": "Schema",
+          "type": "string"
         },
         "severity": {
           "anyOf": [
@@ -4093,16 +3470,9 @@
           "default": null
         },
         "warn_if": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Warn If"
+          "default": "",
+          "title": "Warn If",
+          "type": "string"
         }
       },
       "title": "TestConfigs",
@@ -4117,16 +3487,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "expr": {
           "anyOf": [
@@ -4208,16 +3571,9 @@
     "Unique": {
       "properties": {
         "name": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Name"
+          "default": "",
+          "title": "Name",
+          "type": "string"
         },
         "config": {
           "anyOf": [
@@ -4231,16 +3587,9 @@
           "default": null
         },
         "where": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Where"
+          "default": "",
+          "title": "Where",
+          "type": "string"
         }
       },
       "title": "Unique",
@@ -4271,16 +3620,9 @@
           "type": "string"
         },
         "description": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Description"
+          "default": "",
+          "title": "Description",
+          "type": "string"
         },
         "config": {
           "anyOf": [
