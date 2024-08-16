@@ -1238,30 +1238,32 @@
       "properties": {
         "cumulative_type_params": {
           "type": "object",
-          "window": {
-            "type": "string"
-          },
-          "grain_to_date": {
-            "enum": [
-              "nanosecond",
-              "microsecond",
-              "millisecond",
-              "second",
-              "minute",
-              "hour",
-              "day",
-              "week",
-              "month",
-              "quarter",
-              "year"
-            ]
-          },
-          "period_agg": {
-            "enum": [
-              "first",
-              "last",
-              "average"
-            ]
+          "properties": {
+            "window": {
+              "type": "string"
+            },
+            "grain_to_date": {
+              "enum": [
+                "nanosecond",
+                "microsecond",
+                "millisecond",
+                "second",
+                "minute",
+                "hour",
+                "day",
+                "week",
+                "month",
+                "quarter",
+                "year"
+              ]
+            },
+            "period_agg": {
+              "enum": [
+                "first",
+                "last",
+                "average"
+              ]
+            }
           },
           "additionalProperties": false
       },
