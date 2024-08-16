@@ -347,6 +347,21 @@
           "label": {
             "type": "string"
           },
+          "time_granularity": {
+            "enum": [
+              "nanosecond",
+              "microsecond",
+              "millisecond",
+              "second",
+              "minute",
+              "hour",
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "year"
+            ]
+          },
           "type_params": {
             "type": "object"
           }
@@ -415,6 +430,18 @@
               "$ref": "#/$defs/data_tests"
             }
           },
+          "time_spine": {
+            "type": "object",
+            "required": [
+              "standard_granularity_column"
+            ],
+            "properties": {
+              "standard_granularity_column": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },  
           "versions": {
             "type": "array",
             "items": {
@@ -1076,6 +1103,21 @@
         "data_type": {
           "type": "string"
         },
+        "granularity": {
+          "enum": [
+            "nanosecond",
+            "microsecond",
+            "millisecond",
+            "second",
+            "minute",
+            "hour",
+            "day",
+            "week",
+            "month",
+            "quarter",
+            "year"
+          ]
+        },
         "meta": {
           "type": "object"
         },
@@ -1194,8 +1236,43 @@
     "cumulative_metric_type_params": {
       "type": "object",
       "properties": {
+        "cumulative_type_params": {
+          "type": "object",
+          "window": {
+            "type": "string"
+          },
+          "grain_to_date": {
+            "enum": [
+              "nanosecond",
+              "microsecond",
+              "millisecond",
+              "second",
+              "minute",
+              "hour",
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "year"
+            ]
+          },
+          "period_agg": {
+            "enum": [
+              "first",
+              "last",
+              "average"
+            ]
+          },
+          "additionalProperties": false
+      },
         "grain_to_date": {
           "enum": [
+            "nanosecond",
+            "microsecond",
+            "millisecond",
+            "second",
+            "minute",
+            "hour",
             "day",
             "week",
             "month",
@@ -1401,11 +1478,23 @@
       "properties": {
         "time_granularity": {
           "enum": [
+            "NANOSECOND",
+            "MICROSECOND",
+            "MILLISECOND",
+            "SECOND",
+            "MINUTE",
+            "HOUR",
             "DAY",
             "WEEK",
             "MONTH",
             "QUARTER",
             "YEAR",
+            "nanosecond",
+            "microsecond",
+            "millisecond",
+            "second",
+            "minute",
+            "hour",
             "day",
             "week",
             "month",
