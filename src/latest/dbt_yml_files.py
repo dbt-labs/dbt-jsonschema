@@ -822,18 +822,13 @@ class Dimension(RootModel[Union[CategoricalDimension, TimeDimension]]):
     root: Union[CategoricalDimension, TimeDimension]
 
 
-class FreshnessDefinition1(BaseModel):
+class FreshnessDefinition(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    error_after: Optional[FreshnessRules] = None
-    filter: Optional[str] = None
-    warn_after: Optional[FreshnessRules] = None
-
-
-class FreshnessDefinition(RootModel[Union[FreshnessDefinition1, None]]):
-    root: Union[FreshnessDefinition1, None]
-
+    warn_after: Optional[FreshnessRules] = FreshnessRules(count=1, period=Period.hour)
+    error_after: Optional[FreshnessRules] = FreshnessRules(count=1, period=Period.day)
+    filter: Optional[str] = ""
 
 class SeedConfig(BaseModel):
     column_types: Optional[Dict[str, Any]] = None
@@ -947,7 +942,7 @@ class Table(BaseModel):
     description: Optional[str] = None
     columns: Optional[List[ColumnProperties]] = None
     external: Optional[Dict[str, Any]] = None
-    freshness: Optional[FreshnessDefinition] = None
+    freshness: Optional[FreshnessDefinition] = Field(FreshnessDefinition(), json_schema_extra={"$comment": "truly_nullable"})
     identifier: Optional[str] = Field(
         None,
         description="The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)",
@@ -973,7 +968,7 @@ class Source(BaseModel):
     config: Optional[Dict[str, Any]] = None
     data_tests: Optional[List[DataTests]] = None
     database: Optional[str] = None
-    freshness: Optional[FreshnessDefinition] = None
+    freshness: Optional[FreshnessDefinition] = Field(FreshnessDefinition(), json_schema_extra={"$comment": "truly_nullable"})
     loaded_at_field: Optional[str] = None
     loader: Optional[str] = None
     meta: Optional[Dict[str, Any]] = None

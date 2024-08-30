@@ -1,1647 +1,1639 @@
 {
-  "title": "dbt_yml_files",
-  "type": "object",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "properties": {
-    "version": {
-      "type": "number",
-      "const": 2
-    },
-    "analyses": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "columns": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "name"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "data_type": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "config": {
-            "type": "object",
-            "properties": {
-              "tags": {
-                "$ref": "#/$defs/string_or_array_of_strings"
-              }
-            },
-            "additionalProperties": false
-          },
-          "docs": {
-            "$ref": "#/$defs/docs_config"
-          },
-          "group": {
-            "$ref": "#/$defs/group_name"
-          }
-        }
-      }
-    },
-    "exposures": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "depends_on",
-          "name",
-          "owner",
-          "type"
-        ],
-        "$comment": "NB: depends_on is not strictly required, but is _expected_ according to the documentation",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "dashboard",
-              "notebook",
-              "analysis",
-              "ml",
-              "application"
-            ]
-          },
-          "depends_on": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "label": {
-            "type": "string",
-            "$comment": "Added in dbt Core v1.3"
-          },
-          "maturity": {
-            "type": "string",
-            "enum": [
-              "high",
-              "medium",
-              "low"
-            ]
-          },
-          "meta": {
-            "type": "object"
-          },
-          "owner": {
-            "$ref": "#/$defs/owner"
-          },
-          "tags": {
-            "$ref": "#/$defs/string_or_array_of_strings"
-          },
-          "url": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "groups": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name",
-          "owner"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "owner": {
-            "$ref": "#/$defs/owner"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "macros": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "arguments": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "name"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "docs": {
-            "$ref": "#/$defs/docs_config"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "metrics": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name",
-          "label",
-          "type",
-          "type_params"
-        ],
-        "if": {
-          "properties": {
-            "type": {
-              "enum": [
-                "SIMPLE",
-                "simple"
-              ]
-            }
-          }
-        },
-        "then": {
-          "properties": {
-            "type_params": {
-              "$ref": "#/$defs/simple_metric_type_params"
-            }
-          }
-        },
-        "else": {
-          "if": {
-            "properties": {
-              "type": {
-                "enum": [
-                  "derived",
-                  "DERIVED"
-                ]
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "type_params": {
-                "$ref": "#/$defs/derived_metric_type_params"
-              }
-            }
-          },
-          "else": {
-            "if": {
-              "properties": {
-                "type": {
-                  "enum": [
-                    "cumulative",
-                    "CUMULATIVE"
-                  ]
-                }
-              }
-            },
-            "then": {
-              "properties": {
-                "type_params": {
-                  "$ref": "#/$defs/cumulative_metric_type_params"
-                }
-              }
-            },
-            "else": {
-              "if": {
-                "properties": {
-                  "type": {
-                    "enum": [
-                      "conversion",
-                      "CONVERSION"
-                    ]
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "type_params": {
-                    "$ref": "#/$defs/conversion_metric_type_params"
-                  }
-                }
-              },
-              "else": {
-                "if": {
-                  "properties": {
-                    "type": {
-                      "enum": [
-                        "ratio",
-                        "RATIO"
-                      ]
-                    }
-                  }
-                },
-                "then": {
-                  "properties": {
-                    "type_params": {
-                      "$ref": "#/$defs/ratio_metric_type_params"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "properties": {
-          "name": {
-            "type": "string",
-            "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
-          },
-          "description": {
-            "type": "string"
-          },
-          "type": {
-            "title": "Metric Type",
-            "enum": [
-              "SIMPLE",
-              "RATIO",
-              "CUMULATIVE",
-              "DERIVED",
-              "CONVERSION",
-              "simple",
-              "ratio",
-              "cumulative",
-              "derived",
-              "conversion"
-            ]
-          },
-          "filter": {
-            "type": "string"
-          },
-          "group": {
-            "$ref": "#/$defs/group_name"
-          },
-          "label": {
-            "type": "string"
-          },
-          "type_params": {
-            "type": "object"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "models": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "access": {
-            "type": "string",
-            "enum": [
-              "private",
-              "protected",
-              "public"
-            ]
-          },
-          "columns": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/column_properties"
-            }
-          },
-          "config": {
-            "$ref": "#/$defs/model_configs"
-          },
-          "constraints": {
-            "$ref": "#/$defs/constraints"
-          },
-          "data_tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          },
-          "deprecation_date": {
-            "type": "string"
-          },
-          "docs": {
-            "$ref": "#/$defs/docs_config"
-          },
-          "group": {
-            "$ref": "#/$defs/group_name"
-          },
-          "latest_version": {
-            "type": "number"
-          },
-          "meta": {
-            "type": "object"
-          },
-          "tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          },
-          "versions": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "v"
-              ],
-              "properties": {
-                "columns": {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "$ref": "#/$defs/include_exclude"
-                      },
-                      {
-                        "$ref": "#/$defs/column_properties"
-                      }
-                    ]
-                  }
-                },
-                "config": {
-                  "$ref": "#/$defs/model_configs"
-                },
-                "v": {
-                  "type": "number"
-                }
-              }
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "saved_queries": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name",
-          "description",
-          "label",
-          "query_params"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "exports": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/export"
-            }
-          },
-          "label": {
-            "type": "string"
-          },
-          "query_params": {
-            "type": "object",
-            "properties": {
-              "dimensions": {
-                "$ref": "#/$defs/array_of_strings"
-              },
-              "metrics": {
-                "$ref": "#/$defs/array_of_strings"
-              },
-              "where": {
-                "$ref": "#/$defs/array_of_strings"
-              },
-              "additionalProperties": false
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "seeds": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "columns": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/column_properties"
-            }
-          },
-          "config": {
-            "title": "Seed Config",
-            "type": "object",
-            "properties": {
-              "column_types": {
-                "type": "object"
-              },
-              "copy_grants": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "data_tests": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/$defs/data_tests"
-                }
-              },
-              "database": {
-                "type": "string"
-              },
-              "enabled": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "grants": {
-                "$ref": "#/$defs/grants"
-              },
-              "quote_columns": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "schema": {
-                "type": "string"
-              }
-            }
-          },
-          "docs": {
-            "$ref": "#/$defs/docs_config"
-          },
-          "group": {
-            "$ref": "#/$defs/group_name"
-          },
-          "tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "semantic_models": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name",
-          "model"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
-          },
-          "description": {
-            "type": "string"
-          },
-          "defaults": {
-            "type": "object",
-            "properties": {
-              "agg_time_dimension": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false
-          },
-          "dimensions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/dimension"
-            }
-          },
-          "entities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/entity"
-            }
-          },
-          "measures": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/measure"
-            }
-          },
-          "model": {
-            "type": "string",
-            "default": "ref('')"
-          },
-          "primary_entity": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "snapshots": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "columns": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/column_properties"
-            }
-          },
-          "config": {
-            "title": "Snapshot Config",
-            "type": "object",
-            "properties": {
-              "alias": {
-                "type": "string"
-              },
-              "check_cols": {
-                "$ref": "#/$defs/string_or_array_of_strings"
-              },
-              "enabled": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "grants": {
-                "$ref": "#/$defs/grants"
-              },
-              "persist_docs": {
-                "$ref": "#/$defs/persist_docs_config"
-              },
-              "post-hook": {
-                "$ref": "#/$defs/array_of_strings"
-              },
-              "pre-hook": {
-                "$ref": "#/$defs/array_of_strings"
-              },
-              "quote_columns": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "strategy": {
-                "type": "string"
-              },
-              "tags": {
-                "$ref": "#/$defs/string_or_array_of_strings"
-              },
-              "target_database": {
-                "type": "string"
-              },
-              "target_schema": {
-                "type": "string"
-              },
-              "unique_key": {
-                "$ref": "#/$defs/string_or_array_of_strings"
-              },
-              "updated_at": {
-                "type": "string"
-              }
-            }
-          },
-          "data_tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          },
-          "docs": {
-            "$ref": "#/$defs/docs_config"
-          },
-          "group": {
-            "$ref": "#/$defs/group_name"
-          },
-          "meta": {
-            "type": "object"
-          },
-          "tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "sources": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "description": "How you will identify the schema in {{ source() }} calls. Unless `schema` is also set, this will be the name of the schema in the database.",
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "config": {
-            "type": "object"
-          },
-          "data_tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          },
-          "database": {
-            "type": "string"
-          },
-          "freshness": {
-            "$ref": "#/$defs/freshness_definition"
-          },
-          "loaded_at_field": {
-            "type": "string"
-          },
-          "loader": {
-            "type": "string"
-          },
-          "meta": {
-            "type": "object"
-          },
-          "overrides": {
-            "title": "Package to Override",
-            "description": "The name of another package installed in your project. If that package has a source with the same name as this one, its properties will be applied on top of the base properties of the overridden source. https://docs.getdbt.com/reference/resource-properties/overrides",
-            "type": "string"
-          },
-          "quoting": {
-            "type": "object",
-            "properties": {
-              "database": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "identifier": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              },
-              "schema": {
-                "$ref": "#/$defs/boolean_or_jinja_string"
-              }
-            },
-            "additionalProperties": false
-          },
-          "schema": {
-            "description": "The schema name as stored in the database. Only needed if you want to use a different `name` than what exists in the database (otherwise `name` is used by default)",
-            "type": "string"
-          },
-          "tables": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "name"
-              ],
-              "properties": {
-                "name": {
-                  "title": "Name",
-                  "description": "How you will identify the table in {{ source() }} calls. Unless `identifier` is also set, this will be the name of the table in the database.",
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "columns": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/column_properties"
-                  }
-                },
-                "external": {
-                  "type": "object"
-                },
-                "freshness": {
-                  "$ref": "#/$defs/freshness_definition"
-                },
-                "identifier": {
-                  "title": "Identifier",
-                  "description": "The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)",
-                  "type": "string"
-                },
-                "loaded_at_field": {
-                  "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall.",
-                  "type": "string"
-                },
-                "loader": {
-                  "type": "string"
-                },
-                "meta": {
-                  "type": "object"
-                },
-                "quoting": {
-                  "type": "object",
-                  "properties": {
-                    "database": {
-                      "$ref": "#/$defs/boolean_or_jinja_string"
-                    },
-                    "identifier": {
-                      "$ref": "#/$defs/boolean_or_jinja_string"
-                    },
-                    "schema": {
-                      "$ref": "#/$defs/boolean_or_jinja_string"
-                    }
-                  },
-                  "additionalProperties": false
-                },
-                "tags": {
-                  "$ref": "#/$defs/string_or_array_of_strings"
-                },
-                "tests": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/data_tests"
-                  }
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "tags": {
-            "$ref": "#/$defs/string_or_array_of_strings"
-          },
-          "tests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/$defs/data_tests"
-            }
-          }
-        }
-      }
-    },
-    "unit_tests": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "name",
-          "model",
-          "expect"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "config": {
-            "title": "Unit Test Config",
-            "type": "object",
-            "properties": {
-              "meta": {
-                "type": "object"
-              },
-              "tags": {
-                "$ref": "#/$defs/string_or_array_of_strings"
-              }
-            },
-            "additionalProperties": false
-          },
-          "expect": {
-            "type": "object",
-            "if": {
-              "properties": {
-                "format": {
-                  "const": "dict"
-                }
-              }
-            },
-            "then": {
-              "properties": {
-                "rows": {
-                  "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                }
-              }
-            },
-            "else": {
-              "properties": {
-                "rows": {
-                  "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-                  "type": "string"
-                }
-              }
-            },
-            "properties": {
-              "fixture": {
-                "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
-                "type": "string"
-              },
-              "format": {
-                "description": "Defaults to `dict` when not specified",
-                "type": "string",
-                "enum": [
-                  "csv",
-                  "dict",
-                  "sql"
-                ]
-              },
-              "additionalProperties": false
-            }
-          },
-          "given": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "if": {
-                "properties": {
-                  "format": {
-                    "const": "dict"
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "rows": {
-                    "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
-                    "type": "array",
-                    "items": {
-                      "type": "object"
-                    }
-                  }
-                }
-              },
-              "else": {
-                "properties": {
-                  "rows": {
-                    "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-                    "type": "string"
-                  }
-                }
-              },
-              "properties": {
-                "fixture": {
-                  "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
-                  "type": "string"
-                },
-                "format": {
-                  "description": "Defaults to `dict` when not specified",
-                  "type": "string",
-                  "enum": [
-                    "csv",
-                    "dict",
-                    "sql"
-                  ]
-                },
-                "input": {
-                  "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
-                  "type": "string",
-                  "examples": [
-                    "ref('model_b')",
-                    "ref('upstream_project', 'model_b')",
-                    "source('schema', 'table')"
-                  ]
-                },
-                "additionalProperties": false
-              }
-            }
-          },
-          "model": {
-            "description": "The name of the model whose behaviour you are testing. Does not need to be wrapped in a ref.",
-            "type": "string",
-            "examples": [
-              "my_model"
-            ]
-          },
-          "overrides": {
-            "type": "object",
-            "properties": {
-              "env_vars": {
-                "type": "object"
-              },
-              "macros": {
-                "type": "object",
-                "examples": [
-                  {
-                    "is_incremental": "true"
-                  }
-                ]
-              },
-              "vars": {
-                "type": "object"
-              }
-            },
-            "additionalProperties": false
-          },
-          "additionalProperties": false
-        },
-        "additionalProperties": false
-      }
-    }
-  },
-  "additionalProperties": false,
   "$defs": {
-    "aggregation_type_params": {
-      "type": "object",
-      "properties": {
-        "percentile": {
-          "type": "number"
-        },
-        "use_approximate_percentile": {
-          "type": "boolean"
-        },
-        "use_discrete_percentile": {
-          "type": "boolean"
-        }
-      },
-      "additionalProperties": false
-    },
-    "array_of_strings": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "boolean_or_jinja_string": {
-      "oneOf": [
-        {
-          "$ref": "#/$defs/jinja_string"
-        },
-        {
-          "type": "boolean"
-        }
-      ],
-      "additionalProperties": false
-    },
-    "column_properties": {
-      "type": "object",
-      "required": [
-        "name"
-      ],
-      "uniqueItems": true,
+    "AcceptedValues": {
       "properties": {
         "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConfigs"
+            }
+          ],
+          "default": null
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "values": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Values",
+          "type": "array"
+        },
+        "where": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Where"
+        }
+      },
+      "required": [
+        "values"
+      ],
+      "title": "AcceptedValues",
+      "type": "object"
+    },
+    "AcceptedValuesTest": {
+      "properties": {
+        "accepted_values": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AcceptedValues"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "AcceptedValuesTest",
+      "type": "object"
+    },
+    "Access": {
+      "enum": [
+        "private",
+        "protected",
+        "public"
+      ],
+      "title": "Access",
+      "type": "string"
+    },
+    "Agg": {
+      "enum": [
+        "SUM",
+        "MIN",
+        "MAX",
+        "AVG",
+        "COUNT_DISTINCT",
+        "SUM_BOOLEAN",
+        "COUNT",
+        "PERCENTILE",
+        "MEDIAN",
+        "sum",
+        "min",
+        "max",
+        "avg",
+        "count_distinct",
+        "sum_boolean",
+        "count",
+        "percentile",
+        "median"
+      ],
+      "title": "Agg",
+      "type": "string"
+    },
+    "AggregationTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "percentile": {
+          "anyOf": [
+            {
+              "type": "number"
+            }
+          ],
+          "default": null,
+          "title": "Percentile"
+        },
+        "use_approximate_percentile": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Use Approximate Percentile"
+        },
+        "use_discrete_percentile": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Use Discrete Percentile"
+        }
+      },
+      "title": "AggregationTypeParams",
+      "type": "object"
+    },
+    "Analyse": {
+      "properties": {
+        "name": {
+          "title": "Name",
           "type": "string"
         },
         "description": {
-          "type": "string"
-        },
-        "constraints": {
-          "$ref": "#/$defs/constraints"
-        },
-        "data_tests": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/data_tests"
-          }
-        },
-        "data_type": {
-          "type": "string"
-        },
-        "meta": {
-          "type": "object"
-        },
-        "policy_tags": {
-          "title": "Policy tags",
-          "description": "Configurations, specific to BigQuery adapter, used to set policy tags on specific columns, enabling column-level security. Only relevant when `persist_docs.columns` is true.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "quote": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "tests": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/data_tests"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "constraints": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "columns": {
-            "$ref": "#/$defs/string_or_array_of_strings"
-          },
-          "expression": {
-            "type": "string"
-          },
-          "warn_unenforced": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-          },
-          "warn_unsupported": {
-            "$ref": "#/$defs/boolean_or_jinja_string"
-          }
-        }
-      }
-    },
-    "conversion_metric_type_params": {
-      "type": "object",
-      "properties": {
-        "conversion_type_params": {
-          "type": "object",
-          "required": [
-            "entity",
-            "base_measure",
-            "conversion_measure"
-          ],
-          "properties": {
-            "base_measure": {
-              "$ref": "#/$defs/metric_input_measure"
-            },
-            "calculation": {
-              "type": "string",
-              "default": "conversion_rate",
-              "enum": [
-                "conversions",
-                "conversion_rate",
-                "CONVERSIONS",
-                "CONVERSION_RATE"
-              ]
-            },
-            "constant_properties": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": [
-                  "base_property",
-                  "conversion_property"
-                ],
-                "properties": {
-                  "base_property": {
-                    "description": "DIMENSION or ENTITY",
-                    "type": "string"
-                  },
-                  "conversion_property": {
-                    "description": "DIMENSION or ENTITY",
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "conversion_measure": {
-              "$ref": "#/$defs/metric_input_measure"
-            },
-            "entity": {
-              "description": "The entity to calculate over",
-              "type": "string"
-            },
-            "window": {
+          "anyOf": [
+            {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Column"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Config"
+            }
+          ],
+          "default": null
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
         }
       },
-      "additionalProperties": false
+      "required": [
+        "name"
+      ],
+      "title": "Analyse",
+      "type": "object"
     },
-    "cumulative_metric_type_params": {
-      "type": "object",
+    "Argument": {
+      "additionalProperties": false,
       "properties": {
-        "grain_to_date": {
-          "enum": [
-            "day",
-            "week",
-            "month",
-            "quarter",
-            "year"
-          ]
+        "name": {
+          "title": "Name",
+          "type": "string"
         },
-        "measure": {
-          "$ref": "#/$defs/metric_input_measure"
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
         },
-        "window": {
+        "type": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Type"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Argument",
+      "type": "object"
+    },
+    "ArrayOfStrings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "ArrayOfStrings",
+      "type": "array"
+    },
+    "AuthorizedView": {
+      "additionalProperties": false,
+      "properties": {
+        "database": {
+          "title": "Database",
+          "type": "string"
+        },
+        "project": {
+          "title": "Project",
           "type": "string"
         }
       },
-      "additionalProperties": false
+      "required": [
+        "database",
+        "project"
+      ],
+      "title": "AuthorizedView",
+      "type": "object"
     },
-    "data_tests": {
+    "BooleanOrJinjaString": {
       "anyOf": [
         {
-          "type": "string"
+          "$ref": "#/$defs/JinjaString"
         },
         {
-          "title": "Relationships Test",
-          "type": "object",
-          "properties": {
-            "relationships": {
-              "type": "object",
-              "required": [
-                "to",
-                "field"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "field": {
-                  "title": "Relationships: Field",
-                  "description": "The foreign key column",
-                  "type": "string",
-                  "default": "<FOREIGN_KEY_COLUMN>"
-                },
-                "to": {
-                  "type": "string",
-                  "default": "ref('')",
-                  "examples": [
-                    "ref('parent_model')",
-                    "source('parent_schema', 'parent_table')"
-                  ]
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Accepted Values Test",
-          "type": "object",
-          "properties": {
-            "accepted_values": {
-              "type": "object",
-              "required": [
-                "values"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "quote": {
-                  "type": "boolean"
-                },
-                "values": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Not Null Test",
-          "type": "object",
-          "properties": {
-            "not_null": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Unique Test",
-          "type": "object",
-          "properties": {
-            "unique": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
+          "type": "boolean"
         }
-      ]
+      ],
+      "title": "BooleanOrJinjaString"
     },
-    "derived_metric_type_params": {
-      "type": "object",
+    "Calculation": {
+      "enum": [
+        "conversions",
+        "conversion_rate",
+        "CONVERSIONS",
+        "CONVERSION_RATE"
+      ],
+      "title": "Calculation",
+      "type": "string"
+    },
+    "CategoricalDimension": {
+      "additionalProperties": false,
       "properties": {
-        "expr": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
           "type": "string"
         },
-        "metrics": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/metric_input_schema"
-          }
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "expr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Expr"
+        },
+        "is_partition": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Is Partition"
+        },
+        "type": {
+          "$ref": "#/$defs/CategoricalDimensionType"
         }
       },
-      "additionalProperties": false
-    },
-    "dimension": {
-      "type": "object",
       "required": [
         "name",
         "type"
       ],
-      "anyOf": [
-        {
-          "not": {
-            "$ref": "#/$defs/is-time-dimension"
-          }
-        },
-        {
-          "required": [
-            "type_params"
-          ]
-        }
+      "title": "CategoricalDimension",
+      "type": "object"
+    },
+    "CategoricalDimensionType": {
+      "enum": [
+        "CATEGORICAL",
+        "categorical"
       ],
+      "title": "CategoricalDimensionType",
+      "type": "string"
+    },
+    "Column": {
+      "additionalProperties": false,
       "properties": {
         "name": {
-          "type": "string",
-          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
+          "title": "Name",
+          "type": "string"
         },
         "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "data_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Data Type"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Column",
+      "type": "object"
+    },
+    "ColumnProperties": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "constraints": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Constraints"
+            }
+          ],
+          "default": null
+        },
+        "data_tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Data Tests"
+        },
+        "data_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Data Type"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "policy_tags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "description": "Configurations, specific to BigQuery adapter, used to set policy tags on specific columns, enabling column-level security. Only relevant when `persist_docs.columns` is true.",
+          "title": "Policy tags"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tests"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ColumnProperties",
+      "type": "object"
+    },
+    "Config": {
+      "additionalProperties": false,
+      "properties": {
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Config",
+      "type": "object"
+    },
+    "ConstantProperty": {
+      "properties": {
+        "base_property": {
+          "description": "DIMENSION or ENTITY",
+          "title": "Base Property",
+          "type": "string"
+        },
+        "conversion_property": {
+          "description": "DIMENSION or ENTITY",
+          "title": "Conversion Property",
+          "type": "string"
+        }
+      },
+      "required": [
+        "base_property",
+        "conversion_property"
+      ],
+      "title": "ConstantProperty",
+      "type": "object"
+    },
+    "Constraint": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Expression"
+        },
+        "warn_unenforced": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "warn_unsupported": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Constraint",
+      "type": "object"
+    },
+    "Constraints": {
+      "items": {
+        "$ref": "#/$defs/Constraint"
+      },
+      "title": "Constraints",
+      "type": "array"
+    },
+    "Contract": {
+      "properties": {
+        "enforced": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Contract",
+      "type": "object"
+    },
+    "ConversionMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "title": "Label",
           "type": "string"
         },
         "type": {
-          "title": "Dimension Type",
-          "enum": [
-            "CATEGORICAL",
-            "TIME",
-            "categorical",
-            "time"
-          ]
-        },
-        "expr": {
-          "type": [
-            "string",
-            "boolean"
-          ]
-        },
-        "is_partition": {
-          "type": "boolean"
+          "$ref": "#/$defs/ConversionMetricType"
         },
         "type_params": {
-          "$ref": "#/$defs/dimension_type_params"
+          "$ref": "#/$defs/ConversionMetricTypeParams"
         }
       },
-      "additionalProperties": false
+      "required": [
+        "name",
+        "label",
+        "type",
+        "type_params"
+      ],
+      "title": "ConversionMetric",
+      "type": "object"
     },
-    "dimension_type_params": {
-      "type": "object",
+    "ConversionMetricType": {
+      "enum": [
+        "CONVERSION",
+        "conversion"
+      ],
+      "title": "ConversionMetricType",
+      "type": "string"
+    },
+    "ConversionMetricTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "conversion_type_params": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConversionTypeParams"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "ConversionMetricTypeParams",
+      "type": "object"
+    },
+    "ConversionTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "base_measure": {
+          "$ref": "#/$defs/MetricInputMeasure"
+        },
+        "calculation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Calculation"
+            }
+          ],
+          "default": "conversion_rate"
+        },
+        "constant_properties": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ConstantProperty"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Constant Properties"
+        },
+        "conversion_measure": {
+          "$ref": "#/$defs/MetricInputMeasure"
+        },
+        "entity": {
+          "description": "The entity to calculate over",
+          "title": "Entity",
+          "type": "string"
+        },
+        "window": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Window"
+        }
+      },
+      "required": [
+        "base_measure",
+        "conversion_measure",
+        "entity"
+      ],
+      "title": "ConversionTypeParams",
+      "type": "object"
+    },
+    "CumulativeMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/CumulativeMetricType"
+        },
+        "type_params": {
+          "$ref": "#/$defs/CumulativeMetricTypeParams"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "type",
+        "type_params"
+      ],
+      "title": "CumulativeMetric",
+      "type": "object"
+    },
+    "CumulativeMetricType": {
+      "enum": [
+        "CUMULATIVE",
+        "cumulative"
+      ],
+      "title": "CumulativeMetricType",
+      "type": "string"
+    },
+    "CumulativeMetricTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "grain_to_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GrainToDate"
+            }
+          ],
+          "default": null
+        },
+        "measure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricInputMeasure"
+            }
+          ],
+          "default": null
+        },
+        "window": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Window"
+        }
+      },
+      "title": "CumulativeMetricTypeParams",
+      "type": "object"
+    },
+    "DataTests": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/RelationshipsTest"
+        },
+        {
+          "$ref": "#/$defs/AcceptedValuesTest"
+        },
+        {
+          "$ref": "#/$defs/NotNullTest"
+        },
+        {
+          "$ref": "#/$defs/UniqueTest"
+        }
+      ],
+      "title": "DataTests"
+    },
+    "Defaults": {
+      "additionalProperties": false,
+      "properties": {
+        "agg_time_dimension": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Agg Time Dimension"
+        }
+      },
+      "title": "Defaults",
+      "type": "object"
+    },
+    "DerivedMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/DerivedMetricType"
+        },
+        "type_params": {
+          "$ref": "#/$defs/DerivedMetricTypeParams"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "type",
+        "type_params"
+      ],
+      "title": "DerivedMetric",
+      "type": "object"
+    },
+    "DerivedMetricType": {
+      "enum": [
+        "DERIVED",
+        "derived"
+      ],
+      "title": "DerivedMetricType",
+      "type": "string"
+    },
+    "DerivedMetricTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "expr": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Expr"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/MetricInputSchema"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Metrics"
+        }
+      },
+      "title": "DerivedMetricTypeParams",
+      "type": "object"
+    },
+    "Dimension": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CategoricalDimension"
+        },
+        {
+          "$ref": "#/$defs/TimeDimension"
+        }
+      ],
+      "title": "Dimension"
+    },
+    "DimensionTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "time_granularity": {
+          "$ref": "#/$defs/TimeGranularity"
+        },
+        "validity_params": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ValidityParams"
+            }
+          ],
+          "default": null
+        }
+      },
       "required": [
         "time_granularity"
       ],
-      "properties": {
-        "time_granularity": {
-          "enum": [
-            "DAY",
-            "WEEK",
-            "MONTH",
-            "QUARTER",
-            "YEAR",
-            "day",
-            "week",
-            "month",
-            "quarter",
-            "year"
-          ]
-        },
-        "validity_params": {
-          "$ref": "#/$defs/validity_params"
-        }
-      },
-      "additionalProperties": false
+      "title": "DimensionTypeParams",
+      "type": "object"
     },
-    "docs_config": {
-      "title": "Docs config",
-      "description": "Configurations for the appearance of nodes in the dbt documentation.",
-      "type": "object",
+    "DocsConfig": {
+      "additionalProperties": false,
       "properties": {
         "node_color": {
+          "anyOf": [
+            {
+              "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$",
+              "type": "string"
+            }
+          ],
+          "default": null,
           "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
-          "type": "string",
-          "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
+          "title": "Node Color"
         },
         "show": {
-          "type": "boolean",
-          "default": true
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": true,
+          "title": "Show"
         }
       },
-      "additionalProperties": false
+      "title": "DocsConfig",
+      "type": "object"
     },
-    "entity": {
-      "type": "object",
+    "Entity": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/EntityType"
+            }
+          ],
+          "title": "Entity Type"
+        },
+        "entity": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Entity"
+        },
+        "expr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Expr"
+        }
+      },
       "required": [
         "name",
         "type"
       ],
+      "title": "Entity",
+      "type": "object"
+    },
+    "EntityType": {
+      "enum": [
+        "PRIMARY",
+        "UNIQUE",
+        "FOREIGN",
+        "NATURAL",
+        "primary",
+        "unique",
+        "foreign",
+        "natural"
+      ],
+      "title": "EntityType",
+      "type": "string"
+    },
+    "ExpectCSV": {
       "properties": {
-        "name": {
-          "type": "string",
-          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
-        },
-        "type": {
-          "title": "Entity Type",
+        "format": {
+          "const": "csv",
+          "default": "csv",
           "enum": [
-            "PRIMARY",
-            "UNIQUE",
-            "FOREIGN",
-            "NATURAL",
-            "primary",
-            "unique",
-            "foreign",
-            "natural"
-          ]
-        },
-        "entity": {
+            "csv"
+          ],
+          "title": "Format",
           "type": "string"
         },
-        "expr": {
-          "type": [
-            "string",
-            "boolean"
-          ]
+        "rows": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
+          "title": "Rows"
+        },
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Specify the name of a fixture instead of providing `rows`.",
+          "title": "Fixture"
         }
       },
-      "additionalProperties": false
+      "title": "ExpectCSV",
+      "type": "object"
     },
-    "export": {
-      "type": "object",
+    "ExpectDict": {
+      "properties": {
+        "format": {
+          "const": "dict",
+          "default": "dict",
+          "enum": [
+            "dict"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
+          "items": {
+            "type": "object"
+          },
+          "title": "Rows",
+          "type": "array"
+        }
+      },
       "required": [
-        "name"
+        "rows"
       ],
+      "title": "ExpectDict",
+      "type": "object"
+    },
+    "ExpectSQL": {
+      "properties": {
+        "format": {
+          "const": "sql",
+          "default": "sql",
+          "enum": [
+            "sql"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
+          "title": "Rows"
+        },
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Specify the name of a fixture instead of providing `rows`.",
+          "title": "Fixture"
+        }
+      },
+      "title": "ExpectSQL",
+      "type": "object"
+    },
+    "Export": {
+      "additionalProperties": false,
       "properties": {
         "name": {
+          "title": "Name",
           "type": "string"
         },
         "config": {
-          "title": "Export Config",
-          "type": "object",
-          "properties": {
-            "alias": {
-              "type": "string"
-            },
-            "export_as": {
-              "enum": [
-                "table",
-                "view",
-                "cache"
-              ]
-            },
-            "schema": {
-              "type": "string"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExportConfig"
             }
-          },
-          "additionalProperties": true
+          ],
+          "default": null,
+          "title": "Export Config"
         }
       },
-      "additionalProperties": false
+      "required": [
+        "name"
+      ],
+      "title": "Export",
+      "type": "object"
     },
-    "freshness_definition": {
-      "default": {
-        "error_after": {
-          "count": 2,
-          "period": "day"
+    "ExportAs": {
+      "enum": [
+        "table",
+        "view",
+        "cache"
+      ],
+      "title": "ExportAs",
+      "type": "string"
+    },
+    "ExportConfig": {
+      "additionalProperties": true,
+      "properties": {
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Alias"
         },
+        "export_as": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExportAs"
+            }
+          ],
+          "default": null
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Schema"
+        }
+      },
+      "title": "ExportConfig",
+      "type": "object"
+    },
+    "Exposure": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "type": {
+          "$ref": "#/$defs/Type"
+        },
+        "depends_on": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Depends On",
+          "type": "array"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "maturity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Maturity"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OwnerWithEmail"
+            },
+            {
+              "$ref": "#/$defs/OwnerWithName"
+            }
+          ],
+          "title": "Owner"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "depends_on",
+        "owner"
+      ],
+      "title": "Exposure",
+      "type": "object"
+    },
+    "Format": {
+      "enum": [
+        "csv",
+        "dict",
+        "sql"
+      ],
+      "title": "Format",
+      "type": "string"
+    },
+    "FreshnessDefinition": {
+      "additionalProperties": false,
+      "properties": {
         "warn_after": {
-          "count": 1,
-          "period": "day"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FreshnessRules"
+            }
+          ],
+          "default": {
+            "count": 1.0,
+            "period": "hour"
+          }
+        },
+        "error_after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FreshnessRules"
+            }
+          ],
+          "default": {
+            "count": 1.0,
+            "period": "day"
+          }
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "title": "Filter"
         }
       },
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "error_after": {
-              "$ref": "#/$defs/freshness_rules"
-            },
-            "filter": {
-              "type": "string"
-            },
-            "warn_after": {
-              "$ref": "#/$defs/freshness_rules"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "const": null
-        }
-      ]
+      "title": "FreshnessDefinition",
+      "type": "object"
     },
-    "freshness_rules": {
-      "type": "object",
+    "FreshnessRules": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "$ref": "#/$defs/NumberOrJinjaString"
+        },
+        "period": {
+          "$ref": "#/$defs/Period"
+        }
+      },
       "required": [
         "count",
         "period"
       ],
+      "title": "FreshnessRules",
+      "type": "object"
+    },
+    "GivenItem": {
       "properties": {
-        "count": {
-          "$ref": "#/$defs/number_or_jinja_string"
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
+          "title": "Fixture"
         },
-        "period": {
-          "type": "string",
-          "enum": [
-            "minute",
-            "hour",
-            "day"
-          ]
+        "format": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Format"
+            }
+          ],
+          "default": null,
+          "description": "Defaults to `dict` when not specified"
+        },
+        "input": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
+          "examples": [
+            "ref('model_b')",
+            "ref('upstream_project', 'model_b')",
+            "source('schema', 'table')"
+          ],
+          "title": "Input"
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {}
+          ],
+          "default": null,
+          "title": "Additionalproperties"
         }
       },
-      "additionalProperties": false
+      "title": "GivenItem",
+      "type": "object"
     },
-    "grants": {
-      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
-      "type": "object",
-      "patternProperties": {
-        ".*": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        }
-      },
-      "additionalProperties": false
-    },
-    "group_name": {
+    "GrainToDate": {
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "quarter",
+        "year"
+      ],
+      "title": "GrainToDate",
       "type": "string"
     },
-    "include_exclude": {
-      "type": "object",
+    "Grants": {
+      "additionalProperties": {
+        "$ref": "#/$defs/StringOrArrayOfStrings"
+      },
+      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
+      "title": "Grants",
+      "type": "object"
+    },
+    "Group": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OwnerWithEmail"
+            },
+            {
+              "$ref": "#/$defs/OwnerWithName"
+            }
+          ],
+          "title": "Owner"
+        }
+      },
+      "required": [
+        "name",
+        "owner"
+      ],
+      "title": "Group",
+      "type": "object"
+    },
+    "GroupName": {
+      "title": "GroupName",
+      "type": "string"
+    },
+    "IncludeExclude": {
       "properties": {
         "exclude": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
         },
         "include": {
-          "$ref": "#/$defs/string_or_array_of_strings"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
         }
-      }
+      },
+      "title": "IncludeExclude",
+      "type": "object"
     },
-    "is-time-dimension": {
-      "required": [
-        "type"
-      ],
+    "JinjaString": {
+      "pattern": "\\{\\{.*\\}\\}",
+      "title": "JinjaString",
+      "type": "string"
+    },
+    "Macro": {
+      "additionalProperties": false,
       "properties": {
-        "type": {
-          "enum": [
-            "TIME",
-            "time"
-          ]
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "arguments": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Argument"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Arguments"
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            }
+          ],
+          "default": null
         }
-      }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Macro",
+      "type": "object"
     },
-    "jinja_string": {
-      "type": "string",
-      "pattern": "\\{\\{.*\\}\\}"
+    "Maturity": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "title": "Maturity",
+      "type": "string"
     },
-    "measure": {
-      "type": "object",
+    "Measure": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "agg": {
+          "$ref": "#/$defs/Agg"
+        },
+        "agg_params": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AggregationTypeParams"
+            }
+          ],
+          "default": null
+        },
+        "agg_time_dimension": {
+          "anyOf": [
+            {
+              "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Agg Time Dimension"
+        },
+        "create_metric": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Create Metric"
+        },
+        "create_metric_display_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Create Metric Display Name"
+        },
+        "expr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Expr"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "non_additive_dimension": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonAdditiveDimension"
+            }
+          ],
+          "default": null
+        }
+      },
       "required": [
         "name",
         "agg"
       ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
-        },
-        "description": {
-          "type": "string"
-        },
-        "agg": {
-          "enum": [
-            "SUM",
-            "MIN",
-            "MAX",
-            "AVG",
-            "COUNT_DISTINCT",
-            "SUM_BOOLEAN",
-            "COUNT",
-            "PERCENTILE",
-            "MEDIAN",
-            "sum",
-            "min",
-            "max",
-            "avg",
-            "count_distinct",
-            "sum_boolean",
-            "count",
-            "percentile",
-            "median"
-          ]
-        },
-        "agg_params": {
-          "$ref": "#/$defs/aggregation_type_params"
-        },
-        "agg_time_dimension": {
-          "type": "string",
-          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
-        },
-        "create_metric": {
-          "type": "boolean"
-        },
-        "create_metric_display_name": {
-          "type": "string"
-        },
-        "expr": {
-          "type": [
-            "string",
-            "integer",
-            "boolean"
-          ]
-        },
-        "label": {
-          "type": "string"
-        },
-        "non_additive_dimension": {
-          "$ref": "#/$defs/non_additive_dimension"
-        }
-      },
-      "additionalProperties": false
+      "title": "Measure",
+      "type": "object"
     },
-    "metric_input_measure": {
-      "type": "object",
+    "MetricInputMeasure": {
+      "additionalProperties": false,
       "properties": {
         "name": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
         },
         "fill_nulls_with": {
           "anyOf": [
@@ -1651,311 +1643,2276 @@
             {
               "type": "integer"
             }
-          ]
+          ],
+          "default": null,
+          "title": "Fill Nulls With"
         },
         "filter": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
         },
         "join_to_timespine": {
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Join To Timespine"
         }
       },
-      "additionalProperties": false
+      "title": "MetricInputMeasure",
+      "type": "object"
     },
-    "metric_input_schema": {
-      "type": "object",
+    "MetricInputSchema": {
+      "additionalProperties": false,
       "properties": {
         "name": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
         },
         "alias": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Alias"
         },
         "filter": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
         },
         "offset_window": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Offset Window"
         }
       },
-      "additionalProperties": false
+      "title": "MetricInputSchema",
+      "type": "object"
     },
-    "model_configs": {
-      "type": "object",
-      "properties": {
-        "auto_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "backup": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "contract": {
-          "type": "object",
-          "properties": {
-            "enforced": {
-              "$ref": "#/$defs/boolean_or_jinja_string"
-            }
-          }
-        },
-        "file_format": {
-          "type": "string"
-        },
-        "grant_access_to": {
-          "title": "Authorized views",
-          "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "database",
-              "project"
-            ],
-            "properties": {
-              "database": {
-                "type": "string"
-              },
-              "project": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false
-          }
-        },
-        "grants": {
-          "$ref": "#/$defs/grants"
-        },
-        "hours_to_expiration": {
-          "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
-          "type": "number"
-        },
-        "kms_key_name": {
-          "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
-          "type": "string",
-          "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*"
-        },
-        "labels": {
-          "title": "Label configs",
-          "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
-          "type": "object",
-          "patternProperties": {
-            "^[a-z][a-z0-9_-]{0,62}$": {
-              "type": "string",
-              "pattern": "^[a-z0-9_-]{0,63}$"
-            }
-          },
-          "additionalProperties": false
-        },
-        "location": {
-          "type": "string"
-        },
-        "materialized": {
-          "type": "string"
-        },
-        "on_configuration_change": {
-          "type": "string",
-          "enum": [
-            "apply",
-            "continue",
-            "fail"
-          ]
-        },
-        "on_schema_change": {
-          "type": "string",
-          "enum": [
-            "append_new_columns",
-            "fail",
-            "ignore",
-            "sync_all_columns"
-          ]
-        },
-        "snowflake_warehouse": {
-          "type": "string"
-        },
-        "sql_header": {
-          "type": "string"
-        },
-        "target_lag": {
-          "type": "string",
-          "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$"
-        }
-      }
-    },
-    "owner": {
-      "type": "object",
-      "anyOf": [
-        {
-          "required": [
-            "email"
-          ]
-        },
-        {
-          "required": [
-            "name"
-          ]
-        }
-      ],
+    "Model": {
+      "additionalProperties": false,
       "properties": {
         "name": {
+          "title": "Name",
           "type": "string"
         },
-        "email": {
-          "type": "string"
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "access": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Access"
+            }
+          ],
+          "default": null
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ColumnProperties"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelConfigs"
+            }
+          ],
+          "default": null
+        },
+        "constraints": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Constraints"
+            }
+          ],
+          "default": null
+        },
+        "data_tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Data Tests"
+        },
+        "deprecation_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Deprecation Date"
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "latest_version": {
+          "anyOf": [
+            {
+              "type": "number"
+            }
+          ],
+          "default": null,
+          "title": "Latest Version"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tests"
+        },
+        "versions": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Version"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Versions"
         }
       },
-      "additionalProperties": false
-    },
-    "non_additive_dimension": {
-      "type": "object",
       "required": [
         "name"
       ],
+      "title": "Model",
+      "type": "object"
+    },
+    "ModelConfigs": {
+      "properties": {
+        "auto_refresh": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "backup": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Contract"
+            }
+          ],
+          "default": null
+        },
+        "file_format": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "File Format"
+        },
+        "grant_access_to": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/AuthorizedView"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
+          "title": "Authorized views"
+        },
+        "grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            }
+          ],
+          "default": null
+        },
+        "hours_to_expiration": {
+          "anyOf": [
+            {
+              "type": "number"
+            }
+          ],
+          "default": null,
+          "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
+          "title": "Hours To Expiration"
+        },
+        "kms_key_name": {
+          "anyOf": [
+            {
+              "pattern": "projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*",
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
+          "title": "Kms Key Name"
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
+          "title": "Label configs"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "materialized": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Materialized"
+        },
+        "on_configuration_change": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnConfigurationChange"
+            }
+          ],
+          "default": null
+        },
+        "on_schema_change": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnSchemaChange"
+            }
+          ],
+          "default": null
+        },
+        "snowflake_warehouse": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Snowflake Warehouse"
+        },
+        "sql_header": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Sql Header"
+        },
+        "target_lag": {
+          "anyOf": [
+            {
+              "pattern": "^(?:downstream|\\d+\\s*(?:seconds|minutes|hours|days))$",
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Target Lag"
+        }
+      },
+      "title": "ModelConfigs",
+      "type": "object"
+    },
+    "NonAdditiveDimension": {
+      "additionalProperties": false,
       "properties": {
         "name": {
+          "title": "Name",
           "type": "string"
         },
         "window_choice": {
-          "enum": [
-            "MIN",
-            "MAX",
-            "min",
-            "max"
-          ]
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WindowChoice"
+            }
+          ],
+          "default": null
         },
         "window_groupings": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Window Groupings"
         }
       },
-      "additionalProperties": false
+      "required": [
+        "name"
+      ],
+      "title": "NonAdditiveDimension",
+      "type": "object"
     },
-    "number_or_jinja_string": {
-      "oneOf": [
+    "NotNull": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConfigs"
+            }
+          ],
+          "default": null
+        },
+        "where": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Where"
+        }
+      },
+      "title": "NotNull",
+      "type": "object"
+    },
+    "NotNullTest": {
+      "properties": {
+        "not_null": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NotNull"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "NotNullTest",
+      "type": "object"
+    },
+    "NumberOrJinjaString": {
+      "anyOf": [
         {
-          "$ref": "#/$defs/jinja_string"
+          "$ref": "#/$defs/JinjaString"
         },
         {
           "type": "number"
         }
       ],
-      "additionalProperties": false
+      "title": "NumberOrJinjaString"
     },
-    "persist_docs_config": {
-      "title": "Persist docs config",
-      "description": "Configurations for the persistence of the dbt documentation.",
-      "type": "object",
+    "OnConfigurationChange": {
+      "enum": [
+        "apply",
+        "continue",
+        "fail"
+      ],
+      "title": "OnConfigurationChange",
+      "type": "string"
+    },
+    "OnSchemaChange": {
+      "enum": [
+        "append_new_columns",
+        "fail",
+        "ignore",
+        "sync_all_columns"
+      ],
+      "title": "OnSchemaChange",
+      "type": "string"
+    },
+    "Overrides": {
+      "additionalProperties": false,
+      "properties": {
+        "env_vars": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Env Vars"
+        },
+        "macros": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "examples": [
+            {
+              "is_incremental": "true"
+            }
+          ],
+          "title": "Macros"
+        },
+        "vars": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Vars"
+        }
+      },
+      "title": "Overrides",
+      "type": "object"
+    },
+    "OwnerWithEmail": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "title": "Email",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "title": "OwnerWithEmail",
+      "type": "object"
+    },
+    "OwnerWithName": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "OwnerWithName",
+      "type": "object"
+    },
+    "Period": {
+      "enum": [
+        "minute",
+        "hour",
+        "day"
+      ],
+      "title": "Period",
+      "type": "string"
+    },
+    "PersistDocsConfig": {
+      "additionalProperties": false,
       "properties": {
         "columns": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
-          "default": true
-        },
-        "relation": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
-          "default": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "ratio_metric_type_params": {
-      "type": "object",
-      "properties": {
-        "denominator": {
-          "$ref": "#/$defs/metric_input_schema"
-        },
-        "filter": {
-          "type": "string"
-        },
-        "numerator": {
-          "$ref": "#/$defs/metric_input_schema"
-        }
-      },
-      "additionalProperties": false
-    },
-    "simple_metric_type_params": {
-      "type": "object",
-      "properties": {
-        "measure": {
-          "$ref": "#/$defs/metric_input_measure"
-        }
-      },
-      "additionalProperties": false
-    },
-    "string_or_array_of_strings": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "$ref": "#/$defs/array_of_strings"
-        }
-      ]
-    },
-    "test_configs": {
-      "title": "Test configs",
-      "description": "Configurations set here will override configs set in dbt_project.yml.",
-      "type": "object",
-      "properties": {
-        "alias": {
-          "description": "Only relevant when `store_failures` is true",
-          "type": "string"
-        },
-        "database": {
-          "description": "Only relevant when `store_failures` is true",
-          "type": "string"
-        },
-        "enabled": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "error_if": {
-          "type": "string"
-        },
-        "fail_calc": {
-          "type": "string"
-        },
-        "limit": {
-          "type": "number"
-        },
-        "schema": {
-          "description": "Only relevant when `store_failures` is true",
-          "type": "string"
-        },
-        "severity": {
-          "oneOf": [
+          "anyOf": [
             {
-              "$ref": "#/$defs/jinja_string"
-            },
-            {
-              "type": "string",
-              "enum": [
-                "warn",
-                "error"
-              ]
+              "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ]
         },
-        "store_failures": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "tags": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        },
-        "warn_if": {
-          "type": "string"
-        }
-      }
-    },
-    "validity_params": {
-      "type": "object",
-      "properties": {
-        "is_end": {
-          "type": "boolean"
-        },
-        "is_start": {
-          "type": "boolean"
+        "relation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ]
         }
       },
-      "additionalProperties": false
+      "title": "PersistDocsConfig",
+      "type": "object"
+    },
+    "QueryParams": {
+      "properties": {
+        "dimensions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "where": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {}
+          ],
+          "default": null,
+          "title": "Additionalproperties"
+        }
+      },
+      "title": "QueryParams",
+      "type": "object"
+    },
+    "Quoting": {
+      "additionalProperties": false,
+      "properties": {
+        "database": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "identifier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Quoting",
+      "type": "object"
+    },
+    "RatioMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/RatioMetricType"
+        },
+        "type_params": {
+          "$ref": "#/$defs/RatioMetricTypeParams"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "type",
+        "type_params"
+      ],
+      "title": "RatioMetric",
+      "type": "object"
+    },
+    "RatioMetricType": {
+      "enum": [
+        "RATIO",
+        "ratio"
+      ],
+      "title": "RatioMetricType",
+      "type": "string"
+    },
+    "RatioMetricTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricInputSchema"
+            }
+          ],
+          "default": null
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
+        },
+        "numerator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricInputSchema"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "RatioMetricTypeParams",
+      "type": "object"
+    },
+    "Relationships": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConfigs"
+            }
+          ],
+          "default": null
+        },
+        "field": {
+          "description": "The foreign key column",
+          "title": "Relationships: Field",
+          "type": "string"
+        },
+        "to": {
+          "examples": [
+            "ref('parent_model')",
+            "source('parent_schema', 'parent_table')"
+          ],
+          "title": "To",
+          "type": "string"
+        },
+        "where": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Where"
+        }
+      },
+      "required": [
+        "field",
+        "to"
+      ],
+      "title": "Relationships",
+      "type": "object"
+    },
+    "RelationshipsTest": {
+      "properties": {
+        "relationships": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Relationships"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "RelationshipsTest",
+      "type": "object"
+    },
+    "SavedQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "exports": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Export"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Exports"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "query_params": {
+          "$ref": "#/$defs/QueryParams"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "label",
+        "query_params"
+      ],
+      "title": "SavedQuery",
+      "type": "object"
+    },
+    "Seed": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ColumnProperties"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SeedConfig"
+            }
+          ],
+          "default": null,
+          "title": "Seed Config"
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tests"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Seed",
+      "type": "object"
+    },
+    "SeedConfig": {
+      "properties": {
+        "column_types": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Column Types"
+        },
+        "copy_grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "data_tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Data Tests"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Database"
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            }
+          ],
+          "default": null
+        },
+        "quote_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Schema"
+        }
+      },
+      "title": "SeedConfig",
+      "type": "object"
+    },
+    "SemanticModel": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "defaults": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Defaults"
+            }
+          ],
+          "default": null
+        },
+        "dimensions": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Dimension"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Dimensions"
+        },
+        "entities": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Entity"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Entities"
+        },
+        "measures": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Measure"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Measures"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "primary_entity": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Primary Entity"
+        }
+      },
+      "required": [
+        "name",
+        "model"
+      ],
+      "title": "SemanticModel",
+      "type": "object"
+    },
+    "Severity": {
+      "enum": [
+        "warn",
+        "error"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "SimpleMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Filter"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/SimpleMetricType"
+        },
+        "type_params": {
+          "$ref": "#/$defs/SimpleMetricTypeParams"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "type",
+        "type_params"
+      ],
+      "title": "SimpleMetric",
+      "type": "object"
+    },
+    "SimpleMetricType": {
+      "enum": [
+        "SIMPLE",
+        "simple"
+      ],
+      "title": "SimpleMetricType",
+      "type": "string"
+    },
+    "SimpleMetricTypeParams": {
+      "additionalProperties": false,
+      "properties": {
+        "measure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricInputMeasure"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "SimpleMetricTypeParams",
+      "type": "object"
+    },
+    "Snapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ColumnProperties"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SnapshotConfig"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Config"
+        },
+        "data_tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Data Tests"
+        },
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocsConfig"
+            }
+          ],
+          "default": null
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupName"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tests"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Snapshot",
+      "type": "object"
+    },
+    "SnapshotConfig": {
+      "properties": {
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Alias"
+        },
+        "check_cols": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "grants": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Grants"
+            }
+          ],
+          "default": null
+        },
+        "persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PersistDocsConfig"
+            }
+          ],
+          "default": null
+        },
+        "post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "quote_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "strategy": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Strategy"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "target_database": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Target Database"
+        },
+        "target_schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Target Schema"
+        },
+        "unique_key": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Updated At"
+        }
+      },
+      "title": "SnapshotConfig",
+      "type": "object"
+    },
+    "Source": {
+      "properties": {
+        "name": {
+          "description": "How you will identify the schema in {{ source() }} calls. Unless `schema` is also set, this will be the name of the schema in the database.",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Config"
+        },
+        "data_tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Data Tests"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Database"
+        },
+        "freshness": {
+          "$comment": "truly_nullable",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FreshnessDefinition"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": {
+            "warn_after": {
+              "count": 1.0,
+              "period": "hour"
+            },
+            "error_after": {
+              "count": 1.0,
+              "period": "day"
+            },
+            "filter": ""
+          }
+        },
+        "loaded_at_field": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Loaded At Field"
+        },
+        "loader": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Loader"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "overrides": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "The name of another package installed in your project. If that package has a source with the same name as this one, its properties will be applied on top of the base properties of the overridden source. https://docs.getdbt.com/reference/resource-properties/overrides",
+          "title": "Package to Override"
+        },
+        "quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quoting"
+            }
+          ],
+          "default": null
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "The schema name as stored in the database. Only needed if you want to use a different `name` than what exists in the database (otherwise `name` is used by default)",
+          "title": "Schema"
+        },
+        "tables": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Table"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tables"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tests"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "StringOrArrayOfStrings": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/ArrayOfStrings"
+        }
+      ],
+      "title": "StringOrArrayOfStrings"
+    },
+    "Table": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "How you will identify the table in {{ source() }} calls. Unless `identifier` is also set, this will be the name of the table in the database.",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ColumnProperties"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "external": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "External"
+        },
+        "freshness": {
+          "$comment": "truly_nullable",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FreshnessDefinition"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": {
+            "warn_after": {
+              "count": 1.0,
+              "period": "hour"
+            },
+            "error_after": {
+              "count": 1.0,
+              "period": "day"
+            },
+            "filter": ""
+          }
+        },
+        "identifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "The table name as stored in the database. Only needed if you want to give the source a different name than what exists in the database (otherwise `name` is used by default)",
+          "title": "Identifier"
+        },
+        "loaded_at_field": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall.",
+          "title": "Loaded At Field"
+        },
+        "loader": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Loader"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quoting"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "tests": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/DataTests"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Tests"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Table",
+      "type": "object"
+    },
+    "TestConfigs": {
+      "properties": {
+        "alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Only relevant when `store_failures` is true",
+          "title": "Alias"
+        },
+        "database": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Only relevant when `store_failures` is true",
+          "title": "Database"
+        },
+        "enabled": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "error_if": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Error If"
+        },
+        "fail_calc": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Fail Calc"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "number"
+            }
+          ],
+          "default": null,
+          "title": "Limit"
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "description": "Only relevant when `store_failures` is true",
+          "title": "Schema"
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/JinjaString"
+            },
+            {
+              "$ref": "#/$defs/Severity"
+            }
+          ],
+          "default": null,
+          "title": "Severity"
+        },
+        "store_failures": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BooleanOrJinjaString"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        },
+        "warn_if": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Warn If"
+        }
+      },
+      "title": "TestConfigs",
+      "type": "object"
+    },
+    "TimeDimension": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "expr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Expr"
+        },
+        "is_partition": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Is Partition"
+        },
+        "type": {
+          "$ref": "#/$defs/TimeDimensionType"
+        },
+        "type_params": {
+          "$ref": "#/$defs/DimensionTypeParams"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "type_params"
+      ],
+      "title": "TimeDimension",
+      "type": "object"
+    },
+    "TimeDimensionType": {
+      "enum": [
+        "TIME",
+        "time"
+      ],
+      "title": "TimeDimensionType",
+      "type": "string"
+    },
+    "TimeGranularity": {
+      "enum": [
+        "DAY",
+        "WEEK",
+        "MONTH",
+        "QUARTER",
+        "YEAR",
+        "day",
+        "week",
+        "month",
+        "quarter",
+        "year"
+      ],
+      "title": "TimeGranularity",
+      "type": "string"
+    },
+    "Type": {
+      "enum": [
+        "dashboard",
+        "notebook",
+        "analysis",
+        "ml",
+        "application"
+      ],
+      "title": "Type",
+      "type": "string"
+    },
+    "Unique": {
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConfigs"
+            }
+          ],
+          "default": null
+        },
+        "where": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Where"
+        }
+      },
+      "title": "Unique",
+      "type": "object"
+    },
+    "UniqueTest": {
+      "properties": {
+        "unique": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Unique"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "UniqueTest",
+      "type": "object"
+    },
+    "UnitTest": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UnitTestConfig"
+            }
+          ],
+          "default": null,
+          "title": "Unit Test Config"
+        },
+        "expect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExpectDict"
+            },
+            {
+              "$ref": "#/$defs/ExpectCSV"
+            },
+            {
+              "$ref": "#/$defs/ExpectSQL"
+            }
+          ],
+          "title": "Expect"
+        },
+        "given": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/GivenItem"
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Given"
+        },
+        "model": {
+          "description": "The name of the model whose behaviour you are testing. Does not need to be wrapped in a ref.",
+          "examples": [
+            "my_model"
+          ],
+          "title": "Model",
+          "type": "string"
+        },
+        "overrides": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Overrides"
+            }
+          ],
+          "default": null
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {}
+          ],
+          "default": null,
+          "title": "Additionalproperties"
+        }
+      },
+      "required": [
+        "name",
+        "expect",
+        "model"
+      ],
+      "title": "UnitTest",
+      "type": "object"
+    },
+    "UnitTestConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "meta": {
+          "anyOf": [
+            {
+              "type": "object"
+            }
+          ],
+          "default": null,
+          "title": "Meta"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StringOrArrayOfStrings"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "UnitTestConfig",
+      "type": "object"
+    },
+    "ValidityParams": {
+      "additionalProperties": false,
+      "properties": {
+        "is_end": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Is End"
+        },
+        "is_start": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": null,
+          "title": "Is Start"
+        }
+      },
+      "title": "ValidityParams",
+      "type": "object"
+    },
+    "Version": {
+      "properties": {
+        "columns": {
+          "anyOf": [
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/IncludeExclude"
+                  },
+                  {
+                    "$ref": "#/$defs/ColumnProperties"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ],
+          "default": null,
+          "title": "Columns"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelConfigs"
+            }
+          ],
+          "default": null
+        },
+        "v": {
+          "title": "V",
+          "type": "number"
+        }
+      },
+      "required": [
+        "v"
+      ],
+      "title": "Version",
+      "type": "object"
+    },
+    "WindowChoice": {
+      "enum": [
+        "MIN",
+        "MAX",
+        "min",
+        "max"
+      ],
+      "title": "WindowChoice",
+      "type": "string"
     }
-  }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 2,
+      "default": 2,
+      "enum": [
+        2
+      ],
+      "title": "Version",
+      "type": "integer"
+    },
+    "analyses": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Analyse"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Analyses"
+    },
+    "exposures": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Exposure"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Exposures"
+    },
+    "groups": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Group"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Groups"
+    },
+    "macros": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Macro"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Macros"
+    },
+    "metrics": {
+      "anyOf": [
+        {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SimpleMetric"
+              },
+              {
+                "$ref": "#/$defs/DerivedMetric"
+              },
+              {
+                "$ref": "#/$defs/CumulativeMetric"
+              },
+              {
+                "$ref": "#/$defs/ConversionMetric"
+              },
+              {
+                "$ref": "#/$defs/RatioMetric"
+              }
+            ]
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Metrics"
+    },
+    "models": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Model"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Models"
+    },
+    "saved_queries": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/SavedQuery"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Saved Queries"
+    },
+    "seeds": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Seed"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Seeds"
+    },
+    "semantic_models": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/SemanticModel"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Semantic Models"
+    },
+    "snapshots": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Snapshot"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Snapshots"
+    },
+    "sources": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Source"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Sources"
+    },
+    "unit_tests": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/UnitTest"
+          },
+          "type": "array"
+        }
+      ],
+      "default": null,
+      "title": "Unit Tests"
+    }
+  },
+  "title": "DbtYmlFiles",
+  "type": "object"
 }

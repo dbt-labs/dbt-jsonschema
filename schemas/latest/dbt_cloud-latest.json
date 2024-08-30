@@ -1,14 +1,23 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
+  "additionalProperties": false,
   "properties": {
     "project-id": {
+      "title": "Project-Id",
       "type": "string"
     },
     "defer-env-id": {
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        }
+      ],
+      "default": null,
+      "title": "Defer-Env-Id"
     }
   },
-  "required": ["project-id"],
-  "additionalProperties": false
+  "required": [
+    "project-id"
+  ],
+  "title": "DbtCloud",
+  "type": "object"
 }
