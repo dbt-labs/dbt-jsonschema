@@ -241,7 +241,7 @@ class GroupName(RootModel[str]):
 
 
 class JinjaString(RootModel[str]):
-    root: str = Field(..., pattern="\\{\\{.*\\}\\}")
+    root: str = Field(..., pattern="\\{\\{.+\\}\\}")
 
 
 class Agg(Enum):

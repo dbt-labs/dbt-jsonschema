@@ -1471,7 +1471,7 @@
       "type": "object"
     },
     "JinjaString": {
-      "pattern": "\\{\\{.*\\}\\}",
+      "pattern": "\\{\\{.+\\}\\}",
       "title": "JinjaString",
       "type": "string"
     },
