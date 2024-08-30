@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any, Dict
 
 from src.latest.dbt_cloud import DbtCloud
-from src.latest.dbt_project import DbtProject
 from src.latest.dbt_yml_files import DbtYmlFiles
 from src.latest.dependencies import Dependencies, Packages
 from src.latest.selectors import Selectors
@@ -14,7 +13,10 @@ class RemoveNullsGenerateJsonSchema(GenerateJsonSchema):
     """A GenerateJsonSchema which removes nullability from types.
 
     We do not want to include optional values in the json schema because
-    that would inhibit code completion.
+    that would inhibit code completion and validation.
+
+    Certain properties (such as freshness overrides) need to be nullable,
+    which can be achieved by setting the $comment value below.
     """
 
     def _remove_null(self, json_schema: Dict[str, Any]):
@@ -40,7 +42,6 @@ if __name__ == "__main__":
         "dependencies": Dependencies,
         "packages": Packages,
         "selectors": Selectors,
-        "dbt_project": DbtProject,
         "dbt_cloud": DbtCloud,
     }
     output_directory = Path("schemas/latest")
