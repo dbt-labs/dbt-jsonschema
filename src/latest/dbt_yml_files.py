@@ -149,27 +149,29 @@ class ConstantProperty(BaseModel):
     base_property: str = Field(..., description="DIMENSION or ENTITY")
     conversion_property: str = Field(..., description="DIMENSION or ENTITY")
 
-
-class GrainToDate(Enum):
-    day = "day"
-    week = "week"
-    month = "month"
-    quarter = "quarter"
-    year = "year"
-
-
 class TimeGranularity(Enum):
+    NANOSECOND = "NANOSECOND"
+    MICROSECOND = "MICROSECOND"
+    MILLISECOND = "MILLISECOND"
+    SECOND = "SECOND"
+    MINUTE = "MINUTE"
+    HOUR = "HOUR"
     DAY = "DAY"
     WEEK = "WEEK"
     MONTH = "MONTH"
     QUARTER = "QUARTER"
     YEAR = "YEAR"
+    nanosecond = "nanosecond"
+    microsecond = "microsecond"
+    millisecond = "millisecond"
+    second = "second"
+    minute = "minute"
+    hour = "hour"
     day = "day"
     week = "week"
     month = "month"
     quarter = "quarter"
     year = "year"
-
 
 class DocsConfig(BaseModel):
     model_config = ConfigDict(
@@ -456,6 +458,7 @@ class MetricBase(BaseModel):
     filter: Optional[str] = ""
     group: Optional[GroupName] = ""
     label: str
+    time_granularity: TimeGranularity
 
 
 class SimpleMetric(MetricBase):
@@ -570,7 +573,7 @@ class CumulativeMetricTypeParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    grain_to_date: Optional[GrainToDate] = GrainToDate.month
+    grain_to_date: Optional[TimeGranularity] = TimeGranularity.month
     measure: Optional[MetricInputMeasure] = ""
     window: Optional[str] = ""
 
