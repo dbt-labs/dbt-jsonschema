@@ -230,7 +230,7 @@ class Export(BaseModel):
     config: Optional[ExportConfig] = Field(title="Export Config")
 
 
-class Period(Enum):
+class FreshnessPeriod(Enum):
     minute = "minute"
     hour = "hour"
     day = "day"
@@ -599,7 +599,7 @@ class FreshnessRules(BaseModel):
         extra="forbid",
     )
     count: NumberOrJinjaString
-    period: Period
+    period: FreshnessPeriod
 
 
 class Grants(RootModel[Dict[str, StringOrArrayOfStrings]]):
@@ -828,8 +828,8 @@ class FreshnessDefinition(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    warn_after: Optional[FreshnessRules] = FreshnessRules(count=1, period=Period.hour)
-    error_after: Optional[FreshnessRules] = FreshnessRules(count=1, period=Period.day)
+    warn_after: Optional[FreshnessRules] = FreshnessRules(count=1, period=FreshnessPeriod.hour)
+    error_after: Optional[FreshnessRules] = FreshnessRules(count=1, period=FreshnessPeriod.day)
     filter: Optional[str] = ""
 
 class SeedConfig(BaseModel):

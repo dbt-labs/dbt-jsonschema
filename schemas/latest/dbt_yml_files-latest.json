@@ -1246,6 +1246,15 @@
       "title": "FreshnessDefinition",
       "type": "object"
     },
+    "FreshnessPeriod": {
+      "enum": [
+        "minute",
+        "hour",
+        "day"
+      ],
+      "title": "FreshnessPeriod",
+      "type": "string"
+    },
     "FreshnessRules": {
       "additionalProperties": false,
       "properties": {
@@ -1253,7 +1262,7 @@
           "$ref": "#/$defs/NumberOrJinjaString"
         },
         "period": {
-          "$ref": "#/$defs/Period"
+          "$ref": "#/$defs/FreshnessPeriod"
         }
       },
       "required": [
@@ -2055,15 +2064,6 @@
       ],
       "title": "OwnerWithName",
       "type": "object"
-    },
-    "Period": {
-      "enum": [
-        "minute",
-        "hour",
-        "day"
-      ],
-      "title": "Period",
-      "type": "string"
     },
     "PersistDocsConfig": {
       "additionalProperties": false,
