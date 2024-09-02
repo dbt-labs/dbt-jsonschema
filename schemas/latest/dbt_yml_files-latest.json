@@ -615,6 +615,9 @@
           "title": "Label",
           "type": "string"
         },
+        "time_granularity": {
+          "$ref": "#/$defs/TimeGranularity"
+        },
         "type": {
           "$ref": "#/$defs/ConversionMetricType"
         },
@@ -625,6 +628,7 @@
       "required": [
         "name",
         "label",
+        "time_granularity",
         "type",
         "type_params"
       ],
@@ -744,6 +748,9 @@
           "title": "Label",
           "type": "string"
         },
+        "time_granularity": {
+          "$ref": "#/$defs/TimeGranularity"
+        },
         "type": {
           "$ref": "#/$defs/CumulativeMetricType"
         },
@@ -754,6 +761,7 @@
       "required": [
         "name",
         "label",
+        "time_granularity",
         "type",
         "type_params"
       ],
@@ -774,7 +782,7 @@
         "grain_to_date": {
           "anyOf": [
             {
-              "$ref": "#/$defs/GrainToDate"
+              "$ref": "#/$defs/TimeGranularity"
             }
           ],
           "default": "month"
@@ -874,6 +882,9 @@
           "title": "Label",
           "type": "string"
         },
+        "time_granularity": {
+          "$ref": "#/$defs/TimeGranularity"
+        },
         "type": {
           "$ref": "#/$defs/DerivedMetricType"
         },
@@ -884,6 +895,7 @@
       "required": [
         "name",
         "label",
+        "time_granularity",
         "type",
         "type_params"
       ],
@@ -1250,17 +1262,6 @@
       ],
       "title": "FreshnessRules",
       "type": "object"
-    },
-    "GrainToDate": {
-      "enum": [
-        "day",
-        "week",
-        "month",
-        "quarter",
-        "year"
-      ],
-      "title": "GrainToDate",
-      "type": "string"
     },
     "Grants": {
       "additionalProperties": {
@@ -2184,6 +2185,9 @@
           "title": "Label",
           "type": "string"
         },
+        "time_granularity": {
+          "$ref": "#/$defs/TimeGranularity"
+        },
         "type": {
           "$ref": "#/$defs/RatioMetricType"
         },
@@ -2194,6 +2198,7 @@
       "required": [
         "name",
         "label",
+        "time_granularity",
         "type",
         "type_params"
       ],
@@ -2626,6 +2631,9 @@
           "title": "Label",
           "type": "string"
         },
+        "time_granularity": {
+          "$ref": "#/$defs/TimeGranularity"
+        },
         "type": {
           "$ref": "#/$defs/SimpleMetricType"
         },
@@ -2636,6 +2644,7 @@
       "required": [
         "name",
         "label",
+        "time_granularity",
         "type",
         "type_params"
       ],
@@ -3363,11 +3372,23 @@
     },
     "TimeGranularity": {
       "enum": [
+        "NANOSECOND",
+        "MICROSECOND",
+        "MILLISECOND",
+        "SECOND",
+        "MINUTE",
+        "HOUR",
         "DAY",
         "WEEK",
         "MONTH",
         "QUARTER",
         "YEAR",
+        "nanosecond",
+        "microsecond",
+        "millisecond",
+        "second",
+        "minute",
+        "hour",
         "day",
         "week",
         "month",
