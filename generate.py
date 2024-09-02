@@ -32,7 +32,7 @@ class RemoveNullsGenerateJsonSchema(GenerateJsonSchema):
 
     def generate(self, schema, mode="validation"):
         json_schema = super().generate(schema, mode=mode)
-        json_schema["schema"] = "http://json-schema.org/draft-07/schema#"
+        json_schema["$schema"] = "http://json-schema.org/draft-07/schema#"
         self._remove_null(json_schema)
         return json_schema
 
