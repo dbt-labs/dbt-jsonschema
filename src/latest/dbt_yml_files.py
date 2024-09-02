@@ -61,80 +61,77 @@ class Format(Enum):
     sql = "sql"
 
 
-class ExpectDict(BaseModel):
+class UnitTestExpectDict(BaseModel):
     format: Literal["dict"] = Field("dict")
     rows: List[Dict[str, Any]] = Field(
         ...,
         description="When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
     )
 
-
-class ExpectCSV(BaseModel):
-    format: Literal["csv"] = Field("csv")
-    rows: Optional[str] = Field(
-        None,
-        description="When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-    )
-    fixture: Optional[str] = Field(
-        None,
-        description="Specify the name of a fixture instead of providing `rows`.",
-    )
-
-
-class ExpectSQL(BaseModel):
-    format: Literal["sql"] = Field("sql")
-    rows: Optional[str] = Field(
-        None,
-        description="When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-    )
-    fixture: Optional[str] = Field(
-        None,
-        description="Specify the name of a fixture instead of providing `rows`.",
-    )
-
-
-Expect = Union[ExpectDict, ExpectCSV, ExpectSQL]
-
-
-class GivenItem(BaseModel):
+class UnitTestGivenDict(UnitTestExpectDict):
     model_config = ConfigDict(
         extra="forbid",
     )
+    input: str = Field("ref('')", description="The Relation whose input you want to mock")
+
+class UnitTestExpectCSV(BaseModel):
+    format: Literal["csv"] = Field("csv")
+    rows: Optional[str] = Field(
+        "",
+        description="When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively specify the `fixture` property. Use the pipe character | to create a multi-line string in YAML.",
+    )
     fixture: Optional[str] = Field(
-        None,
-        description="Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
+        "",
+        description="Specify the name of a fixture instead of providing `rows`. Does not need to be wrapped in ref.",
     )
-    format: Optional[Format] = Field(
-        None, description="Defaults to `dict` when not specified"
+
+class UnitTestGivenCSV(UnitTestExpectCSV):
+    model_config = ConfigDict(
+        extra="forbid",
     )
-    input: Optional[str] = Field(
-        None,
-        description="The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
-        examples=[
-            "ref('model_b')",
-            "ref('upstream_project', 'model_b')",
-            "source('schema', 'table')",
-        ],
+    input: str = Field("ref('')", description="The Relation whose input you want to mock")
+
+
+class UnitTestExpectSQL(BaseModel):
+    format: Literal["sql"] = Field("sql")
+    rows: Optional[str] = Field(
+        "",
+        description="When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively specify the `fixture` property. Use the pipe character | to create a multi-line string in YAML.",
     )
+    fixture: Optional[str] = Field(
+        "",
+        description="Specify the name of a fixture instead of providing `rows`. Does not need to be wrapped in ref.",
+    )
+
+class UnitTestGivenSQL(UnitTestExpectSQL):
+    model_config = ConfigDict(
+        extra="forbid",
+    )
+    input: str = Field("ref('')", description="The Relation whose input you want to mock")
+
+
+Expect = Union[UnitTestExpectDict, UnitTestExpectCSV, UnitTestExpectSQL]
+Given = Union[UnitTestGivenDict, UnitTestGivenCSV, UnitTestGivenSQL]
+
 
 class Overrides(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    env_vars: Optional[Dict[str, Any]] = None
+    env_vars: Optional[Dict[str, Any]] = {"ENV_VAR_NAME": "value"}
     macros: Optional[Dict[str, Any]] = Field(
         None, examples=[{"is_incremental": "true"}]
     )
-    vars: Optional[Dict[str, Any]] = None
+    vars: Optional[Dict[str, Any]] = {"var_name": "value"}
 
 
 class AggregationTypeParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    percentile: Optional[float] = None
-    use_approximate_percentile: Optional[bool] = None
-    use_discrete_percentile: Optional[bool] = None
+    percentile: Optional[float] = ""
+    use_approximate_percentile: Optional[bool] = ""
+    use_discrete_percentile: Optional[bool] = ""
 
 
 class ArrayOfStrings(RootModel[List[str]]):
@@ -205,7 +202,7 @@ class Entity(BaseModel):
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     type: EntityType = Field(..., title="Entity Type")
     entity: Optional[str] = ""
-    expr: Optional[Union[str, bool]] = None
+    expr: Optional[str] = Field("", description="The field that denotes the entity. Defaults to name if unspecified")
 
 
 class ExportAs(Enum):
@@ -219,8 +216,8 @@ class ExportConfig(BaseModel):
         extra="allow",
     )
     alias: Optional[str] = ""
-    export_as: Optional[ExportAs] = None
-    schema_: Optional[str] = Field(None, alias="schema")
+    export_as: Optional[ExportAs] = ""
+    schema_: Optional[str] = Field("", alias="schema")
 
 
 class Export(BaseModel):
@@ -228,7 +225,7 @@ class Export(BaseModel):
         extra="forbid",
     )
     name: str
-    config: Optional[ExportConfig] = Field(None, title="Export Config")
+    config: Optional[ExportConfig] = Field(title="Export Config")
 
 
 class Period(Enum):
@@ -271,9 +268,9 @@ class MetricInputMeasure(BaseModel):
         extra="forbid",
     )
     name: Optional[str] = ""
-    fill_nulls_with: Optional[Union[str, int]] = None
+    fill_nulls_with: Optional[Union[str, int]] = 0
     filter: Optional[str] = ""
-    join_to_timespine: Optional[bool] = None
+    join_to_timespine: Optional[bool] = Field(True, description="Indicates if the aggregated measure should be joined to the time spine table to fill in missing dates")
 
 
 class MetricInputSchema(BaseModel):
@@ -335,9 +332,9 @@ class NonAdditiveDimension(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    name: str
-    window_choice: Optional[WindowChoice] = None
-    window_groupings: Optional[List[str]] = None
+    name: str = Field("", description="The name of the time dimension (that has already been defined in the data source) that the measure should not be aggregated over.")
+    window_choice: WindowChoice = Field(WindowChoice.min, description="`min` and `max` reflect the beginning and end of the time period respectively.")
+    window_groupings: Optional[List[str]] = Field([], description="Provide the entities that you would like to group by.")
 
 
 class NumberOrJinjaString(RootModel[Union[JinjaString, float]]):
@@ -348,16 +345,16 @@ class RatioMetricTypeParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    denominator: Optional[MetricInputSchema] = None
+    denominator: Optional[MetricInputSchema] = ""
     filter: Optional[str] = ""
-    numerator: Optional[MetricInputSchema] = None
+    numerator: Optional[MetricInputSchema] = ""
 
 
 class SimpleMetricTypeParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    measure: Optional[MetricInputMeasure] = None
+    measure: Optional[MetricInputMeasure] = ""
 
 
 class StringOrArrayOfStrings(RootModel[Union[str, ArrayOfStrings]]):
@@ -373,24 +370,24 @@ class ValidityParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    is_end: Optional[bool] = None
-    is_start: Optional[bool] = None
+    is_end: Optional[bool] = ""
+    is_start: Optional[bool] = ""
 
 
 class Config(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    tags: Optional[StringOrArrayOfStrings] = None
+    tags: Optional[StringOrArrayOfStrings] = ""
 
 
-class Analyse(BaseModel):
+class Analysis(BaseModel):
     name: str
     description: Optional[str] = ""
-    columns: Optional[List[Column]] = None
-    config: Optional[Config] = None
-    docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
+    columns: Optional[List[Column]] = ""
+    config: Optional[Config] = ""
+    docs: Optional[DocsConfig] = ""
+    group: Optional[GroupName] = ""
 
 
 class Exposure(BaseModel):
@@ -399,10 +396,10 @@ class Exposure(BaseModel):
     type: Type
     depends_on: List[str]
     label: Optional[str] = ""
-    maturity: Optional[Maturity] = None
-    meta: Optional[Dict[str, Any]] = None
+    maturity: Optional[Maturity] = Maturity.medium
+    meta: Optional[Dict[str, Any]] = ""
     owner: Owner
-    tags: Optional[StringOrArrayOfStrings] = None
+    tags: Optional[StringOrArrayOfStrings] = ""
     url: Optional[str] = ""
 
 
@@ -420,8 +417,8 @@ class Macro(BaseModel):
     )
     name: str
     description: Optional[str] = ""
-    arguments: Optional[List[Argument]] = None
-    docs: Optional[DocsConfig] = None
+    arguments: Optional[List[Argument]] = ""
+    docs: Optional[DocsConfig] = ""
 
 
 class SimpleMetricType(Enum):
@@ -457,7 +454,7 @@ class MetricBase(BaseModel):
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     description: Optional[str] = ""
     filter: Optional[str] = ""
-    group: Optional[GroupName] = None
+    group: Optional[GroupName] = ""
     label: str
 
 
@@ -492,10 +489,9 @@ Metric = Union[
 
 
 class QueryParams(BaseModel):
-    dimensions: Optional[ArrayOfStrings] = None
-    metrics: Optional[ArrayOfStrings] = None
-    where: Optional[ArrayOfStrings] = None
-    additionalProperties: Optional[Any] = None
+    dimensions: Optional[ArrayOfStrings] = ""
+    metrics: Optional[ArrayOfStrings] = ""
+    where: Optional[ArrayOfStrings] = ""
 
 
 class SavedQuery(BaseModel):
@@ -504,7 +500,7 @@ class SavedQuery(BaseModel):
     )
     name: str
     description: str
-    exports: Optional[List[Export]] = None
+    exports: Optional[List[Export]] = ""
     label: str
     query_params: QueryParams
 
@@ -513,8 +509,8 @@ class UnitTestConfig(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    meta: Optional[Dict[str, Any]] = None
-    tags: Optional[StringOrArrayOfStrings] = None
+    meta: Optional[Dict[str, Any]] = ""
+    tags: Optional[StringOrArrayOfStrings] = ""
 
 
 class UnitTest(BaseModel):
@@ -525,14 +521,13 @@ class UnitTest(BaseModel):
     description: Optional[str] = ""
     config: Optional[UnitTestConfig] = Field(None, title="Unit Test Config")
     expect: Expect
-    given: Optional[List[GivenItem]] = None
+    given: Optional[List[Given]] = [UnitTestGivenDict(input="", rows=[{"col1": "value1", "col2": "value2"}])]
     model: str = Field(
         ...,
         description="The name of the model whose behaviour you are testing. Does not need to be wrapped in a ref.",
         examples=["my_model"],
     )
-    overrides: Optional[Overrides] = None
-    additionalProperties: Optional[Any] = None
+    overrides: Optional[Overrides] = ""
 
 
 class BooleanOrJinjaString(RootModel[Union[JinjaString, bool]]):
@@ -542,10 +537,10 @@ class BooleanOrJinjaString(RootModel[Union[JinjaString, bool]]):
 class Constraint(BaseModel):
     name: Optional[str] = ""
     type: str
-    columns: Optional[StringOrArrayOfStrings] = None
+    columns: Optional[StringOrArrayOfStrings] = ""
     expression: Optional[str] = ""
-    warn_unenforced: Optional[BooleanOrJinjaString] = None
-    warn_unsupported: Optional[BooleanOrJinjaString] = None
+    warn_unenforced: Optional[BooleanOrJinjaString] = ""
+    warn_unsupported: Optional[BooleanOrJinjaString] = ""
 
 
 class Constraints(RootModel[List[Constraint]]):
@@ -558,7 +553,7 @@ class ConversionTypeParams(BaseModel):
     )
     base_measure: MetricInputMeasure
     calculation: Optional[Calculation] = Calculation.conversion_rate
-    constant_properties: Optional[List[ConstantProperty]] = None
+    constant_properties: Optional[List[ConstantProperty]] = ""
     conversion_measure: MetricInputMeasure
     entity: str = Field(..., description="The entity to calculate over")
     window: Optional[str] = ""
@@ -568,15 +563,15 @@ class ConversionMetricTypeParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    conversion_type_params: Optional[ConversionTypeParams] = None
+    conversion_type_params: Optional[ConversionTypeParams] = ""
 
 
 class CumulativeMetricTypeParams(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    grain_to_date: Optional[GrainToDate] = None
-    measure: Optional[MetricInputMeasure] = None
+    grain_to_date: Optional[GrainToDate] = GrainToDate.month
+    measure: Optional[MetricInputMeasure] = ""
     window: Optional[str] = ""
 
 
@@ -585,7 +580,7 @@ class DerivedMetricTypeParams(BaseModel):
         extra="forbid",
     )
     expr: Optional[str] = ""
-    metrics: Optional[List[MetricInputSchema]] = None
+    metrics: Optional[List[MetricInputSchema]] = ""
 
 
 class DimensionTypeParams(BaseModel):
@@ -593,7 +588,7 @@ class DimensionTypeParams(BaseModel):
         extra="forbid",
     )
     time_granularity: TimeGranularity
-    validity_params: Optional[ValidityParams] = None
+    validity_params: Optional[ValidityParams] = ""
 
 
 class FreshnessRules(BaseModel):
@@ -612,8 +607,8 @@ class Grants(RootModel[Dict[str, StringOrArrayOfStrings]]):
 
 
 class IncludeExclude(BaseModel):
-    exclude: Optional[StringOrArrayOfStrings] = None
-    include: Optional[StringOrArrayOfStrings] = None
+    exclude: Optional[StringOrArrayOfStrings] = ""
+    include: Optional[StringOrArrayOfStrings] = ""
 
 
 class Measure(BaseModel):
@@ -624,50 +619,50 @@ class Measure(BaseModel):
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     description: Optional[str] = ""
     agg: Agg
-    agg_params: Optional[AggregationTypeParams] = None
+    agg_params: Optional[AggregationTypeParams] = ""
     agg_time_dimension: Optional[str] = Field(
         None, pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$"
     )
-    create_metric: Optional[bool] = None
+    create_metric: Optional[bool] = True
     create_metric_display_name: Optional[str] = ""
-    expr: Optional[Union[str, int, bool]] = None
+    expr: Optional[Union[str, int, bool]] = ""
     label: Optional[str] = ""
-    non_additive_dimension: Optional[NonAdditiveDimension] = None
+    non_additive_dimension: Optional[NonAdditiveDimension] = Field(NonAdditiveDimension(), description="Specify dimensions that the measure should not be aggregated over.")
 
 
 class Contract(BaseModel):
-    enforced: Optional[BooleanOrJinjaString] = None
+    enforced: Optional[BooleanOrJinjaString] = True
 
 
 class ModelConfigs(BaseModel):
-    auto_refresh: Optional[BooleanOrJinjaString] = None
-    backup: Optional[BooleanOrJinjaString] = None
-    contract: Optional[Contract] = None
+    auto_refresh: Optional[BooleanOrJinjaString] = True
+    backup: Optional[BooleanOrJinjaString] = True
+    contract: Optional[Contract] = Field(Contract(enforced=True))
     file_format: Optional[str] = ""
     grant_access_to: Optional[List[AuthorizedView]] = Field(
         None,
         description="Configuration, specific to BigQuery adapter, used to setup authorized views.",
         title="Authorized views",
     )
-    grants: Optional[Grants] = None
+    grants: Optional[Grants] = {"select": ["reporter_role", "bi_user"]}
     hours_to_expiration: Optional[float] = Field(
-        None,
+        1,
         description="Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
     )
     kms_key_name: Optional[str] = Field(
-        None,
+        "",
         description="Configuration of the KMS key name, specific to BigQuery adapter.",
         pattern="projects/[a-zA-Z0-9_-]*/locations/[a-zA-Z0-9_-]*/keyRings/.*/cryptoKeys/.*",
     )
     labels: Optional[Dict[str, str]] = Field(
-        None,
+        {"key": "value"},
         description="Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
         title="Label configs",
     )
     location: Optional[str] = ""
     materialized: Optional[str] = ""
-    on_configuration_change: Optional[OnConfigurationChange] = None
-    on_schema_change: Optional[OnSchemaChange] = None
+    on_configuration_change: Optional[OnConfigurationChange] = ""
+    on_schema_change: Optional[OnSchemaChange] = ""
     snowflake_warehouse: Optional[str] = ""
     sql_header: Optional[str] = ""
     target_lag: Optional[str] = Field(
@@ -694,33 +689,33 @@ class TestConfigs(BaseModel):
     database: Optional[str] = Field(
         None, description="Only relevant when `store_failures` is true"
     )
-    enabled: Optional[BooleanOrJinjaString] = None
+    enabled: Optional[BooleanOrJinjaString] = False
     error_if: Optional[str] = ""
     fail_calc: Optional[str] = ""
-    limit: Optional[float] = None
+    limit: Optional[float] = 20
     schema_: Optional[str] = Field(
         None, alias="schema", description="Only relevant when `store_failures` is true"
     )
-    severity: Optional[Union[JinjaString, Severity]] = None
-    store_failures: Optional[BooleanOrJinjaString] = None
-    tags: Optional[StringOrArrayOfStrings] = None
+    severity: Optional[Union[JinjaString, Severity]] = Severity.warn
+    store_failures: Optional[BooleanOrJinjaString] = True
+    tags: Optional[StringOrArrayOfStrings] = ""
     warn_if: Optional[str] = ""
 
 
 class SnapshotConfig(BaseModel):
     alias: Optional[str] = ""
-    check_cols: Optional[StringOrArrayOfStrings] = None
-    enabled: Optional[BooleanOrJinjaString] = None
-    grants: Optional[Grants] = None
-    persist_docs: Optional[PersistDocsConfig] = None
-    post_hook: Optional[ArrayOfStrings] = Field(None, alias="post-hook")
-    pre_hook: Optional[ArrayOfStrings] = Field(None, alias="pre-hook")
-    quote_columns: Optional[BooleanOrJinjaString] = None
+    check_cols: Optional[StringOrArrayOfStrings] = ""
+    enabled: Optional[BooleanOrJinjaString] = False
+    grants: Optional[Grants] = {"select": ["reporter_role", "bi_user"]}
+    persist_docs: Optional[PersistDocsConfig] = ""
+    post_hook: Optional[ArrayOfStrings] = Field("", alias="post-hook")
+    pre_hook: Optional[ArrayOfStrings] = Field("", alias="pre-hook")
+    quote_columns: Optional[BooleanOrJinjaString] = ""
     strategy: Optional[str] = ""
-    tags: Optional[StringOrArrayOfStrings] = None
+    tags: Optional[StringOrArrayOfStrings] = ""
     target_database: Optional[str] = ""
     target_schema: Optional[str] = ""
-    unique_key: Optional[StringOrArrayOfStrings] = None
+    unique_key: Optional[StringOrArrayOfStrings] = ""
     updated_at: Optional[str] = ""
 
 
@@ -728,14 +723,17 @@ class Quoting(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    database: Optional[BooleanOrJinjaString] = None
-    identifier: Optional[BooleanOrJinjaString] = None
-    schema_: Optional[BooleanOrJinjaString] = Field(None, alias="schema")
+    database: Optional[BooleanOrJinjaString] = ""
+    identifier: Optional[BooleanOrJinjaString] = ""
+    schema_: Optional[BooleanOrJinjaString] = Field("", alias="schema")
 
 
 class Relationships(BaseModel):
+    model_config = ConfigDict(
+        extra="forbid",
+    )
     name: Optional[str] = ""
-    config: Optional[TestConfigs] = None
+    config: Optional[TestConfigs] = ""
     field: str = Field(
         ..., description="The foreign key column", title="Relationships: Field"
     )
@@ -746,39 +744,39 @@ class Relationships(BaseModel):
 
 
 class RelationshipsTest(BaseModel):
-    relationships: Optional[Relationships] = None
+    relationships: Optional[Relationships] = ""
 
 
 class AcceptedValues(BaseModel):
     name: Optional[str] = ""
-    config: Optional[TestConfigs] = None
-    quote: Optional[bool] = None
+    config: Optional[TestConfigs] = ""
+    quote: Optional[bool] = ""
     values: List[str]
     where: Optional[str] = ""
 
 
 class AcceptedValuesTest(BaseModel):
-    accepted_values: Optional[AcceptedValues] = None
+    accepted_values: Optional[AcceptedValues] = AcceptedValues(values=[])
 
 
 class NotNull(BaseModel):
     name: Optional[str] = ""
-    config: Optional[TestConfigs] = None
+    config: Optional[TestConfigs] = ""
     where: Optional[str] = ""
 
 
 class NotNullTest(BaseModel):
-    not_null: Optional[NotNull] = None
+    not_null: Optional[NotNull] = ""
 
 
 class Unique(BaseModel):
     name: Optional[str] = ""
-    config: Optional[TestConfigs] = None
+    config: Optional[TestConfigs] = ""
     where: Optional[str] = ""
 
 
 class UniqueTest(BaseModel):
-    unique: Optional[Unique] = None
+    unique: Optional[Unique] = ""
 
 
 class DataTests(
@@ -796,8 +794,8 @@ class DimensionBase(BaseModel):
     )
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     description: Optional[str] = ""
-    expr: Optional[Union[str, bool]] = None
-    is_partition: Optional[bool] = None
+    expr: Optional[Union[str, bool]] = ""
+    is_partition: Optional[bool] = True
 
 
 class TimeDimensionType(Enum):
@@ -832,13 +830,13 @@ class FreshnessDefinition(BaseModel):
     filter: Optional[str] = ""
 
 class SeedConfig(BaseModel):
-    column_types: Optional[Dict[str, Any]] = None
-    copy_grants: Optional[BooleanOrJinjaString] = None
-    data_tests: Optional[List[DataTests]] = None
+    column_types: Optional[Dict[str, Any]] = ""
+    copy_grants: Optional[BooleanOrJinjaString] = True
+    data_tests: Optional[List[DataTests]] = ""
     database: Optional[str] = ""
-    enabled: Optional[BooleanOrJinjaString] = None
-    grants: Optional[Grants] = None
-    quote_columns: Optional[BooleanOrJinjaString] = None
+    enabled: Optional[BooleanOrJinjaString] = False
+    grants: Optional[Grants] = {"select": ["reporter_role", "bi_user"]}
+    quote_columns: Optional[BooleanOrJinjaString] = ""
     schema_: Optional[str] = Field(None, alias="schema")
 
 
@@ -849,10 +847,10 @@ class SemanticModel(BaseModel):
     )
     name: str = Field(..., pattern="(?!.*__).*^[a-z][a-z0-9_]*[a-z0-9]$")
     description: Optional[str] = ""
-    defaults: Optional[Defaults] = None
-    dimensions: Optional[List[Dimension]] = None
-    entities: Optional[List[Entity]] = None
-    measures: Optional[List[Measure]] = None
+    defaults: Optional[Defaults] = ""
+    dimensions: Optional[List[Dimension]] = ""
+    entities: Optional[List[Entity]] = ""
+    measures: Optional[List[Measure]] = ""
     model: str
     primary_entity: Optional[str] = ""
 
@@ -863,24 +861,24 @@ class ColumnProperties(BaseModel):
     )
     name: str
     description: Optional[str] = ""
-    constraints: Optional[Constraints] = None
-    data_tests: Optional[List[DataTests]] = None
+    constraints: Optional[Constraints] = ""
+    data_tests: Optional[List[DataTests]] = ""
     data_type: Optional[str] = ""
-    meta: Optional[Dict[str, Any]] = None
+    meta: Optional[Dict[str, Any]] = ""
     policy_tags: Optional[List[str]] = Field(
         None,
         description="Configurations, specific to BigQuery adapter, used to set policy tags on specific columns, enabling column-level security. Only relevant when `persist_docs.columns` is true.",
         title="Policy tags",
     )
-    quote: Optional[BooleanOrJinjaString] = None
-    tags: Optional[StringOrArrayOfStrings] = None
-    tests: Optional[List[DataTests]] = None
+    quote: Optional[BooleanOrJinjaString] = ""
+    tags: Optional[StringOrArrayOfStrings] = ""
+    tests: Optional[List[DataTests]] = ""
 
 
 class Version(BaseModel):
-    columns: Optional[List[Union[IncludeExclude, ColumnProperties]]] = None
-    config: Optional[ModelConfigs] = None
-    v: float
+    columns: Optional[List[Union[IncludeExclude, ColumnProperties]]] = {}
+    config: Optional[ModelConfigs] = {}
+    v: float = 1
 
 
 class Model(BaseModel):
@@ -889,18 +887,18 @@ class Model(BaseModel):
     )
     name: str
     description: Optional[str] = ""
-    access: Optional[Access] = None
-    columns: Optional[List[ColumnProperties]] = None
-    config: Optional[ModelConfigs] = None
-    constraints: Optional[Constraints] = None
-    data_tests: Optional[List[DataTests]] = None
+    access: Optional[Access] = Access.private
+    columns: Optional[List[ColumnProperties]] = ""
+    config: Optional[ModelConfigs] = ""
+    constraints: Optional[Constraints] = ""
+    data_tests: Optional[List[DataTests]] = ""
     deprecation_date: Optional[str] = ""
-    docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
-    latest_version: Optional[float] = None
-    meta: Optional[Dict[str, Any]] = None
-    tests: Optional[List[DataTests]] = None
-    versions: Optional[List[Version]] = None
+    docs: Optional[DocsConfig] = ""
+    group: Optional[GroupName] = ""
+    latest_version: Optional[float] = ""
+    meta: Optional[Dict[str, Any]] = ""
+    tests: Optional[List[DataTests]] = ""
+    versions: Optional[List[Version]] = ""
 
 
 class Seed(BaseModel):
@@ -909,11 +907,11 @@ class Seed(BaseModel):
     )
     name: str
     description: Optional[str] = ""
-    columns: Optional[List[ColumnProperties]] = None
-    config: Optional[SeedConfig] = Field(None, title="Seed Config")
-    docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
-    tests: Optional[List[DataTests]] = None
+    columns: Optional[List[ColumnProperties]] = ""
+    config: Optional[SeedConfig] = Field("", title="Seed Config")
+    docs: Optional[DocsConfig] = ""
+    group: Optional[GroupName] = ""
+    tests: Optional[List[DataTests]] = ""
 
 
 class Snapshot(BaseModel):
@@ -922,13 +920,13 @@ class Snapshot(BaseModel):
     )
     name: str
     description: Optional[str] = ""
-    columns: Optional[List[ColumnProperties]] = None
-    config: Optional[SnapshotConfig] = Field(None, title="Snapshot Config")
-    data_tests: Optional[List[DataTests]] = None
-    docs: Optional[DocsConfig] = None
-    group: Optional[GroupName] = None
-    meta: Optional[Dict[str, Any]] = None
-    tests: Optional[List[DataTests]] = None
+    columns: Optional[List[ColumnProperties]] = ""
+    config: Optional[SnapshotConfig] = Field("", title="Snapshot Config")
+    data_tests: Optional[List[DataTests]] = ""
+    docs: Optional[DocsConfig] = ""
+    group: Optional[GroupName] = ""
+    meta: Optional[Dict[str, Any]] = ""
+    tests: Optional[List[DataTests]] = ""
 
 
 class Table(BaseModel):
@@ -941,8 +939,8 @@ class Table(BaseModel):
         title="Name",
     )
     description: Optional[str] = ""
-    columns: Optional[List[ColumnProperties]] = None
-    external: Optional[Dict[str, Any]] = None
+    columns: Optional[List[ColumnProperties]] = ""
+    external: Optional[Dict[str, Any]] = ""
     freshness: Optional[FreshnessDefinition] = Field(FreshnessDefinition(), json_schema_extra={"$comment": "truly_nullable"})
     identifier: Optional[str] = Field(
         None,
@@ -954,10 +952,10 @@ class Table(BaseModel):
         description="Which column to check during data freshness tests. Only needed if the table has a different loaded_at_field to the one defined on the source overall.",
     )
     loader: Optional[str] = ""
-    meta: Optional[Dict[str, Any]] = None
-    quoting: Optional[Quoting] = None
-    tags: Optional[StringOrArrayOfStrings] = None
-    tests: Optional[List[DataTests]] = None
+    meta: Optional[Dict[str, Any]] = ""
+    quoting: Optional[Quoting] = ""
+    tags: Optional[StringOrArrayOfStrings] = ""
+    tests: Optional[List[DataTests]] = ""
 
 
 class Source(BaseModel):
@@ -966,27 +964,27 @@ class Source(BaseModel):
         description="How you will identify the schema in {{ source() }} calls. Unless `schema` is also set, this will be the name of the schema in the database.",
     )
     description: Optional[str] = ""
-    config: Optional[Dict[str, Any]] = None
-    data_tests: Optional[List[DataTests]] = None
+    config: Optional[Dict[str, Any]] = ""
+    data_tests: Optional[List[DataTests]] = ""
     database: Optional[str] = ""
     freshness: Optional[FreshnessDefinition] = Field(FreshnessDefinition(), json_schema_extra={"$comment": "truly_nullable"})
     loaded_at_field: Optional[str] = ""
     loader: Optional[str] = ""
-    meta: Optional[Dict[str, Any]] = None
+    meta: Optional[Dict[str, Any]] = ""
     overrides: Optional[str] = Field(
         None,
         description="The name of another package installed in your project. If that package has a source with the same name as this one, its properties will be applied on top of the base properties of the overridden source. https://docs.getdbt.com/reference/resource-properties/overrides",
         title="Package to Override",
     )
-    quoting: Optional[Quoting] = None
+    quoting: Optional[Quoting] = ""
     schema_: Optional[str] = Field(
         None,
         alias="schema",
         description="The schema name as stored in the database. Only needed if you want to use a different `name` than what exists in the database (otherwise `name` is used by default)",
     )
-    tables: Optional[List[Table]] = None
-    tags: Optional[StringOrArrayOfStrings] = None
-    tests: Optional[List[DataTests]] = None
+    tables: Optional[List[Table]] = ""
+    tags: Optional[StringOrArrayOfStrings] = ""
+    tests: Optional[List[DataTests]] = ""
 
 
 class DbtYmlFiles(BaseModel):
@@ -994,15 +992,15 @@ class DbtYmlFiles(BaseModel):
         extra="forbid",
     )
     version: Literal[2] = 2
-    analyses: Optional[List[Analyse]] = None
-    exposures: Optional[List[Exposure]] = None
-    groups: Optional[List[Group]] = None
-    macros: Optional[List[Macro]] = None
-    metrics: Optional[List[Metric]] = None
-    models: Optional[List[Model]] = None
-    saved_queries: Optional[List[SavedQuery]] = None
-    seeds: Optional[List[Seed]] = None
-    semantic_models: Optional[List[SemanticModel]] = None
-    snapshots: Optional[List[Snapshot]] = None
-    sources: Optional[List[Source]] = None
-    unit_tests: Optional[List[UnitTest]] = None
+    analyses: Optional[List[Analysis]] = ""
+    exposures: Optional[List[Exposure]] = ""
+    groups: Optional[List[Group]] = ""
+    macros: Optional[List[Macro]] = ""
+    metrics: Optional[List[Metric]] = ""
+    models: Optional[List[Model]] = ""
+    saved_queries: Optional[List[SavedQuery]] = ""
+    seeds: Optional[List[Seed]] = ""
+    semantic_models: Optional[List[SemanticModel]] = ""
+    snapshots: Optional[List[Snapshot]] = ""
+    sources: Optional[List[Source]] = ""
+    unit_tests: Optional[List[UnitTest]] = ""

@@ -8,7 +8,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "config": {
@@ -17,7 +17,7 @@
               "$ref": "#/$defs/TestConfigs"
             }
           ],
-          "default": null
+          "default": ""
         },
         "quote": {
           "anyOf": [
@@ -25,7 +25,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Quote"
         },
         "values": {
@@ -41,7 +41,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Where"
         }
       },
@@ -59,7 +59,13 @@
               "$ref": "#/$defs/AcceptedValues"
             }
           ],
-          "default": null
+          "default": {
+            "name": "",
+            "config": "",
+            "quote": "",
+            "values": [],
+            "where": ""
+          }
         }
       },
       "title": "AcceptedValuesTest",
@@ -107,7 +113,7 @@
               "type": "number"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Percentile"
         },
         "use_approximate_percentile": {
@@ -116,7 +122,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Use Approximate Percentile"
         },
         "use_discrete_percentile": {
@@ -125,14 +131,14 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Use Discrete Percentile"
         }
       },
       "title": "AggregationTypeParams",
       "type": "object"
     },
-    "Analyse": {
+    "Analysis": {
       "properties": {
         "name": {
           "title": "Name",
@@ -144,7 +150,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "columns": {
@@ -156,7 +162,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Columns"
         },
         "config": {
@@ -165,7 +171,7 @@
               "$ref": "#/$defs/Config"
             }
           ],
-          "default": null
+          "default": ""
         },
         "docs": {
           "anyOf": [
@@ -173,7 +179,7 @@
               "$ref": "#/$defs/DocsConfig"
             }
           ],
-          "default": null
+          "default": ""
         },
         "group": {
           "anyOf": [
@@ -181,13 +187,13 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "required": [
         "name"
       ],
-      "title": "Analyse",
+      "title": "Analysis",
       "type": "object"
     },
     "Argument": {
@@ -203,7 +209,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "type": {
@@ -212,7 +218,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Type"
         }
       },
@@ -283,7 +289,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "expr": {
@@ -295,7 +301,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Expr"
         },
         "is_partition": {
@@ -304,7 +310,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": true,
           "title": "Is Partition"
         },
         "type": {
@@ -339,7 +345,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "data_type": {
@@ -348,7 +354,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Type"
         }
       },
@@ -371,7 +377,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "constraints": {
@@ -380,7 +386,7 @@
               "$ref": "#/$defs/Constraints"
             }
           ],
-          "default": null
+          "default": ""
         },
         "data_tests": {
           "anyOf": [
@@ -391,7 +397,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Tests"
         },
         "data_type": {
@@ -400,7 +406,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Type"
         },
         "meta": {
@@ -409,7 +415,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "policy_tags": {
@@ -431,7 +437,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         },
         "tags": {
           "anyOf": [
@@ -439,7 +445,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "tests": {
           "anyOf": [
@@ -450,7 +456,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tests"
         }
       },
@@ -469,7 +475,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "Config",
@@ -503,7 +509,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "type": {
@@ -516,7 +522,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "expression": {
           "anyOf": [
@@ -524,7 +530,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Expression"
         },
         "warn_unenforced": {
@@ -533,7 +539,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         },
         "warn_unsupported": {
           "anyOf": [
@@ -541,7 +547,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "required": [
@@ -565,7 +571,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": true
         }
       },
       "title": "Contract",
@@ -585,7 +591,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "filter": {
@@ -594,7 +600,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "group": {
@@ -603,7 +609,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "label": {
           "title": "Label",
@@ -642,7 +648,7 @@
               "$ref": "#/$defs/ConversionTypeParams"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "ConversionMetricTypeParams",
@@ -671,7 +677,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Constant Properties"
         },
         "conversion_measure": {
@@ -688,7 +694,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Window"
         }
       },
@@ -714,7 +720,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "filter": {
@@ -723,7 +729,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "group": {
@@ -732,7 +738,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "label": {
           "title": "Label",
@@ -771,7 +777,7 @@
               "$ref": "#/$defs/GrainToDate"
             }
           ],
-          "default": null
+          "default": "month"
         },
         "measure": {
           "anyOf": [
@@ -779,7 +785,7 @@
               "$ref": "#/$defs/MetricInputMeasure"
             }
           ],
-          "default": null
+          "default": ""
         },
         "window": {
           "anyOf": [
@@ -787,7 +793,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Window"
         }
       },
@@ -823,7 +829,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Agg Time Dimension"
         }
       },
@@ -844,7 +850,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "filter": {
@@ -853,7 +859,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "group": {
@@ -862,7 +868,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "label": {
           "title": "Label",
@@ -901,7 +907,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Expr"
         },
         "metrics": {
@@ -913,7 +919,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Metrics"
         }
       },
@@ -943,7 +949,7 @@
               "$ref": "#/$defs/ValidityParams"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "required": [
@@ -1001,19 +1007,17 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Entity"
         },
         "expr": {
           "anyOf": [
             {
               "type": "string"
-            },
-            {
-              "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
+          "description": "The field that denotes the entity. Defaults to name if unspecified",
           "title": "Expr"
         }
       },
@@ -1038,102 +1042,6 @@
       "title": "EntityType",
       "type": "string"
     },
-    "ExpectCSV": {
-      "properties": {
-        "format": {
-          "const": "csv",
-          "default": "csv",
-          "enum": [
-            "csv"
-          ],
-          "title": "Format",
-          "type": "string"
-        },
-        "rows": {
-          "anyOf": [
-            {
-              "type": "string"
-            }
-          ],
-          "default": null,
-          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-          "title": "Rows"
-        },
-        "fixture": {
-          "anyOf": [
-            {
-              "type": "string"
-            }
-          ],
-          "default": null,
-          "description": "Specify the name of a fixture instead of providing `rows`.",
-          "title": "Fixture"
-        }
-      },
-      "title": "ExpectCSV",
-      "type": "object"
-    },
-    "ExpectDict": {
-      "properties": {
-        "format": {
-          "const": "dict",
-          "default": "dict",
-          "enum": [
-            "dict"
-          ],
-          "title": "Format",
-          "type": "string"
-        },
-        "rows": {
-          "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
-          "items": {
-            "type": "object"
-          },
-          "title": "Rows",
-          "type": "array"
-        }
-      },
-      "required": [
-        "rows"
-      ],
-      "title": "ExpectDict",
-      "type": "object"
-    },
-    "ExpectSQL": {
-      "properties": {
-        "format": {
-          "const": "sql",
-          "default": "sql",
-          "enum": [
-            "sql"
-          ],
-          "title": "Format",
-          "type": "string"
-        },
-        "rows": {
-          "anyOf": [
-            {
-              "type": "string"
-            }
-          ],
-          "default": null,
-          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively provide a fixture. Use the pipe character | to create a multi-line string in YAML.",
-          "title": "Rows"
-        },
-        "fixture": {
-          "anyOf": [
-            {
-              "type": "string"
-            }
-          ],
-          "default": null,
-          "description": "Specify the name of a fixture instead of providing `rows`.",
-          "title": "Fixture"
-        }
-      },
-      "title": "ExpectSQL",
-      "type": "object"
-    },
     "Export": {
       "additionalProperties": false,
       "properties": {
@@ -1147,12 +1055,12 @@
               "$ref": "#/$defs/ExportConfig"
             }
           ],
-          "default": null,
           "title": "Export Config"
         }
       },
       "required": [
-        "name"
+        "name",
+        "config"
       ],
       "title": "Export",
       "type": "object"
@@ -1175,7 +1083,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Alias"
         },
         "export_as": {
@@ -1184,7 +1092,7 @@
               "$ref": "#/$defs/ExportAs"
             }
           ],
-          "default": null
+          "default": ""
         },
         "schema": {
           "anyOf": [
@@ -1192,7 +1100,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Schema"
         }
       },
@@ -1211,7 +1119,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "type": {
@@ -1230,7 +1138,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Label"
         },
         "maturity": {
@@ -1239,7 +1147,7 @@
               "$ref": "#/$defs/Maturity"
             }
           ],
-          "default": null
+          "default": "medium"
         },
         "meta": {
           "anyOf": [
@@ -1247,7 +1155,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "owner": {
@@ -1267,7 +1175,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "url": {
           "anyOf": [
@@ -1275,7 +1183,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Url"
         }
       },
@@ -1287,15 +1195,6 @@
       ],
       "title": "Exposure",
       "type": "object"
-    },
-    "Format": {
-      "enum": [
-        "csv",
-        "dict",
-        "sql"
-      ],
-      "title": "Format",
-      "type": "string"
     },
     "FreshnessDefinition": {
       "additionalProperties": false,
@@ -1350,53 +1249,6 @@
         "period"
       ],
       "title": "FreshnessRules",
-      "type": "object"
-    },
-    "GivenItem": {
-      "properties": {
-        "fixture": {
-          "anyOf": [
-            {
-              "type": "string"
-            }
-          ],
-          "default": null,
-          "description": "Only relevant when format is csv. Specify the name of a fixture instead of providing `rows`.",
-          "title": "Fixture"
-        },
-        "format": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Format"
-            }
-          ],
-          "default": null,
-          "description": "Defaults to `dict` when not specified"
-        },
-        "input": {
-          "anyOf": [
-            {
-              "type": "string"
-            }
-          ],
-          "default": null,
-          "description": "The relation whose inputs you need to mock. Enclose in ref or source without curly braces",
-          "examples": [
-            "ref('model_b')",
-            "ref('upstream_project', 'model_b')",
-            "source('schema', 'table')"
-          ],
-          "title": "Input"
-        },
-        "additionalProperties": {
-          "anyOf": [
-            {}
-          ],
-          "default": null,
-          "title": "Additionalproperties"
-        }
-      },
-      "title": "GivenItem",
       "type": "object"
     },
     "GrainToDate": {
@@ -1456,7 +1308,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "include": {
           "anyOf": [
@@ -1464,7 +1316,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "IncludeExclude",
@@ -1488,7 +1340,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "arguments": {
@@ -1500,7 +1352,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Arguments"
         },
         "docs": {
@@ -1509,7 +1361,7 @@
               "$ref": "#/$defs/DocsConfig"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "required": [
@@ -1541,7 +1393,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "agg": {
@@ -1553,7 +1405,7 @@
               "$ref": "#/$defs/AggregationTypeParams"
             }
           ],
-          "default": null
+          "default": ""
         },
         "agg_time_dimension": {
           "anyOf": [
@@ -1571,7 +1423,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": true,
           "title": "Create Metric"
         },
         "create_metric_display_name": {
@@ -1580,7 +1432,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Create Metric Display Name"
         },
         "expr": {
@@ -1595,7 +1447,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Expr"
         },
         "label": {
@@ -1604,7 +1456,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Label"
         },
         "non_additive_dimension": {
@@ -1613,7 +1465,12 @@
               "$ref": "#/$defs/NonAdditiveDimension"
             }
           ],
-          "default": null
+          "default": {
+            "name": "",
+            "window_choice": "min",
+            "window_groupings": []
+          },
+          "description": "Specify dimensions that the measure should not be aggregated over."
         }
       },
       "required": [
@@ -1632,7 +1489,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "fill_nulls_with": {
@@ -1644,7 +1501,7 @@
               "type": "integer"
             }
           ],
-          "default": null,
+          "default": 0,
           "title": "Fill Nulls With"
         },
         "filter": {
@@ -1653,7 +1510,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "join_to_timespine": {
@@ -1662,7 +1519,8 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": true,
+          "description": "Indicates if the aggregated measure should be joined to the time spine table to fill in missing dates",
           "title": "Join To Timespine"
         }
       },
@@ -1678,7 +1536,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "alias": {
@@ -1687,7 +1545,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Alias"
         },
         "filter": {
@@ -1696,7 +1554,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "offset_window": {
@@ -1705,7 +1563,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Offset Window"
         }
       },
@@ -1725,7 +1583,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "access": {
@@ -1734,7 +1592,7 @@
               "$ref": "#/$defs/Access"
             }
           ],
-          "default": null
+          "default": "private"
         },
         "columns": {
           "anyOf": [
@@ -1745,7 +1603,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Columns"
         },
         "config": {
@@ -1754,7 +1612,7 @@
               "$ref": "#/$defs/ModelConfigs"
             }
           ],
-          "default": null
+          "default": ""
         },
         "constraints": {
           "anyOf": [
@@ -1762,7 +1620,7 @@
               "$ref": "#/$defs/Constraints"
             }
           ],
-          "default": null
+          "default": ""
         },
         "data_tests": {
           "anyOf": [
@@ -1773,7 +1631,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Tests"
         },
         "deprecation_date": {
@@ -1782,7 +1640,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Deprecation Date"
         },
         "docs": {
@@ -1791,7 +1649,7 @@
               "$ref": "#/$defs/DocsConfig"
             }
           ],
-          "default": null
+          "default": ""
         },
         "group": {
           "anyOf": [
@@ -1799,7 +1657,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "latest_version": {
           "anyOf": [
@@ -1807,7 +1665,7 @@
               "type": "number"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Latest Version"
         },
         "meta": {
@@ -1816,7 +1674,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "tests": {
@@ -1828,7 +1686,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tests"
         },
         "versions": {
@@ -1840,7 +1698,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Versions"
         }
       },
@@ -1858,7 +1716,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": true
         },
         "backup": {
           "anyOf": [
@@ -1866,7 +1724,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": true
         },
         "contract": {
           "anyOf": [
@@ -1874,7 +1732,9 @@
               "$ref": "#/$defs/Contract"
             }
           ],
-          "default": null
+          "default": {
+            "enforced": true
+          }
         },
         "file_format": {
           "anyOf": [
@@ -1882,7 +1742,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "File Format"
         },
         "grant_access_to": {
@@ -1904,7 +1764,12 @@
               "$ref": "#/$defs/Grants"
             }
           ],
-          "default": null
+          "default": {
+            "select": [
+              "reporter_role",
+              "bi_user"
+            ]
+          }
         },
         "hours_to_expiration": {
           "anyOf": [
@@ -1912,7 +1777,7 @@
               "type": "number"
             }
           ],
-          "default": null,
+          "default": 1,
           "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
           "title": "Hours To Expiration"
         },
@@ -1923,7 +1788,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "description": "Configuration of the KMS key name, specific to BigQuery adapter.",
           "title": "Kms Key Name"
         },
@@ -1936,7 +1801,9 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": {
+            "key": "value"
+          },
           "description": "Configuration specific to BigQuery adapter used to add labels and tags to tables/views created by dbt.",
           "title": "Label configs"
         },
@@ -1946,7 +1813,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Location"
         },
         "materialized": {
@@ -1955,7 +1822,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Materialized"
         },
         "on_configuration_change": {
@@ -1964,7 +1831,7 @@
               "$ref": "#/$defs/OnConfigurationChange"
             }
           ],
-          "default": null
+          "default": ""
         },
         "on_schema_change": {
           "anyOf": [
@@ -1972,7 +1839,7 @@
               "$ref": "#/$defs/OnSchemaChange"
             }
           ],
-          "default": null
+          "default": ""
         },
         "snowflake_warehouse": {
           "anyOf": [
@@ -1980,7 +1847,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Snowflake Warehouse"
         },
         "sql_header": {
@@ -1989,7 +1856,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Sql Header"
         },
         "target_lag": {
@@ -2010,16 +1877,19 @@
       "additionalProperties": false,
       "properties": {
         "name": {
+          "default": "",
+          "description": "The name of the time dimension (that has already been defined in the data source) that the measure should not be aggregated over.",
           "title": "Name",
           "type": "string"
         },
         "window_choice": {
-          "anyOf": [
+          "allOf": [
             {
               "$ref": "#/$defs/WindowChoice"
             }
           ],
-          "default": null
+          "default": "min",
+          "description": "`min` and `max` reflect the beginning and end of the time period respectively."
         },
         "window_groupings": {
           "anyOf": [
@@ -2030,13 +1900,11 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": [],
+          "description": "Provide the entities that you would like to group by.",
           "title": "Window Groupings"
         }
       },
-      "required": [
-        "name"
-      ],
       "title": "NonAdditiveDimension",
       "type": "object"
     },
@@ -2048,7 +1916,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "config": {
@@ -2057,7 +1925,7 @@
               "$ref": "#/$defs/TestConfigs"
             }
           ],
-          "default": null
+          "default": ""
         },
         "where": {
           "anyOf": [
@@ -2065,7 +1933,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Where"
         }
       },
@@ -2080,7 +1948,7 @@
               "$ref": "#/$defs/NotNull"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "NotNullTest",
@@ -2125,7 +1993,9 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": {
+            "ENV_VAR_NAME": "value"
+          },
           "title": "Env Vars"
         },
         "macros": {
@@ -2148,7 +2018,9 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": {
+            "var_name": "value"
+          },
           "title": "Vars"
         }
       },
@@ -2221,7 +2093,7 @@
               "$ref": "#/$defs/ArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "metrics": {
           "anyOf": [
@@ -2229,7 +2101,7 @@
               "$ref": "#/$defs/ArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "where": {
           "anyOf": [
@@ -2237,14 +2109,7 @@
               "$ref": "#/$defs/ArrayOfStrings"
             }
           ],
-          "default": null
-        },
-        "additionalProperties": {
-          "anyOf": [
-            {}
-          ],
-          "default": null,
-          "title": "Additionalproperties"
+          "default": ""
         }
       },
       "title": "QueryParams",
@@ -2259,7 +2124,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         },
         "identifier": {
           "anyOf": [
@@ -2267,7 +2132,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         },
         "schema": {
           "anyOf": [
@@ -2275,7 +2140,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "Quoting",
@@ -2295,7 +2160,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "filter": {
@@ -2304,7 +2169,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "group": {
@@ -2313,7 +2178,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "label": {
           "title": "Label",
@@ -2352,7 +2217,7 @@
               "$ref": "#/$defs/MetricInputSchema"
             }
           ],
-          "default": null
+          "default": ""
         },
         "filter": {
           "anyOf": [
@@ -2360,7 +2225,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "numerator": {
@@ -2369,13 +2234,14 @@
               "$ref": "#/$defs/MetricInputSchema"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "RatioMetricTypeParams",
       "type": "object"
     },
     "Relationships": {
+      "additionalProperties": false,
       "properties": {
         "name": {
           "anyOf": [
@@ -2383,7 +2249,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "config": {
@@ -2392,7 +2258,7 @@
               "$ref": "#/$defs/TestConfigs"
             }
           ],
-          "default": null
+          "default": ""
         },
         "field": {
           "description": "The foreign key column",
@@ -2413,7 +2279,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Where"
         }
       },
@@ -2432,7 +2298,7 @@
               "$ref": "#/$defs/Relationships"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "RelationshipsTest",
@@ -2458,7 +2324,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Exports"
         },
         "label": {
@@ -2491,7 +2357,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "columns": {
@@ -2503,7 +2369,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Columns"
         },
         "config": {
@@ -2512,7 +2378,7 @@
               "$ref": "#/$defs/SeedConfig"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Seed Config"
         },
         "docs": {
@@ -2521,7 +2387,7 @@
               "$ref": "#/$defs/DocsConfig"
             }
           ],
-          "default": null
+          "default": ""
         },
         "group": {
           "anyOf": [
@@ -2529,7 +2395,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "tests": {
           "anyOf": [
@@ -2540,7 +2406,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tests"
         }
       },
@@ -2558,7 +2424,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Column Types"
         },
         "copy_grants": {
@@ -2567,7 +2433,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": true
         },
         "data_tests": {
           "anyOf": [
@@ -2578,7 +2444,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Tests"
         },
         "database": {
@@ -2587,7 +2453,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Database"
         },
         "enabled": {
@@ -2596,7 +2462,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": false
         },
         "grants": {
           "anyOf": [
@@ -2604,7 +2470,12 @@
               "$ref": "#/$defs/Grants"
             }
           ],
-          "default": null
+          "default": {
+            "select": [
+              "reporter_role",
+              "bi_user"
+            ]
+          }
         },
         "quote_columns": {
           "anyOf": [
@@ -2612,7 +2483,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         },
         "schema": {
           "anyOf": [
@@ -2641,7 +2512,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "defaults": {
@@ -2650,7 +2521,7 @@
               "$ref": "#/$defs/Defaults"
             }
           ],
-          "default": null
+          "default": ""
         },
         "dimensions": {
           "anyOf": [
@@ -2661,7 +2532,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Dimensions"
         },
         "entities": {
@@ -2673,7 +2544,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Entities"
         },
         "measures": {
@@ -2685,7 +2556,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Measures"
         },
         "model": {
@@ -2698,7 +2569,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Primary Entity"
         }
       },
@@ -2731,7 +2602,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "filter": {
@@ -2740,7 +2611,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Filter"
         },
         "group": {
@@ -2749,7 +2620,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "label": {
           "title": "Label",
@@ -2788,7 +2659,7 @@
               "$ref": "#/$defs/MetricInputMeasure"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "SimpleMetricTypeParams",
@@ -2807,7 +2678,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "columns": {
@@ -2819,7 +2690,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Columns"
         },
         "config": {
@@ -2828,7 +2699,7 @@
               "$ref": "#/$defs/SnapshotConfig"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Snapshot Config"
         },
         "data_tests": {
@@ -2840,7 +2711,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Tests"
         },
         "docs": {
@@ -2849,7 +2720,7 @@
               "$ref": "#/$defs/DocsConfig"
             }
           ],
-          "default": null
+          "default": ""
         },
         "group": {
           "anyOf": [
@@ -2857,7 +2728,7 @@
               "$ref": "#/$defs/GroupName"
             }
           ],
-          "default": null
+          "default": ""
         },
         "meta": {
           "anyOf": [
@@ -2865,7 +2736,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "tests": {
@@ -2877,7 +2748,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tests"
         }
       },
@@ -2895,7 +2766,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Alias"
         },
         "check_cols": {
@@ -2904,7 +2775,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "enabled": {
           "anyOf": [
@@ -2912,7 +2783,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": false
         },
         "grants": {
           "anyOf": [
@@ -2920,7 +2791,12 @@
               "$ref": "#/$defs/Grants"
             }
           ],
-          "default": null
+          "default": {
+            "select": [
+              "reporter_role",
+              "bi_user"
+            ]
+          }
         },
         "persist_docs": {
           "anyOf": [
@@ -2928,7 +2804,7 @@
               "$ref": "#/$defs/PersistDocsConfig"
             }
           ],
-          "default": null
+          "default": ""
         },
         "post-hook": {
           "anyOf": [
@@ -2936,7 +2812,7 @@
               "$ref": "#/$defs/ArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "pre-hook": {
           "anyOf": [
@@ -2944,7 +2820,7 @@
               "$ref": "#/$defs/ArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "quote_columns": {
           "anyOf": [
@@ -2952,7 +2828,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": ""
         },
         "strategy": {
           "anyOf": [
@@ -2960,7 +2836,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Strategy"
         },
         "tags": {
@@ -2969,7 +2845,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "target_database": {
           "anyOf": [
@@ -2977,7 +2853,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Target Database"
         },
         "target_schema": {
@@ -2986,7 +2862,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Target Schema"
         },
         "unique_key": {
@@ -2995,7 +2871,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "updated_at": {
           "anyOf": [
@@ -3003,7 +2879,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Updated At"
         }
       },
@@ -3023,7 +2899,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "config": {
@@ -3032,7 +2908,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Config"
         },
         "data_tests": {
@@ -3044,7 +2920,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Data Tests"
         },
         "database": {
@@ -3053,7 +2929,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Database"
         },
         "freshness": {
@@ -3084,7 +2960,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Loaded At Field"
         },
         "loader": {
@@ -3093,7 +2969,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Loader"
         },
         "meta": {
@@ -3102,7 +2978,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "overrides": {
@@ -3121,7 +2997,7 @@
               "$ref": "#/$defs/Quoting"
             }
           ],
-          "default": null
+          "default": ""
         },
         "schema": {
           "anyOf": [
@@ -3142,7 +3018,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tables"
         },
         "tags": {
@@ -3151,7 +3027,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "tests": {
           "anyOf": [
@@ -3162,7 +3038,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tests"
         }
       },
@@ -3197,7 +3073,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "columns": {
@@ -3209,7 +3085,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Columns"
         },
         "external": {
@@ -3218,7 +3094,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "External"
         },
         "freshness": {
@@ -3269,7 +3145,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Loader"
         },
         "meta": {
@@ -3278,7 +3154,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "quoting": {
@@ -3287,7 +3163,7 @@
               "$ref": "#/$defs/Quoting"
             }
           ],
-          "default": null
+          "default": ""
         },
         "tags": {
           "anyOf": [
@@ -3295,7 +3171,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "tests": {
           "anyOf": [
@@ -3306,7 +3182,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Tests"
         }
       },
@@ -3344,7 +3220,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": false
         },
         "error_if": {
           "anyOf": [
@@ -3352,7 +3228,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Error If"
         },
         "fail_calc": {
@@ -3361,7 +3237,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Fail Calc"
         },
         "limit": {
@@ -3370,7 +3246,7 @@
               "type": "number"
             }
           ],
-          "default": null,
+          "default": 20,
           "title": "Limit"
         },
         "schema": {
@@ -3392,7 +3268,7 @@
               "$ref": "#/$defs/Severity"
             }
           ],
-          "default": null,
+          "default": "warn",
           "title": "Severity"
         },
         "store_failures": {
@@ -3401,7 +3277,7 @@
               "$ref": "#/$defs/BooleanOrJinjaString"
             }
           ],
-          "default": null
+          "default": true
         },
         "tags": {
           "anyOf": [
@@ -3409,7 +3285,7 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         },
         "warn_if": {
           "anyOf": [
@@ -3417,7 +3293,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Warn If"
         }
       },
@@ -3438,7 +3314,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "expr": {
@@ -3450,7 +3326,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Expr"
         },
         "is_partition": {
@@ -3459,7 +3335,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": true,
           "title": "Is Partition"
         },
         "type": {
@@ -3520,7 +3396,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Name"
         },
         "config": {
@@ -3529,7 +3405,7 @@
               "$ref": "#/$defs/TestConfigs"
             }
           ],
-          "default": null
+          "default": ""
         },
         "where": {
           "anyOf": [
@@ -3537,7 +3413,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Where"
         }
       },
@@ -3552,7 +3428,7 @@
               "$ref": "#/$defs/Unique"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "UniqueTest",
@@ -3571,7 +3447,7 @@
               "type": "string"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Description"
         },
         "config": {
@@ -3586,13 +3462,13 @@
         "expect": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ExpectDict"
+              "$ref": "#/$defs/UnitTestExpectDict"
             },
             {
-              "$ref": "#/$defs/ExpectCSV"
+              "$ref": "#/$defs/UnitTestExpectCSV"
             },
             {
-              "$ref": "#/$defs/ExpectSQL"
+              "$ref": "#/$defs/UnitTestExpectSQL"
             }
           ],
           "title": "Expect"
@@ -3601,12 +3477,33 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/GivenItem"
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/UnitTestGivenDict"
+                  },
+                  {
+                    "$ref": "#/$defs/UnitTestGivenCSV"
+                  },
+                  {
+                    "$ref": "#/$defs/UnitTestGivenSQL"
+                  }
+                ]
               },
               "type": "array"
             }
           ],
-          "default": null,
+          "default": [
+            {
+              "format": "dict",
+              "rows": [
+                {
+                  "col1": "value1",
+                  "col2": "value2"
+                }
+              ],
+              "input": ""
+            }
+          ],
           "title": "Given"
         },
         "model": {
@@ -3623,14 +3520,7 @@
               "$ref": "#/$defs/Overrides"
             }
           ],
-          "default": null
-        },
-        "additionalProperties": {
-          "anyOf": [
-            {}
-          ],
-          "default": null,
-          "title": "Additionalproperties"
+          "default": ""
         }
       },
       "required": [
@@ -3650,7 +3540,7 @@
               "type": "object"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Meta"
         },
         "tags": {
@@ -3659,10 +3549,223 @@
               "$ref": "#/$defs/StringOrArrayOfStrings"
             }
           ],
-          "default": null
+          "default": ""
         }
       },
       "title": "UnitTestConfig",
+      "type": "object"
+    },
+    "UnitTestExpectCSV": {
+      "properties": {
+        "format": {
+          "const": "csv",
+          "default": "csv",
+          "enum": [
+            "csv"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively specify the `fixture` property. Use the pipe character | to create a multi-line string in YAML.",
+          "title": "Rows"
+        },
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "Specify the name of a fixture instead of providing `rows`. Does not need to be wrapped in ref.",
+          "title": "Fixture"
+        }
+      },
+      "title": "UnitTestExpectCSV",
+      "type": "object"
+    },
+    "UnitTestExpectDict": {
+      "properties": {
+        "format": {
+          "const": "dict",
+          "default": "dict",
+          "enum": [
+            "dict"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
+          "items": {
+            "type": "object"
+          },
+          "title": "Rows",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rows"
+      ],
+      "title": "UnitTestExpectDict",
+      "type": "object"
+    },
+    "UnitTestExpectSQL": {
+      "properties": {
+        "format": {
+          "const": "sql",
+          "default": "sql",
+          "enum": [
+            "sql"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively specify the `fixture` property. Use the pipe character | to create a multi-line string in YAML.",
+          "title": "Rows"
+        },
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "Specify the name of a fixture instead of providing `rows`. Does not need to be wrapped in ref.",
+          "title": "Fixture"
+        }
+      },
+      "title": "UnitTestExpectSQL",
+      "type": "object"
+    },
+    "UnitTestGivenCSV": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "csv",
+          "default": "csv",
+          "enum": [
+            "csv"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively specify the `fixture` property. Use the pipe character | to create a multi-line string in YAML.",
+          "title": "Rows"
+        },
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "Specify the name of a fixture instead of providing `rows`. Does not need to be wrapped in ref.",
+          "title": "Fixture"
+        },
+        "input": {
+          "default": "ref('')",
+          "description": "The Relation whose input you want to mock",
+          "title": "Input",
+          "type": "string"
+        }
+      },
+      "title": "UnitTestGivenCSV",
+      "type": "object"
+    },
+    "UnitTestGivenDict": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "dict",
+          "default": "dict",
+          "enum": [
+            "dict"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "description": "When `format` is `dict`, each item should be a dictionary containing a key-value pair for each column and its value, e.g. `{id: 1, code: 'ABC'}`",
+          "items": {
+            "type": "object"
+          },
+          "title": "Rows",
+          "type": "array"
+        },
+        "input": {
+          "default": "ref('')",
+          "description": "The Relation whose input you want to mock",
+          "title": "Input",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rows"
+      ],
+      "title": "UnitTestGivenDict",
+      "type": "object"
+    },
+    "UnitTestGivenSQL": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "sql",
+          "default": "sql",
+          "enum": [
+            "sql"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "When `format` is csv or sql, a string containing comma-separated headers and values. Alternatively specify the `fixture` property. Use the pipe character | to create a multi-line string in YAML.",
+          "title": "Rows"
+        },
+        "fixture": {
+          "anyOf": [
+            {
+              "type": "string"
+            }
+          ],
+          "default": "",
+          "description": "Specify the name of a fixture instead of providing `rows`. Does not need to be wrapped in ref.",
+          "title": "Fixture"
+        },
+        "input": {
+          "default": "ref('')",
+          "description": "The Relation whose input you want to mock",
+          "title": "Input",
+          "type": "string"
+        }
+      },
+      "title": "UnitTestGivenSQL",
       "type": "object"
     },
     "ValidityParams": {
@@ -3674,7 +3777,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Is End"
         },
         "is_start": {
@@ -3683,7 +3786,7 @@
               "type": "boolean"
             }
           ],
-          "default": null,
+          "default": "",
           "title": "Is Start"
         }
       },
@@ -3708,7 +3811,7 @@
               "type": "array"
             }
           ],
-          "default": null,
+          "default": {},
           "title": "Columns"
         },
         "config": {
@@ -3717,16 +3820,14 @@
               "$ref": "#/$defs/ModelConfigs"
             }
           ],
-          "default": null
+          "default": {}
         },
         "v": {
+          "default": 1,
           "title": "V",
           "type": "number"
         }
       },
-      "required": [
-        "v"
-      ],
       "title": "Version",
       "type": "object"
     },
@@ -3756,12 +3857,12 @@
       "anyOf": [
         {
           "items": {
-            "$ref": "#/$defs/Analyse"
+            "$ref": "#/$defs/Analysis"
           },
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Analyses"
     },
     "exposures": {
@@ -3773,7 +3874,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Exposures"
     },
     "groups": {
@@ -3785,7 +3886,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Groups"
     },
     "macros": {
@@ -3797,7 +3898,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Macros"
     },
     "metrics": {
@@ -3825,7 +3926,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Metrics"
     },
     "models": {
@@ -3837,7 +3938,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Models"
     },
     "saved_queries": {
@@ -3849,7 +3950,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Saved Queries"
     },
     "seeds": {
@@ -3861,7 +3962,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Seeds"
     },
     "semantic_models": {
@@ -3873,7 +3974,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Semantic Models"
     },
     "snapshots": {
@@ -3885,7 +3986,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Snapshots"
     },
     "sources": {
@@ -3897,7 +3998,7 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Sources"
     },
     "unit_tests": {
@@ -3909,10 +4010,11 @@
           "type": "array"
         }
       ],
-      "default": null,
+      "default": "",
       "title": "Unit Tests"
     }
   },
   "title": "DbtYmlFiles",
-  "type": "object"
+  "type": "object",
+  "schema": "http://json-schema.org/draft-07/schema#"
 }
