@@ -620,7 +620,8 @@
             {
               "$ref": "#/$defs/TimeGranularity"
             }
-          ]
+          ],
+          "default": ""
         },
         "type": {
           "$ref": "#/$defs/ConversionMetricType"
@@ -632,7 +633,6 @@
       "required": [
         "name",
         "label",
-        "time_granularity",
         "type",
         "type_params"
       ],
@@ -757,7 +757,8 @@
             {
               "$ref": "#/$defs/TimeGranularity"
             }
-          ]
+          ],
+          "default": ""
         },
         "type": {
           "$ref": "#/$defs/CumulativeMetricType"
@@ -769,7 +770,6 @@
       "required": [
         "name",
         "label",
-        "time_granularity",
         "type",
         "type_params"
       ],
@@ -895,7 +895,8 @@
             {
               "$ref": "#/$defs/TimeGranularity"
             }
-          ]
+          ],
+          "default": ""
         },
         "type": {
           "$ref": "#/$defs/DerivedMetricType"
@@ -907,7 +908,6 @@
       "required": [
         "name",
         "label",
-        "time_granularity",
         "type",
         "type_params"
       ],
@@ -2202,7 +2202,8 @@
             {
               "$ref": "#/$defs/TimeGranularity"
             }
-          ]
+          ],
+          "default": ""
         },
         "type": {
           "$ref": "#/$defs/RatioMetricType"
@@ -2214,7 +2215,6 @@
       "required": [
         "name",
         "label",
-        "time_granularity",
         "type",
         "type_params"
       ],
@@ -2652,7 +2652,8 @@
             {
               "$ref": "#/$defs/TimeGranularity"
             }
-          ]
+          ],
+          "default": ""
         },
         "type": {
           "$ref": "#/$defs/SimpleMetricType"
@@ -2664,7 +2665,6 @@
       "required": [
         "name",
         "label",
-        "time_granularity",
         "type",
         "type_params"
       ],
