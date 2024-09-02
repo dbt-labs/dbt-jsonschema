@@ -458,7 +458,7 @@ class MetricBase(BaseModel):
     filter: Optional[str] = ""
     group: Optional[GroupName] = ""
     label: str
-    time_granularity: TimeGranularity
+    time_granularity: Optional[TimeGranularity]
 
 
 class SimpleMetric(MetricBase):

@@ -616,7 +616,11 @@
           "type": "string"
         },
         "time_granularity": {
-          "$ref": "#/$defs/TimeGranularity"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeGranularity"
+            }
+          ]
         },
         "type": {
           "$ref": "#/$defs/ConversionMetricType"
@@ -749,7 +753,11 @@
           "type": "string"
         },
         "time_granularity": {
-          "$ref": "#/$defs/TimeGranularity"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeGranularity"
+            }
+          ]
         },
         "type": {
           "$ref": "#/$defs/CumulativeMetricType"
@@ -883,7 +891,11 @@
           "type": "string"
         },
         "time_granularity": {
-          "$ref": "#/$defs/TimeGranularity"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeGranularity"
+            }
+          ]
         },
         "type": {
           "$ref": "#/$defs/DerivedMetricType"
@@ -2186,7 +2198,11 @@
           "type": "string"
         },
         "time_granularity": {
-          "$ref": "#/$defs/TimeGranularity"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeGranularity"
+            }
+          ]
         },
         "type": {
           "$ref": "#/$defs/RatioMetricType"
@@ -2632,7 +2648,11 @@
           "type": "string"
         },
         "time_granularity": {
-          "$ref": "#/$defs/TimeGranularity"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeGranularity"
+            }
+          ]
         },
         "type": {
           "$ref": "#/$defs/SimpleMetricType"
