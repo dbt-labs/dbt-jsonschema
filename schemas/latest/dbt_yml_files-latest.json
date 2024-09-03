@@ -1753,29 +1753,36 @@
       "additionalProperties": false
     },
     "metric_input_measure": {
-      "type": "object",
-      "properties": {
-        "name": {
+      "oneOf": [
+        {
           "type": "string"
         },
-        "fill_nulls_with": {
-          "anyOf": [
-            {
+        {
+          "type": "object",
+          "properties": {
+            "name": {
               "type": "string"
             },
-            {
-              "type": "integer"
+            "fill_nulls_with": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "filter": {
+              "type": "string"
+            },
+            "join_to_timespine": {
+              "type": "boolean"
             }
-          ]
-        },
-        "filter": {
-          "type": "string"
-        },
-        "join_to_timespine": {
-          "type": "boolean"
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
+      ]
     },
     "metric_input_schema": {
       "type": "object",
