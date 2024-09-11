@@ -216,6 +216,15 @@ metrics:
     filter: |
       {{ Dimension('customer__customer_type') }}  = 'new'
 
+  - name: recurring_customer
+    description: Unique count of recurring customers.
+    label: Recurring Customers
+    type: simple
+    type_params:
+      measure: customers_with_orders
+    filter: |
+      {{ Dimension('customer__customer_type') }}  = 'recurring'
+
   - name: average_transaction_total_us
     description: "The average total for each transaction in the US"
     label: Transaction Total Average US
