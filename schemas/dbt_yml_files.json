@@ -334,6 +334,12 @@
             "meta": {
               "type": "object"
             },
+            "data_tests": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/tests"
+              }
+            },
             "tests": {
               "type": "array",
               "items": {
@@ -421,6 +427,12 @@
                 }
               }
             },
+            "data_tests": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/tests"
+              }
+            },
             "tests": {
               "type": "array",
               "items": {
@@ -506,6 +518,12 @@
             },
             "meta": {
               "type": "object"
+            },
+            "data_tests": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/tests"
+              }
             },
             "tests": {
               "type": "array",
@@ -631,6 +649,12 @@
                   "tags": {
                     "$ref": "#/$defs/string_or_array_of_strings"
                   },
+                  "data_tests": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/tests"
+                    }
+                  },
                   "tests": {
                     "type": "array",
                     "items": {
@@ -643,6 +667,12 @@
             },
             "tags": {
               "$ref": "#/$defs/string_or_array_of_strings"
+            },
+            "data_tests": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/tests"
+              }
             },
             "tests": {
               "type": "array",
@@ -702,6 +732,12 @@
           },
           "quote": {
             "$ref": "#/$defs/boolean_or_jinja_string"
+          },
+          "data_tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/tests"
+            }
           },
           "tests": {
             "type": "array",

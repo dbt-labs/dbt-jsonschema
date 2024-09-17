@@ -143,6 +143,9 @@
     "test-paths": {
       "$ref": "#/$defs/array_of_strings"
     },
+    "data_tests": {
+      "$ref": "#/$defs/test_configs"
+    },
     "tests": {
       "$ref": "#/$defs/test_configs"
     },
