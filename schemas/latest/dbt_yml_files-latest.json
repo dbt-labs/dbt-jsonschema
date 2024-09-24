@@ -820,6 +820,12 @@
                     "$ref": "#/$defs/column_properties"
                   }
                 },
+                "data_tests": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/data_tests"
+                  }
+                },
                 "external": {
                   "type": "object"
                 },
