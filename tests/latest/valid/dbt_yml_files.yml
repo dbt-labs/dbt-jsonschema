@@ -1,5 +1,3 @@
-# this file was generated with dbt init with dbt 1.2.1
-
 models:
   - name: my_first_dbt_model
     description: "A starter dbt model"
@@ -298,3 +296,25 @@ saved_queries:
           alias: my_export_alias
           export_as: table
           schema: my_export_schema_name
+
+
+sources:
+  - name: some_source_name
+    loaded_at_field: _etl_loaded_at
+    freshness: 
+      error_after:
+        count: 2
+        period: day
+      warn_after:
+        count: 1
+        period: day
+    tables:
+      - name: some_table_name
+        config:
+          event_time: "created_at"
+      - name: another_table_name
+        columns:
+          - name: my_unique_column
+            description: This sure is a column
+            data_tests:
+              - unique
