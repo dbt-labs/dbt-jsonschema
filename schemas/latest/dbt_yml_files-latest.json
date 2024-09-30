@@ -1835,6 +1835,10 @@
             }
           }
         },
+        "event_time": {
+          "type": "string",
+          "description": "The column that represents the actual moment the row's event happened. Contrast with, for example, when it was loaded to the warehouse."
+        },
         "file_format": {
           "type": "string"
         },
