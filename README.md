@@ -62,7 +62,8 @@ This repository contains schemata for:
             "!dbt_project.yml",
             "!packages.yml",
             "!selectors.yml",
-            "!profile_template.yml"
+            "!profile_template.yml",
+            "!package-lock.yml"
         ],
         "https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_project-latest.json": [
             "dbt_project.yml"
