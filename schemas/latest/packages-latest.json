@@ -49,29 +49,23 @@
                             "private"
                         ],
                         "properties": {
-                            "revision": {
-                                "title": "Package version",
-                                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]",
-                                "type": [
-                                    "string",
-                                    "number",
-                                    "array"
-                                ]
-                            },
-                            "subdirectory": {
-                                "title": "Repo subdirectory",
-                                "description": "Subdirectory of the repo where the dbt package is located",
-                                "type": "string"
-                            },
-                            "private": {
-                                "title": "Package identifier",
-                                "description": "Must be in format `org_name/package_name`. Refer to docs.getdbt.com for installation instructions",
-                                "type": "string",
-                                "examples": [
-                                    "dbt-labs/private_dbt_utils"
-                                ],
-                                "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
-                            }
+                          "revision": {
+                            "title": "Revision",
+                            "description": "Pin your package to a specific release by specifying a release name",
+                            "type": "string"
+                          },
+                          "subdirectory": {
+                            "title": "Repo subdirectory",
+                            "description": "Subdirectory of the repo where the dbt package is located",
+                            "type": "string"
+                          },
+                          "private": {
+                            "title": "Package identifier",
+                            "description": "Must be in format `org_name/package_name`. Refer to docs.getdbt.com for installation instructions",
+                            "type": "string",
+                            "examples": ["dbt-labs/private_dbt_utils"],
+                            "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
+                          }
                         },
                         "additionalProperties": false
                     },
