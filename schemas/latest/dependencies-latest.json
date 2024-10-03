@@ -24,18 +24,11 @@
         "anyOf": [
           {
             "type": "object",
-            "required": [
-              "package",
-              "version"
-            ],
+            "required": ["package", "version"],
             "properties": {
               "version": {
                 "title": "Package version",
-                "type": [
-                  "string",
-                  "number",
-                  "array"
-                ],
+                "type": ["string", "number", "array"],
                 "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]"
               },
               "install-prerelease": {
@@ -47,9 +40,7 @@
                 "title": "Package identifier",
                 "type": "string",
                 "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
-                "examples": [
-                  "dbt-labs/dbt_utils"
-                ],
+                "examples": ["dbt-labs/dbt_utils"],
                 "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
               }
             },
@@ -57,9 +48,31 @@
           },
           {
             "type": "object",
-            "required": [
-              "git"
-            ],
+            "required": ["private"],
+            "properties": {
+              "revision": {
+                "title": "Revision",
+                "description": "Pin your package to a specific release by specifying a release name",
+                "type": "string"
+              },
+              "subdirectory": {
+                "title": "Repo subdirectory",
+                "description": "Subdirectory of the repo where the dbt package is located",
+                "type": "string"
+              },
+              "private": {
+                "title": "Package identifier",
+                "description": "Must be in format `org_name/package_name`. Refer to docs.getdbt.com for installation instructions",
+                "type": "string",
+                "examples": ["dbt-labs/private_dbt_utils"],
+                "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": ["git"],
             "properties": {
               "git": {
                 "title": "Git URL",
@@ -80,10 +93,7 @@
           },
           {
             "type": "object",
-            "required": [
-              "tarball",
-              "name"
-            ],
+            "required": ["tarball", "name"],
             "properties": {
               "tarball": {
                 "title": "Internally-hosted tarball URL",
