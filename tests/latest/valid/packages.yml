@@ -6,3 +6,6 @@ packages:
     revision: 1.0.0
 
   - local: /opt/dbt/redshift
+
+  - tarball: abc123
+    name: some_package
