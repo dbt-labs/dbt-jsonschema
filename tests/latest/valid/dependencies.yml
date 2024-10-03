@@ -4,3 +4,7 @@ projects:
 packages:
   - package: dbt-labs/dbt-utils
     version: 1.0.0
+
+  - private: dbt-labs/private_dbt_utils
+    revision: 1.0.0
+    subdirectory: mango

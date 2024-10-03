@@ -9,3 +9,7 @@ packages:
 
   - tarball: abc123
     name: some_package
+  
+  - private: dbt-labs/private_dbt_utils
+    revision: 1.0.0
+    subdirectory: banjo
