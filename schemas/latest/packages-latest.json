@@ -68,6 +68,24 @@
                     },
                     {
                         "type": "object",
+                        "required": [
+                            "tarball",
+                            "name"
+                        ],
+                        "properties": {
+                            "tarball": {
+                                "title": "Internally-hosted tarball URL",
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "dbt will create a subdirectory in your `packages-install-path` with this name, and the tarball's source code will be installed here."
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "type": "object",
                         "properties": {
                             "local": {
                                 "type": "string"

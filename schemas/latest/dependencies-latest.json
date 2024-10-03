@@ -7,7 +7,9 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -22,11 +24,18 @@
         "anyOf": [
           {
             "type": "object",
-            "required": ["package", "version"],
+            "required": [
+              "package",
+              "version"
+            ],
             "properties": {
               "version": {
                 "title": "Package version",
-                "type": ["string", "number", "array"],
+                "type": [
+                  "string",
+                  "number",
+                  "array"
+                ],
                 "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]"
               },
               "install-prerelease": {
@@ -38,7 +47,9 @@
                 "title": "Package identifier",
                 "type": "string",
                 "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
-                "examples": ["dbt-labs/dbt_utils"],
+                "examples": [
+                  "dbt-labs/dbt_utils"
+                ],
                 "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
               }
             },
@@ -46,7 +57,9 @@
           },
           {
             "type": "object",
-            "required": ["git"],
+            "required": [
+              "git"
+            ],
             "properties": {
               "git": {
                 "title": "Git URL",
@@ -61,6 +74,24 @@
                 "title": "Subdirectory",
                 "type": "string",
                 "description": "Only required if the package is nested in a subdirectory of the git project"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "tarball",
+              "name"
+            ],
+            "properties": {
+              "tarball": {
+                "title": "Internally-hosted tarball URL",
+                "type": "string"
+              },
+              "name": {
+                "type": "string",
+                "description": "dbt will create a subdirectory in your `packages-install-path` with this name, and the tarball's source code will be installed here."
               }
             },
             "additionalProperties": false
