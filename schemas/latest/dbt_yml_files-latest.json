@@ -725,6 +725,11 @@
           "meta": {
             "type": "object"
           },
+          "relation": {
+            "description": "Required when defining your snapshot in YAML instead of using a legacy snapshot block.",
+            "type": "string",
+            "default": "source('', '')"
+          },
           "tests": {
             "type": "array",
             "items": {

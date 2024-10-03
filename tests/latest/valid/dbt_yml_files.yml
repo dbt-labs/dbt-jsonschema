@@ -151,6 +151,14 @@ snapshots:
       - name: id 
         description: cool column, eh?
 
+  - name: yaml_defined_snapshot
+    relation: source('jaffle_shop', 'orders')
+    config:
+      schema: snapshots
+      database: analytics
+      unique_key: id
+      strategy: timestamp
+      updated_at: updated_at
 
 # model groups 
 
