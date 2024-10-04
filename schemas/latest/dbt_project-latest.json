@@ -806,6 +806,9 @@
         "+schema": {
           "$ref": "#/$defs/schema"
         },
+        "+snowflake_warehouse": {
+          "$ref": "#/$defs/snowflake_warehouse"
+        },
         "+tags": {
           "$ref": "#/$defs/tags"
         },
@@ -847,6 +850,9 @@
         },
         "schema": {
           "$ref": "#/$defs/schema"
+        },
+        "snowflake_warehouse": {
+          "$ref": "#/$defs/snowflake_warehouse"
         },
         "tags": {
           "$ref": "#/$defs/tags"
