@@ -481,6 +481,9 @@
         "+database": {
           "$ref": "#/$defs/database"
         },
+        "+delimiter": {
+          "$ref": "#/$defs/delimiter"
+        },
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -829,6 +832,9 @@
       }
     },
     "database": {
+      "type": "string"
+    },
+    "delimiter": {
       "type": "string"
     },
     "file_format": {

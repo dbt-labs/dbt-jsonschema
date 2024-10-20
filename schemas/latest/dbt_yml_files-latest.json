@@ -559,6 +559,9 @@
               "database": {
                 "type": "string"
               },
+              "delimiter": {
+                "type": "string"
+              },
               "enabled": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
