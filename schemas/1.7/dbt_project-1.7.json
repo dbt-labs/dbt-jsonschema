@@ -520,6 +520,9 @@
         "copy_grants": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "delimiter": {
+          "$ref": "#/$defs/delimiter"
+        },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
