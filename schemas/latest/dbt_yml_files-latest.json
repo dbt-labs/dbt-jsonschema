@@ -516,6 +516,68 @@
               },
               "additionalProperties": false
             }
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "default": true
+              },
+              "group": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "meta": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                }
+              },
+              "export_as": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "table",
+                      "view"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "cache": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": true
           }
         },
         "additionalProperties": false
