@@ -430,7 +430,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "database": {
+          "dataset": {
             "type": "string"
           },
           "project": {
