@@ -1084,11 +1084,17 @@
     },
     "unit_test_configs": {
       "properties": {
+        "+enabled": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
         "+meta": {
           "$ref": "#/$defs/meta"
         },
         "+tags": {
           "$ref": "#/$defs/tags"
+        },
+        "enabled": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "meta": {
           "$ref": "#/$defs/meta"
