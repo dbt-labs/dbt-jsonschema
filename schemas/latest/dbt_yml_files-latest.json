@@ -983,6 +983,9 @@
           "config": {
             "type": "object",
             "properties": {
+              "enabled": {
+                "$ref": "#/$defs/boolean_or_jinja_string"
+              },
               "meta": {
                 "type": "object"
               },
