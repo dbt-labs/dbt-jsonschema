@@ -60,6 +60,25 @@
         }
       }
     },
+    "data_tests":{
+      "type": "array",
+      "description": "Add descriptions to custom singular tests",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the singular test"
+          },
+          "description":{
+            "type": "string",
+            "description": "A description of the test's purpose, how it is implemented, and perhaps what you should do if it starts failing."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "exposures": {
       "type": "array",
       "items": {
