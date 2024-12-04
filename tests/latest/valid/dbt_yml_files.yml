@@ -327,3 +327,7 @@ sources:
             description: This sure is a column
             data_tests:
               - unique
+
+data_tests:
+  - name: my_cool_custom_test
+    description: "This checks that all numbers are positive, if it fails you should talk to data engineering"
