@@ -367,19 +367,7 @@
             "type": "string"
           },
           "time_granularity": {
-            "enum": [
-              "nanosecond",
-              "microsecond",
-              "millisecond",
-              "second",
-              "minute",
-              "hour",
-              "day",
-              "week",
-              "month",
-              "quarter",
-              "year"
-            ]
+            "type": "string"
           },
           "type_params": {
             "type": "object"
@@ -1348,19 +1336,7 @@
               "type": "string"
             },
             "grain_to_date": {
-              "enum": [
-                "nanosecond",
-                "microsecond",
-                "millisecond",
-                "second",
-                "minute",
-                "hour",
-                "day",
-                "week",
-                "month",
-                "quarter",
-                "year"
-              ]
+              "type": "string"
             },
             "period_agg": {
               "enum": [
@@ -1900,6 +1876,9 @@
         },
         "filter": {
           "type": "string"
+        },
+        "offset_to_grain": {
+            "type": "string"
         },
         "offset_window": {
           "type": "string"
