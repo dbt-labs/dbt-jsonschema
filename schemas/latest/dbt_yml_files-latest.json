@@ -524,6 +524,19 @@
               "additionalProperties": false
             }
           },
+          "tags": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
           "config": {
             "type": "object",
             "properties": {
