@@ -30,14 +30,14 @@ models:
     group: analytics
     latest_version: 2
     config:
-      contract: 
+      contract:
         enforced: true
       event_time: "created_at"
     columns:
       - name: id
         description: "The primary key for this table"
         data_type: int
-        constraints: 
+        constraints:
           - type: not_null
           - type: unique
           - type: check
@@ -69,7 +69,7 @@ models:
     - type: unique
       columns: [ color, date_day ]
       name: strange_uniqueness_requirement
-  
+
   - name: my_materialized_view
     config:
       materialized: materialized_view
@@ -89,7 +89,7 @@ unit_tests:
           - {id: 1, code: 'abc'}
           - {id: 2, code: 'def'}
     model: my_first_dbt_model
-  
+
   - name: my_second_unit_test
     expect:
       rows:
@@ -100,13 +100,13 @@ unit_tests:
       tags: ['tag_1', 'tag_2']
     description: This checks the validity of the model
     overrides:
-      macros: 
+      macros:
         is_incremental: true
       env_vars:
         my_first_var: 12345
       vars:
         my_second_var: 689
-    
+
   - name: my_inline_csv_unit_test
     given:
       - input: ref('model_b')
@@ -147,7 +147,7 @@ snapshots:
     group: analytics
     description: slowly changing dimension
     columns:
-      - name: id 
+      - name: id
         description: cool column, eh?
 
   - name: yaml_defined_snapshot
@@ -159,7 +159,7 @@ snapshots:
       strategy: timestamp
       updated_at: updated_at
 
-# model groups 
+# model groups
 
 groups:
   - name: analytics
@@ -177,9 +177,15 @@ semantic_models:
       - name: customer
         expr: customer_id
         type: primary
+        config:
+          meta:
+            contains_pii: false
     dimensions:
       - name: customer_name
         type: categorical
+        config:
+          meta:
+            contains_pii: true
       - name: customer_type
         type: categorical
       - name: first_ordered_at
@@ -194,6 +200,9 @@ semantic_models:
       - name: count_lifetime_orders
         description: Total count of orders per customer.
         agg: sum
+        config:
+          meta:
+            contains_pii: false
       - name: lifetime_spend_pretax
         description: Customer lifetime spend before taxes.
         agg: sum
@@ -218,7 +227,7 @@ metrics:
     label: New Customers
     type: simple
     type_params:
-      measure: 
+      measure:
         name: customers_with_orders
     filter: |
       {{ Dimension('customer__customer_type') }}  = 'new'
@@ -263,11 +272,11 @@ metrics:
             {{ Dimension('order__is_food_order') }} = True
 
   - name: cumulative_order_total_l1m
-    label: Cumulative Order total (L1M)   
+    label: Cumulative Order total (L1M)
     description: Trailing 1-month cumulative order amount
     type: cumulative
     type_params:
-      measure: 
+      measure:
         name: order_total
         fill_nulls_with: 0
       window: 1 month
@@ -281,11 +290,11 @@ metrics:
         calculation: conversions
         base_measure:
           name: visits
-        conversion_measure: 
+        conversion_measure:
           name: buys
           fill_nulls_with: 0
         entity: user
-        window: 7 days 
+        window: 7 days
 
 saved_queries:
   - name: test_saved_query
@@ -310,7 +319,7 @@ saved_queries:
 sources:
   - name: some_source_name
     loaded_at_field: _etl_loaded_at
-    freshness: 
+    freshness:
       error_after:
         count: 2
         period: day

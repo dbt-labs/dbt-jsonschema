@@ -448,7 +448,7 @@
               }
             },
             "additionalProperties": false
-          },  
+          },
           "versions": {
             "type": "array",
             "items": {
@@ -1562,6 +1562,17 @@
         },
         "type_params": {
           "$ref": "#/$defs/dimension_type_params"
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              }
+            }
+          }
         }
       },
       "additionalProperties": false
@@ -1652,6 +1663,17 @@
             "string",
             "boolean"
           ]
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              }
+            }
+          }
         }
       },
       "additionalProperties": false
@@ -1842,6 +1864,17 @@
         },
         "non_additive_dimension": {
           "$ref": "#/$defs/non_additive_dimension"
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "meta": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              }
+            }
+          }
         }
       },
       "additionalProperties": false
