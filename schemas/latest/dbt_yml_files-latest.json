@@ -1390,6 +1390,7 @@
         {
           "type": "string"
         },
+        { "enum": ["unique", "not_null"] },
         {
           "title": "Relationships Test",
           "type": "object",
@@ -1461,10 +1462,10 @@
           }
         },
         {
-          "title": "Not Null Test",
+          "title": "User defined test",
           "type": "object",
-          "properties": {
-            "not_null": {
+          "patternProperties": {
+            ".*": {
               "type": "object",
               "properties": {
                 "name": {
@@ -1478,27 +1479,9 @@
                 }
               }
             }
-          }
-        },
-        {
-          "title": "Unique Test",
-          "type": "object",
-          "properties": {
-            "unique": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "config": {
-                  "$ref": "#/$defs/test_configs"
-                },
-                "where": {
-                  "type": "string"
-                }
-              }
-            }
-          }
+          },
+          "minProperties": 1,
+          "maxProperties": 1
         }
       ]
     },
