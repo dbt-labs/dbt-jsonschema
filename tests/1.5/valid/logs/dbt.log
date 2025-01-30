@@ -1,0 +1,47 @@
+[0m15:09:28.925964 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108e1b680>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109b3a690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109b3a060>]}
+
+
+============================== 15:09:28.930686 | 05162a26-83bf-4304-8190-6d06b25a5e3b ==============================
+[0m15:09:28.930686 [info ] [MainThread]: Running with dbt=1.9.1
+[0m15:09:28.931118 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/Users/mirnawong/.dbt', 'fail_fast': 'False', 'warn_error': 'None', 'log_path': '/Users/mirnawong/Documents/dbt-jsonschema/tests/1.5/valid/logs', 'version_check': 'True', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'invocation_command': 'dbt ', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m15:09:29.054922 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '05162a26-83bf-4304-8190-6d06b25a5e3b', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1076102f0>]}
+[0m15:09:29.063051 [debug] [MainThread]: Set downloads directory='/var/folders/3p/xrxy3r9j18l5p5z5cmdc8fwh0000gp/T/dbt-downloads-21sqbtil'
+[0m15:09:29.063494 [debug] [MainThread]: Making package index registry request: GET https://hub.getdbt.com/api/v1/index.json
+[0m15:09:29.784268 [debug] [MainThread]: Response from registry index: GET https://hub.getdbt.com/api/v1/index.json 200
+[0m15:09:29.791121 [error] [MainThread]: Encountered an error:
+Package dbt-labs/dbt-utils was not found in the package index
+[0m15:09:29.797129 [error] [MainThread]: Traceback (most recent call last):
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/cli/requires.py", line 153, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/cli/requires.py", line 103, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/cli/requires.py", line 218, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/cli/requires.py", line 264, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/cli/main.py", line 455, in deps
+    results = task.run()
+              ^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/task/deps.py", line 211, in run
+    self.lock()
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/task/deps.py", line 187, in lock
+    resolved_deps = resolve_packages(packages, self.project, self.cli_vars)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/deps/resolver.py", line 131, in resolve_packages
+    target = final[package].resolved().fetch_metadata(project, renderer)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/deps/registry.py", line 98, in resolved
+    self._check_in_index()
+  File "/Users/mirnawong/Library/Python/3.12/lib/python/site-packages/dbt/deps/registry.py", line 77, in _check_in_index
+    raise PackageNotFoundError(self.package)
+dbt.exceptions.PackageNotFoundError: Package dbt-labs/dbt-utils was not found in the package index
+
+[0m15:09:29.801358 [debug] [MainThread]: Resource report: {"command_name": "deps", "command_success": false, "command_wall_clock_time": 0.9604, "process_in_blocks": "0", "process_kernel_time": 0.153494, "process_mem_max_rss": "95879168", "process_out_blocks": "0", "process_user_time": 0.952766}
+[0m15:09:29.809992 [debug] [MainThread]: Command `cli deps` failed at 15:09:29.807927 after 0.97 seconds
+[0m15:09:29.811263 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109af4410>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109b690d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1099a9220>]}
+[0m15:09:29.814291 [debug] [MainThread]: Flushing usage events
+[0m15:09:30.292611 [debug] [MainThread]: An error was encountered while trying to flush usage events

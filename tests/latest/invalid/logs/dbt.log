@@ -1,0 +1,16 @@
+[0m15:09:28.824320 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10503ef00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107020200>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10753e180>]}
+
+
+============================== 15:09:28.827506 | 38bc34eb-a64a-45d7-a16a-38e9e215e615 ==============================
+[0m15:09:28.827506 [info ] [MainThread]: Running with dbt=1.9.1
+[0m15:09:28.829483 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': '/Users/mirnawong/Documents/dbt-jsonschema/tests/latest/invalid/logs', 'profiles_dir': '/Users/mirnawong/.dbt', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'static_parser': 'True', 'invocation_command': 'dbt ', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m15:09:28.916073 [error] [MainThread]: Encountered an error:
+Runtime Error
+  at path []: Additional properties are not allowed ('semantic_models' was unexpected)
+
+Error encountered in /Users/mirnawong/Documents/dbt-jsonschema/tests/latest/invalid/dbt_project.yml
+[0m15:09:28.950538 [debug] [MainThread]: Resource report: {"command_name": "deps", "command_success": false, "command_wall_clock_time": 0.2239693, "process_in_blocks": "0", "process_kernel_time": 0.137066, "process_mem_max_rss": "91209728", "process_out_blocks": "0", "process_user_time": 0.872801}
+[0m15:09:28.951432 [debug] [MainThread]: Command `cli deps` failed at 15:09:28.951227 after 0.23 seconds
+[0m15:09:28.951955 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10753e540>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10753e570>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f67f80>]}
+[0m15:09:28.952438 [debug] [MainThread]: Flushing usage events
+[0m15:09:29.771124 [debug] [MainThread]: An error was encountered while trying to flush usage events
