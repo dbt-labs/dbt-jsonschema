@@ -60,18 +60,20 @@
         }
       }
     },
-    "data_tests":{
+    "data_tests": {
       "type": "array",
       "description": "Add descriptions to custom singular tests",
       "items": {
         "type": "object",
-        "required": ["name"],
+        "required": [
+          "name"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "description": "The name of the singular test"
           },
-          "description":{
+          "description": {
             "type": "string",
             "description": "A description of the test's purpose, how it is implemented, and perhaps what you should do if it starts failing."
           }
@@ -1360,7 +1362,7 @@
             }
           },
           "additionalProperties": false
-      },
+        },
         "grain_to_date": {
           "enum": [
             "nanosecond",
@@ -1924,7 +1926,7 @@
           "type": "string"
         },
         "offset_to_grain": {
-            "type": "string"
+          "type": "string"
         },
         "offset_window": {
           "type": "string"
@@ -2146,7 +2148,7 @@
           "type": "string"
         },
         "limit": {
-          "type": "number"
+          "type": "integer"
         },
         "schema": {
           "description": "Only relevant when `store_failures` is true",
