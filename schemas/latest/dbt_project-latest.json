@@ -22,7 +22,7 @@
       "$ref": "#/$defs/array_of_strings"
     },
     "config-version": {
-      "type": "number",
+      "type": "integer",
       "default": 2
     },
     "data_tests": {
@@ -491,7 +491,7 @@
       "additionalProperties": false
     },
     "limit": {
-      "type": "number"
+      "type": "integer"
     },
     "location": {
       "type": "string"
