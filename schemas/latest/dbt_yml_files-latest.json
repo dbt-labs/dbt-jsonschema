@@ -756,11 +756,17 @@
               "check_cols": {
                 "$ref": "#/$defs/string_or_array_of_strings"
               },
+              "dbt_valid_to_current": {
+                "type": "string"
+              },
               "enabled": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
               "grants": {
                 "$ref": "#/$defs/grants"
+              },
+              "hard_deletes": {
+                "type": "string"
               },
               "persist_docs": {
                 "$ref": "#/$defs/persist_docs_config"
