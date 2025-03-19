@@ -1895,25 +1895,32 @@
       ]
     },
     "metric_input_schema": {
-      "type": "object",
-      "properties": {
-        "name": {
+      "oneOf": [
+        {
           "type": "string"
         },
-        "alias": {
-          "type": "string"
-        },
-        "filter": {
-          "type": "string"
-        },
-        "offset_to_grain": {
-          "type": "string"
-        },
-        "offset_window": {
-          "type": "string"
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "alias": {
+              "type": "string"
+            },
+            "filter": {
+              "type": "string"
+            },
+            "offset_to_grain": {
+              "type": "string"
+            },
+            "offset_window": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
-      },
-      "additionalProperties": false
+      ]
     },
     "model_configs": {
       "type": "object",
