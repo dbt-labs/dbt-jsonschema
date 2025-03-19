@@ -552,6 +552,12 @@
         },
         "schema": {
           "$ref": "#/$defs/schema"
+        },
+        "+pre-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "+post-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
         }
       },
       "additionalProperties": {

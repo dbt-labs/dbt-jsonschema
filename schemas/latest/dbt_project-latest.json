@@ -859,6 +859,12 @@
         },
         "transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "+pre-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "+post-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
         }
       },
       "additionalProperties": {
