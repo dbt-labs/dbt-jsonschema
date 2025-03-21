@@ -1,7 +1,9 @@
 {
   "title": "dbt_project",
   "type": "object",
-  "required": ["name"],
+  "required": [
+    "name"
+  ],
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "version": {
@@ -27,7 +29,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["macro_namespace", "search_order"],
+        "required": [
+          "macro_namespace",
+          "search_order"
+        ],
         "properties": {
           "macro_namespace": {
             "type": "string"
@@ -152,24 +157,14 @@
   },
   "additionalProperties": false,
   "$defs": {
+    "alias": {
+      "type": "string"
+    },
     "array_of_strings": {
       "type": "array",
       "items": {
         "type": "string"
       }
-    },
-    "contract": {
-      "type": "object",
-      "required": ["enforced"],
-      "properties": {
-        "enforced": {
-          "$ref": "#/$defs/boolean_or_jinja_string",
-          "default": "true"
-        }
-      }
-    },
-    "empty_directory": {
-      "type": "null"
     },
     "boolean_or_jinja_string": {
       "oneOf": [
@@ -181,14 +176,37 @@
         }
       ]
     },
+    "column_types": {
+      "type": "object",
+      "patternProperties": {
+        "": {
+          "type": "string"
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "required": [
+        "enforced"
+      ],
+      "properties": {
+        "enforced": {
+          "$ref": "#/$defs/boolean_or_jinja_string",
+          "default": "true"
+        }
+      }
+    },
+    "database": {
+      "type": "string"
+    },
     "docs_config": {
       "title": "Docs config",
-      "type": "object",
       "description": "Configurations for the appearance of nodes in the dbt documentation.",
+      "type": "object",
       "properties": {
         "node_color": {
-          "type": "string",
           "description": "The color of the node on the DAG in the documentation. It must be an Hex code or a valid CSS color name.",
+          "type": "string",
           "pattern": "^(#[a-fA-F0-9]{3}|#[a-fA-F0-9]{6}|[^#][a-zA-Z]*)$"
         },
         "show": {
@@ -198,6 +216,52 @@
       },
       "additionalProperties": false
     },
+    "empty_directory": {
+      "type": "null"
+    },
+    "error_if": {
+      "type": "string"
+    },
+    "fail_calc": {
+      "type": "string"
+    },
+    "file_format": {
+      "type": "string"
+    },
+    "grant_access_to": {
+      "title": "Authorized views",
+      "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "type": "string"
+          },
+          "project": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "grants": {
+      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        }
+      },
+      "additionalProperties": false
+    },
+    "hours_to_expiration": {
+      "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table.",
+      "type": "number"
+    },
+    "incremental_strategy": {
+      "type": "string"
+    },
     "invalidate_hard_deletes": {
       "$ref": "#/$defs/boolean_or_jinja_string"
     },
@@ -205,10 +269,14 @@
       "type": "string",
       "pattern": "\\{\\{.*\\}\\}"
     },
+    "kms_key_name": {
+      "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption.",
+      "type": "string"
+    },
     "label_configs": {
       "title": "Label configs",
-      "type": "object",
       "description": "Configurations specific to BigQuery adapter used to add labels and tags to tables & views created by dbt.",
+      "type": "object",
       "patternProperties": {
         "^[a-z][a-z0-9_-]{0,63}$": {
           "oneOf": [
@@ -224,10 +292,22 @@
       },
       "additionalProperties": false
     },
+    "limit": {
+      "type": "number"
+    },
+    "location": {
+      "type": "string"
+    },
+    "materialized": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object"
+    },
     "metric_configs": {
       "title": "Metric configs",
-      "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all metrics that don't have a more specific configuration set.",
+      "type": "object",
       "properties": {
         "+enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -255,8 +335,8 @@
     },
     "model_configs": {
       "title": "Model configs",
-      "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all models that don't have a more specific configuration set.",
+      "type": "object",
       "properties": {
         "+alias": {
           "$ref": "#/$defs/alias"
@@ -422,10 +502,19 @@
         ]
       }
     },
+    "on_schema_change": {
+      "type": "string",
+      "enum": [
+        "append_new_columns",
+        "fail",
+        "ignore",
+        "sync_all_columns"
+      ]
+    },
     "persist_docs_config": {
       "title": "Persist docs config",
-      "type": "object",
       "description": "Configurations for the persistence of the dbt documentation.",
+      "type": "object",
       "properties": {
         "columns": {
           "$ref": "#/$defs/boolean_or_jinja_string",
@@ -438,10 +527,19 @@
       },
       "additionalProperties": false
     },
+    "schema": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "seed_configs": {
       "title": "Seed configs",
       "type": "object",
       "properties": {
+        "+column_types": {
+          "$ref": "#/$defs/column_types"
+        },
         "+copy_grants": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -449,6 +547,9 @@
           "$ref": "#/$defs/database"
         },
         "+enabled": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "+full_refresh": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "+grants": {
@@ -459,6 +560,12 @@
         },
         "+persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
+        },
+        "+post-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "+pre-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
         },
         "+quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -472,16 +579,19 @@
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
-        "+column_types": {
+        "column_types": {
           "$ref": "#/$defs/column_types"
-        },
-        "+full_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "copy_grants": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "database": {
+          "$ref": "#/$defs/database"
+        },
         "enabled": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "full_refresh": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
         "grants": {
@@ -493,26 +603,23 @@
         "persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
         },
+        "post-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "pre-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
         "quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "schema": {
+          "$ref": "#/$defs/schema"
         },
         "tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
         },
         "transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "column_types": {
-          "$ref": "#/$defs/column_types"
-        },
-        "full_refresh": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
-        },
-        "database": {
-          "$ref": "#/$defs/database"
-        },
-        "schema": {
-          "$ref": "#/$defs/schema"
         }
       },
       "additionalProperties": {
@@ -525,6 +632,20 @@
           }
         ]
       }
+    },
+    "severity": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/jinja_string"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "error",
+            "warn"
+          ]
+        }
+      ]
     },
     "snapshot_configs": {
       "title": "Snapshot configs",
@@ -678,6 +799,12 @@
         ]
       }
     },
+    "sql_header": {
+      "type": "string"
+    },
+    "strategy": {
+      "type": "string"
+    },
     "string_or_array_of_strings": {
       "oneOf": [
         {
@@ -688,10 +815,16 @@
         }
       ]
     },
+    "target_database": {
+      "type": "string"
+    },
+    "target_schema": {
+      "type": "string"
+    },
     "test_configs": {
       "title": "Test configs",
-      "type": "object",
       "description": "Configurations set in the dbt_project.yml file will apply to all tests that don't have a more specific configuration set.",
+      "type": "object",
       "properties": {
         "+alias": {
           "$ref": "#/$defs/alias"
@@ -729,6 +862,12 @@
         "+warn_if": {
           "$ref": "#/$defs/warn_if"
         },
+        "alias": {
+          "$ref": "#/$defs/alias"
+        },
+        "database": {
+          "$ref": "#/$defs/database"
+        },
         "enabled": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -744,6 +883,9 @@
         "meta": {
           "$ref": "#/$defs/meta"
         },
+        "schema": {
+          "$ref": "#/$defs/schema"
+        },
         "severity": {
           "$ref": "#/$defs/severity"
         },
@@ -755,15 +897,6 @@
         },
         "warn_if": {
           "$ref": "#/$defs/warn_if"
-        },
-        "alias": {
-          "$ref": "#/$defs/alias"
-        },
-        "database": {
-          "$ref": "#/$defs/database"
-        },
-        "schema": {
-          "$ref": "#/$defs/schema"
         }
       },
       "additionalProperties": {
@@ -777,111 +910,8 @@
         ]
       }
     },
-    "database": {
-      "type": "string"
-    },
-    "file_format": {
-      "type": "string"
-    },
-    "grant_access_to": {
-      "title": "Authorized views",
-      "type": "array",
-      "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "dataset": {
-            "type": "string"
-          },
-          "project": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "grants": {
-      "type": "object",
-      "description": "grant config. each key is a database permission and the value is the grantee of that permission",
-      "patternProperties": {
-        ".*": {
-          "$ref": "#/$defs/string_or_array_of_strings"
-        }
-      },
-      "additionalProperties": false
-    },
-    "hours_to_expiration": {
-      "type": "number",
-      "description": "Configuration specific to BigQuery adapter used to set an expiration delay (in hours) to a table."
-    },
-    "incremental_strategy": {
-      "type": "string"
-    },
-    "kms_key_name": {
-      "type": "string",
-      "description": "Configuration, specific to BigQuery adapter, of the KMS key name used for data encryption."
-    },
-    "location": {
-      "type": "string"
-    },
-    "materialized": {
-      "type": "string"
-    },
-    "meta": {
-      "type": "object"
-    },
-    "on_schema_change": {
-      "type": "string",
-      "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
-    },
-    "schema": {
-      "type": ["string", "null"]
-    },
-    "sql_header": {
-      "type": "string"
-    },
-    "column_types": {
-      "type": "object",
-      "patternProperties": {
-        "": {
-          "type": "string"
-        }
-      }
-    },
-    "alias": {
-      "type": "string"
-    },
-    "strategy": {
-      "type": "string"
-    },
-    "target_database": {
-      "type": "string"
-    },
-    "target_schema": {
-      "type": "string"
-    },
     "updated_at": {
       "type": "string"
-    },
-    "error_if": {
-      "type": "string"
-    },
-    "fail_calc": {
-      "type": "string"
-    },
-    "limit": {
-      "type": "number"
-    },
-    "severity": {
-      "oneOf": [
-        {
-          "$ref": "#/$defs/jinja_string"
-        },
-        {
-          "type": "string",
-          "enum": ["warn", "error"]
-        }
-      ]
     },
     "warn_if": {
       "type": "string"
