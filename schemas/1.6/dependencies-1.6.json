@@ -1,44 +1,40 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
   "title": "dependencies",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "projects": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["name"],
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
     "packages": {
       "type": "array",
       "items": {
         "anyOf": [
           {
             "type": "object",
-            "required": ["package", "version"],
+            "required": [
+              "package",
+              "version"
+            ],
             "properties": {
               "version": {
                 "title": "Package version",
-                "type": ["string", "number", "array"],
-                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]"
+                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]",
+                "type": [
+                  "string",
+                  "number",
+                  "array"
+                ]
               },
               "install-prerelease": {
                 "title": "Install Prerelease",
-                "type": "boolean",
-                "description": "Opt in to prerelease versions of a package"
+                "description": "Opt in to prerelease versions of a package",
+                "type": "boolean"
               },
               "package": {
                 "title": "Package identifier",
-                "type": "string",
                 "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
-                "examples": ["dbt-labs/dbt_utils"],
+                "type": "string",
+                "examples": [
+                  "dbt-labs/dbt_utils"
+                ],
                 "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
               }
             },
@@ -46,7 +42,9 @@
           },
           {
             "type": "object",
-            "required": ["git"],
+            "required": [
+              "git"
+            ],
             "properties": {
               "git": {
                 "title": "Git URL",
@@ -54,13 +52,13 @@
               },
               "revision": {
                 "title": "Revision",
-                "type": "string",
-                "description": "Pin your package to a specific release by specifying a release name"
+                "description": "Pin your package to a specific release by specifying a release name",
+                "type": "string"
               },
               "subdirectory": {
                 "title": "Subdirectory",
-                "type": "string",
-                "description": "Only required if the package is nested in a subdirectory of the git project"
+                "description": "Only required if the package is nested in a subdirectory of the git project",
+                "type": "string"
               }
             },
             "additionalProperties": false
@@ -77,6 +75,21 @@
         ]
       },
       "minItems": 1
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

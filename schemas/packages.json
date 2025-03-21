@@ -1,10 +1,10 @@
 {
     "title": "packages",
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "required": [
         "packages"
     ],
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
         "packages": {
             "type": "array",
@@ -19,22 +19,22 @@
                         "properties": {
                             "version": {
                                 "title": "Package version",
+                                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]",
                                 "type": [
-                                    "string",
+                                    "array",
                                     "number",
-                                    "array"
-                                ],
-                                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]"
+                                    "string"
+                                ]
                             },
                             "install-prerelease": {
                                 "title": "Install Prerelease",
-                                "type": "boolean",
-                                "description": "Opt in to prerelease versions of a package"
+                                "description": "Opt in to prerelease versions of a package",
+                                "type": "boolean"
                             },
                             "package": {
                                 "title": "Package identifier",
-                                "type": "string",
                                 "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
+                                "type": "string",
                                 "examples": [
                                     "dbt-labs/dbt_utils"
                                 ],
@@ -55,13 +55,13 @@
                             },
                             "revision": {
                                 "title": "Revision",
-                                "type": "string",
-                                "description": "Pin your package to a specific release by specifying a release name"
+                                "description": "Pin your package to a specific release by specifying a release name",
+                                "type": "string"
                             },
                             "subdirectory": {
                                 "title": "Subdirectory",
-                                "type": "string",
-                                "description": "Only required if the package is nested in a subdirectory of the git project"
+                                "description": "Only required if the package is nested in a subdirectory of the git project",
+                                "type": "string"
                             }
                         },
                         "additionalProperties": false
