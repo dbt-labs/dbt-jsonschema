@@ -762,8 +762,8 @@
     },
     "schema": {
       "type": [
-        "string",
-        "null"
+        "null",
+        "string"
       ]
     },
     "seed_configs": {
@@ -799,6 +799,12 @@
         },
         "+persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
+        },
+        "+post-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "+pre-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
         },
         "+quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -845,6 +851,12 @@
         "persist_docs": {
           "$ref": "#/$defs/persist_docs_config"
         },
+        "post-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "pre-hook": {
+          "$ref": "#/$defs/string_or_array_of_strings"
+        },
         "quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -880,8 +892,8 @@
         {
           "type": "string",
           "enum": [
-            "warn",
-            "error"
+            "error",
+            "warn"
           ]
         }
       ]
