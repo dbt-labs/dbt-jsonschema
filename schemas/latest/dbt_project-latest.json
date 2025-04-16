@@ -908,6 +908,9 @@
         "+check_cols": {
           "$ref": "#/$defs/string_or_array_of_strings"
         },
+        "+dbt_valid_to_current": {
+          "type": "string"
+        },
         "+docs": {
           "$ref": "#/$defs/docs_config"
         },
@@ -919,6 +922,9 @@
         },
         "+group": {
           "$ref": "#/$defs/group"
+        },
+        "+hard_deletes": {
+          "type": "string"
         },
         "+invalidate_hard_deletes": {
           "$ref": "#/$defs/invalidate_hard_deletes"
@@ -965,6 +971,9 @@
         "check_cols": {
           "$ref": "#/$defs/string_or_array_of_strings"
         },
+        "dbt_valid_to_current": {
+          "type": "string"
+        },
         "docs": {
           "$ref": "#/$defs/docs_config"
         },
@@ -976,6 +985,9 @@
         },
         "group": {
           "$ref": "#/$defs/group"
+        },
+        "hard_deletes": {
+          "type": "string"
         },
         "invalidate_hard_deletes": {
           "$ref": "#/$defs/invalidate_hard_deletes"
