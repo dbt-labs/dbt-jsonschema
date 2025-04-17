@@ -345,6 +345,9 @@
           "$ref": "#/$defs/boolean_or_jinja_string",
           "default": false
         },
+        "+catalog": {
+          "$ref": "#/$defs/catalog"
+        },
         "+contract": {
           "$ref": "#/$defs/contract"
         },
@@ -420,6 +423,9 @@
         "bind": {
           "$ref": "#/$defs/boolean_or_jinja_string",
           "default": false
+        },
+        "catalog": {
+          "$ref": "#/$defs/catalog"
         },
         "contract": {
           "$ref": "#/$defs/contract"
@@ -915,6 +921,9 @@
     },
     "warn_if": {
       "type": "string"
+    },
+    "catalog": {
+        "type": "string"
     }
   }
 }
