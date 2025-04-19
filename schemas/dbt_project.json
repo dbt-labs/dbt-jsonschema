@@ -331,6 +331,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "model_configs": {
@@ -500,6 +503,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "on_schema_change": {
@@ -631,6 +637,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "severity": {
@@ -763,6 +772,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "source_configs": {
@@ -797,6 +809,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "sql_header": {
@@ -908,6 +923,9 @@
             "$ref": "#/$defs/empty_directory"
           }
         ]
+      },
+      "patternProperties": {
+        "^\\+": {}
       }
     },
     "updated_at": {
