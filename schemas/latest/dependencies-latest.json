@@ -23,7 +23,7 @@
                   "string"
                 ]
               },
-              "install-prerelease": {
+              "install_prerelease": {
                 "title": "Install Prerelease",
                 "description": "Opt in to prerelease versions of a package",
                 "type": "boolean"
