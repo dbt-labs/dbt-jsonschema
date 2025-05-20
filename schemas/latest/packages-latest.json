@@ -86,6 +86,11 @@
                                 "description": "Pin your package to a specific release by specifying a release name",
                                 "type": "string"
                             },
+                            "warn-unpinned": {
+                                "title": "Warn for Unpinned Revision",
+                                "description": "If set to false, dbt will not warn you if the package is not pinned to a specific version (e.g. a branch name)",
+                                "type": "boolean"
+                            },
                             "subdirectory": {
                                 "title": "Subdirectory",
                                 "description": "Only required if the package is nested in a subdirectory of the git project",
