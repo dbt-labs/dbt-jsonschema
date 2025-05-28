@@ -63,6 +63,8 @@ models:
       +backup: '{{ target.name == "prod" }}'
       +target_lag: 20 minutes
       +snowflake_warehouse: my_warehouse
+      +hard_deletes: 'ignore'
+      +dbt_valid_to_current: "to_date('9999-12-31')"
     
   test_bq:
     +labels:
@@ -111,3 +113,4 @@ quoting:
   database: true
   schema: true
   identifier: true
+
