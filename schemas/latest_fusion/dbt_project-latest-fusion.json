@@ -1,0 +1,1548 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DbtProject",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "analysis-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "asset-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "clean-targets": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "config-version": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32"
+    },
+    "data_tests": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectDataTestConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dbt-cloud": true,
+    "dispatch": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/_Dispatch"
+      }
+    },
+    "docs-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "flags": true,
+    "log-path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "macro-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "metrics": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectMetricConfigs"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "model-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "models": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectModelConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "on-run-end": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/StringOrArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "on-run-start": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/StringOrArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "packages-install-path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "profile": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "query-comment": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/QueryComment"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "quoting": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/DbtQuoting"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "require-dbt-version": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/StringOrArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "restrict-access": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "saved-queries": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/SavedQueriesConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "seed-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "seeds": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectSeedConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "semantic-models": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectModelConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "snapshot-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "snapshots": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectSnapshotConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sources": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectSourceConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target-path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "test-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectDataTestConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unit_tests": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectUnitTestConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "vars": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/AnyValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "version": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/FloatOrString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Access": {
+      "type": "string",
+      "enum": [
+        "private",
+        "protected",
+        "public"
+      ]
+    },
+    "AnyValue": true,
+    "BigqueryClusterConfig": {
+      "description": "dbt-core allows either of the variants for the `cluster_by` to allow cluster on a single column or on multiple columns",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "BigqueryPartitionConfig": {
+      "description": "reference: https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-bigquery/src/dbt/adapters/bigquery/relation_configs/_partition.py#L12-L13",
+      "type": "object",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RangeConfig"
+        },
+        {
+          "$ref": "#/definitions/TimeConfig"
+        }
+      ],
+      "required": [
+        "field"
+      ],
+      "properties": {
+        "copy_partitions": {
+          "default": false,
+          "type": "boolean"
+        },
+        "data_type": {
+          "default": "date",
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "time_ingestion_partitioning": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "BigqueryPartitionConfigLegacy": {
+      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `validate` method",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/definitions/BigqueryPartitionConfig"
+        }
+      ]
+    },
+    "Contract": {
+      "type": "object",
+      "required": [
+        "enforced"
+      ],
+      "properties": {
+        "alias_types": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "enforced": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DbtQuoting": {
+      "type": "object",
+      "properties": {
+        "database": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "identifier": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "schema": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DocsConfig": {
+      "type": "object",
+      "properties": {
+        "node_color": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "show": {
+          "default": true,
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "FloatOrString": {
+      "anyOf": [
+        {
+          "type": "number",
+          "format": "float"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "FreshnessPeriod": {
+      "type": "string",
+      "enum": [
+        "minute",
+        "hour",
+        "day"
+      ]
+    },
+    "FreshnessRules": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64"
+        },
+        "period": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessPeriod"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HookConfig": {
+      "type": "object",
+      "properties": {
+        "sql": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "transaction": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Hooks": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/definitions/HookConfig"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HookConfig"
+          }
+        }
+      ]
+    },
+    "ModelFreshness": {
+      "type": "object",
+      "properties": {
+        "build_after": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessRules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "OnConfigurationChange": {
+      "type": "string",
+      "enum": [
+        "apply",
+        "continue",
+        "fail",
+        "unknown"
+      ]
+    },
+    "OnSchemaChange": {
+      "type": "string",
+      "enum": [
+        "ignore",
+        "append_new_columns",
+        "fail",
+        "sync_all_columns",
+        "unknown"
+      ]
+    },
+    "PersistDocsConfig": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "relation": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectDataTestConfig": {
+      "type": "object",
+      "properties": {
+        "+alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+error_if": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+fail_calc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+limit": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32"
+        },
+        "+meta": true,
+        "+quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+severity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+store_failures": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+warn_if": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectMetricConfigs": {
+      "type": "object",
+      "properties": {
+        "+meta": true,
+        "enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectModelConfig": {
+      "type": "object",
+      "properties": {
+        "+access": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Access"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+auto_refresh": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+automatic_clustering": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+backup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+base_location_root": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+base_location_subpath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+batch_size": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+begin": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+bind": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+cluster_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/BigqueryClusterConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+concurrent_batches": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+contract": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Contract"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+copy_grants": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+event_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+external_volume": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+freshness": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ModelFreshness"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+full_refresh": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+grant_access_to": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": true
+        },
+        "+grants": true,
+        "+group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+hours_to_expiration": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "format": "float"
+        },
+        "+include_full_name_in_path": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+incremental_predicates": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "+incremental_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+initialize": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+kms_key_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+labels": true,
+        "+location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+location_root": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+lookback": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "format": "float"
+        },
+        "+materialized": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+merge_exclude_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+merge_update_columns": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+meta": true,
+        "+on_configuration_change": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/OnConfigurationChange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+on_schema_change": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/OnSchemaChange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+partition_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+predicates": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "+query_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+refresh_mode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+secure": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+snowflake_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+sql_header": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+table_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+target_lag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+tblproperties": true,
+        "+tmp_relation_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+transient": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+unique_key": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectSeedConfig": {
+      "type": "object",
+      "properties": {
+        "+alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+column_types": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false
+        },
+        "+copy_grants": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+full_refresh": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+grants": true,
+        "+group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+meta": true,
+        "+persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+quote_columns": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+snowflake_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+transient": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectSnapshotConfig": {
+      "type": "object",
+      "properties": {
+        "+alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+check_cols": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+dbt_valid_to_current": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+event_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+grants": true,
+        "+hard_deletes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+persist_docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PersistDocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+snapshot_meta_column_names": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false
+        },
+        "+strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+target_schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+unique_key": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+updated_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectSourceConfig": {
+      "type": "object",
+      "properties": {
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+event_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+meta": true,
+        "+quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ProjectUnitTestConfig": {
+      "type": "object",
+      "properties": {
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+meta": true,
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "QueryComment": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        true
+      ]
+    },
+    "Range": {
+      "type": "object",
+      "required": [
+        "end",
+        "interval",
+        "start"
+      ],
+      "properties": {
+        "end": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "interval": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "start": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "RangeConfig": {
+      "type": "object",
+      "required": [
+        "range"
+      ],
+      "properties": {
+        "range": {
+          "$ref": "#/definitions/Range"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SavedQueriesConfig": {
+      "type": "object",
+      "properties": {
+        "+schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "StringOrArrayOfStrings": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "TimeConfig": {
+      "type": "object",
+      "properties": {
+        "granularity": {
+          "default": "day",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "_Dispatch": {
+      "type": "object",
+      "required": [
+        "macro_namespace",
+        "search_order"
+      ],
+      "properties": {
+        "macro_namespace": {
+          "type": "string"
+        },
+        "search_order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
