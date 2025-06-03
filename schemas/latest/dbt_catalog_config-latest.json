@@ -1,0 +1,61 @@
+{
+    "title": "dbt_catalog_config",
+    "type": "object",
+    "required": [
+        "catalogs"
+    ],
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "catalogs": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "active_write_integration",
+                    "write_integrations"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "active_write_integration": {
+                        "type": "string"
+                    },
+                    "write_integrations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/catalog-integration-config"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "$defs": {
+        "catalog-integration-config": {
+            "type": "object",
+            "required": [
+                "name",
+                "catalog_type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "catalog_type": {
+                    "type": "string"
+                },
+                "table_format": {
+                    "type": "string"
+                },
+                "file_format": {
+                    "type": "string"
+                },
+                "external_volume": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
