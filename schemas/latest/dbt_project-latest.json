@@ -908,6 +908,9 @@
         "+check_cols": {
           "$ref": "#/$defs/string_or_array_of_strings"
         },
+        "+database": {
+          "$ref": "#/$defs/database"
+        },
         "+docs": {
           "$ref": "#/$defs/docs_config"
         },
@@ -964,6 +967,9 @@
         },
         "check_cols": {
           "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "database": {
+          "$ref": "#/$defs/database"
         },
         "docs": {
           "$ref": "#/$defs/docs_config"
