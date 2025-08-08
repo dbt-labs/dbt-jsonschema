@@ -589,6 +589,9 @@
         "+pre-hook": {
           "$ref": "#/$defs/array_of_strings"
         },
+        "+resource_tags": {
+          "$ref": "#/$defs/resource_tags"
+        },
         "+schema": {
           "$ref": "#/$defs/schema"
         },
@@ -693,6 +696,9 @@
         "pre-hook": {
           "$ref": "#/$defs/array_of_strings"
         },
+        "resource_tags": {
+          "$ref": "#/$defs/resource_tags"
+        },
         "schema": {
           "$ref": "#/$defs/schema"
         },
@@ -760,6 +766,17 @@
       },
       "additionalProperties": false
     },
+    "resource_tags": {
+      "title": "Resource Tags",
+      "description": "BigQuery resource tags for IAM access control. Keys must be in format 'project_id/key_name'.",
+      "type": "object",
+      "patternProperties": {
+        "^[^/]+/[^/]+$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "schema": {
       "type": [
         "null",
@@ -808,6 +825,9 @@
         },
         "+quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "+resource_tags": {
+          "$ref": "#/$defs/resource_tags"
         },
         "+schema": {
           "$ref": "#/$defs/schema"
@@ -859,6 +879,9 @@
         },
         "quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "resource_tags": {
+          "$ref": "#/$defs/resource_tags"
         },
         "schema": {
           "$ref": "#/$defs/schema"
@@ -941,6 +964,9 @@
         "+quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+resource_tags": {
+          "$ref": "#/$defs/resource_tags"
+        },
         "+strategy": {
           "$ref": "#/$defs/strategy"
         },
@@ -1000,6 +1026,9 @@
         },
         "quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "resource_tags": {
+          "$ref": "#/$defs/resource_tags"
         },
         "strategy": {
           "$ref": "#/$defs/strategy"
