@@ -42,6 +42,9 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+      +tblproperties:
+        property1: value1
+        property2: value2
     subdirectory:
       # same key without the plus
       materialized: table
