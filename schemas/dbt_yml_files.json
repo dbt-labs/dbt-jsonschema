@@ -949,6 +949,9 @@
         },
         "sql_header": {
           "type": "string"
+        },
+        "tblproperties": {
+          "type": "object"
         }
       }
     },

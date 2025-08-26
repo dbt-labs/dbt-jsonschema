@@ -411,6 +411,9 @@
         "+tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
         },
+        "+tblproperties": {
+          "$ref": "#/$defs/tblproperties"
+        },
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -486,6 +489,9 @@
         },
         "tags": {
           "$ref": "#/$defs/string_or_array_of_strings"
+        },
+        "tblproperties": {
+          "$ref": "#/$defs/tblproperties"
         },
         "transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -820,6 +826,9 @@
     },
     "target_schema": {
       "type": "string"
+    },
+    "tblproperties": {
+      "type": "object"
     },
     "test_configs": {
       "title": "Test configs",
