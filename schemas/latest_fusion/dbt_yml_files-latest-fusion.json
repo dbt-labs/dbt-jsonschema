@@ -12,6 +12,15 @@
         "$ref": "#/definitions/AnalysesProperties"
       }
     },
+    "anchors": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/AnyValue"
+      }
+    },
     "data_tests": {
       "type": [
         "array",
@@ -142,59 +151,6 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "AcceptedValuesTest": {
-      "type": "object",
-      "required": [
-        "accepted_values"
-      ],
-      "properties": {
-        "accepted_values": {
-          "$ref": "#/definitions/AcceptedValuesTestProperties"
-        }
-      },
-      "additionalProperties": false
-    },
-    "AcceptedValuesTestProperties": {
-      "type": "object",
-      "required": [
-        "values"
-      ],
-      "properties": {
-        "config": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/DataTestConfig"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "name": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "quote": {
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
-        "values": {
-          "type": "array",
-          "items": true
-        }
-      },
-      "additionalProperties": false
-    },
     "Access": {
       "type": "string",
       "enum": [
@@ -282,7 +238,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tags": {
           "type": [
@@ -373,30 +331,9 @@
         },
         "field": {
           "type": "string"
-        },
-        "time_ingestion_partitioning": {
-          "default": false,
-          "type": "boolean"
         }
       },
       "additionalProperties": false
-    },
-    "BigqueryPartitionConfigLegacy": {
-      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `validate` method",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        {
-          "$ref": "#/definitions/BigqueryPartitionConfig"
-        }
-      ]
     },
     "ColumnConfig": {
       "type": "object",
@@ -406,7 +343,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tags": {
           "anyOf": [
@@ -620,7 +559,7 @@
       ],
       "properties": {
         "base_measure": {
-          "$ref": "#/definitions/MetricInputMeasure"
+          "$ref": "#/definitions/StringOrMetricInputMeasure"
         },
         "calculation": {
           "$ref": "#/definitions/ConversionCalculationType"
@@ -635,19 +574,15 @@
           }
         },
         "conversion_measure": {
-          "$ref": "#/definitions/MetricInputMeasure"
+          "$ref": "#/definitions/StringOrMetricInputMeasure"
         },
         "entity": {
           "type": "string"
         },
         "window": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/MetricTimeWindow"
-            },
-            {
-              "type": "null"
-            }
+          "type": [
+            "string",
+            "null"
           ]
         }
       },
@@ -669,13 +604,9 @@
           "$ref": "#/definitions/PeriodAggregationType"
         },
         "window": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/MetricTimeWindow"
-            },
-            {
-              "type": "null"
-            }
+          "type": [
+            "string",
+            "null"
           ]
         }
       },
@@ -699,12 +630,126 @@
       },
       "additionalProperties": false
     },
+    "CustomTest": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/CustomTestMultiKey"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/CustomTestInner"
+          }
+        }
+      ]
+    },
+    "CustomTestInner": {
+      "type": "object",
+      "properties": {
+        "arguments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "column_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DataTestConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CustomTestMultiKey": {
+      "type": "object",
+      "required": [
+        "test_name"
+      ],
+      "properties": {
+        "arguments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "column_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DataTestConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "test_name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "DataTestConfig": {
+      "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
         "alias": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "as_columnstore": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -808,7 +853,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "description": {
           "type": [
@@ -887,6 +934,15 @@
             "null"
           ]
         },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PostgresIndex"
+          }
+        },
         "initialize": {
           "type": [
             "string",
@@ -960,7 +1016,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "not_matched_by_source_action": {
           "type": [
@@ -983,7 +1041,7 @@
         "partition_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+              "$ref": "#/definitions/PartitionConfig"
             },
             {
               "type": "null"
@@ -1038,10 +1096,25 @@
           ]
         },
         "require_partition_filter": {
-          "default": false,
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "row_access_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ScheduleConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "schema": {
@@ -1057,9 +1130,13 @@
           ]
         },
         "severity": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Severity"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "skip_matched_step": {
@@ -1128,6 +1205,18 @@
             }
           ]
         },
+        "table_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "tags": {
           "anyOf": [
             {
@@ -1155,7 +1244,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tmp_relation_type": {
           "type": [
@@ -1218,18 +1309,8 @@
           "type": "string"
         },
         {
-          "$ref": "#/definitions/UniqueTest"
-        },
-        {
-          "$ref": "#/definitions/NotNullTest"
-        },
-        {
-          "$ref": "#/definitions/RelationshipsTest"
-        },
-        {
-          "$ref": "#/definitions/AcceptedValuesTest"
-        },
-        true
+          "$ref": "#/definitions/CustomTest"
+        }
       ]
     },
     "DbtBatchSize": {
@@ -1248,7 +1329,16 @@
           "default": true,
           "type": "boolean"
         },
-        "checksum": true,
+        "checksum": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "enforced": {
           "default": false,
           "type": "boolean"
@@ -1302,6 +1392,13 @@
           ]
         },
         {
+          "description": "only for snowflake",
+          "type": "string",
+          "enum": [
+            "dynamic_table"
+          ]
+        },
+        {
           "type": "object",
           "required": [
             "unknown"
@@ -1314,6 +1411,28 @@
           "additionalProperties": false
         }
       ]
+    },
+    "DbtOwner": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "DbtQuoting": {
       "type": "object",
@@ -1331,6 +1450,12 @@
           ]
         },
         "schema": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "snowflake_ignore_case": {
           "type": [
             "boolean",
             "null"
@@ -1391,7 +1516,16 @@
             "null"
           ]
         },
-        "metadata": true,
+        "metadata": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "name": {
           "type": "string"
         },
@@ -1419,7 +1553,9 @@
       "properties": {
         "meta": {
           "type": "object",
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         }
       },
       "additionalProperties": false
@@ -1543,7 +1679,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         }
       },
       "additionalProperties": false
@@ -1673,7 +1811,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tags": {
           "anyOf": [
@@ -1737,30 +1877,12 @@
           "type": "string"
         },
         "owner": {
-          "$ref": "#/definitions/ExposuresOwner"
+          "$ref": "#/definitions/DbtOwner"
         },
         "type": {
           "type": "string"
         },
         "url": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "ExposuresOwner": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "name": {
           "type": [
             "string",
             "null"
@@ -1792,6 +1914,10 @@
       "type": "object",
       "properties": {
         "error_after": {
+          "default": {
+            "count": null,
+            "period": null
+          },
           "anyOf": [
             {
               "$ref": "#/definitions/FreshnessRules"
@@ -1808,6 +1934,10 @@
           ]
         },
         "warn_after": {
+          "default": {
+            "count": null,
+            "period": null
+          },
           "anyOf": [
             {
               "$ref": "#/definitions/FreshnessRules"
@@ -1908,7 +2038,16 @@
     "GroupsConfig": {
       "type": "object",
       "properties": {
-        "meta": true
+        "meta": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
       "additionalProperties": false
     },
@@ -2097,7 +2236,16 @@
             "null"
           ]
         },
-        "config": true,
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "create_metric": {
           "type": [
             "boolean",
@@ -2191,7 +2339,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tags": {
           "anyOf": [
@@ -2221,7 +2371,7 @@
         "filter": {
           "anyOf": [
             {
-              "$ref": "#/definitions/WhereFilterIntersection"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -2238,13 +2388,9 @@
           ]
         },
         "offset_window": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/MetricTimeWindow"
-            },
-            {
-              "type": "null"
-            }
+          "type": [
+            "string",
+            "null"
           ]
         }
       },
@@ -2272,37 +2418,20 @@
         "filter": {
           "anyOf": [
             {
-              "$ref": "#/definitions/WhereFilterIntersection"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
             }
           ]
         },
-        "join_to_timepine": {
+        "join_to_timespine": {
           "type": [
             "boolean",
             "null"
           ]
         },
         "name": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "MetricTimeWindow": {
-      "type": "object",
-      "required": [
-        "count",
-        "granularity"
-      ],
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "granularity": {
           "type": "string"
         }
       },
@@ -2344,7 +2473,7 @@
         "denominator": {
           "anyOf": [
             {
-              "$ref": "#/definitions/MetricInput"
+              "$ref": "#/definitions/StringOrMetricInput"
             },
             {
               "type": "null"
@@ -2356,13 +2485,6 @@
             "string",
             "null"
           ]
-        },
-        "input_measures": {
-          "default": [],
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MetricInputMeasure"
-          }
         },
         "measure": {
           "anyOf": [
@@ -2380,13 +2502,13 @@
             "null"
           ],
           "items": {
-            "$ref": "#/definitions/MetricInput"
+            "$ref": "#/definitions/StringOrMetricInput"
           }
         },
         "numerator": {
           "anyOf": [
             {
-              "$ref": "#/definitions/MetricInput"
+              "$ref": "#/definitions/StringOrMetricInput"
             },
             {
               "type": "null"
@@ -2394,13 +2516,9 @@
           ]
         },
         "window": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/MetricTimeWindow"
-            },
-            {
-              "type": "null"
-            }
+          "type": [
+            "string",
+            "null"
           ]
         }
       },
@@ -2432,9 +2550,13 @@
           ]
         },
         "filter": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "label": {
@@ -2463,6 +2585,7 @@
       "additionalProperties": false
     },
     "ModelConfig": {
+      "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
         "access": {
@@ -2478,6 +2601,12 @@
         "alias": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "as_columnstore": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -2629,7 +2758,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "description": {
           "type": [
@@ -2758,6 +2889,15 @@
             }
           ]
         },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PostgresIndex"
+          }
+        },
         "initialize": {
           "type": [
             "string",
@@ -2868,7 +3008,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "not_matched_by_source_action": {
           "type": [
@@ -2921,7 +3063,7 @@
         "partition_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+              "$ref": "#/definitions/PartitionConfig"
             },
             {
               "type": "null"
@@ -3015,10 +3157,25 @@
           ]
         },
         "require_partition_filter": {
-          "default": false,
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "row_access_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ScheduleConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "schema": {
@@ -3095,6 +3252,18 @@
             "null"
           ]
         },
+        "table_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "tags": {
           "anyOf": [
             {
@@ -3122,7 +3291,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tmp_relation_type": {
           "type": [
@@ -3217,7 +3388,40 @@
         "build_after": {
           "anyOf": [
             {
-              "$ref": "#/definitions/FreshnessRules"
+              "$ref": "#/definitions/ModelFreshnessRules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ModelFreshnessRules": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int64"
+        },
+        "period": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessPeriod"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updates_on": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/UpdatesOn"
             },
             {
               "type": "null"
@@ -3393,52 +3597,6 @@
         "max"
       ]
     },
-    "NotNullTest": {
-      "type": "object",
-      "required": [
-        "not_null"
-      ],
-      "properties": {
-        "not_null": {
-          "$ref": "#/definitions/NotNullTestProperties"
-        }
-      },
-      "additionalProperties": false
-    },
-    "NotNullTestProperties": {
-      "type": "object",
-      "properties": {
-        "column": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "config": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/DataTestConfig"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "name": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
     "OnConfigurationChange": {
       "type": "string",
       "enum": [
@@ -3456,6 +3614,23 @@
         "fail",
         "sync_all_columns",
         "unknown"
+      ]
+    },
+    "PartitionConfig": {
+      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `validate` method",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "$ref": "#/definitions/BigqueryPartitionConfig"
+        }
       ]
     },
     "PeriodAggregationType": {
@@ -3476,6 +3651,33 @@
           ]
         },
         "relation": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PostgresIndex": {
+      "type": "object",
+      "required": [
+        "columns"
+      ],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unique": {
           "type": [
             "boolean",
             "null"
@@ -3522,56 +3724,6 @@
       },
       "additionalProperties": false
     },
-    "RelationshipsTest": {
-      "type": "object",
-      "required": [
-        "relationships"
-      ],
-      "properties": {
-        "relationships": {
-          "$ref": "#/definitions/RelationshipsTestProperties"
-        }
-      },
-      "additionalProperties": false
-    },
-    "RelationshipsTestProperties": {
-      "type": "object",
-      "required": [
-        "field",
-        "to"
-      ],
-      "properties": {
-        "config": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/DataTestConfig"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "field": {
-          "type": "string"
-        },
-        "name": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "to": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
     "Rows": {
       "anyOf": [
         {
@@ -3581,7 +3733,9 @@
           "type": "array",
           "items": {
             "type": "object",
-            "additionalProperties": true
+            "additionalProperties": {
+              "$ref": "#/definitions/AnyValue"
+            }
           }
         }
       ]
@@ -3626,7 +3780,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "schema": {
           "type": [
@@ -3748,12 +3904,37 @@
       },
       "additionalProperties": false
     },
+    "ScheduleConfig": {
+      "type": "object",
+      "properties": {
+        "cron": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time_zone_value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "SeedConfig": {
+      "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
         "alias": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "as_columnstore": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -3866,7 +4047,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "delimiter": {
           "type": [
@@ -3970,6 +4153,15 @@
             "null"
           ]
         },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PostgresIndex"
+          }
+        },
         "initialize": {
           "type": [
             "string",
@@ -4036,7 +4228,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "not_matched_by_source_action": {
           "type": [
@@ -4059,7 +4253,7 @@
         "partition_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+              "$ref": "#/definitions/PartitionConfig"
             },
             {
               "type": "null"
@@ -4150,10 +4344,25 @@
           ]
         },
         "require_partition_filter": {
-          "default": false,
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "row_access_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ScheduleConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "schema": {
@@ -4208,6 +4417,18 @@
             "null"
           ]
         },
+        "table_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "tags": {
           "anyOf": [
             {
@@ -4235,7 +4456,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tmp_relation_type": {
           "type": [
@@ -4327,7 +4550,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tags": {
           "anyOf": [
@@ -4435,12 +4660,26 @@
       },
       "additionalProperties": false
     },
+    "Severity": {
+      "type": "string",
+      "enum": [
+        "Error",
+        "Warn"
+      ]
+    },
     "SnapshotConfig": {
+      "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
         "alias": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "as_columnstore": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -4554,7 +4793,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "dbt_valid_to_current": {
           "type": [
@@ -4662,6 +4903,15 @@
             "null"
           ]
         },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PostgresIndex"
+          }
+        },
         "initialize": {
           "type": [
             "string",
@@ -4744,7 +4994,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "not_matched_by_source_action": {
           "type": [
@@ -4767,7 +5019,7 @@
         "partition_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+              "$ref": "#/definitions/PartitionConfig"
             },
             {
               "type": "null"
@@ -4858,10 +5110,25 @@
           ]
         },
         "require_partition_filter": {
-          "default": false,
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "row_access_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ScheduleConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "schema": {
@@ -4942,6 +5209,18 @@
             "null"
           ]
         },
+        "table_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "tags": {
           "anyOf": [
             {
@@ -4969,7 +5248,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tmp_relation_type": {
           "type": [
@@ -5105,8 +5386,15 @@
       "additionalProperties": false
     },
     "SourceConfig": {
+      "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
+        "as_columnstore": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "auto_liquid_cluster": {
           "type": [
             "boolean",
@@ -5201,7 +5489,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "description": {
           "type": [
@@ -5277,6 +5567,15 @@
             "boolean",
             "null"
           ]
+        },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PostgresIndex"
+          }
         },
         "initialize": {
           "type": [
@@ -5356,7 +5655,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "not_matched_by_source_action": {
           "type": [
@@ -5379,7 +5680,7 @@
         "partition_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+              "$ref": "#/definitions/PartitionConfig"
             },
             {
               "type": "null"
@@ -5434,10 +5735,25 @@
           ]
         },
         "require_partition_filter": {
-          "default": false,
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "row_access_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ScheduleConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "secure": {
@@ -5496,6 +5812,18 @@
             }
           ]
         },
+        "table_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "tags": {
           "anyOf": [
             {
@@ -5523,7 +5851,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tmp_relation_type": {
           "type": [
@@ -5640,6 +5970,16 @@
         }
       ]
     },
+    "StringOrMetricInput": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/MetricInput"
+        }
+      ]
+    },
     "StringOrMetricInputMeasure": {
       "anyOf": [
         {
@@ -5690,7 +6030,16 @@
             "null"
           ]
         },
-        "external": true,
+        "external": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "identifier": {
           "type": [
             "string",
@@ -5770,7 +6119,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tags": {
           "anyOf": [
@@ -5791,6 +6142,11 @@
         "granularity": {
           "default": "day",
           "type": "string"
+        },
+        "time_ingestion_partitioning": {
+          "description": "When this is true, the [`BigqueryPartitionConfig::field`] will be used as the `_PARTITIONTIME` pseudo column _PARTITIONTIME: https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time https://docs.getdbt.com/reference/resource-configs/bigquery-configs#partitioning-by-an-ingestion-date-or-timestamp",
+          "default": false,
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -5811,49 +6167,16 @@
         "year"
       ]
     },
-    "UniqueTest": {
-      "type": "object",
-      "required": [
-        "unique"
-      ],
-      "properties": {
-        "unique": {
-          "$ref": "#/definitions/UniqueTestProperties"
-        }
-      },
-      "additionalProperties": false
-    },
-    "UniqueTestProperties": {
-      "type": "object",
-      "properties": {
-        "config": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/DataTestConfig"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "name": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
     "UnitTestConfig": {
+      "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
+        "as_columnstore": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "auto_liquid_cluster": {
           "type": [
             "boolean",
@@ -5948,7 +6271,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "description": {
           "type": [
@@ -6008,6 +6333,15 @@
             "boolean",
             "null"
           ]
+        },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PostgresIndex"
+          }
         },
         "initialize": {
           "type": [
@@ -6075,7 +6409,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": true
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "not_matched_by_source_action": {
           "type": [
@@ -6098,7 +6434,7 @@
         "partition_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryPartitionConfigLegacy"
+              "$ref": "#/definitions/PartitionConfig"
             },
             {
               "type": "null"
@@ -6143,10 +6479,25 @@
           ]
         },
         "require_partition_filter": {
-          "default": false,
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "row_access_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ScheduleConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "secure": {
@@ -6205,6 +6556,18 @@
             }
           ]
         },
+        "table_tag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "tags": {
           "anyOf": [
             {
@@ -6232,7 +6595,9 @@
             "object",
             "null"
           ],
-          "additionalProperties": false
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "tmp_relation_type": {
           "type": [
@@ -6252,9 +6617,33 @@
     "UnitTestOverrides": {
       "type": "object",
       "properties": {
-        "env_vars": true,
-        "macros": true,
-        "vars": true
+        "env_vars": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "macros": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "vars": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -6310,9 +6699,25 @@
             }
           ]
         },
-        "versions": true
+        "versions": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
       "additionalProperties": false
+    },
+    "UpdatesOn": {
+      "type": "string",
+      "enum": [
+        "any",
+        "all"
+      ]
     },
     "Versions": {
       "type": "object",
@@ -6330,39 +6735,16 @@
             }
           ]
         },
-        "v": true
+        "v": {
+          "$ref": "#/definitions/AnyValue"
+        }
       },
       "additionalProperties": {
         "type": "object",
-        "additionalProperties": true
+        "additionalProperties": {
+          "$ref": "#/definitions/AnyValue"
+        }
       }
-    },
-    "WhereFilter": {
-      "type": "object",
-      "required": [
-        "where_sql_template"
-      ],
-      "properties": {
-        "where_sql_template": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "WhereFilterIntersection": {
-      "type": "object",
-      "required": [
-        "where_filters"
-      ],
-      "properties": {
-        "where_filters": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/WhereFilter"
-          }
-        }
-      },
-      "additionalProperties": false
     },
     "_MeasureExpr": {
       "anyOf": [
