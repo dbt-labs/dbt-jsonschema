@@ -657,6 +657,12 @@
               }
             }
           },
+          "data_tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/data_tests"
+            }
+          },
           "docs": {
             "$ref": "#/$defs/docs_config"
           },
