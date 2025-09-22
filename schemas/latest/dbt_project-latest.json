@@ -608,6 +608,9 @@
         "+target_lag": {
           "$ref": "#/$defs/target_lag"
         },
+        "+tblproperties": {
+          "$ref": "#/$defs/tblproperties"
+        },
         "+transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
@@ -711,6 +714,9 @@
         },
         "target_lag": {
           "$ref": "#/$defs/target_lag"
+        },
+        "tblproperties": {
+          "$ref": "#/$defs/tblproperties"
         },
         "transient": {
           "$ref": "#/$defs/boolean_or_jinja_string"
@@ -1099,6 +1105,9 @@
     },
     "target_schema": {
       "type": "string"
+    },
+    "tblproperties": {
+      "type": "object"
     },
     "unit_test_configs": {
       "properties": {
