@@ -2019,6 +2019,17 @@
             "sync_all_columns"
           ]
         },
+        "resource_tags": {
+          "title": "Resource tags",
+          "description": "Configuration specific to BigQuery adapter used to apply resource tags for IAM access control. Tags must follow the format {google_cloud_project_id}/{key_name}: value.",
+          "type": "object",
+          "patternProperties": {
+            "^[^/]+/[^/]+$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
         "snowflake_warehouse": {
           "type": "string"
         },
