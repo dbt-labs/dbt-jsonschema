@@ -220,7 +220,7 @@
     "saved-queries": {
       "anyOf": [
         {
-          "$ref": "#/definitions/ProjectSavedQueriesConfig"
+          "$ref": "#/definitions/ProjectSavedQueryConfig"
         },
         {
           "type": "null"
@@ -399,6 +399,17 @@
       },
       "additionalProperties": false
     },
+    "DataLakeObjectCategory": {
+      "description": "See `category` from https://developer.salesforce.com/docs/data/connectapi/references/spec?meta=postDataLakeObject",
+      "type": "string",
+      "enum": [
+        "Profile",
+        "Engagement",
+        "Directory_Table",
+        "Insights",
+        "Other"
+      ]
+    },
     "DbtBatchSize": {
       "type": "string",
       "enum": [
@@ -441,8 +452,7 @@
             "merge",
             "delete+insert",
             "insert_overwrite",
-            "microbatch",
-            "unknown"
+            "microbatch"
           ]
         },
         {
@@ -451,6 +461,18 @@
           "enum": [
             "replace_where"
           ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
         }
       ]
     },
@@ -459,6 +481,8 @@
         {
           "type": "string",
           "enum": [
+            "snapshot",
+            "seed",
             "view",
             "table",
             "incremental",
@@ -482,6 +506,13 @@
           "type": "string",
           "enum": [
             "dynamic_table"
+          ]
+        },
+        {
+          "description": "for inline SQL compilation",
+          "type": "string",
+          "enum": [
+            "inline"
           ]
         },
         {
@@ -676,6 +707,12 @@
     "HookConfig": {
       "type": "object",
       "properties": {
+        "index": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "sql": {
           "type": [
             "string",
@@ -788,7 +825,7 @@
       ]
     },
     "PartitionConfig": {
-      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `validate` method",
+      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `into_bigquery()` method",
       "anyOf": [
         {
           "type": "string"
@@ -1194,11 +1231,10 @@
         },
         "+refresh_interval_minutes": {
           "type": [
-            "integer",
+            "number",
             "null"
           ],
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "double"
         },
         "+refresh_mode": {
           "type": [
@@ -1391,6 +1427,12 @@
     "ProjectDbtCloudConfig": {
       "type": "object",
       "properties": {
+        "account-host": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "account_id": {
           "anyOf": [
             {
@@ -1469,6 +1511,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "tenant_hostname": {
+          "type": [
+            "string",
+            "null"
           ]
         }
       },
@@ -1646,6 +1694,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+category": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DataLakeObjectCategory"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+cluster_by": {
@@ -2083,6 +2141,12 @@
             "type": "string"
           }
         },
+        "+primary_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+query_tag": {
           "type": [
             "string",
@@ -2101,11 +2165,10 @@
         },
         "+refresh_interval_minutes": {
           "type": [
-            "integer",
+            "number",
             "null"
           ],
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "double"
         },
         "+refresh_mode": {
           "type": [
@@ -2272,13 +2335,13 @@
         "$ref": "#/definitions/ProjectModelConfig"
       }
     },
-    "ProjectSavedQueriesConfig": {
+    "ProjectSavedQueryConfig": {
       "type": "object",
       "properties": {
         "+cache": {
           "anyOf": [
             {
-              "$ref": "#/definitions/SavedQueriesConfigCache"
+              "$ref": "#/definitions/SavedQueryCache"
             },
             {
               "type": "null"
@@ -2334,7 +2397,7 @@
         }
       },
       "additionalProperties": {
-        "$ref": "#/definitions/ProjectSavedQueriesConfig"
+        "$ref": "#/definitions/ProjectSavedQueryConfig"
       }
     },
     "ProjectSeedConfig": {
@@ -2745,11 +2808,10 @@
         },
         "+refresh_interval_minutes": {
           "type": [
-            "integer",
+            "number",
             "null"
           ],
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "double"
         },
         "+refresh_mode": {
           "type": [
@@ -3359,11 +3421,10 @@
         },
         "+refresh_interval_minutes": {
           "type": [
-            "integer",
+            "number",
             "null"
           ],
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "double"
         },
         "+refresh_mode": {
           "type": [
@@ -3499,7 +3560,19 @@
             "null"
           ]
         },
+        "+target_database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+target_lag": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+target_schema": {
           "type": [
             "string",
             "null"
@@ -3883,11 +3956,10 @@
         },
         "+refresh_interval_minutes": {
           "type": [
-            "integer",
+            "number",
             "null"
           ],
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "double"
         },
         "+refresh_mode": {
           "type": [
@@ -4331,11 +4403,10 @@
         },
         "+refresh_interval_minutes": {
           "type": [
-            "integer",
+            "number",
             "null"
           ],
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "double"
         },
         "+refresh_mode": {
           "type": [
@@ -4529,7 +4600,7 @@
       },
       "additionalProperties": false
     },
-    "SavedQueriesConfigCache": {
+    "SavedQueryCache": {
       "type": "object",
       "properties": {
         "enabled": {
@@ -4570,35 +4641,30 @@
       "type": "object",
       "properties": {
         "dbt_is_deleted": {
-          "default": "DBT_IS_DELETED",
           "type": [
             "string",
             "null"
           ]
         },
         "dbt_scd_id": {
-          "default": "DBT_SCD_ID",
           "type": [
             "string",
             "null"
           ]
         },
         "dbt_updated_at": {
-          "default": "DBT_UPDATED_AT",
           "type": [
             "string",
             "null"
           ]
         },
         "dbt_valid_from": {
-          "default": "DBT_VALID_FROM",
           "type": [
             "string",
             "null"
           ]
         },
         "dbt_valid_to": {
-          "default": "DBT_VALID_TO",
           "type": [
             "string",
             "null"
