@@ -1,9 +1,7 @@
 {
   "title": "dbt_project",
   "type": "object",
-  "required": [
-    "name"
-  ],
+  "required": ["name"],
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "version": {
@@ -41,10 +39,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "macro_namespace",
-          "search_order"
-        ],
+        "required": ["macro_namespace", "search_order"],
         "properties": {
           "macro_namespace": {
             "type": "string"
@@ -245,11 +240,7 @@
   "$defs": {
     "access": {
       "type": "string",
-      "enum": [
-        "private",
-        "protected",
-        "public"
-      ]
+      "enum": ["private", "protected", "public"]
     },
     "alias": {
       "type": "string"
@@ -286,9 +277,7 @@
     },
     "contract": {
       "type": "object",
-      "required": [
-        "enforced"
-      ],
+      "required": ["enforced"],
       "properties": {
         "enforced": {
           "$ref": "#/$defs/boolean_or_jinja_string",
@@ -735,20 +724,11 @@
     },
     "on_configuration_change": {
       "type": "string",
-      "enum": [
-        "apply",
-        "continue",
-        "fail"
-      ]
+      "enum": ["apply", "continue", "fail"]
     },
     "on_schema_change": {
       "type": "string",
-      "enum": [
-        "append_new_columns",
-        "fail",
-        "ignore",
-        "sync_all_columns"
-      ]
+      "enum": ["append_new_columns", "fail", "ignore", "sync_all_columns"]
     },
     "persist_docs_config": {
       "title": "Persist docs config",
@@ -767,10 +747,7 @@
       "additionalProperties": false
     },
     "schema": {
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": ["null", "string"]
     },
     "seed_configs": {
       "title": "Seed configs",
@@ -897,10 +874,7 @@
         },
         {
           "type": "string",
-          "enum": [
-            "error",
-            "warn"
-          ]
+          "enum": ["error", "warn"]
         }
       ]
     },
@@ -916,6 +890,9 @@
         },
         "+database": {
           "$ref": "#/$defs/database"
+        },
+        "+schema": {
+          "$ref": "#/$defs/schema"
         },
         "+docs": {
           "$ref": "#/$defs/docs_config"
@@ -976,6 +953,9 @@
         },
         "database": {
           "$ref": "#/$defs/database"
+        },
+        "schema": {
+          "$ref": "#/$defs/schema"
         },
         "docs": {
           "$ref": "#/$defs/docs_config"
