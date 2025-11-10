@@ -8,8 +8,8 @@ jobs:
   validate-json-schemas:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # actions/checkout@v3
+      - uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610  # actions/setup-node@v3
         with:
           node-version: 16
       - name: install avj
@@ -26,8 +26,8 @@ jobs:
             dbt-file-name: "dependencies"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # actions/checkout@v3
+      - uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610  # actions/setup-node@v3
         with:
           node-version: 16
       - name: install avj
@@ -41,8 +41,8 @@ jobs:
   validate_plusless_properties:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744  # actions/checkout@v3
+      - uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c  # actions/setup-python@v4
         with:
           python-version: "3.x"
       - name: install avj
