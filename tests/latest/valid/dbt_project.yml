@@ -110,6 +110,13 @@ sources:
     +enabled: true
     empty_subdirectory:
 
+semantic-models:
+  my_project:
+    +enabled: true
+    +group: analytics
+    +meta:
+      team: data-platform
+
 quoting:
   database: true
   schema: true

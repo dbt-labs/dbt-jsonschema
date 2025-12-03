@@ -134,6 +134,9 @@
     "seeds": {
       "$ref": "#/$defs/seed_configs"
     },
+    "semantic-models": {
+      "$ref": "#/$defs/semantic_model_configs"
+    },
     "snapshot-paths": {
       "$ref": "#/$defs/array_of_strings"
     },
@@ -570,6 +573,41 @@
         "oneOf": [
           {
             "$ref": "#/$defs/seed_configs"
+          },
+          {
+            "$ref": "#/$defs/empty_directory"
+          }
+        ]
+      }
+    },
+    "semantic_model_configs": {
+      "title": "Semantic model configs",
+      "description": "Configurations set in the dbt_project.yml file will apply to all semantic models that don't have a more specific configuration set.",
+      "type": "object",
+      "properties": {
+        "+enabled": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "+group": {
+          "$ref": "#/$defs/group"
+        },
+        "+meta": {
+          "$ref": "#/$defs/meta"
+        },
+        "enabled": {
+          "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "group": {
+          "$ref": "#/$defs/group"
+        },
+        "meta": {
+          "$ref": "#/$defs/meta"
+        }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/semantic_model_configs"
           },
           {
             "$ref": "#/$defs/empty_directory"
