@@ -634,12 +634,6 @@
               "copy_grants": {
                 "$ref": "#/$defs/boolean_or_jinja_string"
               },
-              "data_tests": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/$defs/data_tests"
-                }
-              },
               "database": {
                 "type": "string"
               },
@@ -655,6 +649,12 @@
               "schema": {
                 "type": "string"
               }
+            }
+          },
+          "data_tests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/data_tests"
             }
           },
           "docs": {
