@@ -1531,6 +1531,9 @@
         "description": {
           "type": "string"
         },
+        "label": {
+          "type": "string"
+        },
         "type": {
           "enum": [
             "CATEGORICAL",
