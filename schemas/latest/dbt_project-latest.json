@@ -985,6 +985,9 @@
         "+quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
         },
+        "+schema": {
+          "$ref": "#/$defs/schema"
+        },
         "+strategy": {
           "$ref": "#/$defs/strategy"
         },
@@ -1044,6 +1047,9 @@
         },
         "quote_columns": {
           "$ref": "#/$defs/boolean_or_jinja_string"
+        },
+        "schema": {
+          "$ref": "#/$defs/schema"
         },
         "strategy": {
           "$ref": "#/$defs/strategy"
