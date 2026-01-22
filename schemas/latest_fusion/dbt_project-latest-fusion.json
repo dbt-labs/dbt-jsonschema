@@ -6,6 +6,16 @@
     "name"
   ],
   "properties": {
+    "analyses": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectAnalysisConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "analysis-paths": {
       "type": [
         "array",
@@ -92,6 +102,25 @@
       "anyOf": [
         {
           "$ref": "#/definitions/AnyValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "function-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "functions": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectFunctionConfig"
         },
         {
           "type": "null"
@@ -491,7 +520,8 @@
             "test",
             "ephemeral",
             "unit",
-            "analysis"
+            "analysis",
+            "function"
           ]
         },
         {
@@ -533,18 +563,21 @@
       "type": "object",
       "properties": {
         "database": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "identifier": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "schema": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -678,6 +711,15 @@
       },
       "additionalProperties": false
     },
+    "FunctionKind": {
+      "description": "Function kind enum with same values as UDFKind",
+      "type": "string",
+      "enum": [
+        "scalar",
+        "aggregate",
+        "table"
+      ]
+    },
     "GrantAccessToTarget": {
       "type": "object",
       "properties": {
@@ -695,6 +737,13 @@
         }
       },
       "additionalProperties": false
+    },
+    "GrantConfig": {
+      "description": "Wrapper type for grant configurations that normalizes values to arrays during serialization.\n\nThis type handles grant configurations with the following behavior: - Normalizes string values to arrays during serialization - Preserves insertion order using IndexMap",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/StringOrArrayOfStrings"
+      }
     },
     "HardDeletes": {
       "type": "string",
@@ -749,6 +798,16 @@
           }
         }
       ]
+    },
+    "IndexesConfig": {
+      "description": "A wrapper type for the `indexes` config field that handles flexible deserialization.\n\ndbt-core accepts both list and dictionary formats for indexes. This type accepts either format on input but always serializes as a list.\n\n# Example\n\n```ignore // Input (list): [{columns: [\"id\"], unique: true}] // Serializes as: [{columns: [\"id\"], unique: true}]\n\n// Input (dict): {\"my_index\": {columns: [\"id\"], unique: true}} // Serializes as: [{columns: [\"id\"], unique: true}]  (keys are discarded) ```",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PostgresIndex"
+      }
     },
     "LogPath": {
       "type": "string",
@@ -886,9 +945,89 @@
       },
       "additionalProperties": false
     },
+    "PrimaryKeyConfig": {
+      "description": "A wrapper type for the `primary_key` config field that normalizes serialization.\n\nIn dbt-core, primary_key values are \"listified\" - single strings are converted to single-element arrays. This type accepts either format on input but always serializes as arrays.\n\n# Example\n\n```ignore // Input: \"id\" // Serializes as: [\"id\"]\n\n// Input: [\"id\", \"tenant_id\"] // Serializes as: [\"id\", \"tenant_id\"] ```",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/StringOrArrayOfStrings"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ProjectAnalysisConfig": {
+      "type": "object",
+      "properties": {
+        "+docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+enabled": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+static_analysis": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisKind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/ProjectAnalysisConfig"
+      }
+    },
     "ProjectDataTestConfig": {
       "type": "object",
       "properties": {
+        "+adapter_properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+alias": {
           "type": [
             "string",
@@ -896,30 +1035,35 @@
           ]
         },
         "+as_columnstore": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_liquid_cluster": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+automatic_clustering": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+backup": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -938,6 +1082,7 @@
           ]
         },
         "+bind": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -951,6 +1096,12 @@
           "format": "int64"
         },
         "+catalog": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+catalog_name": {
           "type": [
             "string",
             "null"
@@ -979,6 +1130,7 @@
           ]
         },
         "+copy_grants": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1005,12 +1157,6 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
-        "+description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+dist": {
           "type": [
             "string",
@@ -1018,12 +1164,14 @@
           ]
         },
         "+enable_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+enabled": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1053,6 +1201,13 @@
             "null"
           ]
         },
+        "+full_refresh": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "+grant_access_to": {
           "type": [
             "array",
@@ -1069,6 +1224,7 @@
           ]
         },
         "+hours_to_expiration": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -1077,19 +1233,19 @@
           "minimum": 0.0
         },
         "+include_full_name_in_path": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+indexes": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/PostgresIndex"
-          }
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/IndexesConfig"
+            }
+          ]
         },
         "+initialize": {
           "type": [
@@ -1113,6 +1269,7 @@
           }
         },
         "+labels_from_meta": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1154,6 +1311,7 @@
           ]
         },
         "+merge_with_schema_evolution": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1197,6 +1355,7 @@
           ]
         },
         "+partition_expiration_days": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -1230,6 +1389,7 @@
           ]
         },
         "+refresh_interval_minutes": {
+          "default": null,
           "type": [
             "number",
             "null"
@@ -1243,6 +1403,7 @@
           ]
         },
         "+require_partition_filter": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1257,7 +1418,7 @@
         "+schedule": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ScheduleConfig"
+              "$ref": "#/definitions/Schedule"
             },
             {
               "type": "null"
@@ -1271,6 +1432,7 @@
           ]
         },
         "+secure": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1287,12 +1449,14 @@
           ]
         },
         "+skip_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_not_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1337,6 +1501,7 @@
           ]
         },
         "+store_failures": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1359,6 +1524,7 @@
           ]
         },
         "+table_type": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -1402,6 +1568,7 @@
           ]
         },
         "+transient": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1526,6 +1693,7 @@
       "type": "object",
       "properties": {
         "+enabled": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1553,6 +1721,156 @@
       },
       "additionalProperties": {
         "$ref": "#/definitions/ProjectExposureConfig"
+      }
+    },
+    "ProjectFunctionConfig": {
+      "type": "object",
+      "properties": {
+        "+access": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Access"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+database": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+entry_point": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+grants": {
+          "$ref": "#/definitions/GrantConfig"
+        },
+        "+group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+on_configuration_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+quoting": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+runtime_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+static_analysis": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisKind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+type": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FunctionKind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+volatility": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Volatility"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/ProjectFunctionConfig"
       }
     },
     "ProjectMetricConfigs": {
@@ -1607,6 +1925,24 @@
             }
           ]
         },
+        "+adapter_properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+additional_libs": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+alias": {
           "type": [
             "string",
@@ -1614,30 +1950,35 @@
           ]
         },
         "+as_columnstore": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_liquid_cluster": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+automatic_clustering": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+backup": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1650,6 +1991,12 @@
           ]
         },
         "+base_location_subpath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+batch_id": {
           "type": [
             "string",
             "null"
@@ -1672,6 +2019,7 @@
           ]
         },
         "+bind": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1716,6 +2064,12 @@
             }
           ]
         },
+        "+cluster_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+clustered_by": {
           "type": [
             "string",
@@ -1738,6 +2092,7 @@
           ]
         },
         "+concurrent_batches": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1754,6 +2109,14 @@
           ]
         },
         "+copy_grants": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+create_notebook": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1780,6 +2143,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "+dataproc_cluster_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+description": {
           "type": [
             "string",
@@ -1803,12 +2172,14 @@
           ]
         },
         "+enable_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+enabled": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1843,6 +2214,7 @@
           ]
         },
         "+full_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1858,13 +2230,7 @@
           }
         },
         "+grants": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "$ref": "#/definitions/StringOrArrayOfStrings"
-          }
+          "$ref": "#/definitions/GrantConfig"
         },
         "+group": {
           "type": [
@@ -1873,6 +2239,7 @@
           ]
         },
         "+hours_to_expiration": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -1880,7 +2247,24 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "+http_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+imports": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+include_full_name_in_path": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -1905,20 +2289,40 @@
             }
           ]
         },
-        "+indexes": {
+        "+index_url": {
           "type": [
-            "array",
+            "string",
             "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/PostgresIndex"
-          }
+          ]
+        },
+        "+indexes": {
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/IndexesConfig"
+            }
+          ]
         },
         "+initialize": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "+jar_file_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+job_cluster_config": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "+kms_key_name": {
           "type": [
@@ -1936,6 +2340,7 @@
           }
         },
         "+labels_from_meta": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -2013,6 +2418,7 @@
           ]
         },
         "+merge_with_schema_evolution": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -2040,6 +2446,12 @@
           ]
         },
         "+not_matched_condition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+notebook_template_id": {
           "type": [
             "string",
             "null"
@@ -2086,6 +2498,7 @@
           ]
         },
         "+partition_expiration_days": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -2142,6 +2555,23 @@
           }
         },
         "+primary_key": {
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/PrimaryKeyConfig"
+            }
+          ]
+        },
+        "+python_job_config": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+python_version": {
           "type": [
             "string",
             "null"
@@ -2164,6 +2594,7 @@
           ]
         },
         "+refresh_interval_minutes": {
+          "default": null,
           "type": [
             "number",
             "null"
@@ -2177,10 +2608,20 @@
           ]
         },
         "+require_partition_filter": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
+        },
+        "+resource_tags": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
         },
         "+row_access_policy": {
           "type": [
@@ -2191,7 +2632,7 @@
         "+schedule": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ScheduleConfig"
+              "$ref": "#/definitions/Schedule"
             },
             {
               "type": "null"
@@ -2205,18 +2646,21 @@
           ]
         },
         "+secure": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_not_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -2266,6 +2710,12 @@
             }
           ]
         },
+        "+submission_method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+table_format": {
           "type": [
             "string",
@@ -2279,6 +2729,7 @@
           ]
         },
         "+table_type": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -2308,6 +2759,14 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "+timeout": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
         "+tmp_relation_type": {
           "type": [
             "string",
@@ -2315,6 +2774,7 @@
           ]
         },
         "+transient": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -2328,6 +2788,13 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+user_folder_for_python": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
           ]
         }
       },
@@ -2403,6 +2870,15 @@
     "ProjectSeedConfig": {
       "type": "object",
       "properties": {
+        "+adapter_properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+alias": {
           "type": [
             "string",
@@ -2465,6 +2941,12 @@
           "format": "int64"
         },
         "+catalog": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+catalog_name": {
           "type": [
             "string",
             "null"
@@ -2534,12 +3016,6 @@
             "null"
           ]
         },
-        "+description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+dist": {
           "type": [
             "string",
@@ -2602,13 +3078,7 @@
           }
         },
         "+grants": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "$ref": "#/definitions/StringOrArrayOfStrings"
-          }
+          "$ref": "#/definitions/GrantConfig"
         },
         "+group": {
           "type": [
@@ -2631,13 +3101,12 @@
           ]
         },
         "+indexes": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/PostgresIndex"
-          }
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/IndexesConfig"
+            }
+          ]
         },
         "+initialize": {
           "type": [
@@ -2834,7 +3303,7 @@
         "+schedule": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ScheduleConfig"
+              "$ref": "#/definitions/Schedule"
             },
             {
               "type": "null"
@@ -2956,6 +3425,28 @@
     "ProjectSemanticModelConfig": {
       "type": "object",
       "properties": {
+        "+enabled": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+tags": {
           "anyOf": [
             {
@@ -2965,27 +3456,6 @@
               "type": "null"
             }
           ]
-        },
-        "enabled": {
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
-        "group": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "meta": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "$ref": "#/definitions/AnyValue"
-          }
         }
       },
       "additionalProperties": {
@@ -2995,6 +3465,15 @@
     "ProjectSnapshotConfig": {
       "type": "object",
       "properties": {
+        "+adapter_properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+alias": {
           "type": [
             "string",
@@ -3002,30 +3481,35 @@
           ]
         },
         "+as_columnstore": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_liquid_cluster": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+automatic_clustering": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+backup": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3044,6 +3528,7 @@
           ]
         },
         "+bind": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3057,6 +3542,12 @@
           "format": "int64"
         },
         "+catalog": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+catalog_name": {
           "type": [
             "string",
             "null"
@@ -3095,6 +3586,7 @@
           ]
         },
         "+copy_grants": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3127,12 +3619,6 @@
             "null"
           ]
         },
-        "+description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+dist": {
           "type": [
             "string",
@@ -3150,12 +3636,14 @@
           ]
         },
         "+enable_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+enabled": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3179,6 +3667,13 @@
             "null"
           ]
         },
+        "+full_refresh": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "+grant_access_to": {
           "type": [
             "array",
@@ -3189,13 +3684,7 @@
           }
         },
         "+grants": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "$ref": "#/definitions/StringOrArrayOfStrings"
-          }
+          "$ref": "#/definitions/GrantConfig"
         },
         "+group": {
           "type": [
@@ -3214,6 +3703,7 @@
           ]
         },
         "+hours_to_expiration": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -3222,19 +3712,19 @@
           "minimum": 0.0
         },
         "+include_full_name_in_path": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+indexes": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/PostgresIndex"
-          }
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/IndexesConfig"
+            }
+          ]
         },
         "+initialize": {
           "type": [
@@ -3243,6 +3733,7 @@
           ]
         },
         "+invalidate_hard_deletes": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3264,6 +3755,7 @@
           }
         },
         "+labels_from_meta": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3308,6 +3800,7 @@
           ]
         },
         "+merge_with_schema_evolution": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3351,6 +3844,7 @@
           ]
         },
         "+partition_expiration_days": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -3404,6 +3898,7 @@
           ]
         },
         "+quote_columns": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3420,6 +3915,7 @@
           ]
         },
         "+refresh_interval_minutes": {
+          "default": null,
           "type": [
             "number",
             "null"
@@ -3433,6 +3929,7 @@
           ]
         },
         "+require_partition_filter": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3447,7 +3944,7 @@
         "+schedule": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ScheduleConfig"
+              "$ref": "#/definitions/Schedule"
             },
             {
               "type": "null"
@@ -3461,18 +3958,21 @@
           ]
         },
         "+secure": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_not_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3539,6 +4039,7 @@
           ]
         },
         "+table_type": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -3594,6 +4095,7 @@
           ]
         },
         "+transient": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3623,31 +4125,45 @@
     "ProjectSourceConfig": {
       "type": "object",
       "properties": {
+        "+adapter_properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+as_columnstore": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_liquid_cluster": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+automatic_clustering": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+backup": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3666,6 +4182,7 @@
           ]
         },
         "+bind": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3679,6 +4196,12 @@
           "format": "int64"
         },
         "+catalog": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+catalog_name": {
           "type": [
             "string",
             "null"
@@ -3707,6 +4230,7 @@
           ]
         },
         "+copy_grants": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3727,12 +4251,6 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
-        "+description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+dist": {
           "type": [
             "string",
@@ -3740,12 +4258,14 @@
           ]
         },
         "+enable_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+enabled": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3789,6 +4309,7 @@
           }
         },
         "+hours_to_expiration": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -3797,19 +4318,19 @@
           "minimum": 0.0
         },
         "+include_full_name_in_path": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+indexes": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/PostgresIndex"
-          }
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/IndexesConfig"
+            }
+          ]
         },
         "+initialize": {
           "type": [
@@ -3833,6 +4354,7 @@
           }
         },
         "+labels_from_meta": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3879,6 +4401,7 @@
           ]
         },
         "+merge_with_schema_evolution": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3922,6 +4445,7 @@
           ]
         },
         "+partition_expiration_days": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -3955,6 +4479,7 @@
           ]
         },
         "+refresh_interval_minutes": {
+          "default": null,
           "type": [
             "number",
             "null"
@@ -3968,6 +4493,7 @@
           ]
         },
         "+require_partition_filter": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -3982,7 +4508,7 @@
         "+schedule": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ScheduleConfig"
+              "$ref": "#/definitions/Schedule"
             },
             {
               "type": "null"
@@ -3990,18 +4516,21 @@
           ]
         },
         "+secure": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_not_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4052,6 +4581,7 @@
           ]
         },
         "+table_type": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -4095,6 +4625,7 @@
           ]
         },
         "+transient": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4108,31 +4639,45 @@
     "ProjectUnitTestConfig": {
       "type": "object",
       "properties": {
+        "+adapter_properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+as_columnstore": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_liquid_cluster": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+auto_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+automatic_clustering": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+backup": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4151,6 +4696,7 @@
           ]
         },
         "+bind": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4164,6 +4710,12 @@
           "format": "int64"
         },
         "+catalog": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+catalog_name": {
           "type": [
             "string",
             "null"
@@ -4192,6 +4744,7 @@
           ]
         },
         "+copy_grants": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4212,12 +4765,6 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
-        "+description": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+dist": {
           "type": [
             "string",
@@ -4225,12 +4772,14 @@
           ]
         },
         "+enable_refresh": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+enabled": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4258,6 +4807,7 @@
           }
         },
         "+hours_to_expiration": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -4266,19 +4816,19 @@
           "minimum": 0.0
         },
         "+include_full_name_in_path": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+indexes": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "$ref": "#/definitions/PostgresIndex"
-          }
+          "default": null,
+          "allOf": [
+            {
+              "$ref": "#/definitions/IndexesConfig"
+            }
+          ]
         },
         "+initialize": {
           "type": [
@@ -4302,6 +4852,7 @@
           }
         },
         "+labels_from_meta": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4336,6 +4887,7 @@
           ]
         },
         "+merge_with_schema_evolution": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4379,6 +4931,7 @@
           ]
         },
         "+partition_expiration_days": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -4402,6 +4955,7 @@
           ]
         },
         "+refresh_interval_minutes": {
+          "default": null,
           "type": [
             "number",
             "null"
@@ -4415,6 +4969,7 @@
           ]
         },
         "+require_partition_filter": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4429,7 +4984,7 @@
         "+schedule": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ScheduleConfig"
+              "$ref": "#/definitions/Schedule"
             },
             {
               "type": "null"
@@ -4437,18 +4992,21 @@
           ]
         },
         "+secure": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
           ]
         },
         "+skip_not_matched_step": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4499,6 +5057,7 @@
           ]
         },
         "+table_type": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -4542,6 +5101,7 @@
           ]
         },
         "+transient": {
+          "default": null,
           "type": [
             "boolean",
             "null"
@@ -4572,18 +5132,15 @@
       "properties": {
         "end": {
           "type": "integer",
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "int64"
         },
         "interval": {
           "type": "integer",
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "int64"
         },
         "start": {
           "type": "integer",
-          "format": "uint64",
-          "minimum": 0.0
+          "format": "int64"
         }
       },
       "additionalProperties": false
@@ -4611,6 +5168,17 @@
         }
       },
       "additionalProperties": false
+    },
+    "Schedule": {
+      "description": "Schedule configuration that accepts both string and structured formats. This allows users to specify schedule as either: - A string: `schedule: \"USING CRON 0,15,30,45 * * * * UTC\"` - A structured config: `schedule: { cron: \"0 * * * *\", time_zone_value: \"UTC\" }`",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/ScheduleConfig"
+        }
+      ]
     },
     "ScheduleConfig": {
       "type": "object",
@@ -4752,6 +5320,31 @@
       "enum": [
         "any",
         "all"
+      ]
+    },
+    "Volatility": {
+      "description": "Function volatility enum - defines the function's eligibility for certain optimizations Matches the Python Volatility enum from dbt-core",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "stable"
+          ]
+        },
+        {
+          "description": "Deterministic - An deterministic function will always return the same output when given the same input.",
+          "type": "string",
+          "enum": [
+            "deterministic"
+          ]
+        },
+        {
+          "description": "NonDeterministic - A non-deterministic function may change the return value from evaluation to evaluation. Multiple invocations of a non-deterministic function may return different results when used in the same query.",
+          "type": "string",
+          "enum": [
+            "non-deterministic"
+          ]
+        }
       ]
     },
     "_Dispatch": {
