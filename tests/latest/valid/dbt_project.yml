@@ -8,7 +8,7 @@ name: 'test'
 # This setting configures which "profile" dbt uses for this project.
 profile: 'test'
 
-flags: 
+flags:
   require_explicit_package_overrides_for_builtin_materializations: True
 
 # These configurations specify where dbt should look for different types of files.
@@ -51,7 +51,7 @@ models:
     empty_subdirectory:
     another_one:
       +group: real
-      meta: 
+      meta:
         owner: Tony
     contracted_models:
       +contract:
@@ -66,11 +66,15 @@ models:
       +backup: '{{ target.name == "prod" }}'
       +target_lag: 20 minutes
       +snowflake_warehouse: my_warehouse
-    
+
   test_bq:
     +labels:
       key: val
       jinja_key: "{{ target.name }}"
+    +resource_tags:
+      my-project-id/environment: production
+      my-project-id/data_classification: sensitive
+      another-project/access_level: "{{ env_var('ACCESS_LEVEL', 'restricted') }}"
 
 unit_tests:
   meta:
@@ -79,6 +83,8 @@ unit_tests:
 seeds:
   test:
     +enabled: false
+    +resource_tags:
+      my-project/seed_env: development
     empty_subdirectory:
 
 tests:
@@ -98,7 +104,7 @@ tests:
 snapshots:
   test:
     +target_schema: schema
-    +target_database: database 
+    +target_database: database
     +invalidate_hard_deletes: true
     +grants:
       select: ['role']
@@ -106,7 +112,7 @@ snapshots:
     empty_subdirectory:
 
 sources:
-  test: 
+  test:
     +enabled: true
     empty_subdirectory:
 
