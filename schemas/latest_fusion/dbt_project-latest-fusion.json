@@ -314,6 +314,16 @@
         }
       ]
     },
+    "sync": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/SyncConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "target-path": {
       "anyOf": [
         {
@@ -385,20 +395,6 @@
       ]
     },
     "AnyValue": true,
-    "BigqueryClusterConfig": {
-      "description": "dbt-core allows either of the variants for the `cluster_by` to allow cluster on a single column or on multiple columns",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ]
-    },
     "BigqueryPartitionConfig": {
       "description": "reference: https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-bigquery/src/dbt/adapters/bigquery/relation_configs/_partition.py#L12-L13",
       "type": "object",
@@ -427,6 +423,20 @@
         }
       },
       "additionalProperties": false
+    },
+    "ClusterConfig": {
+      "description": "Configuration for cluster by columns.\n\ndbt-core allows either of the variants for the `cluster_by` to allow cluster on a single column or on multiple columns",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "DataLakeObjectCategory": {
       "description": "See `category` from https://developer.salesforce.com/docs/data/connectapi/references/spec?meta=postDataLakeObject",
@@ -884,7 +894,7 @@
       ]
     },
     "PartitionConfig": {
-      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `into_bigquery()` method",
+      "description": "Configuration for partition by columns.\n\ndbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `into_bigquery()` method",
       "anyOf": [
         {
           "type": "string"
@@ -1110,7 +1120,7 @@
         "+cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -1118,9 +1128,13 @@
           ]
         },
         "+clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+compression": {
@@ -1253,6 +1267,15 @@
             "null"
           ]
         },
+        "+job_execution_timeout_seconds": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
         "+kms_key_name": {
           "type": [
             "string",
@@ -1373,9 +1396,13 @@
           }
         },
         "+query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quoting": {
@@ -1485,6 +1512,12 @@
           ]
         },
         "+source_alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+sql_header": {
           "type": [
             "string",
             "null"
@@ -1785,12 +1818,6 @@
             "null"
           ]
         },
-        "+language": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+meta": {
           "type": [
             "object",
@@ -2057,7 +2084,7 @@
         "+cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -2071,9 +2098,13 @@
           ]
         },
         "+clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+column_types": {
@@ -2171,6 +2202,13 @@
             }
           ]
         },
+        "+enable_list_inference": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "+enable_refresh": {
           "default": null,
           "type": [
@@ -2189,6 +2227,17 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+external_access_integrations": {
+          "description": "Snowflake Python model config: external access integrations for network access",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+external_volume": {
@@ -2309,6 +2358,12 @@
             "null"
           ]
         },
+        "+intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+jar_file_uri": {
           "type": [
             "string",
@@ -2323,6 +2378,15 @@
           "additionalProperties": {
             "$ref": "#/definitions/AnyValue"
           }
+        },
+        "+job_execution_timeout_seconds": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "+kms_key_name": {
           "type": [
@@ -2452,10 +2516,13 @@
           ]
         },
         "+notebook_template_id": {
+          "default": null,
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "+on_configuration_change": {
           "anyOf": [
@@ -2578,9 +2645,13 @@
           ]
         },
         "+query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quoting": {
@@ -2644,6 +2715,16 @@
             "string",
             "null"
           ]
+        },
+        "+secrets": {
+          "description": "Snowflake Python model config: secrets to pass to stored procedure",
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "+secure": {
           "default": null,
@@ -2714,6 +2795,17 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+sync": {
+          "description": "Schema synchronization configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+table_format": {
@@ -2788,6 +2880,14 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+use_anonymous_sproc": {
+          "description": "Snowflake Python model config: use anonymous stored procedure (default: true)",
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "+user_folder_for_python": {
@@ -2955,7 +3055,7 @@
         "+cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -2963,9 +3063,13 @@
           ]
         },
         "+clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+column_types": {
@@ -3114,6 +3218,14 @@
             "null"
           ]
         },
+        "+job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
         "+kms_key_name": {
           "type": [
             "string",
@@ -3254,9 +3366,13 @@
           ]
         },
         "+query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quote_columns": {
@@ -3360,6 +3476,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+static_analysis": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisKind"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+table_tag": {
@@ -3566,7 +3692,7 @@
         "+cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -3574,9 +3700,13 @@
           ]
         },
         "+clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+compression": {
@@ -3739,6 +3869,15 @@
             "null"
           ]
         },
+        "+job_execution_timeout_seconds": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
         "+kms_key_name": {
           "type": [
             "string",
@@ -3892,9 +4031,13 @@
           ]
         },
         "+query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quote_columns": {
@@ -4030,6 +4173,17 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+sync": {
+          "description": "Schema synchronization configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+table_tag": {
@@ -4210,7 +4364,7 @@
         "+cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -4218,9 +4372,13 @@
           ]
         },
         "+clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+compression": {
@@ -4337,6 +4495,15 @@
             "string",
             "null"
           ]
+        },
+        "+job_execution_timeout_seconds": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "+kms_key_name": {
           "type": [
@@ -4463,9 +4630,13 @@
           }
         },
         "+query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quoting": {
@@ -4509,6 +4680,17 @@
           "anyOf": [
             {
               "$ref": "#/definitions/Schedule"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+schema_origin": {
+          "description": "Specifies where the schema metadata originates: 'remote' (default) or 'local'",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SchemaOrigin"
             },
             {
               "type": "null"
@@ -4568,6 +4750,17 @@
           "anyOf": [
             {
               "$ref": "#/definitions/StaticAnalysisKind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+sync": {
+          "description": "Schema synchronization configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
             },
             {
               "type": "null"
@@ -4724,7 +4917,7 @@
         "+cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -4732,9 +4925,13 @@
           ]
         },
         "+clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+compression": {
@@ -4835,6 +5032,15 @@
             "string",
             "null"
           ]
+        },
+        "+job_execution_timeout_seconds": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "+kms_key_name": {
           "type": [
@@ -4949,9 +5155,13 @@
           }
         },
         "+query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+refresh_interval_minutes": {
@@ -5122,6 +5332,10 @@
         }
       ]
     },
+    "QueryTag": {
+      "description": "A wrapper type for the `query_tag` config field that handles flexible deserialization.\n\nAccepts strings, dictionaries, or sequences for query_tag. Maps and sequences are JSON-serialized to strings.\n\n# Example\n\n```ignore // Input: \"my-tag\" // Stores as: \"my-tag\"\n\n// Input: {\"project\": \"foo\", \"env\": \"prod\"} // Stores as: \"{\\\"project\\\":\\\"foo\\\",\\\"env\\\":\\\"prod\\\"}\" ```",
+      "type": "string"
+    },
     "Range": {
       "type": "object",
       "required": [
@@ -5198,6 +5412,29 @@
       },
       "additionalProperties": false
     },
+    "SchemaOrigin": {
+      "description": "Indicates where schema metadata originates from.\n\n- `Remote` (default): Schema is fetched from the remote warehouse - `Local`: Schema is derived from YAML column definitions",
+      "oneOf": [
+        {
+          "description": "Schema metadata comes from the remote warehouse (default)",
+          "type": "string",
+          "enum": [
+            "remote"
+          ]
+        },
+        {
+          "description": "Schema metadata is derived from YAML column definitions",
+          "type": "string",
+          "enum": [
+            "local"
+          ]
+        }
+      ]
+    },
+    "SchemaRefreshInterval": {
+      "description": "Schema refresh interval: '30m', '2h', '1d', or 'never'",
+      "type": "string"
+    },
     "Severity": {
       "type": "string",
       "enum": [
@@ -5259,6 +5496,8 @@
       "enum": [
         "unsafe",
         "off",
+        "strict",
+        "baseline",
         "on"
       ]
     },
@@ -5293,6 +5532,24 @@
           "format": "int64"
         }
       ]
+    },
+    "SyncConfig": {
+      "description": "Configuration for schema synchronization behavior.\n\nThis can be specified at source level (default for all tables) or at individual table level (overrides source-level settings).",
+      "type": "object",
+      "properties": {
+        "schema_refresh_interval": {
+          "description": "How often to refresh the schema from the warehouse. Examples: \"30m\", \"2h\", \"1d\", \"never\"",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SchemaRefreshInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "TargetPath": {
       "type": "string",
