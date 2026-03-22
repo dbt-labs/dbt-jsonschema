@@ -278,25 +278,22 @@
         },
         "name": {
           "type": "string"
+        },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
     },
     "AnyValue": true,
-    "BigqueryClusterConfig": {
-      "description": "dbt-core allows either of the variants for the `cluster_by` to allow cluster on a single column or on multiple columns",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ]
-    },
     "BigqueryPartitionConfig": {
       "description": "reference: https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-bigquery/src/dbt/adapters/bigquery/relation_configs/_partition.py#L12-L13",
       "type": "object",
@@ -325,6 +322,20 @@
         }
       },
       "additionalProperties": false
+    },
+    "ClusterConfig": {
+      "description": "Configuration for cluster by columns.\n\ndbt-core allows either of the variants for the `cluster_by` to allow cluster on a single column or on multiple columns",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "ColumnConfig": {
       "type": "object",
@@ -360,12 +371,40 @@
       },
       "additionalProperties": false
     },
+    "ColumnMask": {
+      "type": "object",
+      "required": [
+        "function"
+      ],
+      "properties": {
+        "function": {
+          "type": "string"
+        },
+        "using_columns": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "ColumnProperties": {
       "type": "object",
       "required": [
         "name"
       ],
       "properties": {
+        "column_mask": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ColumnMask"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "config": {
           "anyOf": [
             {
@@ -644,15 +683,6 @@
         "conversion_rate"
       ]
     },
-    "CustomCheckLevel": {
-      "type": "string",
-      "enum": [
-        "error",
-        "warn",
-        "advisory",
-        "off"
-      ]
-    },
     "CustomTest": {
       "anyOf": [
         {
@@ -876,7 +906,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -884,9 +914,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "compression": {
@@ -937,6 +971,12 @@
         "dist": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -1027,11 +1067,25 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "jar_file_uri": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -1134,9 +1188,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "partition_by": {
           "anyOf": [
@@ -1174,9 +1230,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "quoting": {
@@ -1295,6 +1355,12 @@
             "null"
           ]
         },
+        "sql_header": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "static_analysis": {
           "anyOf": [
             {
@@ -1335,6 +1401,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -1424,6 +1491,17 @@
         },
         "name": {
           "type": "string"
+        },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1948,6 +2026,7 @@
           }
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -2268,7 +2347,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -2276,9 +2355,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "compression": {
@@ -2340,6 +2423,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "enable_refresh": {
@@ -2418,11 +2507,25 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "jar_file_uri": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -2442,12 +2545,6 @@
         "labels_from_meta": {
           "type": [
             "boolean",
-            "null"
-          ]
-        },
-        "language": {
-          "type": [
-            "string",
             "null"
           ]
         },
@@ -2514,9 +2611,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "on_configuration_change": {
           "type": [
@@ -2560,9 +2659,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "quoting": {
@@ -2751,6 +2854,7 @@
           ]
         },
         "type": {
+          "default": "scalar",
           "anyOf": [
             {
               "$ref": "#/definitions/FunctionKind"
@@ -2829,6 +2933,7 @@
           ]
         },
         "language": {
+          "default": "sql",
           "type": [
             "string",
             "null"
@@ -2847,6 +2952,17 @@
             }
           ]
         },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "tests": {
           "type": [
             "array",
@@ -2855,16 +2971,6 @@
           "items": {
             "$ref": "#/definitions/DataTests"
           }
-        },
-        "type": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/FunctionKind"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "additionalProperties": false
@@ -3099,6 +3205,31 @@
       },
       "additionalProperties": false
     },
+    "MacrosConfig": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DocsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "MacrosProperties": {
       "type": "object",
       "required": [
@@ -3113,6 +3244,16 @@
           "items": {
             "$ref": "#/definitions/MacrosArguments"
           }
+        },
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MacrosConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "description": {
           "type": [
@@ -3129,6 +3270,15 @@
               "type": "null"
             }
           ]
+        },
+        "meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "name": {
           "type": "string"
@@ -3162,6 +3312,7 @@
           }
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -3639,7 +3790,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -3653,9 +3804,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "column_types": {
@@ -3701,15 +3856,6 @@
             "boolean",
             "null"
           ]
-        },
-        "custom_checks": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "$ref": "#/definitions/CustomCheckLevel"
-          }
         },
         "database": {
           "type": [
@@ -3760,6 +3906,12 @@
             }
           ]
         },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "enable_refresh": {
           "type": [
             "boolean",
@@ -3777,6 +3929,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "external_access_integrations": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "external_volume": {
@@ -3895,6 +4057,12 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "jar_file_uri": {
           "type": [
             "string",
@@ -3909,6 +4077,14 @@
           "additionalProperties": {
             "$ref": "#/definitions/AnyValue"
           }
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -4038,9 +4214,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "on_configuration_change": {
           "anyOf": [
@@ -4162,9 +4340,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "quoting": {
@@ -4226,6 +4408,15 @@
             "string",
             "null"
           ]
+        },
+        "secrets": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "secure": {
           "type": [
@@ -4289,20 +4480,21 @@
             }
           ]
         },
-        "strictness": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/StrictnessMode"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "submission_method": {
           "type": [
             "string",
             "null"
+          ]
+        },
+        "sync": {
+          "description": "Schema synchronization configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "table_format": {
@@ -4324,6 +4516,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -4382,6 +4575,13 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "use_anonymous_sproc": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "user_folder_for_python": {
@@ -4621,6 +4821,17 @@
             }
           ]
         },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "tests": {
           "type": [
             "array",
@@ -4727,7 +4938,7 @@
       ]
     },
     "PartitionConfig": {
-      "description": "dbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `into_bigquery()` method",
+      "description": "Configuration for partition by columns.\n\ndbt-core allows either of the variants for the `partition_by` in the model config but the bigquery-adapter throws RunTime error the behaviors are tested from the latest dbt-core + bigquery-adapter as this is written we're conformant to this behavior via here and via the `into_bigquery()` method",
       "anyOf": [
         {
           "type": "string"
@@ -4813,6 +5024,10 @@
           "type": "null"
         }
       ]
+    },
+    "QueryTag": {
+      "description": "A wrapper type for the `query_tag` config field that handles flexible deserialization.\n\nAccepts strings, dictionaries, or sequences for query_tag. Maps and sequences are JSON-serialized to strings.\n\n# Example\n\n```ignore // Input: \"my-tag\" // Stores as: \"my-tag\"\n\n// Input: {\"project\": \"foo\", \"env\": \"prod\"} // Stores as: \"{\\\"project\\\":\\\"foo\\\",\\\"env\\\":\\\"prod\\\"}\" ```",
+      "type": "string"
     },
     "Range": {
       "type": "object",
@@ -5009,6 +5224,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -5049,6 +5265,29 @@
         }
       },
       "additionalProperties": false
+    },
+    "SchemaOrigin": {
+      "description": "Indicates where schema metadata originates from.\n\n- `Remote` (default): Schema is fetched from the remote warehouse - `Local`: Schema is derived from YAML column definitions",
+      "oneOf": [
+        {
+          "description": "Schema metadata comes from the remote warehouse (default)",
+          "type": "string",
+          "enum": [
+            "remote"
+          ]
+        },
+        {
+          "description": "Schema metadata is derived from YAML column definitions",
+          "type": "string",
+          "enum": [
+            "local"
+          ]
+        }
+      ]
+    },
+    "SchemaRefreshInterval": {
+      "description": "Schema refresh interval: '30m', '2h', '1d', or 'never'",
+      "type": "string"
     },
     "SeedConfig": {
       "description": "This configuration is a superset of all warehouse specific configurations that users can set",
@@ -5155,7 +5394,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -5163,9 +5402,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "column_types": {
@@ -5242,6 +5485,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "enable_refresh": {
@@ -5332,11 +5581,25 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "jar_file_uri": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -5432,9 +5695,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "partition_by": {
           "anyOf": [
@@ -5502,9 +5767,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "quote_columns": {
@@ -5620,6 +5889,16 @@
             "null"
           ]
         },
+        "static_analysis": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisKind"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "table_tag": {
           "type": [
             "string",
@@ -5633,6 +5912,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -5728,6 +6008,17 @@
         },
         "name": {
           "type": "string"
+        },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "tests": {
           "type": [
@@ -5878,7 +6169,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -5886,9 +6177,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "compression": {
@@ -5956,6 +6251,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "enable_refresh": {
@@ -6057,6 +6358,12 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "invalidate_hard_deletes": {
           "default": null,
           "type": [
@@ -6069,6 +6376,14 @@
             "string",
             "null"
           ]
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -6164,9 +6479,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "partition_by": {
           "anyOf": [
@@ -6234,9 +6551,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "quote_columns": {
@@ -6378,6 +6699,17 @@
             "null"
           ]
         },
+        "sync": {
+          "description": "Schema synchronization configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "table_tag": {
           "type": [
             "string",
@@ -6391,6 +6723,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -6557,6 +6890,17 @@
             "null"
           ]
         },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "tests": {
           "type": [
             "array",
@@ -6668,7 +7012,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -6676,9 +7020,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "compression": {
@@ -6723,6 +7071,12 @@
         "dist": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -6804,11 +7158,25 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "jar_file_uri": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -6906,9 +7274,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "partition_by": {
           "anyOf": [
@@ -6946,9 +7316,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "quoting": {
@@ -6999,6 +7373,17 @@
           "anyOf": [
             {
               "$ref": "#/definitions/Schedule"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema_origin": {
+          "description": "Specifies where the schema metadata originates: 'remote' (default) or 'local'",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SchemaOrigin"
             },
             {
               "type": "null"
@@ -7061,6 +7446,17 @@
             }
           ]
         },
+        "sync": {
+          "description": "Schema synchronization configuration",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "table_tag": {
           "type": [
             "string",
@@ -7074,6 +7470,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -7203,7 +7600,17 @@
       "enum": [
         "unsafe",
         "off",
+        "strict",
+        "baseline",
         "on"
+      ]
+    },
+    "StaticAnalysisOffReason": {
+      "type": "string",
+      "enum": [
+        "configuredoff",
+        "unabletofetchschema",
+        "nodownstream"
       ]
     },
     "StoreFailuresAs": {
@@ -7212,14 +7619,6 @@
         "ephemeral",
         "table",
         "view"
-      ]
-    },
-    "StrictnessMode": {
-      "type": "string",
-      "enum": [
-        "baseline",
-        "strict",
-        "custom"
       ]
     },
     "StringOrArrayOfStrings": {
@@ -7244,6 +7643,24 @@
           "$ref": "#/definitions/MetricPropertiesMetricInput"
         }
       ]
+    },
+    "SyncConfig": {
+      "description": "Configuration for schema synchronization behavior.\n\nThis can be specified at source level (default for all tables) or at individual table level (overrides source-level settings).",
+      "type": "object",
+      "properties": {
+        "schema_refresh_interval": {
+          "description": "How often to refresh the schema from the warehouse. Examples: \"30m\", \"2h\", \"1d\", \"never\"",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SchemaRefreshInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "Tables": {
       "type": "object",
@@ -7377,6 +7794,26 @@
           "additionalProperties": {
             "$ref": "#/definitions/AnyValue"
           }
+        },
+        "schema_origin": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SchemaOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sync": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SyncConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "tags": {
           "anyOf": [
@@ -7523,7 +7960,7 @@
         "cluster_by": {
           "anyOf": [
             {
-              "$ref": "#/definitions/BigqueryClusterConfig"
+              "$ref": "#/definitions/ClusterConfig"
             },
             {
               "type": "null"
@@ -7531,9 +7968,13 @@
           ]
         },
         "clustered_by": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "compression": {
@@ -7578,6 +8019,12 @@
         "dist": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "enable_list_inference": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -7642,11 +8089,25 @@
             "null"
           ]
         },
+        "intermediate_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "jar_file_uri": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "job_execution_timeout_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "kms_key_name": {
           "type": [
@@ -7732,9 +8193,11 @@
         },
         "notebook_template_id": {
           "type": [
-            "string",
+            "integer",
             "null"
-          ]
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "partition_by": {
           "anyOf": [
@@ -7772,9 +8235,13 @@
           ]
         },
         "query_tag": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "refresh_interval_minutes": {
@@ -8028,6 +8495,17 @@
             }
           ]
         },
+        "static_analysis_off_reason": {
+          "readOnly": true,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "versions": {
           "anyOf": [
             {
@@ -8062,6 +8540,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "deprecation_date": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "v": {
