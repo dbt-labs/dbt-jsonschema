@@ -51,12 +51,27 @@
                         "properties": {
                             "private": {
                                 "title": "Package identifier",
-                                "description": "Must be in format `org_name/package_name`. Refer to docs.getdbt.com for installation instructions",
+                                "description": "Must be in format `org_name/package_name` or `host/group/project` for GitLab. Refer to docs.getdbt.com for installation instructions",
                                 "type": "string",
                                 "examples": [
-                                    "dbt-labs/private_dbt_utils"
+                                    "dbt-labs/private_dbt_utils",
+                                    "getdbt.com/group/project"
                                 ],
-                                "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
+                                "pattern": "^[\\w\\-\\.]+(/[\\w\\-\\.]+)+$"
+                            },
+                            "provider": {
+                                "title": "Provider",
+                                "description": "Authentication provider configuration for the private package",
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "title": "Provider type",
+                                        "description": "The authentication provider for the private package",
+                                        "type": "string",
+                                        "enum": ["github", "gitlab", "azure_devops"]
+                                    }
+                                },
+                                "additionalProperties": true
                             },
                             "revision": {
                                 "title": "Revision",
