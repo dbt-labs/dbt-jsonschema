@@ -1489,6 +1489,12 @@
             "null"
           ]
         },
+        "+snowflake_initialization_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+snowflake_warehouse": {
           "type": [
             "string",
@@ -2757,6 +2763,12 @@
             "null"
           ]
         },
+        "+snowflake_initialization_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+snowflake_warehouse": {
           "type": [
             "string",
@@ -3460,6 +3472,12 @@
             "null"
           ]
         },
+        "+snowflake_initialization_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+snowflake_warehouse": {
           "type": [
             "string",
@@ -4141,6 +4159,12 @@
             }
           ]
         },
+        "+snowflake_initialization_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+snowflake_warehouse": {
           "type": [
             "string",
@@ -4728,6 +4752,12 @@
             "null"
           ]
         },
+        "+snowflake_initialization_warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+snowflake_warehouse": {
           "type": [
             "string",
@@ -5229,6 +5259,12 @@
           "default": null,
           "type": [
             "boolean",
+            "null"
+          ]
+        },
+        "+snowflake_initialization_warehouse": {
+          "type": [
+            "string",
             "null"
           ]
         },
