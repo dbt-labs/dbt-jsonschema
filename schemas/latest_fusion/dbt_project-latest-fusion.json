@@ -1246,6 +1246,12 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "+immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+include_full_name_in_path": {
           "default": null,
           "type": [
@@ -2318,6 +2324,12 @@
             "null"
           ]
         },
+        "+immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+imports": {
           "anyOf": [
             {
@@ -3220,6 +3232,12 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "+immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+include_full_name_in_path": {
           "type": [
             "boolean",
@@ -3868,6 +3886,12 @@
           ],
           "format": "uint64",
           "minimum": 0.0
+        },
+        "+immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "+include_full_name_in_path": {
           "default": null,
@@ -4752,12 +4776,6 @@
             "null"
           ]
         },
-        "+snowflake_initialization_warehouse": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+snowflake_warehouse": {
           "type": [
             "string",
@@ -5051,6 +5069,12 @@
           ],
           "format": "uint64",
           "minimum": 0.0
+        },
+        "+immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "+include_full_name_in_path": {
           "default": null,

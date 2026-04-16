@@ -1047,6 +1047,12 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "include_full_name_in_path": {
           "type": [
             "boolean",
@@ -2492,6 +2498,12 @@
           ],
           "format": "uint64",
           "minimum": 0.0
+        },
+        "immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "include_full_name_in_path": {
           "type": [
@@ -4019,6 +4031,12 @@
           "minimum": 0.0
         },
         "http_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "immutable_where": {
           "type": [
             "string",
             "null"
@@ -5589,6 +5607,12 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "include_full_name_in_path": {
           "type": [
             "boolean",
@@ -6371,6 +6395,12 @@
           ],
           "format": "uint64",
           "minimum": 0.0
+        },
+        "immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "include_full_name_in_path": {
           "type": [
@@ -7177,6 +7207,12 @@
           ],
           "format": "uint64",
           "minimum": 0.0
+        },
+        "immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "include_full_name_in_path": {
           "type": [
@@ -8114,6 +8150,12 @@
           ],
           "format": "uint64",
           "minimum": 0.0
+        },
+        "immutable_where": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "include_full_name_in_path": {
           "type": [
