@@ -1,130 +1,205 @@
 {
-    "title": "packages",
-    "type": "object",
-    "required": [
-        "packages"
-    ],
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "properties": {
-        "packages": {
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "type": "object",
-                        "required": [
-                            "package",
-                            "version"
-                        ],
-                        "properties": {
-                            "version": {
-                                "title": "Package version",
-                                "description": "A semantic version string or range, such as [\">=1.0.0\", \"<2.0.0\"]",
-                                "type": [
-                                    "array",
-                                    "number",
-                                    "string"
-                                ]
-                            },
-                            "install-prerelease": {
-                                "title": "Install Prerelease",
-                                "description": "Opt in to prerelease versions of a package",
-                                "type": "boolean"
-                            },
-                            "package": {
-                                "title": "Package identifier",
-                                "description": "Must be in format `org_name/package_name`. Refer to hub.getdbt.com for installation instructions",
-                                "type": "string",
-                                "examples": [
-                                    "dbt-labs/dbt_utils"
-                                ],
-                                "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
-                            }
-                        },
-                        "additionalProperties": false
-                    },
-                    {
-                        "type": "object",
-                        "required": [
-                            "private"
-                        ],
-                        "properties": {
-                            "private": {
-                                "title": "Package identifier",
-                                "description": "Must be in format `org_name/package_name`. Refer to docs.getdbt.com for installation instructions",
-                                "type": "string",
-                                "examples": [
-                                    "dbt-labs/private_dbt_utils"
-                                ],
-                                "pattern": "^[\\w\\-\\.]+/[\\w\\-\\.]+$"
-                            },
-                            "revision": {
-                                "title": "Revision",
-                                "description": "Pin your package to a specific release by specifying a release name",
-                                "type": "string"
-                            },
-                            "subdirectory": {
-                                "title": "Repo subdirectory",
-                                "description": "Subdirectory of the repo where the dbt package is located",
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": false
-                    },
-                    {
-                        "type": "object",
-                        "required": [
-                            "git"
-                        ],
-                        "properties": {
-                            "git": {
-                                "title": "Git URL",
-                                "type": "string"
-                            },
-                            "revision": {
-                                "title": "Revision",
-                                "description": "Pin your package to a specific release by specifying a release name",
-                                "type": "string"
-                            },
-                            "subdirectory": {
-                                "title": "Subdirectory",
-                                "description": "Only required if the package is nested in a subdirectory of the git project",
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": false
-                    },
-                    {
-                        "type": "object",
-                        "required": [
-                            "name",
-                            "tarball"
-                        ],
-                        "properties": {
-                            "name": {
-                                "description": "dbt will create a subdirectory in your `packages-install-path` with this name, and the tarball's source code will be installed here.",
-                                "type": "string"
-                            },
-                            "tarball": {
-                                "title": "Internally-hosted tarball URL",
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": false
-                    },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "local": {
-                                "type": "string"
-                            }
-                        },
-                        "additionalProperties": false
-                    }
-                ]
-            },
-            "minItems": 1
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DbtPackages",
+  "type": "object",
+  "properties": {
+    "packages": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/DbtPackageEntry"
+      }
     },
-    "additionalProperties": false
+    "projects": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/UpstreamProject"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "DbtPackageEntry": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/HubPackage"
+        },
+        {
+          "$ref": "#/definitions/GitPackage"
+        },
+        {
+          "$ref": "#/definitions/LocalPackage"
+        },
+        {
+          "$ref": "#/definitions/PrivatePackage"
+        },
+        {
+          "$ref": "#/definitions/TarballPackage"
+        }
+      ]
+    },
+    "GitPackage": {
+      "type": "object",
+      "required": [
+        "git"
+      ],
+      "properties": {
+        "git": {
+          "description": "Git clone URL of the package repository (e.g. `https://github.com/dbt-labs/dbt_utils.git`).",
+          "type": "string"
+        },
+        "revision": {
+          "description": "Revision to check out: a tag, branch, or commit SHA.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subdirectory": {
+          "description": "Subdirectory of the repo where the dbt package is located.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "warn-unpinned": {
+          "description": "Suppress the warning emitted when `revision` is unpinned (i.e. a branch name like `main`).",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HubPackage": {
+      "type": "object",
+      "required": [
+        "package"
+      ],
+      "properties": {
+        "install-prerelease": {
+          "description": "Allow installation of pre-release versions when resolving `version`.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "package": {
+          "description": "Package identifier on the dbt package hub, in `org/name` form (e.g. `dbt-labs/dbt_utils`).",
+          "type": "string"
+        },
+        "version": {
+          "description": "Version pin. Accepts a single version string, a list of constraints (e.g. `[\">=1.0.0\", \"<2.0.0\"]`), or a number.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PackageVersion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocalPackage": {
+      "type": "object",
+      "required": [
+        "local"
+      ],
+      "properties": {
+        "local": {
+          "description": "Filesystem path to the local dbt package, relative to the project root.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "PackageVersion": {
+      "anyOf": [
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "PrivatePackage": {
+      "type": "object",
+      "required": [
+        "private"
+      ],
+      "properties": {
+        "private": {
+          "description": "Private package identifier. Two-segment `org/repo` for GitHub or 2-part Azure DevOps (`azure_active_directory`); three-or-more-segment `org/group/repo` for GitLab subgroups or Azure DevOps `org/project/repo` (`ado` / `azure_devops`).",
+          "type": "string",
+          "pattern": "^[\\w\\-\\.]+(/[\\w\\-\\.]+){1,}$"
+        },
+        "provider": {
+          "description": "Git provider. One of `github` (default), `gitlab`, `ado`, `azure_devops`, or `azure_active_directory`. `ado` / `azure_devops` require an `org/project/repo` path; `azure_active_directory` is hosted-only and uses `org/repo`.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "revision": {
+          "description": "Revision to check out: a tag, branch, or commit SHA.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subdirectory": {
+          "description": "Subdirectory of the repo where the dbt package is located.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "warn-unpinned": {
+          "description": "Suppress the warning emitted when `revision` is unpinned (i.e. a branch name like `main`).",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "TarballPackage": {
+      "type": "object",
+      "required": [
+        "tarball"
+      ],
+      "properties": {
+        "tarball": {
+          "description": "HTTPS URL of a `.tar.gz` archive containing the dbt package.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UpstreamProject": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
 }
