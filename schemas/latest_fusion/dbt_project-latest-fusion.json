@@ -702,6 +702,7 @@
       "type": "object",
       "properties": {
         "count": {
+          "default": null,
           "type": [
             "integer",
             "null"
@@ -709,6 +710,7 @@
           "format": "int64"
         },
         "period": {
+          "default": null,
           "anyOf": [
             {
               "$ref": "#/definitions/FreshnessPeriod"
@@ -881,6 +883,13 @@
         "continue",
         "fail",
         "unknown"
+      ]
+    },
+    "OnError": {
+      "type": "string",
+      "enum": [
+        "skip_children",
+        "continue"
       ]
     },
     "OnSchemaChange": {
@@ -1456,6 +1465,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+scheduler": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+schema": {
@@ -2103,6 +2118,13 @@
             }
           ]
         },
+        "+change_tracking": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "+cluster_by": {
           "anyOf": [
             {
@@ -2174,6 +2196,15 @@
             "boolean",
             "null"
           ]
+        },
+        "+data_retention_time_in_days": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "+database": {
           "type": [
@@ -2323,6 +2354,15 @@
             "string",
             "null"
           ]
+        },
+        "+iceberg_version": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
         },
         "+immutable_where": {
           "type": [
@@ -2483,6 +2523,15 @@
             }
           ]
         },
+        "+max_data_extension_time_in_days": {
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
         "+max_staleness": {
           "type": [
             "string",
@@ -2556,6 +2605,16 @@
           "anyOf": [
             {
               "$ref": "#/definitions/OnConfigurationChange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+on_error": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/OnError"
             },
             {
               "type": "null"
@@ -2738,6 +2797,12 @@
             }
           ]
         },
+        "+scheduler": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+schema": {
           "type": [
             "string",
@@ -2825,6 +2890,18 @@
             }
           ]
         },
+        "+storage_serialization_policy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+storage_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+submission_method": {
           "type": [
             "string",
@@ -2865,6 +2942,12 @@
           "$ref": "#/definitions/StringOrArrayOfStrings"
         },
         "+target_alias": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+target_file_size": {
           "type": [
             "string",
             "null"
@@ -2918,6 +3001,13 @@
         },
         "+use_anonymous_sproc": {
           "description": "Snowflake Python model config: use anonymous stored procedure (default: true)",
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+use_uniform": {
           "default": null,
           "type": [
             "boolean",
@@ -3464,6 +3554,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+scheduler": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+schema": {
@@ -4146,6 +4242,12 @@
             }
           ]
         },
+        "+scheduler": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+schema": {
           "type": [
             "string",
@@ -4337,15 +4439,6 @@
     "ProjectSourceConfig": {
       "type": "object",
       "properties": {
-        "+adapter_properties": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "additionalProperties": {
-            "$ref": "#/definitions/AnyValue"
-          }
-        },
         "+as_columnstore": {
           "default": null,
           "type": [
@@ -4367,29 +4460,10 @@
             "null"
           ]
         },
-        "+automatic_clustering": {
-          "default": null,
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
         "+backup": {
           "default": null,
           "type": [
             "boolean",
-            "null"
-          ]
-        },
-        "+base_location_root": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "+base_location_subpath": {
-          "type": [
-            "string",
             "null"
           ]
         },
@@ -4445,13 +4519,6 @@
             "null"
           ]
         },
-        "+copy_grants": {
-          "default": null,
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
         "+databricks_compute": {
           "type": [
             "string",
@@ -4488,12 +4555,6 @@
           ]
         },
         "+event_time": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "+external_volume": {
           "type": [
             "string",
             "null"
@@ -4546,12 +4607,6 @@
             {
               "$ref": "#/definitions/IndexesConfig"
             }
-          ]
-        },
-        "+initialize": {
-          "type": [
-            "string",
-            "null"
           ]
         },
         "+job_execution_timeout_seconds": {
@@ -4687,16 +4742,6 @@
             "type": "string"
           }
         },
-        "+query_tag": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/QueryTag"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "+quoting": {
           "anyOf": [
             {
@@ -4715,22 +4760,10 @@
           ],
           "format": "double"
         },
-        "+refresh_mode": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+require_partition_filter": {
           "default": null,
           "type": [
             "boolean",
-            "null"
-          ]
-        },
-        "+row_access_policy": {
-          "type": [
-            "string",
             "null"
           ]
         },
@@ -4755,13 +4788,6 @@
             }
           ]
         },
-        "+secure": {
-          "default": null,
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
         "+skip_matched_step": {
           "default": null,
           "type": [
@@ -4773,12 +4799,6 @@
           "default": null,
           "type": [
             "boolean",
-            "null"
-          ]
-        },
-        "+snowflake_warehouse": {
-          "type": [
-            "string",
             "null"
           ]
         },
@@ -4825,12 +4845,6 @@
             }
           ]
         },
-        "+table_tag": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+table_type": {
           "default": null,
           "type": [
@@ -4854,12 +4868,6 @@
             "null"
           ]
         },
-        "+target_lag": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "+tblproperties": {
           "type": [
             "object",
@@ -4868,19 +4876,6 @@
           "additionalProperties": {
             "$ref": "#/definitions/AnyValue"
           }
-        },
-        "+tmp_relation_type": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "+transient": {
-          "default": null,
-          "type": [
-            "boolean",
-            "null"
-          ]
         }
       },
       "additionalProperties": {
@@ -5263,6 +5258,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+scheduler": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+secure": {
