@@ -1,0 +1,1771 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DbtProfiles",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "AnyValue": true,
+    "DbConfig": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "autocommit": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "autocreate": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "cluster_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "connect_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "datasharing": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "db_groups": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "iam_profile": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "idc_client_display_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "idc_region": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "idp_listen_port": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "idp_response_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "issuer_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "ra3_node": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "region": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "retries": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslmode": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "token_endpoint": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "redshift"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "account": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "auth_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "authenticator": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_session_keep_alive": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "connect_retries": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "connect_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "execution_timezone": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "oauth_client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "oauth_client_secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "private_key": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "private_key_passphrase": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "private_key_path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "protocol": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "query_tag": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/QueryTag"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "request_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "retry_all": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "retry_on_database_errors": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "reuse_connections": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "s3_stage_vpce_dns_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "token": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "snowflake"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "warehouse": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "keepalives_idle": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retries": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "search_path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslcert": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslkey": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslmode": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sslrootcert": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "postgres"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "api_endpoint": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "compute_region": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dataproc_batch": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/AnyValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "dataproc_cluster_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dataproc_region": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "execution_project": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "gcs_bucket": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "impersonate_service_account": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "job_creation_timeout_seconds": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "job_execution_timeout_seconds": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "job_retries": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "job_retry_deadline_seconds": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "keyfile": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "keyfile_json": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrMap"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "location": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "maximum_bytes_billed": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "priority": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "profile_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "quota_project": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "refresh_token": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "retries": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "scopes": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "submission_method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "target_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timeout_seconds": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "token": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "token_uri": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "bigquery"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "trino"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "datafusion"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "auth": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/SparkAuth"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "kerberos_service_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "method": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/SparkMethod"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "platform_hint": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint16",
+              "minimum": 0.0
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "server_side_parameters": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "spark"
+              ]
+            },
+            "use_ssl": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "auth_type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "compute": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "connect_max_idle": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int32"
+            },
+            "connect_retries": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int32"
+            },
+            "connect_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int32"
+            },
+            "connection_parameters": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "database": {
+              "default": "hive_metastore",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "http_path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "oauth_redirect_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "oauth_scopes": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "retry_all": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "session_properties": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "token": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "databricks"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "data_transform_run_timeout": {
+              "default": 180000,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "database": {
+              "default": "default",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "login_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "method": {
+              "description": "The method to use to authenticate with Salesforce. `jwt_bearer`, `username_password`",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "private_key": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "private_key_path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "salesforce"
+              ]
+            },
+            "username": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "DuckDB adapter configuration",
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "attach": {
+              "description": "External databases to attach.",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "$ref": "#/definitions/DuckDbAttachment"
+              }
+            },
+            "database": {
+              "description": "Database name (defaults to \"main\")",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "extensions": {
+              "description": "Extensions to load (e.g., [\"httpfs\", \"parquet\"] or [{name: \"duckpgq\", repo: \"community\"}])",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "$ref": "#/definitions/DuckDbExtension"
+              }
+            },
+            "external_root": {
+              "description": "Root path for external materializations (defaults to \".\")",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "is_ducklake": {
+              "description": "Whether the primary database is a DuckLake database. Set to true to enable DuckLake-specific query generation (e.g., DROP without CASCADE). Not needed when the path uses the `ducklake:` scheme, but required for MotherDuck managed DuckLake where the path uses `md:` instead.",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "path": {
+              "description": "Path to the DuckDB database file. Defaults to in-memory (:memory:)",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "description": "Schema name (defaults to \"main\")",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "secrets": {
+              "description": "Secrets to register with DuckDB's Secrets Manager.",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "$ref": "#/definitions/DuckDbSecret"
+              }
+            },
+            "settings": {
+              "description": "DuckDB configuration settings (e.g., {\"memory_limit\": \"4GB\"})",
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "threads": {
+              "description": "Number of threads",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "duckdb"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "certificate_fingerprint": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "certificate_validation": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "connection_timeout": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "encryption": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "exasol"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "PWD": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "UID": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "access_token": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "access_token_expires_on": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "api_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "authentication": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "driver": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "encrypt": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "login_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "query_timeout": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "retries": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema_authorization": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "snapshot_timestamp": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tenant_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "trace_flag": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "trust_cert": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "fabric"
+              ]
+            },
+            "warehouse_snapshot_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "warehouse_snapshot_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "windows_login": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "workspace_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "password": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "port": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "secure": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "threads": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "clickhouse"
+              ]
+            },
+            "user": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "DuckDbAttachment": {
+      "description": "A DuckDB database attachment. Corresponds to upstream dbt-duckdb `Attachment` dataclass. Generates an `ATTACH IF NOT EXISTS` statement.",
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "alias": {
+          "description": "Alias name for the attached database.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "is_ducklake": {
+          "description": "Whether this attachment is a DuckLake database. Set to true to enable DuckLake-specific query generation (e.g., DROP without CASCADE). Not needed when the path uses the `ducklake:` scheme, but required for MotherDuck managed DuckLake where the path uses `md:` instead.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "path": {
+          "description": "Path to the database file or connection string.",
+          "type": "string"
+        },
+        "read_only": {
+          "description": "Whether to attach read-only.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Database type (e.g., \"duckdb\", \"sqlite\", \"postgres\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DuckDbExtension": {
+      "description": "DuckDB extension definition — can be a simple string (name) or an object with name and optional repo",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/DuckDbExtensionObject"
+        }
+      ]
+    },
+    "DuckDbExtensionObject": {
+      "description": "DuckDB extension object with name and optional repo metadata",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "repo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DuckDbSecret": {
+      "description": "A DuckDB secret for the Secrets Manager. Corresponds to upstream dbt-duckdb `Secret` dataclass. Generates a `CREATE OR REPLACE SECRET` statement.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "description": "Optional name. Auto-generated as `__dbt_secret_{index}` if omitted.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "persistent": {
+          "description": "Whether this is a persistent secret (survives restarts).",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "provider": {
+          "description": "Optional provider (e.g., \"credential_chain\" for AWS default creds).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scope": {
+          "description": "Optional scope restriction (e.g., \"s3://my-bucket\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Secret type: s3, azure, gcs, r2, huggingface, etc.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "QueryTag": {
+      "description": "A wrapper type for the `query_tag` config field that handles flexible deserialization.\n\nAccepts strings, dictionaries, or sequences for query_tag. Maps and sequences are JSON-serialized to strings.\n\n# Example\n\n```ignore // Input: \"my-tag\" // Stores as: \"my-tag\"\n\n// Input: {\"project\": \"foo\", \"env\": \"prod\"} // Stores as: \"{\\\"project\\\":\\\"foo\\\",\\\"env\\\":\\\"prod\\\"}\" ```",
+      "type": "string"
+    },
+    "SparkAuth": {
+      "type": "string",
+      "enum": [
+        "NOSASL",
+        "CUSTOM",
+        "KERBEROS",
+        "LDAP",
+        "NONE",
+        "PLAIN",
+        "BASIC",
+        "TOKEN",
+        "AWS_SIGV4"
+      ]
+    },
+    "SparkMethod": {
+      "type": "string",
+      "enum": [
+        "thrift",
+        "http",
+        "livy",
+        "spark-connect"
+      ]
+    },
+    "StringOrInteger": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer",
+          "format": "int64"
+        }
+      ]
+    },
+    "StringOrMap": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        }
+      ]
+    }
+  }
+}

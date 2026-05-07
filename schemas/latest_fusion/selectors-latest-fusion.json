@@ -1,157 +1,284 @@
 {
-  "title": "selectors",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SelectorFile",
   "type": "object",
   "required": [
     "selectors"
   ],
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "selectors": {
+      "description": "List of named selectors that may later be referenced with `dbt run --selector <name>`.",
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "default": {
-            "oneOf": [
-              {
-                "type": "string",
-                "pattern": "\\{\\{.*\\}\\}"
-              },
-              {
-                "type": "boolean"
-              }
-            ],
-            "additionalProperties": false
-          },
-          "definition": {
-            "oneOf": [
-              {
-                "$ref": "#/$defs/definition_block"
-              },
-              {
-                "type": "string"
-              },
-              {
-                "$ref": "#/$defs/union_block"
-              }
-            ]
-          }
+        "$ref": "#/definitions/SelectorDefinition"
+      }
+    },
+    "version": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/FloatOrString"
         },
-        "additionalProperties": false
-      },
-      "minItems": 1
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false,
-  "$defs": {
-    "boolean_or_jinja_string": {
-      "oneOf": [
+  "definitions": {
+    "AtomExpr": {
+      "description": "The true leaves: either a method, a shorthand, or an exclude",
+      "anyOf": [
         {
-          "$ref": "#/$defs/jinja_string"
+          "$ref": "#/definitions/MethodAtomExpr"
         },
         {
-          "type": "boolean"
+          "$ref": "#/definitions/ExcludeAtomExpr"
+        },
+        {
+          "description": "Direct method name as key with value",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/SelectorValue"
+          }
         }
+      ]
+    },
+    "CompositeExpr": {
+      "description": "A boolean composition of other selectors",
+      "type": "object",
+      "required": [
+        "kind"
       ],
+      "properties": {
+        "kind": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/CompositeKind"
+          }
+        }
+      },
       "additionalProperties": false
     },
-    "definition_block": {
+    "CompositeKind": {
+      "description": "Is this an `OR` or an `AND`?",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "union"
+          ],
+          "properties": {
+            "union": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SelectorDefinitionValue"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "intersection"
+          ],
+          "properties": {
+            "intersection": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SelectorDefinitionValue"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ExcludeAtomExpr": {
       "type": "object",
+      "required": [
+        "exclude"
+      ],
+      "properties": {
+        "exclude": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SelectorDefinitionValue"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "FloatOrString": {
+      "anyOf": [
+        {
+          "type": "number",
+          "format": "float"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "IndirectSelection": {
+      "type": "string",
+      "enum": [
+        "eager",
+        "buildable",
+        "cautious",
+        "empty"
+      ]
+    },
+    "MethodAtomExpr": {
+      "type": "object",
+      "required": [
+        "method",
+        "value"
+      ],
       "properties": {
         "children": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "default": false,
+          "type": "boolean"
         },
         "children_depth": {
-          "type": "number"
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
         },
         "childrens_parents": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "default": false,
+          "type": "boolean"
+        },
+        "exclude": {
+          "default": null,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/SelectorDefinitionValue"
+          }
         },
         "indirect_selection": {
-          "type": "string",
-          "enum": [
-            "buildable",
-            "cautious",
-            "eager"
+          "default": null,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/IndirectSelection"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "method": {
-          "type": "string",
-          "enum": [
-            "config",
-            "exposure",
-            "file",
-            "fqn",
-            "group",
-            "metric",
-            "package",
-            "path",
-            "result",
-            "source",
-            "source_status",
-            "state",
-            "tag",
-            "test_name",
-            "test_type",
-            "wildcard"
-          ]
+          "type": "string"
         },
         "parents": {
-          "$ref": "#/$defs/boolean_or_jinja_string"
+          "default": false,
+          "type": "boolean"
         },
         "parents_depth": {
-          "type": "number"
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
         },
         "value": {
+          "$ref": "#/definitions/SelectorValue"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SelectorDefaultSpec": {
+      "description": "Parsed form of the selector `default:` field: either a literal bool or a still-unrendered Jinja template string.",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "SelectorDefinition": {
+      "type": "object",
+      "required": [
+        "definition",
+        "name"
+      ],
+      "properties": {
+        "default": {
+          "description": "Whether this selector should be used when the user does *not* pass `--select` / `--selector`.\n\nWrapped in [`Verbatim`] so the Jinja string form is captured unrendered at parse time; rendering happens lazily in `resolve_selectors_from_yaml`, and only when the default is actually needed (no CLI selection was provided). This matches dbt-core behavior: a buggy Jinja expression in a selector the user didn't ask to use must not fail the run.",
+          "default": null,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SelectorDefaultSpec"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "definition": {
+          "description": "Either a bare CLI string or a full YAML expression tree.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/SelectorDefinitionValue"
+            }
+          ]
+        },
+        "description": {
+          "description": "Human-readable description (optional).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "The key used in `--selector <name>`.",
           "type": "string"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
-    "exclude_block": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "$ref": "#/$defs/intersection_block"
-          },
-          {
-            "$ref": "#/$defs/definition_block"
-          }
-        ]
-      }
+    "SelectorDefinitionValue": {
+      "anyOf": [
+        {
+          "description": "CLI-style selector string (e.g. `\"snowplow tag:nightly\"`).",
+          "type": "string"
+        },
+        {
+          "description": "Full YAML tree (see `SelectorExpr` below).",
+          "allOf": [
+            {
+              "$ref": "#/definitions/SelectorExpr"
+            }
+          ]
+        }
+      ]
     },
-    "intersection_block": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/definition_block"
-      }
+    "SelectorExpr": {
+      "description": "Top‐level expression: either a boolean node or a single atom",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/CompositeExpr"
+        },
+        {
+          "$ref": "#/definitions/AtomExpr"
+        }
+      ]
     },
-    "jinja_string": {
-      "type": "string",
-      "pattern": "\\{\\{.*\\}\\}"
-    },
-    "union_block": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "$ref": "#/$defs/intersection_block"
-          },
-          {
-            "$ref": "#/$defs/definition_block"
-          },
-          {
-            "$ref": "#/$defs/exclude_block"
-          }
-        ]
-      }
+    "SelectorValue": {
+      "description": "A selector value that accepts any YAML scalar (string, boolean, number) and normalizes it to a string representation for downstream matching.",
+      "type": "string"
     }
   }
 }
