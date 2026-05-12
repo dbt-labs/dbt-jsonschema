@@ -438,6 +438,38 @@
         }
       ]
     },
+    "ComputeArg": {
+      "oneOf": [
+        {
+          "description": "Execute on the remote warehouse (Snowflake, BigQuery, etc.)",
+          "type": "string",
+          "enum": [
+            "remote"
+          ]
+        },
+        {
+          "description": "Run computations in-process",
+          "type": "string",
+          "enum": [
+            "inline"
+          ]
+        },
+        {
+          "description": "Run computations in a separate, ephemeral worker process",
+          "type": "string",
+          "enum": [
+            "sidecar"
+          ]
+        },
+        {
+          "description": "Run via the remote compute service (persistent workers/cluster).",
+          "type": "string",
+          "enum": [
+            "service"
+          ]
+        }
+      ]
+    },
     "DataLakeObjectCategory": {
       "description": "See `category` from https://developer.salesforce.com/docs/data/connectapi/references/spec?meta=postDataLakeObject",
       "type": "string",
@@ -1150,6 +1182,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+compute": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ComputeArg"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_grants": {
@@ -2164,6 +2206,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+compute": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ComputeArg"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+concurrent_batches": {
@@ -3857,6 +3909,16 @@
             "null"
           ]
         },
+        "+compute": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ComputeArg"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+copy_grants": {
           "default": null,
           "type": [
@@ -4567,6 +4629,7 @@
           ]
         },
         "+freshness": {
+          "default": null,
           "anyOf": [
             {
               "$ref": "#/definitions/FreshnessDefinition"
@@ -4991,6 +5054,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+compute": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ComputeArg"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_grants": {
