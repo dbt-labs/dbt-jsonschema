@@ -1535,25 +1535,123 @@
             "type"
           ],
           "properties": {
-            "database": {
+            "allow_automatic_deduplication": {
+              "default": false,
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "check_exchange": {
+              "default": true,
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "client_cert": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_cert_key": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cluster": {
+              "default": "",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cluster_mode": {
+              "default": false,
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "compress_block_size": {
+              "default": 1048576,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "compression": {
+              "default": "",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "connect_timeout": {
+              "default": 10,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "custom_settings": {
+              "default": {},
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "$ref": "#/definitions/AnyValue"
+              }
+            },
+            "database_engine": {
+              "default": "",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "driver": {
+              "description": "Auto-detected from `port` and `secure` when not set.",
               "type": [
                 "string",
                 "null"
               ]
             },
             "host": {
+              "default": "localhost",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "local_db_prefix": {
+              "default": "",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "local_suffix": {
+              "default": "_local",
               "type": [
                 "string",
                 "null"
               ]
             },
             "password": {
+              "default": "",
               "type": [
                 "string",
                 "null"
               ]
             },
             "port": {
+              "description": "Auto-detected from `driver` and `secure` when not set.",
               "anyOf": [
                 {
                   "$ref": "#/definitions/StringOrInteger"
@@ -1563,19 +1661,46 @@
                 }
               ]
             },
+            "retries": {
+              "default": 1,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
             "schema": {
+              "default": "default",
               "type": [
                 "string",
                 "null"
               ]
             },
             "secure": {
+              "default": false,
               "type": [
                 "boolean",
                 "null"
               ]
             },
+            "send_receive_timeout": {
+              "default": 300,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
+            "sync_request_timeout": {
+              "default": 5,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "int64"
+            },
             "threads": {
+              "default": 1,
               "anyOf": [
                 {
                   "$ref": "#/definitions/StringOrInteger"
@@ -1591,9 +1716,24 @@
                 "clickhouse"
               ]
             },
+            "use_lw_deletes": {
+              "default": false,
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
             "user": {
+              "default": "default",
               "type": [
                 "string",
+                "null"
+              ]
+            },
+            "verify": {
+              "default": true,
+              "type": [
+                "boolean",
                 "null"
               ]
             }
