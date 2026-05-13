@@ -139,7 +139,11 @@
       "properties": {
         "children": {
           "default": false,
-          "type": "boolean"
+          "allOf": [
+            {
+              "$ref": "#/definitions/SelectorDefaultSpec"
+            }
+          ]
         },
         "children_depth": {
           "default": null,
@@ -152,7 +156,11 @@
         },
         "childrens_parents": {
           "default": false,
-          "type": "boolean"
+          "allOf": [
+            {
+              "$ref": "#/definitions/SelectorDefaultSpec"
+            }
+          ]
         },
         "exclude": {
           "default": null,
@@ -180,7 +188,11 @@
         },
         "parents": {
           "default": false,
-          "type": "boolean"
+          "allOf": [
+            {
+              "$ref": "#/definitions/SelectorDefaultSpec"
+            }
+          ]
         },
         "parents_depth": {
           "default": null,
@@ -198,7 +210,7 @@
       "additionalProperties": false
     },
     "SelectorDefaultSpec": {
-      "description": "Parsed form of the selector `default:` field: either a literal bool or a still-unrendered Jinja template string.",
+      "description": "Parsed form of the selector `default:` field: either a literal bool or a still-unrendered Jinja template string.\n\nAlso reused for graph-walk flag fields (`children`, `parents`, `childrens_parents`) so the JSON schema correctly shows that those fields accept Jinja expressions.  At runtime those fields are always rendered before deserialization (`into_typed_with_jinja`), so `Template` is only ever populated for `default`.",
       "anyOf": [
         {
           "type": "boolean"
@@ -262,6 +274,13 @@
               "$ref": "#/definitions/SelectorExpr"
             }
           ]
+        },
+        {
+          "description": "Bare YAML sequence — treated as an implicit union of the listed items.\n\ndbt-core allows writing: ```yaml definition: - method: tag value: nightly - method: config value: \"materialized:table\" ``` which is semantically equivalent to `union: [...]`.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SelectorDefinitionValue"
+          }
         }
       ]
     },
