@@ -45,55 +45,41 @@
       ]
     },
     "CompositeExpr": {
-      "description": "A boolean composition of other selectors",
+      "description": "A boolean composition of other selectors.\n\nSupports three forms from dbt-core's YAML spec: - `union: [...]` - `intersection: [...]` - `union: [...]\\nexclude: [...]` — top-level exclude applied after the union\n\nExactly one of `union` / `intersection` must be present; `exclude` is always optional. The generated JSON schema allows all three keys (no `oneOf` constraint) to avoid false-positive IDE squiggles on the common `union + exclude` pattern.",
       "type": "object",
-      "required": [
-        "kind"
-      ],
       "properties": {
-        "kind": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/CompositeKind"
+        "exclude": {
+          "description": "Models excluded from the composite result.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/SelectorDefinitionValue"
+          }
+        },
+        "intersection": {
+          "description": "AND of all listed selectors.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/SelectorDefinitionValue"
+          }
+        },
+        "union": {
+          "description": "OR of all listed selectors.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/SelectorDefinitionValue"
           }
         }
       },
       "additionalProperties": false
-    },
-    "CompositeKind": {
-      "description": "Is this an `OR` or an `AND`?",
-      "oneOf": [
-        {
-          "type": "object",
-          "required": [
-            "union"
-          ],
-          "properties": {
-            "union": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SelectorDefinitionValue"
-              }
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "intersection"
-          ],
-          "properties": {
-            "intersection": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/SelectorDefinitionValue"
-              }
-            }
-          },
-          "additionalProperties": false
-        }
-      ]
     },
     "ExcludeAtomExpr": {
       "type": "object",
@@ -184,6 +170,7 @@
           ]
         },
         "method": {
+          "description": "Selector method name. Standard values: `access`, `config`, `exposure`, `file`, `fqn`, `group`, `metric`, `package`, `path`, `resource_type`, `result`, `saved_query`, `semantic_model`, `source`, `source_status`, `state`, `tag`, `test_name`, `test_type`, `unit_test`, `version`. YAML-only: `selector` (references another named selector). Dot-notation adds a sub-argument: `config.materialized`, `config.schema`, etc.",
           "type": "string"
         },
         "parents": {
