@@ -1,0 +1,839 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DbtCatalogsFile",
+  "description": "Top-level `catalogs.yml` schema.",
+  "type": "object",
+  "properties": {
+    "catalogs": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CatalogEntry"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AccessDelegationMode": {
+      "type": "string",
+      "enum": [
+        "VENDED_CREDENTIALS",
+        "NONE"
+      ]
+    },
+    "AuthorizationType": {
+      "type": "string",
+      "enum": [
+        "OAUTH2",
+        "SIGV4",
+        "NONE"
+      ]
+    },
+    "BigLakeBigQueryConfig": {
+      "description": "BigQuery config for `biglake_metastore` catalog type. Both `external_volume` and `file_format` are required.",
+      "type": "object",
+      "required": [
+        "external_volume",
+        "file_format"
+      ],
+      "properties": {
+        "base_location_root": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "connection_id": {
+          "description": "BigQuery Cloud Resource connection ID for accessing external data.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "external_volume": {
+          "description": "GCS bucket URI, must start with `gs://` (e.g. `gs://my-iceberg-bucket`).",
+          "type": "string"
+        },
+        "file_format": {
+          "description": "File format for BigLake Iceberg tables. Only `parquet` is currently supported.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/BigQueryFileFormat"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BigQueryFileFormat": {
+      "description": "Only `parquet` is currently supported for BigLake.",
+      "type": "string",
+      "enum": [
+        "parquet"
+      ]
+    },
+    "BiglakeMetastoreConfig": {
+      "type": "object",
+      "required": [
+        "bigquery"
+      ],
+      "properties": {
+        "bigquery": {
+          "$ref": "#/definitions/BigLakeBigQueryConfig"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CatalogEntry": {
+      "description": "A single catalog entry. Set `type` to select the catalog implementation; the available `config` fields narrow to those valid for the chosen type.",
+      "oneOf": [
+        {
+          "description": "Snowflake-managed Iceberg catalog (Horizon). Snowflake platform only.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/HorizonConfig"
+            },
+            "name": {
+              "description": "Unique catalog name within this project.",
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/IcebergTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "horizon"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "AWS Glue catalog. Supports `config.snowflake` and/or `config.duckdb`.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/GlueConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/IcebergTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "glue"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Iceberg REST catalog. Supports `config.snowflake` and/or `config.duckdb`.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/IcebergRestConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/IcebergTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "iceberg_rest"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Databricks Unity catalog. Supports `config.snowflake` and/or `config.databricks`.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/UnityConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/IcebergTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "unity"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Databricks Hive Metastore catalog. Databricks platform only.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/HiveMetastoreConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/DefaultTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "hive_metastore"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "BigLake Metastore catalog. BigQuery platform only.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/BiglakeMetastoreConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/IcebergTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "biglake_metastore"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "DuckLake metadata store catalog. DuckDB platform only. Note: variant renamed from `duck_lake` to `ducklake` to match the YAML key.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/DuckLakeConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/DefaultTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "ducklake"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Local filesystem catalog. DuckDB platform only.",
+          "type": "object",
+          "required": [
+            "config",
+            "name",
+            "table_format",
+            "type"
+          ],
+          "properties": {
+            "config": {
+              "$ref": "#/definitions/LocalFilesystemConfig"
+            },
+            "name": {
+              "type": "string"
+            },
+            "table_format": {
+              "$ref": "#/definitions/DefaultTableFormat"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "local_filesystem"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "DefaultTableFormat": {
+      "description": "Table format; only `default` is valid for this catalog type.",
+      "type": "string",
+      "enum": [
+        "default"
+      ]
+    },
+    "DuckDBIcebergConfig": {
+      "description": "DuckDB config for `glue` and `iceberg_rest` catalog types (Iceberg REST protocol).\n\nExactly one of `endpoint` or `endpoint_type` is required (enforced at runtime, not expressible in JSON Schema without `if`/`then`).",
+      "type": "object",
+      "properties": {
+        "access_delegation_mode": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AccessDelegationMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attach_as": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "authorization_type": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AuthorizationType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default_region": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "default_schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "encode_entire_prefix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "endpoint": {
+          "description": "Full REST catalog URL, e.g. `https://my-rest.example.com`. Mutually exclusive with `endpoint_type`.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "endpoint_type": {
+          "description": "Managed endpoint type (`GLUE` or `S3_TABLES`). Mutually exclusive with `endpoint`.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/EndpointType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_table_staleness": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "purge_requested": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "secret": {
+          "description": "Name of a DuckDB secret from `profiles.yml` to use for authentication.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "support_nested_namespaces": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "support_stage_create": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "warehouse": {
+          "description": "S3 warehouse URI. Required when `endpoint_type` is `S3_TABLES`.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DuckLakeConfig": {
+      "type": "object",
+      "required": [
+        "duckdb"
+      ],
+      "properties": {
+        "duckdb": {
+          "$ref": "#/definitions/DuckLakeDuckDBConfig"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DuckLakeDuckDBConfig": {
+      "description": "DuckDB config for the `ducklake` catalog type (DuckLake metadata store). `metadata_path` is required; all other fields are optional.",
+      "type": "object",
+      "required": [
+        "metadata_path"
+      ],
+      "properties": {
+        "attach_as": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "create_if_not_exists": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "data_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "encrypted": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "metadata_path": {
+          "description": "Path to the DuckLake metadata database file (e.g. `my_lake.db`).",
+          "type": "string"
+        },
+        "metadata_schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "read_only": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "EndpointType": {
+      "type": "string",
+      "enum": [
+        "GLUE",
+        "S3_TABLES"
+      ]
+    },
+    "GlueConfig": {
+      "description": "At least one of `snowflake` or `duckdb` must be present (enforced at runtime).",
+      "type": "object",
+      "properties": {
+        "duckdb": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DuckDBIcebergConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snowflake": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LinkedCatalogSnowflakeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HiveFileFormat": {
+      "type": "string",
+      "enum": [
+        "delta",
+        "parquet",
+        "hudi"
+      ]
+    },
+    "HiveMetastoreConfig": {
+      "type": "object",
+      "required": [
+        "databricks"
+      ],
+      "properties": {
+        "databricks": {
+          "$ref": "#/definitions/HiveMetastoreDatabricksConfig"
+        }
+      },
+      "additionalProperties": false
+    },
+    "HiveMetastoreDatabricksConfig": {
+      "description": "Databricks config for `hive_metastore` catalog type.",
+      "type": "object",
+      "required": [
+        "file_format"
+      ],
+      "properties": {
+        "file_format": {
+          "$ref": "#/definitions/HiveFileFormat"
+        }
+      },
+      "additionalProperties": false
+    },
+    "HorizonConfig": {
+      "type": "object",
+      "required": [
+        "snowflake"
+      ],
+      "properties": {
+        "snowflake": {
+          "$ref": "#/definitions/HorizonSnowflakeConfig"
+        }
+      },
+      "additionalProperties": false
+    },
+    "HorizonSnowflakeConfig": {
+      "description": "Snowflake config for `type: horizon`. `external_volume` is required.\n\nNote: `base_location_subpath` is model-config only and must NOT appear here; the runtime validator rejects it with an explicit error.",
+      "type": "object",
+      "required": [
+        "external_volume"
+      ],
+      "properties": {
+        "base_location_root": {
+          "description": "Catalog-wide storage path prefix for all Iceberg tables. Per-model sub-paths are set via `base_location_subpath` in model config.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "change_tracking": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "data_retention_time_in_days": {
+          "description": "Days to retain table data after deletion. Range: 0–90.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "external_volume": {
+          "description": "Non-empty external volume name registered in Snowflake (e.g. `my_external_volume`).",
+          "type": "string"
+        },
+        "iceberg_version": {
+          "description": "Iceberg spec version, e.g. `3` for Iceberg V3.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "max_data_extension_time_in_days": {
+          "description": "Days beyond the retention period to extend data availability. Range: 0–90.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "storage_serialization_policy": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StorageSerializationPolicy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "IcebergRestConfig": {
+      "description": "At least one of `snowflake` or `duckdb` must be present (enforced at runtime).",
+      "type": "object",
+      "properties": {
+        "duckdb": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DuckDBIcebergConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snowflake": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LinkedCatalogSnowflakeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "IcebergTableFormat": {
+      "description": "Table format; only `iceberg` is valid for this catalog type.",
+      "type": "string",
+      "enum": [
+        "iceberg"
+      ]
+    },
+    "LinkedCatalogSnowflakeConfig": {
+      "description": "Snowflake config shared by `glue`, `iceberg_rest`, and `unity` catalog types. `catalog_database` is required when this block is present.",
+      "type": "object",
+      "required": [
+        "catalog_database"
+      ],
+      "properties": {
+        "auto_refresh": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "catalog_database": {
+          "description": "Name of the Snowflake database linked to the external catalog.",
+          "type": "string"
+        },
+        "iceberg_version": {
+          "description": "Iceberg spec version, e.g. `3` for Iceberg V3.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "max_data_extension_time_in_days": {
+          "description": "Days beyond the retention period to extend data availability. Range: 0–90.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "target_file_size": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/TargetFileSize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocalFileFormat": {
+      "type": "string",
+      "enum": [
+        "parquet",
+        "csv",
+        "json"
+      ]
+    },
+    "LocalFilesystemConfig": {
+      "type": "object",
+      "required": [
+        "duckdb"
+      ],
+      "properties": {
+        "duckdb": {
+          "$ref": "#/definitions/LocalFilesystemDuckDBConfig"
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocalFilesystemDuckDBConfig": {
+      "description": "DuckDB config for the `local_filesystem` catalog type.\n\n`root_path` is the required local directory path. This is unrelated to `base_location_root` (a Snowflake/BigQuery Iceberg storage prefix concept).",
+      "type": "object",
+      "required": [
+        "root_path"
+      ],
+      "properties": {
+        "file_format": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LocalFileFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "root_path": {
+          "description": "Local filesystem directory path where table files are stored (e.g. `data/raw`). Unrelated to `base_location_root`, which is a Snowflake/BigQuery Iceberg concept.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StorageSerializationPolicy": {
+      "type": "string",
+      "enum": [
+        "COMPATIBLE",
+        "OPTIMIZED"
+      ]
+    },
+    "TargetFileSize": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "16MB",
+        "32MB",
+        "64MB",
+        "128MB"
+      ]
+    },
+    "UnityConfig": {
+      "description": "At least one of `snowflake` or `databricks` must be present (enforced at runtime).",
+      "type": "object",
+      "properties": {
+        "databricks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/UnityDatabricksConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snowflake": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LinkedCatalogSnowflakeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "UnityDatabricksConfig": {
+      "description": "Databricks config for `unity` catalog type.",
+      "type": "object",
+      "required": [
+        "file_format"
+      ],
+      "properties": {
+        "file_format": {
+          "$ref": "#/definitions/UnityFileFormat"
+        },
+        "location_root": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "use_uniform": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "UnityFileFormat": {
+      "type": "string",
+      "enum": [
+        "delta",
+        "parquet"
+      ]
+    }
+  }
+}
