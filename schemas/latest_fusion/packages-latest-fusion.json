@@ -146,7 +146,7 @@
           "pattern": "^[\\w\\-\\.]+(/[\\w\\-\\.]+){1,}$"
         },
         "provider": {
-          "description": "Git provider. `ado` and `azure_devops` are aliases and accept both `org/repo` (project from URL template) and `org/project/repo` paths. `azure_active_directory` is hosted-only and uses `org/repo`. Defaults to `github` when omitted.",
+          "description": "Git provider. Defaults to `github` when omitted. Use `ado` for Azure DevOps — `azure_devops` and `azure_active_directory` are legacy aliases.",
           "anyOf": [
             {
               "$ref": "#/definitions/PrivatePackageProvider"
@@ -181,7 +181,7 @@
       "additionalProperties": false
     },
     "PrivatePackageProvider": {
-      "description": "Git provider for a private package.\n\n`ado` and `azure_devops` are aliases and behave identically. `azure_active_directory` is a legacy hosted-only provider that uses 2-part `org/repo` paths.",
+      "description": "Git provider for a private package.\n\nUse `ado` (canonical). `azure_devops` and `azure_active_directory` are legacy aliases accepted for backward compatibility — prefer `ado` for new configurations.",
       "type": "string",
       "enum": [
         "github",
