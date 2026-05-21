@@ -141,15 +141,19 @@
       ],
       "properties": {
         "private": {
-          "description": "Private package identifier. Two-segment `org/repo` for GitHub or 2-part Azure DevOps (`azure_active_directory`); three-or-more-segment `org/group/repo` for GitLab subgroups or Azure DevOps `org/project/repo` (`ado` / `azure_devops`).",
+          "description": "Private package identifier. Two-segment `org/repo` for GitHub, GitLab, or Azure DevOps; three-or-more-segment `org/group/repo` for GitLab subgroups or Azure DevOps `org/project/repo` (`ado` / `azure_devops`) when you want to pin the project explicitly.",
           "type": "string",
           "pattern": "^[\\w\\-\\.]+(/[\\w\\-\\.]+){1,}$"
         },
         "provider": {
-          "description": "Git provider. One of `github` (default), `gitlab`, `ado`, `azure_devops`, or `azure_active_directory`. `ado` / `azure_devops` require an `org/project/repo` path; `azure_active_directory` is hosted-only and uses `org/repo`.",
-          "type": [
-            "string",
-            "null"
+          "description": "Git provider. `ado` and `azure_devops` are aliases and accept both `org/repo` (project from URL template) and `org/project/repo` paths. `azure_active_directory` is hosted-only and uses `org/repo`. Defaults to `github` when omitted.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PrivatePackageProvider"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "revision": {
@@ -175,6 +179,17 @@
         }
       },
       "additionalProperties": false
+    },
+    "PrivatePackageProvider": {
+      "description": "Git provider for a private package.\n\n`ado` and `azure_devops` are aliases and behave identically. `azure_active_directory` is a legacy hosted-only provider that uses 2-part `org/repo` paths.",
+      "type": "string",
+      "enum": [
+        "github",
+        "gitlab",
+        "ado",
+        "azure_devops",
+        "azure_active_directory"
+      ]
     },
     "TarballPackage": {
       "type": "object",
