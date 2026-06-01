@@ -18,6 +18,16 @@
         "$ref": "#/definitions/DbtCloudProject"
       }
     },
+    "state": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/DbtCloudState"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "version": {
       "type": "string"
     }
@@ -79,6 +89,23 @@
           "type": "string"
         },
         "token-value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DbtCloudState": {
+      "description": "Represents the OAuth client credentials for dbt State authentication. Sourced from the optional `state:` section in `~/.dbt/dbt_cloud.yml`.",
+      "type": "object",
+      "required": [
+        "client-id",
+        "client-secret"
+      ],
+      "properties": {
+        "client-id": {
+          "type": "string"
+        },
+        "client-secret": {
           "type": "string"
         }
       },

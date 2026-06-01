@@ -13,6 +13,12 @@
             "type"
           ],
           "properties": {
+            "access_key_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "autocommit": {
               "type": [
                 "boolean",
@@ -58,6 +64,12 @@
               "items": {
                 "type": "string"
               }
+            },
+            "drop_without_cascade": {
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             "host": {
               "type": [
@@ -156,6 +168,12 @@
                 "null"
               ]
             },
+            "secret_access_key": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "sslmode": {
               "type": [
                 "string",
@@ -246,6 +264,12 @@
                 "null"
               ]
             },
+            "driver_log_level": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "execution_timezone": {
               "type": [
                 "string",
@@ -253,6 +277,12 @@
               ]
             },
             "host": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "metadata_warehouse": {
               "type": [
                 "string",
                 "null"
@@ -283,9 +313,13 @@
               ]
             },
             "port": {
-              "type": [
-                "string",
-                "null"
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
               ]
             },
             "private_key": {
@@ -1607,6 +1641,12 @@
               "additionalProperties": {
                 "$ref": "#/definitions/AnyValue"
               }
+            },
+            "database": {
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "database_engine": {
               "default": "",
