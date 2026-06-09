@@ -1,0 +1,707 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "Top-level `catalogs.yml` (v2) schema.",
+  "properties": {
+    "catalogs": {
+      "items": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "description": "Snowflake-managed Iceberg catalog (Horizon). Snowflake platform only.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "properties": {
+                  "snowflake": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "base_location_root": {
+                        "description": "Catalog-wide storage path prefix for all Iceberg tables.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "change_tracking": {
+                        "type": "boolean"
+                      },
+                      "data_retention_time_in_days": {
+                        "description": "Days to retain table data after deletion. Range 0–90.",
+                        "maximum": 90,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "external_volume": {
+                        "description": "Non-empty external volume name registered in Snowflake.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "iceberg_version": {
+                        "description": "Iceberg spec version, e.g. 3 for Iceberg V3.",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "max_data_extension_time_in_days": {
+                        "description": "Days beyond the retention period to extend data availability. Range 0–90.",
+                        "maximum": 90,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "storage_serialization_policy": {
+                        "enum": [
+                          "COMPATIBLE",
+                          "OPTIMIZED"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "external_volume"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "snowflake"
+                ],
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "iceberg"
+              },
+              "type": {
+                "const": "horizon"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "AWS Glue catalog. Supports config.snowflake and/or config.duckdb.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "minProperties": 1,
+                "properties": {
+                  "duckdb": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "access_delegation_mode": {
+                        "enum": [
+                          "VENDED_CREDENTIALS",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "attach_as": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "authorization_type": {
+                        "enum": [
+                          "OAUTH2",
+                          "SIGV4",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "default_region": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "encode_entire_prefix": {
+                        "type": "boolean"
+                      },
+                      "endpoint": {
+                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "endpoint_type": {
+                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
+                        "enum": [
+                          "GLUE",
+                          "S3_TABLES"
+                        ],
+                        "type": "string"
+                      },
+                      "max_table_staleness": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "purge_requested": {
+                        "type": "boolean"
+                      },
+                      "secret": {
+                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "support_nested_namespaces": {
+                        "type": "boolean"
+                      },
+                      "support_stage_create": {
+                        "type": "boolean"
+                      },
+                      "warehouse": {
+                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "snowflake": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "auto_refresh": {
+                        "type": "boolean"
+                      },
+                      "catalog_database": {
+                        "description": "Name of the Snowflake database linked to the external catalog.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "iceberg_version": {
+                        "description": "Iceberg spec version, e.g. 3 for Iceberg V3.",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "max_data_extension_time_in_days": {
+                        "description": "Days beyond the retention period to extend data availability. Range 0–90.",
+                        "maximum": 90,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "target_file_size": {
+                        "enum": [
+                          "AUTO",
+                          "16MB",
+                          "32MB",
+                          "64MB",
+                          "128MB"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "catalog_database"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "iceberg"
+              },
+              "type": {
+                "const": "glue"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "Iceberg REST catalog. Supports config.snowflake and/or config.duckdb.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "minProperties": 1,
+                "properties": {
+                  "duckdb": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "access_delegation_mode": {
+                        "enum": [
+                          "VENDED_CREDENTIALS",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "attach_as": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "authorization_type": {
+                        "enum": [
+                          "OAUTH2",
+                          "SIGV4",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "default_region": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "encode_entire_prefix": {
+                        "type": "boolean"
+                      },
+                      "endpoint": {
+                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "endpoint_type": {
+                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
+                        "enum": [
+                          "GLUE",
+                          "S3_TABLES"
+                        ],
+                        "type": "string"
+                      },
+                      "max_table_staleness": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "purge_requested": {
+                        "type": "boolean"
+                      },
+                      "secret": {
+                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "support_nested_namespaces": {
+                        "type": "boolean"
+                      },
+                      "support_stage_create": {
+                        "type": "boolean"
+                      },
+                      "warehouse": {
+                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "snowflake": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "auto_refresh": {
+                        "type": "boolean"
+                      },
+                      "catalog_database": {
+                        "description": "Name of the Snowflake database linked to the external catalog.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "iceberg_version": {
+                        "description": "Iceberg spec version, e.g. 3 for Iceberg V3.",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "max_data_extension_time_in_days": {
+                        "description": "Days beyond the retention period to extend data availability. Range 0–90.",
+                        "maximum": 90,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "target_file_size": {
+                        "enum": [
+                          "AUTO",
+                          "16MB",
+                          "32MB",
+                          "64MB",
+                          "128MB"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "catalog_database"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "iceberg"
+              },
+              "type": {
+                "const": "iceberg_rest"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "Databricks Unity catalog. Supports config.snowflake and/or config.databricks.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "minProperties": 1,
+                "properties": {
+                  "databricks": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "file_format": {
+                        "enum": [
+                          "delta",
+                          "parquet"
+                        ],
+                        "type": "string"
+                      },
+                      "location_root": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "use_uniform": {
+                        "description": "UniForm mode. true requires file_format: delta; false (default) requires parquet.",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "file_format"
+                    ],
+                    "type": "object"
+                  },
+                  "snowflake": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "auto_refresh": {
+                        "type": "boolean"
+                      },
+                      "catalog_database": {
+                        "description": "Name of the Snowflake database linked to the external catalog.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "iceberg_version": {
+                        "description": "Iceberg spec version, e.g. 3 for Iceberg V3.",
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "max_data_extension_time_in_days": {
+                        "description": "Days beyond the retention period to extend data availability. Range 0–90.",
+                        "maximum": 90,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "target_file_size": {
+                        "enum": [
+                          "AUTO",
+                          "16MB",
+                          "32MB",
+                          "64MB",
+                          "128MB"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "catalog_database"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "iceberg"
+              },
+              "type": {
+                "const": "unity"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "Databricks Hive Metastore catalog. Databricks platform only.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "properties": {
+                  "databricks": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "file_format": {
+                        "enum": [
+                          "delta",
+                          "parquet",
+                          "hudi"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "file_format"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "databricks"
+                ],
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "default"
+              },
+              "type": {
+                "const": "hive_metastore"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "BigLake Metastore catalog. BigQuery platform only.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "properties": {
+                  "bigquery": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "base_location_root": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "connection_id": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "external_volume": {
+                        "description": "Cloud Storage bucket path (gs://<bucket_name>).",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "file_format": {
+                        "enum": [
+                          "parquet"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "external_volume",
+                      "file_format"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "bigquery"
+                ],
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "iceberg"
+              },
+              "type": {
+                "const": "biglake_metastore"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "DuckLake metadata store catalog. DuckDB platform only.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "properties": {
+                  "duckdb": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "attach_as": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "create_if_not_exists": {
+                        "type": "boolean"
+                      },
+                      "data_path": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "encrypted": {
+                        "type": "boolean"
+                      },
+                      "metadata_path": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "metadata_schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "read_only": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "metadata_path"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "duckdb"
+                ],
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "default"
+              },
+              "type": {
+                "const": "ducklake"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "description": "Local filesystem catalog. DuckDB platform only.",
+            "properties": {
+              "config": {
+                "additionalProperties": false,
+                "properties": {
+                  "duckdb": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "file_format": {
+                        "description": "Local file extension / DuckDB COPY format. Defaults to parquet.",
+                        "enum": [
+                          "parquet",
+                          "csv",
+                          "json"
+                        ],
+                        "type": "string"
+                      },
+                      "root_path": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "root_path"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "duckdb"
+                ],
+                "type": "object"
+              },
+              "name": {
+                "description": "Unique catalog name within this project.",
+                "minLength": 1,
+                "type": "string"
+              },
+              "table_format": {
+                "const": "default"
+              },
+              "type": {
+                "const": "local_filesystem"
+              }
+            },
+            "required": [
+              "name",
+              "type",
+              "table_format",
+              "config"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "catalogs"
+  ],
+  "title": "DbtCatalogsFile",
+  "type": "object"
+}
