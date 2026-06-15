@@ -726,6 +726,12 @@
                 "null"
               ]
             },
+            "reservation": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "retries": {
               "type": [
                 "integer",
@@ -747,6 +753,12 @@
               "items": {
                 "type": "string"
               }
+            },
+            "service_account_impersonation_url": {
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "submission_method": {
               "type": [
@@ -783,6 +795,16 @@
                 "null"
               ]
             },
+            "token_endpoint": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/AnyValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "token_uri": {
               "type": [
                 "string",
@@ -793,6 +815,12 @@
               "type": "string",
               "enum": [
                 "bigquery"
+              ]
+            },
+            "workload_pool_provider_path": {
+              "type": [
+                "string",
+                "null"
               ]
             }
           },
