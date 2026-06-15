@@ -1369,6 +1369,12 @@
             "null"
           ]
         },
+        "reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "resource_tags": {
           "type": [
             "object",
@@ -2253,6 +2259,82 @@
         "application"
       ]
     },
+    "ExternalPartition": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/ExternalPartitionConfig"
+        }
+      ]
+    },
+    "ExternalPartitionConfig": {
+      "description": "Reference: https://github.com/dbt-labs/dbt-mantle/blob/da5abca4f829b167bd1b1d5c6666c12cd8c719c0/core/dbt/artifacts/resources/v1/source_definition.py#L36",
+      "type": "object",
+      "properties": {
+        "data_type": {
+          "default": "",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "type": "string"
+        },
+        "meta": {
+          "default": {},
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "name": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ExternalTable": {
+      "description": "Reference: https://github.com/dbt-labs/dbt-mantle/blob/da5abca4f829b167bd1b1d5c6666c12cd8c719c0/core/dbt/artifacts/resources/v1/source_definition.py#L48 These always get serialized, even if none.",
+      "type": "object",
+      "properties": {
+        "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "partitions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/ExternalPartition"
+          }
+        },
+        "row_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tbl_properties": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "FloatOrString": {
       "anyOf": [
         {
@@ -2911,6 +2993,12 @@
             "null"
           ]
         },
+        "reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "resource_tags": {
           "type": [
             "object",
@@ -2970,6 +3058,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "snowflake": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FunctionSnowflakeConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "snowflake_initialization_warehouse": {
@@ -3284,6 +3382,19 @@
         "description": {
           "type": [
             "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "FunctionSnowflakeConfig": {
+      "description": "Snowflake-specific configuration for functions. Nested under the `snowflake` key inside `config:` in schema YAML (or `+snowflake:` under `functions:` in `dbt_project.yml`).",
+      "type": "object",
+      "properties": {
+        "quote_args": {
+          "type": [
+            "boolean",
             "null"
           ]
         }
@@ -4773,6 +4884,12 @@
             "null"
           ]
         },
+        "reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "resource_tags": {
           "type": [
             "object",
@@ -5368,7 +5485,7 @@
             "null"
           ]
         },
-        "execute_hooks_on_reuse": {
+        "execute_hooks_on_any_reuse": {
           "type": [
             "boolean",
             "null"
@@ -6377,6 +6494,12 @@
             "null"
           ]
         },
+        "reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "resource_tags": {
           "type": [
             "object",
@@ -7256,6 +7379,12 @@
             "null"
           ]
         },
+        "reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "resource_tags": {
           "type": [
             "object",
@@ -8077,16 +8206,6 @@
             }
           ]
         },
-        "quoting": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/DbtQuoting"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "refresh_interval_minutes": {
           "type": [
             "number",
@@ -8109,6 +8228,12 @@
         "require_partition_filter": {
           "type": [
             "boolean",
+            "null"
+          ]
+        },
+        "reservation": {
+          "type": [
+            "string",
             "null"
           ]
         },
@@ -8507,7 +8632,7 @@
         "external": {
           "anyOf": [
             {
-              "$ref": "#/definitions/AnyValue"
+              "$ref": "#/definitions/ExternalTable"
             },
             {
               "type": "null"
@@ -9133,6 +9258,12 @@
         "require_partition_filter": {
           "type": [
             "boolean",
+            "null"
+          ]
+        },
+        "reservation": {
+          "type": [
+            "string",
             "null"
           ]
         },

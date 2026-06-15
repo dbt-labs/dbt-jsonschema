@@ -780,6 +780,19 @@
         "table"
       ]
     },
+    "FunctionSnowflakeConfig": {
+      "description": "Snowflake-specific configuration for functions. Nested under the `snowflake` key inside `config:` in schema YAML (or `+snowflake:` under `functions:` in `dbt_project.yml`).",
+      "type": "object",
+      "properties": {
+        "quote_args": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "GrantAccessToTarget": {
       "type": "object",
       "properties": {
@@ -952,7 +965,7 @@
             "null"
           ]
         },
-        "execute_hooks_on_reuse": {
+        "execute_hooks_on_any_reuse": {
           "type": [
             "boolean",
             "null"
@@ -1610,6 +1623,12 @@
             "null"
           ]
         },
+        "+reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+row_access_policy": {
           "type": [
             "string",
@@ -2049,6 +2068,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+snowflake": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FunctionSnowflakeConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+static_analysis": {
@@ -2965,6 +2994,12 @@
             "null"
           ]
         },
+        "+reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+resource_tags": {
           "type": [
             "object",
@@ -3756,6 +3791,12 @@
             "null"
           ]
         },
+        "+reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+row_access_policy": {
           "type": [
             "string",
@@ -4466,6 +4507,12 @@
             "null"
           ]
         },
+        "+reservation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+row_access_policy": {
           "type": [
             "string",
@@ -4996,16 +5043,6 @@
             }
           ]
         },
-        "+quoting": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/DbtQuoting"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "+refresh_interval_minutes": {
           "default": null,
           "type": [
@@ -5018,6 +5055,12 @@
           "default": null,
           "type": [
             "boolean",
+            "null"
+          ]
+        },
+        "+reservation": {
+          "type": [
+            "string",
             "null"
           ]
         },
@@ -5519,6 +5562,12 @@
           "default": null,
           "type": [
             "boolean",
+            "null"
+          ]
+        },
+        "+reservation": {
+          "type": [
+            "string",
             "null"
           ]
         },
