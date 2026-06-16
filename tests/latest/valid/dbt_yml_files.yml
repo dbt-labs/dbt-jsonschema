@@ -78,6 +78,24 @@ models:
       target_lag: downstream
       snowflake_warehouse: my_warehouse
 
+  - name: my_bigquery_model
+    description: "A dbt model with BigQuery-specific configurations"
+    config:
+      materialized: table
+      labels:
+        environment: production
+        team: analytics
+      resource_tags:
+        my-project-id/environment: production
+        my-project-id/data_classification: sensitive
+        bigquery-project/access_level: "{{ env_var('ACCESS_LEVEL', 'restricted') }}"
+      hours_to_expiration: 72
+      kms_key_name: "projects/my-project/locations/us-central1/keyRings/my-ring/cryptoKeys/my-key"
+    columns:
+      - name: id
+        description: "The primary key"
+        data_type: int
+
 unit_tests:
   - name: my_first_unit_test
     expect:
