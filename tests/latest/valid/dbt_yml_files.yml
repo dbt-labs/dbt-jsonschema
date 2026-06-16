@@ -337,6 +337,12 @@ sources:
             data_tests:
               - unique
 
+seeds:
+  - name: my_seed
+    description: "A seed file"
+    config:
+      delimiter: ","
+
 data_tests:
   - name: my_cool_custom_test
     description: "This checks that all numbers are positive, if it fails you should talk to data engineering"

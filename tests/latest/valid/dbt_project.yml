@@ -79,6 +79,8 @@ unit_tests:
 seeds:
   test:
     +enabled: false
+    +delimiter: ","
+    delimiter: ","
     empty_subdirectory:
 
 tests:
