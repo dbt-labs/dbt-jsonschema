@@ -1084,7 +1084,7 @@
             "type": "object",
             "required": ["dataset", "project"],
             "properties": {
-              "database": {
+              "dataset": {
                 "type": "string"
               },
               "project": {
