@@ -1208,7 +1208,7 @@
             "$ref": "#/$defs/data_tests"
           }
         },
-        "data_type": {
+        "type": {
           "type": "string"
         },
         "granularity": {
