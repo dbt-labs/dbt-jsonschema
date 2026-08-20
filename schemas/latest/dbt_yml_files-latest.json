@@ -35,7 +35,7 @@
                 "description": {
                   "type": "string"
                 },
-                "data_type": {
+                "type": {
                   "type": "string"
                 }
               },
