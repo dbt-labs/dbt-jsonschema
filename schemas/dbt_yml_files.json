@@ -366,7 +366,7 @@
             "type": "string"
           },
           "latest_version": {
-            "type": "number"
+            "type": ["number", "string"]
           },
           "meta": {
             "type": "object"
@@ -402,7 +402,7 @@
                   "$ref": "#/$defs/model_configs"
                 },
                 "v": {
-                  "type": "number"
+                  "type": ["number", "string"]
                 }
               }
             }

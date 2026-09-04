@@ -258,7 +258,7 @@
             "$ref": "#/$defs/group"
           },
           "latest_version": {
-            "type": "number"
+            "type": ["number", "string"]
           },
           "meta": {
             "type": "object"
@@ -276,7 +276,7 @@
               "required": ["v"],
               "properties": {
                 "v": {
-                  "type": "number"
+                  "type": ["number", "string"]
                 },
                 "config": {
                   "$ref": "#/$defs/model_configs"
