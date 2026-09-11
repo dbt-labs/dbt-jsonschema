@@ -14,98 +14,6 @@
                 "additionalProperties": false,
                 "minProperties": 1,
                 "properties": {
-                  "alt": {
-                    "additionalProperties": false,
-                    "properties": {
-                      "access_delegation_mode": {
-                        "enum": [
-                          "VENDED_CREDENTIALS",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "authorization_type": {
-                        "enum": [
-                          "OAUTH2",
-                          "SIGV4",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "default_region": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "default_schema": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "disable_multi_table_commit": {
-                        "description": "Disable multi-table commits (Unity write-compat default).",
-                        "type": "boolean"
-                      },
-                      "encode_entire_prefix": {
-                        "type": "boolean"
-                      },
-                      "endpoint": {
-                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
-                        "enum": [
-                          "GLUE",
-                          "S3_TABLES"
-                        ],
-                        "type": "string"
-                      },
-                      "max_table_staleness": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "purge_requested": {
-                        "type": "boolean"
-                      },
-                      "read_only": {
-                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
-                        "type": "boolean"
-                      },
-                      "remove_files_on_delete": {
-                        "description": "Remove underlying data files when a table is dropped (write-compat).",
-                        "type": "boolean"
-                      },
-                      "secret": {
-                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "skip_create_table_metadata_updates": {
-                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
-                        "type": "boolean"
-                      },
-                      "stage_create_tables": {
-                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
-                        "type": "boolean"
-                      },
-                      "support_nested_namespaces": {
-                        "type": "boolean"
-                      },
-                      "support_stage_create": {
-                        "type": "boolean"
-                      },
-                      "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
-                        "minLength": 1,
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
                   "databricks": {
                     "additionalProperties": false,
                     "properties": {
@@ -130,16 +38,16 @@
                         ],
                         "type": "string"
                       },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
                       "authorization_type": {
                         "enum": [
                           "OAUTH2",
                           "SIGV4",
                           "NONE"
                         ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
                         "type": "string"
                       },
                       "default_region": {
@@ -163,7 +71,7 @@
                         "type": "string"
                       },
                       "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
                         "enum": [
                           "GLUE",
                           "S3_TABLES"
@@ -205,7 +113,99 @@
                         "type": "boolean"
                       },
                       "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "lakecompute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "access_delegation_mode": {
+                        "enum": [
+                          "VENDED_CREDENTIALS",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "authorization_type": {
+                        "enum": [
+                          "OAUTH2",
+                          "SIGV4",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_region": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "disable_multi_table_commit": {
+                        "description": "Disable multi-table commits (Unity write-compat default).",
+                        "type": "boolean"
+                      },
+                      "encode_entire_prefix": {
+                        "type": "boolean"
+                      },
+                      "endpoint": {
+                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "endpoint_type": {
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
+                        "enum": [
+                          "GLUE",
+                          "S3_TABLES"
+                        ],
+                        "type": "string"
+                      },
+                      "max_table_staleness": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "purge_requested": {
+                        "type": "boolean"
+                      },
+                      "read_only": {
+                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
+                        "type": "boolean"
+                      },
+                      "remove_files_on_delete": {
+                        "description": "Remove underlying data files when a table is dropped (write-compat).",
+                        "type": "boolean"
+                      },
+                      "secret": {
+                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "skip_create_table_metadata_updates": {
+                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
+                        "type": "boolean"
+                      },
+                      "stage_create_tables": {
+                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
+                        "type": "boolean"
+                      },
+                      "support_nested_namespaces": {
+                        "type": "boolean"
+                      },
+                      "support_stage_create": {
+                        "type": "boolean"
+                      },
+                      "warehouse": {
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
                         "minLength": 1,
                         "type": "string"
                       }
@@ -266,9 +266,22 @@
                 },
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -294,98 +307,6 @@
                 "additionalProperties": false,
                 "minProperties": 1,
                 "properties": {
-                  "alt": {
-                    "additionalProperties": false,
-                    "properties": {
-                      "access_delegation_mode": {
-                        "enum": [
-                          "VENDED_CREDENTIALS",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "authorization_type": {
-                        "enum": [
-                          "OAUTH2",
-                          "SIGV4",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "default_region": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "default_schema": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "disable_multi_table_commit": {
-                        "description": "Disable multi-table commits (Unity write-compat default).",
-                        "type": "boolean"
-                      },
-                      "encode_entire_prefix": {
-                        "type": "boolean"
-                      },
-                      "endpoint": {
-                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
-                        "enum": [
-                          "GLUE",
-                          "S3_TABLES"
-                        ],
-                        "type": "string"
-                      },
-                      "max_table_staleness": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "purge_requested": {
-                        "type": "boolean"
-                      },
-                      "read_only": {
-                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
-                        "type": "boolean"
-                      },
-                      "remove_files_on_delete": {
-                        "description": "Remove underlying data files when a table is dropped (write-compat).",
-                        "type": "boolean"
-                      },
-                      "secret": {
-                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "skip_create_table_metadata_updates": {
-                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
-                        "type": "boolean"
-                      },
-                      "stage_create_tables": {
-                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
-                        "type": "boolean"
-                      },
-                      "support_nested_namespaces": {
-                        "type": "boolean"
-                      },
-                      "support_stage_create": {
-                        "type": "boolean"
-                      },
-                      "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
-                        "minLength": 1,
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
                   "duckdb": {
                     "additionalProperties": false,
                     "properties": {
@@ -396,16 +317,16 @@
                         ],
                         "type": "string"
                       },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
                       "authorization_type": {
                         "enum": [
                           "OAUTH2",
                           "SIGV4",
                           "NONE"
                         ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
                         "type": "string"
                       },
                       "default_region": {
@@ -429,7 +350,7 @@
                         "type": "string"
                       },
                       "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
                         "enum": [
                           "GLUE",
                           "S3_TABLES"
@@ -471,11 +392,48 @@
                         "type": "boolean"
                       },
                       "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
                         "minLength": 1,
                         "type": "string"
                       }
                     },
+                    "type": "object"
+                  },
+                  "lakecompute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "access_key_id": {
+                        "description": "AWS access key ID.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "catalog_id": {
+                        "description": "Glue catalog identifier passed to ATTACH. Accepted forms: a 12-digit AWS account ID, ':' for the caller's own account, 'catalog1/catalog2', or '<account_id>:catalog1/catalog2'.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "region": {
+                        "description": "AWS region of the Glue catalog. Determines the REST endpoint and SigV4 signing region.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "secret_access_key": {
+                        "description": "AWS secret access key.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "session_token": {
+                        "description": "AWS session token; only for temporary/STS credentials.",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "catalog_id",
+                      "region",
+                      "access_key_id",
+                      "secret_access_key"
+                    ],
                     "type": "object"
                   },
                   "snowflake": {
@@ -519,9 +477,22 @@
                 },
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -547,98 +518,6 @@
                 "additionalProperties": false,
                 "minProperties": 1,
                 "properties": {
-                  "alt": {
-                    "additionalProperties": false,
-                    "properties": {
-                      "access_delegation_mode": {
-                        "enum": [
-                          "VENDED_CREDENTIALS",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "authorization_type": {
-                        "enum": [
-                          "OAUTH2",
-                          "SIGV4",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "default_region": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "default_schema": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "disable_multi_table_commit": {
-                        "description": "Disable multi-table commits (Unity write-compat default).",
-                        "type": "boolean"
-                      },
-                      "encode_entire_prefix": {
-                        "type": "boolean"
-                      },
-                      "endpoint": {
-                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
-                        "enum": [
-                          "GLUE",
-                          "S3_TABLES"
-                        ],
-                        "type": "string"
-                      },
-                      "max_table_staleness": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "purge_requested": {
-                        "type": "boolean"
-                      },
-                      "read_only": {
-                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
-                        "type": "boolean"
-                      },
-                      "remove_files_on_delete": {
-                        "description": "Remove underlying data files when a table is dropped (write-compat).",
-                        "type": "boolean"
-                      },
-                      "secret": {
-                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "skip_create_table_metadata_updates": {
-                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
-                        "type": "boolean"
-                      },
-                      "stage_create_tables": {
-                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
-                        "type": "boolean"
-                      },
-                      "support_nested_namespaces": {
-                        "type": "boolean"
-                      },
-                      "support_stage_create": {
-                        "type": "boolean"
-                      },
-                      "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
-                        "minLength": 1,
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
                   "duckdb": {
                     "additionalProperties": false,
                     "properties": {
@@ -649,16 +528,16 @@
                         ],
                         "type": "string"
                       },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
                       "authorization_type": {
                         "enum": [
                           "OAUTH2",
                           "SIGV4",
                           "NONE"
                         ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
                         "type": "string"
                       },
                       "default_region": {
@@ -682,7 +561,7 @@
                         "type": "string"
                       },
                       "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
                         "enum": [
                           "GLUE",
                           "S3_TABLES"
@@ -724,7 +603,99 @@
                         "type": "boolean"
                       },
                       "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "lakecompute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "access_delegation_mode": {
+                        "enum": [
+                          "VENDED_CREDENTIALS",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "authorization_type": {
+                        "enum": [
+                          "OAUTH2",
+                          "SIGV4",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_region": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "disable_multi_table_commit": {
+                        "description": "Disable multi-table commits (Unity write-compat default).",
+                        "type": "boolean"
+                      },
+                      "encode_entire_prefix": {
+                        "type": "boolean"
+                      },
+                      "endpoint": {
+                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "endpoint_type": {
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
+                        "enum": [
+                          "GLUE",
+                          "S3_TABLES"
+                        ],
+                        "type": "string"
+                      },
+                      "max_table_staleness": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "purge_requested": {
+                        "type": "boolean"
+                      },
+                      "read_only": {
+                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
+                        "type": "boolean"
+                      },
+                      "remove_files_on_delete": {
+                        "description": "Remove underlying data files when a table is dropped (write-compat).",
+                        "type": "boolean"
+                      },
+                      "secret": {
+                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "skip_create_table_metadata_updates": {
+                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
+                        "type": "boolean"
+                      },
+                      "stage_create_tables": {
+                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
+                        "type": "boolean"
+                      },
+                      "support_nested_namespaces": {
+                        "type": "boolean"
+                      },
+                      "support_stage_create": {
+                        "type": "boolean"
+                      },
+                      "warehouse": {
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
                         "minLength": 1,
                         "type": "string"
                       }
@@ -772,9 +743,22 @@
                 },
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -800,98 +784,6 @@
                 "additionalProperties": false,
                 "minProperties": 1,
                 "properties": {
-                  "alt": {
-                    "additionalProperties": false,
-                    "properties": {
-                      "access_delegation_mode": {
-                        "enum": [
-                          "VENDED_CREDENTIALS",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "authorization_type": {
-                        "enum": [
-                          "OAUTH2",
-                          "SIGV4",
-                          "NONE"
-                        ],
-                        "type": "string"
-                      },
-                      "default_region": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "default_schema": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "disable_multi_table_commit": {
-                        "description": "Disable multi-table commits (Unity write-compat default).",
-                        "type": "boolean"
-                      },
-                      "encode_entire_prefix": {
-                        "type": "boolean"
-                      },
-                      "endpoint": {
-                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
-                        "enum": [
-                          "GLUE",
-                          "S3_TABLES"
-                        ],
-                        "type": "string"
-                      },
-                      "max_table_staleness": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "purge_requested": {
-                        "type": "boolean"
-                      },
-                      "read_only": {
-                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
-                        "type": "boolean"
-                      },
-                      "remove_files_on_delete": {
-                        "description": "Remove underlying data files when a table is dropped (write-compat).",
-                        "type": "boolean"
-                      },
-                      "secret": {
-                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
-                        "minLength": 1,
-                        "type": "string"
-                      },
-                      "skip_create_table_metadata_updates": {
-                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
-                        "type": "boolean"
-                      },
-                      "stage_create_tables": {
-                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
-                        "type": "boolean"
-                      },
-                      "support_nested_namespaces": {
-                        "type": "boolean"
-                      },
-                      "support_stage_create": {
-                        "type": "boolean"
-                      },
-                      "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
-                        "minLength": 1,
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
                   "databricks": {
                     "additionalProperties": false,
                     "properties": {
@@ -931,16 +823,16 @@
                         ],
                         "type": "string"
                       },
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
                       "authorization_type": {
                         "enum": [
                           "OAUTH2",
                           "SIGV4",
                           "NONE"
                         ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
                         "type": "string"
                       },
                       "default_region": {
@@ -964,7 +856,7 @@
                         "type": "string"
                       },
                       "endpoint_type": {
-                        "description": "Managed endpoint type. Mutually exclusive with endpoint.",
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
                         "enum": [
                           "GLUE",
                           "S3_TABLES"
@@ -1006,7 +898,99 @@
                         "type": "boolean"
                       },
                       "warehouse": {
-                        "description": "S3 warehouse URI. Required when endpoint_type is S3_TABLES.",
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "lakecompute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "access_delegation_mode": {
+                        "enum": [
+                          "VENDED_CREDENTIALS",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "authorization_type": {
+                        "enum": [
+                          "OAUTH2",
+                          "SIGV4",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_region": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "default_schema": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "disable_multi_table_commit": {
+                        "description": "Disable multi-table commits (Unity write-compat default).",
+                        "type": "boolean"
+                      },
+                      "encode_entire_prefix": {
+                        "type": "boolean"
+                      },
+                      "endpoint": {
+                        "description": "Full REST catalog URL. Mutually exclusive with endpoint_type.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "endpoint_type": {
+                        "description": "Managed AWS endpoint type. DuckDB derives the endpoint URL and SigV4 authorization from it, so it's mutually exclusive with both endpoint and authorization_type.",
+                        "enum": [
+                          "GLUE",
+                          "S3_TABLES"
+                        ],
+                        "type": "string"
+                      },
+                      "max_table_staleness": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "purge_requested": {
+                        "type": "boolean"
+                      },
+                      "read_only": {
+                        "description": "Attach the catalog read-only. Read-write (read_only: false) on Horizon/Unity requires DuckDB 1.5.4 / duckdb-iceberg#1017.",
+                        "type": "boolean"
+                      },
+                      "remove_files_on_delete": {
+                        "description": "Remove underlying data files when a table is dropped (write-compat).",
+                        "type": "boolean"
+                      },
+                      "secret": {
+                        "description": "Name of a DuckDB secret from profiles.yml to use for authentication.",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "skip_create_table_metadata_updates": {
+                        "description": "Skip metadata updates on CREATE TABLE (write-compat).",
+                        "type": "boolean"
+                      },
+                      "stage_create_tables": {
+                        "description": "Opt into staged CREATE TABLE AS SELECT writes (direct CTAS into the target catalog).",
+                        "type": "boolean"
+                      },
+                      "support_nested_namespaces": {
+                        "type": "boolean"
+                      },
+                      "support_stage_create": {
+                        "type": "boolean"
+                      },
+                      "warehouse": {
+                        "description": "Warehouse identifier used as the ATTACH source: the S3 Tables bucket ARN (required when endpoint_type is S3_TABLES), or the Glue catalog path (defaults to ':', the current account's default catalog).",
                         "minLength": 1,
                         "type": "string"
                       }
@@ -1054,9 +1038,22 @@
                 },
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -1104,9 +1101,22 @@
                 ],
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -1157,6 +1167,11 @@
                           "parquet"
                         ],
                         "type": "string"
+                      },
+                      "lakehouse_catalog": {
+                        "description": "Lakehouse Runtime Catalog (LRC) catalog name. When set, models using this catalog render a 4-part BigQuery FQN (project.lakehouse_catalog.namespace.table) instead of the standard 3-part project.dataset.table.",
+                        "minLength": 1,
+                        "type": "string"
                       }
                     },
                     "required": [
@@ -1171,9 +1186,22 @@
                 ],
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -1193,21 +1221,21 @@
           },
           {
             "additionalProperties": false,
-            "description": "DuckLake metadata store catalog. Supports duckdb and/or alt connection blocks.",
+            "description": "DuckLake metadata store catalog. Supports duckdb and/or lakecompute connection blocks.",
             "properties": {
               "config": {
                 "additionalProperties": false,
                 "minProperties": 1,
                 "properties": {
-                  "alt": {
+                  "duckdb": {
                     "additionalProperties": false,
                     "properties": {
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
                       "automatic_migration": {
                         "type": "boolean"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
+                        "type": "string"
                       },
                       "create_if_not_exists": {
                         "type": "boolean"
@@ -1248,15 +1276,15 @@
                     ],
                     "type": "object"
                   },
-                  "duckdb": {
+                  "lakecompute": {
                     "additionalProperties": false,
                     "properties": {
-                      "attach_as": {
-                        "minLength": 1,
-                        "type": "string"
-                      },
                       "automatic_migration": {
                         "type": "boolean"
+                      },
+                      "catalog_database": {
+                        "minLength": 1,
+                        "type": "string"
                       },
                       "create_if_not_exists": {
                         "type": "boolean"
@@ -1300,9 +1328,22 @@
                 },
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {
@@ -1355,9 +1396,22 @@
                 ],
                 "type": "object"
               },
+              "description": {
+                "description": "Optional human-readable description of this catalog's purpose.",
+                "type": "string"
+              },
+              "meta": {
+                "additionalProperties": true,
+                "description": "Optional free-form metadata map, following the dbt sources/models `meta:` convention.",
+                "type": "object"
+              },
               "name": {
                 "description": "Unique catalog name within this project.",
                 "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "description": "Optional dedicated ownership field (team name or email).",
                 "type": "string"
               },
               "table_format": {

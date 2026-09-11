@@ -6,6 +6,16 @@
     "name"
   ],
   "properties": {
+    "adapters": {
+      "description": "`AdapterType` has no `JsonSchema` impl -- it lives in `dbt-adapter-core`, which has no `schemars` dependency and must not gain one -- so the schema describes the key as the string it is in YAML.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "$ref": "#/definitions/AdapterProjectConfig"
+      }
+    },
     "analyses": {
       "anyOf": [
         {
@@ -33,6 +43,26 @@
       "items": {
         "type": "string"
       }
+    },
+    "check-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "description": "Project-level `checks:` config tree (path-scoped, `+`-prefixed), resolved by the standard project-config machinery like every other node type's subtree.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectCheckConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "clean-targets": {
       "type": [
@@ -121,6 +151,17 @@
       "anyOf": [
         {
           "$ref": "#/definitions/ProjectFunctionConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "info_schema": {
+      "description": "Package-scoped `info_schema:` block. Not resolved/inherited like `checks:` -- see [`InfoSchemaConfig`].",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/InfoSchemaConfig"
         },
         {
           "type": "null"
@@ -285,6 +326,25 @@
         }
       ]
     },
+    "skill-paths": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "skills": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ProjectSkillConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "snapshot-paths": {
       "type": [
         "array",
@@ -394,6 +454,24 @@
         "public"
       ]
     },
+    "AdapterProjectConfig": {
+      "description": "Project-level config scoped to one adapter, keyed by adapter type:\n\n```yaml adapters: snowflake: quoting: identifier: false ```\n\nA map rather than a list because the key *is* the identity — a node selects an adapter by type, so there is no separate name to carry and no way to declare the same adapter twice.\n\nRoot-project only, read from the root project and ignored elsewhere exactly as `dispatch:` is. Settings here belong to the project, not the connection, which is why they are not in `profiles.yml`: that file is per-user and its concern is connectivity, while identifier rendering is a project semantic that has to be versioned and reviewed alongside the code depending on it.",
+      "type": "object",
+      "properties": {
+        "quoting": {
+          "description": "Identifier quoting for nodes running on this adapter. Overrides the top-level `quoting:` block; still overridden by `models:` and model-level `+quoting:`.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "AnyValue": true,
     "BigqueryPartitionConfig": {
       "description": "reference: https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-bigquery/src/dbt/adapters/bigquery/relation_configs/_partition.py#L12-L13",
@@ -419,6 +497,23 @@
           "type": "string"
         },
         "field": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClickHouseIndex": {
+      "description": "A ClickHouse data-skipping index: `{name, definition}` items consumed by the ClickHouse macros (`ADD INDEX {{ index.get('name') }} {{ index.get('definition') }}`). Both fields are required, so no `skip_serializing_none` is needed.",
+      "type": "object",
+      "required": [
+        "definition",
+        "name"
+      ],
+      "properties": {
+        "definition": {
+          "type": "string"
+        },
+        "name": {
           "type": "string"
         }
       },
@@ -458,7 +553,8 @@
           "description": "Run computations in a separate, ephemeral worker process",
           "type": "string",
           "enum": [
-            "sidecar"
+            "sidecar",
+            "local"
           ]
         },
         {
@@ -470,23 +566,15 @@
         }
       ]
     },
-    "ComputePlatform": {
-      "description": "Selects the compute target a model's DML is executed against.\n\n`Default` uses the profile's adapter. A run implementation may honor an alternate target for other variants; parse/compile/render and introspection are unaffected by this selection.",
-      "oneOf": [
-        {
-          "description": "Execute on the profile's (default) adapter.",
-          "type": "string",
-          "enum": [
-            "default"
-          ]
-        },
-        {
-          "description": "Execute on the alternate compute target.",
-          "type": "string",
-          "enum": [
-            "alt"
-          ]
-        }
+    "ConstraintType": {
+      "type": "string",
+      "enum": [
+        "not_null",
+        "unique",
+        "primary_key",
+        "foreign_key",
+        "check",
+        "custom"
       ]
     },
     "DataLakeObjectCategory": {
@@ -499,6 +587,35 @@
         "Insights",
         "Other"
       ]
+    },
+    "DataTestState": {
+      "description": "The dbt State configs supported on data tests: only `require_fresh_data_from`, `evaluate_volatile_sql` and `compare_unrendered_code` (snapshots reuse the full `ModelState`). Other keys are not fields here, so they are flagged as unknown keys at parse time.",
+      "type": "object",
+      "properties": {
+        "compare_unrendered_code": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "evaluate_volatile_sql": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "require_fresh_data_from": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/UpdatesOn"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "DbtBatchSize": {
       "type": "string",
@@ -596,6 +713,13 @@
           "description": "only for databricks",
           "type": "string",
           "enum": [
+            "metric_view"
+          ]
+        },
+        {
+          "description": "only for databricks",
+          "type": "string",
+          "enum": [
             "streaming_table"
           ]
         },
@@ -604,6 +728,13 @@
           "type": "string",
           "enum": [
             "dynamic_table"
+          ]
+        },
+        {
+          "description": "only for snowflake",
+          "type": "string",
+          "enum": [
+            "interactive_table"
           ]
         },
         {
@@ -892,6 +1023,27 @@
         }
       ]
     },
+    "IndexItem": {
+      "description": "One element of the shared `indexes` config. Adapter shapes are kept as distinct typed variants (like `PartitionConfig` does for BigQuery); the required fields are disjoint (`columns` vs `name`+`definition`), so untagged deserialization is unambiguous, and each variant serializes its own shape back to Jinja.",
+      "anyOf": [
+        {
+          "description": "Postgres: `{columns, unique, type}`",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PostgresIndex"
+            }
+          ]
+        },
+        {
+          "description": "ClickHouse: `{name, definition}`",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ClickHouseIndex"
+            }
+          ]
+        }
+      ]
+    },
     "IndexesConfig": {
       "description": "A wrapper type for the `indexes` config field that handles flexible deserialization.\n\ndbt-core accepts both list and dictionary formats for indexes. This type accepts either format on input but always serializes as a list.\n\n# Example\n\n```ignore // Input (list): [{columns: [\"id\"], unique: true}] // Serializes as: [{columns: [\"id\"], unique: true}]\n\n// Input (dict): {\"my_index\": {columns: [\"id\"], unique: true}} // Serializes as: [{columns: [\"id\"], unique: true}]  (keys are discarded) ```",
       "type": [
@@ -899,8 +1051,23 @@
         "null"
       ],
       "items": {
-        "$ref": "#/definitions/PostgresIndex"
+        "$ref": "#/definitions/IndexItem"
       }
+    },
+    "InfoSchemaConfig": {
+      "description": "Project-level `info_schema:` block.\n\nPackage-scoped, not resolved/inherited the way `checks:` is: each package -- root or dependency -- declares its own `version` directly in its own `dbt_project.yml`, so a check in the root project can read a newer `info_schema()` shape while an installed package (e.g. `dbt_project_evaluator`) keeps depending on an older one, and every check within a single package queries one consistent version. See `SUPPORTED_INFO_SCHEMA_VERSIONS`.",
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
     },
     "LatestVersionPointer": {
       "description": "Represents the latest version view configuration for versioned models. Supports shorthand (bool) and full form ({enabled: bool, alias: string}).",
@@ -927,6 +1094,70 @@
         "logs"
       ]
     },
+    "ModelConstraint": {
+      "description": "Model level contraint",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "columns": {
+          "default": null,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "expression": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "to_columns": {
+          "description": "Only ForeignKey constraints accept: a list columns in that table containing the corresponding primary or unique key.",
+          "default": [],
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/ConstraintType"
+        },
+        "warn_unenforced": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "warn_unsupported": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "ModelFreshness": {
       "type": "object",
       "properties": {
@@ -934,6 +1165,44 @@
           "anyOf": [
             {
               "$ref": "#/definitions/ModelFreshnessRules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_after": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessRules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "loaded_at_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "loaded_at_query": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "warn_after": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessRules"
             },
             {
               "type": "null"
@@ -979,6 +1248,12 @@
     "ModelState": {
       "type": "object",
       "properties": {
+        "compare_unrendered_code": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "evaluate_volatile_sql": {
           "type": [
             "boolean",
@@ -1068,12 +1343,21 @@
       ]
     },
     "PartitionsConfig": {
-      "description": "External-table style `partitions` config — list-of-strings (e.g. `['ds=2023-01-01']`) or list-of-maps (e.g. `[{name: foo, data_type: varchar}]`, as used by `dbt-external-tables`).",
+      "description": "External-table style `partitions` config — a string or list-of-strings (e.g. `['ds=2023-01-01']`), or a map or list-of-maps (e.g. `[{name: foo, data_type: varchar}]`, as used by `dbt-external-tables`).",
       "anyOf": [
+        {
+          "type": "string"
+        },
         {
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
           }
         },
         {
@@ -1146,6 +1430,12 @@
     "ProjectAnalysisConfig": {
       "type": "object",
       "properties": {
+        "+adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+docs": {
           "anyOf": [
             {
@@ -1203,9 +1493,69 @@
         "$ref": "#/definitions/ProjectAnalysisConfig"
       }
     },
+    "ProjectCheckConfig": {
+      "type": "object",
+      "properties": {
+        "+enabled": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+selection_filter_on": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SelectionFilterOn"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+severity": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Severity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/ProjectCheckConfig"
+      }
+    },
     "ProjectDataTestConfig": {
       "type": "object",
       "properties": {
+        "+adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+adapter_properties": {
           "type": [
             "object",
@@ -1366,9 +1716,13 @@
           }
         },
         "+dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+enable_refresh": {
@@ -1608,6 +1962,12 @@
             }
           ]
         },
+        "+query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+quoting": {
           "anyOf": [
             {
@@ -1750,6 +2110,16 @@
             "null"
           ]
         },
+        "+state": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DataTestState"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+static_analysis": {
           "anyOf": [
             {
@@ -1828,6 +2198,13 @@
           ]
         },
         "+transient": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+unlogged": {
           "default": null,
           "type": [
             "boolean",
@@ -2006,6 +2383,12 @@
             }
           ]
         },
+        "+adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+alias": {
           "type": [
             "string",
@@ -2074,6 +2457,26 @@
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+post-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+pre-hook": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
             },
             {
               "type": "null"
@@ -2209,6 +2612,12 @@
             }
           ]
         },
+        "+adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+adapter_properties": {
           "type": [
             "object",
@@ -2231,16 +2640,6 @@
           "type": [
             "string",
             "null"
-          ]
-        },
-        "+alt_compute": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ComputePlatform"
-            },
-            {
-              "type": "null"
-            }
           ]
         },
         "+as_columnstore": {
@@ -2338,6 +2737,13 @@
             "null"
           ]
         },
+        "+catchup": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "+category": {
           "anyOf": [
             {
@@ -2385,6 +2791,7 @@
           ]
         },
         "+column_types": {
+          "default": null,
           "type": [
             "object",
             "null"
@@ -2415,6 +2822,25 @@
             "boolean",
             "null"
           ]
+        },
+        "+connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+constraints": {
+          "default": null,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/ModelConstraint"
+          }
         },
         "+contract": {
           "anyOf": [
@@ -2483,6 +2909,12 @@
             "null"
           ]
         },
+        "+definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+description": {
           "type": [
             "string",
@@ -2490,9 +2922,24 @@
           ]
         },
         "+dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+distribute_by_config": {
+          "description": "Exasol: DISTRIBUTE BY column list (name matches the Python dbt-exasol adapter)",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+docs": {
@@ -2526,7 +2973,29 @@
             "null"
           ]
         },
+        "+engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+environment_dependencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "+environment_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -2549,7 +3018,22 @@
             "null"
           ]
         },
+        "+fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+format": {
           "type": [
             "string",
             "null"
@@ -2647,13 +3131,14 @@
           ]
         },
         "+incremental_predicates": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "type": "string"
-          }
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "+incremental_strategy": {
           "anyOf": [
@@ -2682,6 +3167,13 @@
         "+initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "+inserts_only": {
+          "default": null,
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -2747,6 +3239,22 @@
             }
           ]
         },
+        "+layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+liquid_clustered_by": {
           "anyOf": [
             {
@@ -2755,6 +3263,18 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+loaded_at_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+loaded_at_query": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+location": {
@@ -2843,6 +3363,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "+mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+not_matched_by_source_action": {
           "type": [
             "string",
@@ -2900,6 +3426,16 @@
             }
           ]
         },
+        "+order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+packages": {
           "anyOf": [
             {
@@ -2914,6 +3450,17 @@
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+partition_by_config": {
+          "description": "Exasol: PARTITION BY column list (name matches the Python dbt-exasol adapter)",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -2937,6 +3484,13 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+persist_constraints": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "+persist_docs": {
@@ -2986,6 +3540,36 @@
             }
           ]
         },
+        "+primary_key_config": {
+          "description": "Exasol: advisory PRIMARY KEY column list (name matches the Python dbt-exasol adapter)",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+propagate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+python_job_config": {
           "type": [
             "object",
@@ -3001,6 +3585,15 @@
             "null"
           ]
         },
+        "+query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+query_tag": {
           "anyOf": [
             {
@@ -3011,10 +3604,26 @@
             }
           ]
         },
+        "+query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+quoting": {
           "anyOf": [
             {
               "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -3038,6 +3647,23 @@
         "+refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "+refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+repopulate_from_mvs_on_full_refresh": {
+          "default": null,
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -3067,6 +3693,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "+row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+schedule": {
@@ -3108,6 +3744,15 @@
             "null"
           ]
         },
+        "+settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "+skip_matched_step": {
           "default": null,
           "type": [
@@ -3116,6 +3761,13 @@
           ]
         },
         "+skip_not_matched_step": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+skip_optimize": {
           "default": null,
           "type": [
             "boolean",
@@ -3156,7 +3808,19 @@
             "null"
           ]
         },
+        "+source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+sql_header": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+sql_security": {
           "type": [
             "string",
             "null"
@@ -3209,6 +3873,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+table": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+table_format": {
@@ -3281,6 +3951,12 @@
             "null"
           ]
         },
+        "+ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+unique_key": {
           "anyOf": [
             {
@@ -3289,6 +3965,42 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+unique_tmp_table_suffix": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+unlogged": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "+update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "+url": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+use_anonymous_sproc": {
@@ -3325,6 +4037,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "+zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -3400,6 +4122,12 @@
     "ProjectSeedConfig": {
       "type": "object",
       "properties": {
+        "+adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+adapter_properties": {
           "type": [
             "object",
@@ -3557,9 +4285,13 @@
           ]
         },
         "+dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+docs": {
@@ -3627,6 +4359,7 @@
           ]
         },
         "+hours_to_expiration": {
+          "default": null,
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrInteger"
@@ -3810,6 +4543,16 @@
             }
           ]
         },
+        "+propagate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+query_tag": {
           "anyOf": [
             {
@@ -3818,6 +4561,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+query_tags": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+quote_columns": {
@@ -4020,6 +4769,12 @@
             "boolean",
             "null"
           ]
+        },
+        "+unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
         }
       },
       "additionalProperties": {
@@ -4066,9 +4821,49 @@
         "$ref": "#/definitions/ProjectSemanticModelConfig"
       }
     },
+    "ProjectSkillConfig": {
+      "type": "object",
+      "properties": {
+        "+enabled": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "+tags": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/ProjectSkillConfig"
+      }
+    },
     "ProjectSnapshotConfig": {
       "type": "object",
       "properties": {
+        "+adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+adapter_properties": {
           "type": [
             "object",
@@ -4245,9 +5040,13 @@
           ]
         },
         "+dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+docs": {
@@ -4275,6 +5074,7 @@
           ]
         },
         "+event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -4504,6 +5304,13 @@
             }
           ]
         },
+        "+persist_constraints": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "+persist_docs": {
           "anyOf": [
             {
@@ -4534,6 +5341,16 @@
             }
           ]
         },
+        "+propagate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+query_tag": {
           "anyOf": [
             {
@@ -4542,6 +5359,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+query_tags": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "+quote_columns": {
@@ -4696,6 +5519,16 @@
             "null"
           ]
         },
+        "+state": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ModelState"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "+static_analysis": {
           "anyOf": [
             {
@@ -4800,6 +5633,20 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "+unique_tmp_table_suffix": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+unlogged": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "+updated_at": {
@@ -4912,9 +5759,13 @@
           }
         },
         "+dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+enable_refresh": {
@@ -4932,6 +5783,7 @@
           ]
         },
         "+event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -5265,6 +6117,13 @@
           "additionalProperties": {
             "$ref": "#/definitions/AnyValue"
           }
+        },
+        "+unlogged": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
         }
       },
       "additionalProperties": {
@@ -5422,9 +6281,13 @@
           }
         },
         "+dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+enable_refresh": {
@@ -5632,6 +6495,12 @@
             }
           ]
         },
+        "+query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "+refresh_interval_minutes": {
           "default": null,
           "type": [
@@ -5808,6 +6677,20 @@
             "boolean",
             "null"
           ]
+        },
+        "+unique_tmp_table_suffix": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "+unlogged": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
         }
       },
       "additionalProperties": {
@@ -5859,6 +6742,42 @@
       "properties": {
         "range": {
           "$ref": "#/definitions/Range"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RefreshableConfig": {
+      "description": "ClickHouse `refreshable` MV config: the settings map or a bare bool, where `false` behaves like omitting the key (dbt-clickhouse parity).",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        }
+      ]
+    },
+    "RowFilterConfig": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "function": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false
@@ -5926,6 +6845,20 @@
     "SchemaRefreshInterval": {
       "description": "Schema refresh interval: '30m', '2h', '1d', or 'never'",
       "type": "string"
+    },
+    "SelectionFilterOn": {
+      "description": "Which output column(s) node selection scopes a check's rows by.\n\n`\"none\"` opts out of scoping entirely (the check always evaluates the whole project, which is what aggregate checks want). A single name or a list of names scopes on those output columns: a row is kept when the node id in *any* of them is selected. Unset defaults to the `unique_id` column when the check outputs one.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "Severity": {
       "type": "string",
