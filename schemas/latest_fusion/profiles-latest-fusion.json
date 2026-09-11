@@ -109,6 +109,12 @@
               ],
               "format": "int64"
             },
+            "is_serverless": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
             "issuer_url": {
               "type": [
                 "string",
@@ -174,6 +180,18 @@
                 "null"
               ]
             },
+            "serverless_acct_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "serverless_work_group": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "sslmode": {
               "type": [
                 "string",
@@ -221,6 +239,18 @@
           ],
           "properties": {
             "account": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "adaptive_metadata_fetch": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "application_name": {
               "type": [
                 "string",
                 "null"
@@ -421,6 +451,13 @@
                 "snowflake"
               ]
             },
+            "use_dbt_cloud_credentials": {
+              "description": "Route auth through flock-service using dbt Cloud credentials instead of adapter-specific auth (see dbt-auth's `AdapterConfig::use_dbt_cloud_credentials`).",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
             "user": {
               "type": [
                 "string",
@@ -428,6 +465,18 @@
               ]
             },
             "warehouse": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "workload_identity_entra_resource": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "workload_identity_provider": {
               "type": [
                 "string",
                 "null"
@@ -610,12 +659,6 @@
               ]
             },
             "dataproc_cluster_name": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "dataproc_region": {
               "type": [
                 "string",
                 "null"
@@ -1030,6 +1073,24 @@
                 "null"
               ]
             },
+            "azure_client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "azure_client_secret": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "azure_tenant_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "client_id": {
               "type": [
                 "string",
@@ -1114,6 +1175,16 @@
               "items": {
                 "type": "string"
               }
+            },
+            "query_tags": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/AnyValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "retry_all": {
               "type": [
@@ -1235,6 +1306,12 @@
             "type"
           ],
           "properties": {
+            "api_key": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "attach": {
               "description": "External databases to attach.",
               "type": [
@@ -1245,8 +1322,14 @@
                 "$ref": "#/definitions/DuckDbAttachment"
               }
             },
+            "base_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "database": {
-              "description": "Database name (defaults to \"main\")",
+              "description": "Database name (defaults to the name DuckDB derives from `path`)",
               "type": [
                 "string",
                 "null"
@@ -1273,6 +1356,36 @@
               "description": "Whether the primary database is a DuckLake database. Set to true to enable DuckLake-specific query generation (e.g., DROP without CASCADE). Not needed when the path uses the `ducklake:` scheme, but required for MotherDuck managed DuckLake where the path uses `md:` instead.",
               "type": [
                 "boolean",
+                "null"
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "okta_auth_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "okta_client_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "okta_token_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "organization": {
+              "type": [
+                "string",
                 "null"
               ]
             },
@@ -1319,6 +1432,12 @@
                 {
                   "type": "null"
                 }
+              ]
+            },
+            "token": {
+              "type": [
+                "string",
+                "null"
               ]
             },
             "type": {
@@ -1331,89 +1450,65 @@
           "additionalProperties": false
         },
         {
-          "description": "DuckDB adapter configuration",
+          "description": "The dbt lake compute engine.",
           "type": "object",
           "required": [
             "type"
           ],
           "properties": {
-            "attach": {
-              "description": "External databases to attach.",
+            "base_url": {
               "type": [
-                "array",
+                "string",
                 "null"
-              ],
-              "items": {
-                "$ref": "#/definitions/DuckDbAttachment"
-              }
+              ]
             },
             "database": {
-              "description": "Database name (defaults to \"main\")",
               "type": [
                 "string",
                 "null"
               ]
             },
-            "extensions": {
-              "description": "Extensions to load (e.g., [\"httpfs\", \"parquet\"] or [{name: \"duckpgq\", repo: \"community\"}])",
-              "type": [
-                "array",
-                "null"
-              ],
-              "items": {
-                "$ref": "#/definitions/DuckDbExtension"
-              }
-            },
-            "external_root": {
-              "description": "Root path for external materializations (defaults to \".\")",
+            "fivetran_auth_url": {
+              "description": "Fivetran public API base URL; only needed to reach a non-production one.",
               "type": [
                 "string",
                 "null"
               ]
             },
-            "is_ducklake": {
-              "description": "Whether the primary database is a DuckLake database. Set to true to enable DuckLake-specific query generation (e.g., DROP without CASCADE). Not needed when the path uses the `ducklake:` scheme, but required for MotherDuck managed DuckLake where the path uses `md:` instead.",
+            "fivetran_credential": {
+              "description": "Long-lived Fivetran personal access token, for `method: fivetran`.",
               "type": [
-                "boolean",
+                "string",
+                "null"
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
                 "null"
               ]
             },
             "path": {
-              "description": "Path to the DuckDB database file. Defaults to in-memory (:memory:)",
               "type": [
                 "string",
                 "null"
               ]
             },
             "schema": {
-              "description": "Schema name (defaults to \"main\")",
               "type": [
                 "string",
                 "null"
               ]
             },
-            "secrets": {
-              "description": "Secrets to register with DuckDB's Secrets Manager.",
+            "snowflake_pat_duration_days": {
+              "description": "Days a minted Snowflake PAT stays valid before it needs re-minting. Only applies when lake compute mints a PAT for Horizon catalog access (i.e. non-keypair auth on the native Snowflake target). Default: 30.",
               "type": [
-                "array",
+                "integer",
                 "null"
               ],
-              "items": {
-                "$ref": "#/definitions/DuckDbSecret"
-              }
-            },
-            "settings": {
-              "description": "DuckDB configuration settings (e.g., {\"memory_limit\": \"4GB\"})",
-              "type": [
-                "object",
-                "null"
-              ],
-              "additionalProperties": {
-                "$ref": "#/definitions/AnyValue"
-              }
+              "format": "int64"
             },
             "threads": {
-              "description": "Number of threads",
               "anyOf": [
                 {
                   "$ref": "#/definitions/StringOrInteger"
@@ -1423,10 +1518,16 @@
                 }
               ]
             },
+            "token": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
             "type": {
               "type": "string",
               "enum": [
-                "alt"
+                "lakecompute"
               ]
             }
           },
@@ -1478,6 +1579,17 @@
                 "null"
               ]
             },
+            "idle_timeout": {
+              "description": "Idle connection timeout in seconds",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "password": {
               "type": [
                 "string",
@@ -1485,6 +1597,17 @@
               ]
             },
             "port": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/StringOrInteger"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "query_timeout": {
+              "description": "Per-statement execution timeout in seconds (0 = no limit)",
               "anyOf": [
                 {
                   "$ref": "#/definitions/StringOrInteger"

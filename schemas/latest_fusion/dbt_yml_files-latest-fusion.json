@@ -13,12 +13,22 @@
       }
     },
     "anchors": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/AnyValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "checks": {
       "type": [
         "array",
         "null"
       ],
       "items": {
-        "$ref": "#/definitions/AnyValue"
+        "$ref": "#/definitions/CheckProperties"
       }
     },
     "data_tests": {
@@ -185,6 +195,12 @@
     "AnalysesConfig": {
       "type": "object",
       "properties": {
+        "adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -233,6 +249,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -323,6 +340,105 @@
       },
       "additionalProperties": false
     },
+    "CheckConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": null,
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "meta": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "selection_filter_on": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SelectionFilterOn"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Severity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tags": {
+          "default": [],
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CheckProperties": {
+      "description": "A `checks:` entry in a properties `.yml`, describing one check by name.\n\nUnlike most resources a check has no `columns:` — it is a query over project metadata, not a relation with a schema.",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CheckConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClickHouseIndex": {
+      "description": "A ClickHouse data-skipping index: `{name, definition}` items consumed by the ClickHouse macros (`ADD INDEX {{ index.get('name') }} {{ index.get('definition') }}`). Both fields are required, so no `skip_serializing_none` is needed.",
+      "type": "object",
+      "required": [
+        "definition",
+        "name"
+      ],
+      "properties": {
+        "definition": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "ClusterConfig": {
       "description": "Configuration for cluster by columns.\n\ndbt-core allows either of the variants for the `cluster_by` to allow cluster on a single column or on multiple columns",
       "anyOf": [
@@ -364,7 +480,7 @@
             "null"
           ],
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/StringOrMap"
           }
         },
         "tags": {
@@ -412,6 +528,12 @@
           "items": {
             "type": "string"
           }
+        },
+        "codec": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "column_mask": {
           "anyOf": [
@@ -511,7 +633,7 @@
             "null"
           ],
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/StringOrMap"
           }
         },
         "quote": {
@@ -528,6 +650,12 @@
           "items": {
             "$ref": "#/definitions/DataTests"
           }
+        },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false
@@ -634,7 +762,8 @@
           "description": "Run computations in a separate, ephemeral worker process",
           "type": "string",
           "enum": [
-            "sidecar"
+            "sidecar",
+            "local"
           ]
         },
         {
@@ -642,25 +771,6 @@
           "type": "string",
           "enum": [
             "service"
-          ]
-        }
-      ]
-    },
-    "ComputePlatform": {
-      "description": "Selects the compute target a model's DML is executed against.\n\n`Default` uses the profile's adapter. A run implementation may honor an alternate target for other variants; parse/compile/render and introspection are unaffected by this selection.",
-      "oneOf": [
-        {
-          "description": "Execute on the profile's (default) adapter.",
-          "type": "string",
-          "enum": [
-            "default"
-          ]
-        },
-        {
-          "description": "Execute on the alternate compute target.",
-          "type": "string",
-          "enum": [
-            "alt"
           ]
         }
       ]
@@ -780,9 +890,13 @@
           ]
         },
         "column_name": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "config": {
@@ -827,9 +941,13 @@
           ]
         },
         "column_name": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "config": {
@@ -875,6 +993,12 @@
       "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
+        "adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "adapter_properties": {
           "type": [
             "object",
@@ -963,6 +1087,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -1015,6 +1145,15 @@
             }
           ]
         },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "copy_grants": {
           "type": [
             "boolean",
@@ -1062,6 +1201,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -1069,9 +1214,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "enable_list_inference": {
@@ -1093,6 +1252,12 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "error_if": {
           "type": [
             "string",
@@ -1111,7 +1276,22 @@
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -1176,16 +1356,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -1228,6 +1409,22 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "limit": {
@@ -1298,6 +1495,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -1324,10 +1527,30 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "partition_by": {
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -1352,13 +1575,42 @@
             }
           ]
         },
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "primary_key": {
-          "default": null,
-          "allOf": [
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
             }
           ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "query_tag": {
           "anyOf": [
@@ -1370,10 +1622,26 @@
             }
           ]
         },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "quoting": {
           "anyOf": [
             {
               "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -1396,6 +1664,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -1426,6 +1710,16 @@
             "null"
           ]
         },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "schedule": {
           "anyOf": [
             {
@@ -1454,6 +1748,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "severity": {
           "anyOf": [
             {
@@ -1471,6 +1774,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -1510,10 +1819,32 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "sql_header": {
           "type": [
             "string",
             "null"
+          ]
+        },
+        "sql_security": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/DataTestState"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "static_analysis": {
@@ -1553,6 +1884,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "table": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "table_tag": {
@@ -1625,6 +1962,46 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "use_safer_relation_operations": {
           "type": [
             "boolean",
@@ -1653,6 +2030,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -1688,6 +2075,35 @@
           "anyOf": [
             {
               "$ref": "#/definitions/StaticAnalysisOffReason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DataTestState": {
+      "description": "The dbt State configs supported on data tests: only `require_fresh_data_from`, `evaluate_volatile_sql` and `compare_unrendered_code` (snapshots reuse the full `ModelState`). Other keys are not fields here, so they are flagged as unknown keys at parse time.",
+      "type": "object",
+      "properties": {
+        "compare_unrendered_code": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "evaluate_volatile_sql": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "require_fresh_data_from": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/UpdatesOn"
             },
             {
               "type": "null"
@@ -1803,6 +2219,13 @@
           "description": "only for databricks",
           "type": "string",
           "enum": [
+            "metric_view"
+          ]
+        },
+        {
+          "description": "only for databricks",
+          "type": "string",
+          "enum": [
             "streaming_table"
           ]
         },
@@ -1811,6 +2234,13 @@
           "type": "string",
           "enum": [
             "dynamic_table"
+          ]
+        },
+        {
+          "description": "only for snowflake",
+          "type": "string",
+          "enum": [
+            "interactive_table"
           ]
         },
         {
@@ -2532,6 +2962,12 @@
             }
           ]
         },
+        "adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "adapter_properties": {
           "type": [
             "object",
@@ -2620,6 +3056,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -2661,6 +3103,15 @@
             "string",
             "null"
           ]
+        },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "copy_grants": {
           "type": [
@@ -2709,6 +3160,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -2716,9 +3173,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "docs": {
@@ -2749,6 +3220,12 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "entry_point": {
           "type": [
             "string",
@@ -2761,7 +3238,22 @@
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -2822,16 +3314,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -2874,6 +3367,22 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "liquid_clustered_by": {
@@ -2927,6 +3436,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -2959,6 +3474,16 @@
             "null"
           ]
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "packages": {
           "anyOf": [
             {
@@ -2973,6 +3498,16 @@
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -2997,13 +3532,64 @@
             }
           ]
         },
-        "primary_key": {
-          "default": null,
-          "allOf": [
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "post-hook": {
+          "default": [],
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
             }
           ]
+        },
+        "pre-hook": {
+          "default": [],
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Hooks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "primary_key": {
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "query_tag": {
           "anyOf": [
@@ -3015,10 +3601,26 @@
             }
           ]
         },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "quoting": {
           "anyOf": [
             {
               "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -3041,6 +3643,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -3069,6 +3687,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "runtime_version": {
@@ -3105,6 +3733,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "skip_matched_step": {
           "type": [
             "boolean",
@@ -3112,6 +3749,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -3161,6 +3804,18 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sql_security": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "static_analysis": {
           "anyOf": [
             {
@@ -3183,6 +3838,12 @@
             "null"
           ]
         },
+        "table": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "table_tag": {
           "type": [
             "string",
@@ -3196,6 +3857,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -3252,6 +3914,12 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "default": "scalar",
           "anyOf": [
@@ -3261,6 +3929,40 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "use_safer_relation_operations": {
@@ -3285,6 +3987,16 @@
           "anyOf": [
             {
               "$ref": "#/definitions/Volatility"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -3648,6 +4360,27 @@
         }
       ]
     },
+    "IndexItem": {
+      "description": "One element of the shared `indexes` config. Adapter shapes are kept as distinct typed variants (like `PartitionConfig` does for BigQuery); the required fields are disjoint (`columns` vs `name`+`definition`), so untagged deserialization is unambiguous, and each variant serializes its own shape back to Jinja.",
+      "anyOf": [
+        {
+          "description": "Postgres: `{columns, unique, type}`",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PostgresIndex"
+            }
+          ]
+        },
+        {
+          "description": "ClickHouse: `{name, definition}`",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ClickHouseIndex"
+            }
+          ]
+        }
+      ]
+    },
     "IndexesConfig": {
       "description": "A wrapper type for the `indexes` config field that handles flexible deserialization.\n\ndbt-core accepts both list and dictionary formats for indexes. This type accepts either format on input but always serializes as a list.\n\n# Example\n\n```ignore // Input (list): [{columns: [\"id\"], unique: true}] // Serializes as: [{columns: [\"id\"], unique: true}]\n\n// Input (dict): {\"my_index\": {columns: [\"id\"], unique: true}} // Serializes as: [{columns: [\"id\"], unique: true}]  (keys are discarded) ```",
       "type": [
@@ -3655,7 +4388,7 @@
         "null"
       ],
       "items": {
-        "$ref": "#/definitions/PostgresIndex"
+        "$ref": "#/definitions/IndexItem"
       }
     },
     "LatestVersionPointer": {
@@ -4160,6 +4893,12 @@
             }
           ]
         },
+        "adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "adapter_properties": {
           "type": [
             "object",
@@ -4182,16 +4921,6 @@
           "type": [
             "string",
             "null"
-          ]
-        },
-        "alt_compute": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ComputePlatform"
-            },
-            {
-              "type": "null"
-            }
           ]
         },
         "as_columnstore": {
@@ -4283,6 +5012,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -4337,6 +5072,7 @@
           ]
         },
         "column_types": {
+          "default": null,
           "type": [
             "object",
             "null"
@@ -4367,6 +5103,25 @@
             "boolean",
             "null"
           ]
+        },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "constraints": {
+          "default": null,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/ModelConstraint"
+          }
         },
         "contract": {
           "anyOf": [
@@ -4431,6 +5186,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -4438,9 +5199,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "docs": {
@@ -4472,7 +5247,29 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "environment_dependencies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "environment_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -4494,7 +5291,22 @@
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -4588,13 +5400,14 @@
           ]
         },
         "incremental_predicates": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "type": "string"
-          }
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "incremental_strategy": {
           "anyOf": [
@@ -4613,16 +5426,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -4686,6 +5500,22 @@
             }
           ]
         },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "liquid_clustered_by": {
           "anyOf": [
             {
@@ -4694,6 +5524,18 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "loaded_at_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "loaded_at_query": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "location": {
@@ -4781,6 +5623,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -4837,6 +5685,16 @@
             }
           ]
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "packages": {
           "anyOf": [
             {
@@ -4851,6 +5709,16 @@
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -4873,6 +5741,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "persist_docs": {
@@ -4915,10 +5789,34 @@
           }
         },
         "primary_key": {
-          "default": null,
-          "allOf": [
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "propagate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
             }
           ]
         },
@@ -4937,6 +5835,15 @@
             "null"
           ]
         },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "query_tag": {
           "anyOf": [
             {
@@ -4947,10 +5854,26 @@
             }
           ]
         },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "quoting": {
           "anyOf": [
             {
               "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -4973,6 +5896,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -5001,6 +5940,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "schedule": {
@@ -5040,6 +5989,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "skip_matched_step": {
           "type": [
             "boolean",
@@ -5047,6 +6005,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -5086,7 +6050,19 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "sql_header": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sql_security": {
           "type": [
             "string",
             "null"
@@ -5139,6 +6115,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "table": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "table_format": {
@@ -5217,6 +6199,12 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "unique_key": {
           "anyOf": [
             {
@@ -5225,6 +6213,40 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "use_anonymous_sproc": {
@@ -5256,6 +6278,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -5332,6 +6364,44 @@
           "anyOf": [
             {
               "$ref": "#/definitions/ModelFreshnessRules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_after": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessRules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "loaded_at_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "loaded_at_query": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "warn_after": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FreshnessRules"
             },
             {
               "type": "null"
@@ -5589,6 +6659,12 @@
     "ModelState": {
       "type": "object",
       "properties": {
+        "compare_unrendered_code": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "evaluate_volatile_sql": {
           "type": [
             "boolean",
@@ -5678,12 +6754,21 @@
       ]
     },
     "PartitionsConfig": {
-      "description": "External-table style `partitions` config — list-of-strings (e.g. `['ds=2023-01-01']`) or list-of-maps (e.g. `[{name: foo, data_type: varchar}]`, as used by `dbt-external-tables`).",
+      "description": "External-table style `partitions` config — a string or list-of-strings (e.g. `['ds=2023-01-01']`), or a map or list-of-maps (e.g. `[{name: foo, data_type: varchar}]`, as used by `dbt-external-tables`).",
       "anyOf": [
+        {
+          "type": "string"
+        },
         {
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
           }
         },
         {
@@ -5803,6 +6888,42 @@
       "properties": {
         "range": {
           "$ref": "#/definitions/Range"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RefreshableConfig": {
+      "description": "ClickHouse `refreshable` MV config: the settings map or a bare bool, where `false` behaves like omitting the key (dbt-clickhouse parity).",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        }
+      ]
+    },
+    "RowFilterConfig": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "function": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false
@@ -6036,6 +7157,12 @@
       "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
+        "adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "adapter_properties": {
           "type": [
             "object",
@@ -6124,6 +7251,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -6161,6 +7294,7 @@
           ]
         },
         "column_types": {
+          "default": null,
           "type": [
             "object",
             "null"
@@ -6174,6 +7308,15 @@
             "string",
             "null"
           ]
+        },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "copy_grants": {
           "type": [
@@ -6222,6 +7365,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "delimiter": {
           "type": [
             "string",
@@ -6235,9 +7384,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "docs": {
@@ -6269,7 +7432,14 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -6281,7 +7451,22 @@
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -6353,16 +7538,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -6405,6 +7591,22 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "liquid_clustered_by": {
@@ -6468,6 +7670,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -6494,10 +7702,30 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "partition_by": {
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -6520,6 +7748,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "persist_docs": {
@@ -6553,12 +7787,45 @@
           ]
         },
         "primary_key": {
-          "default": null,
-          "allOf": [
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
             }
           ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "propagate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "query_tag": {
           "anyOf": [
@@ -6568,6 +7835,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "quote_columns": {
@@ -6581,6 +7854,16 @@
           "anyOf": [
             {
               "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -6603,6 +7886,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -6633,6 +7932,16 @@
             "null"
           ]
         },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "schedule": {
           "anyOf": [
             {
@@ -6661,6 +7970,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "skip_matched_step": {
           "type": [
             "boolean",
@@ -6668,6 +7986,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -6707,6 +8031,18 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sql_security": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "static_analysis": {
           "anyOf": [
             {
@@ -6724,6 +8060,12 @@
           ]
         },
         "storage_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "table": {
           "type": [
             "string",
             "null"
@@ -6799,6 +8141,46 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "use_safer_relation_operations": {
           "type": [
             "boolean",
@@ -6815,6 +8197,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -6886,10 +8278,25 @@
       },
       "additionalProperties": false
     },
+    "SelectionFilterOn": {
+      "description": "Which output column(s) node selection scopes a check's rows by.\n\n`\"none\"` opts out of scoping entirely (the check always evaluates the whole project, which is what aggregate checks want). A single name or a list of names scopes on those output columns: a row is kept when the node id in *any* of them is selected. Unset defaults to the `unique_id` column when the check outputs one.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "SemanticLayerElementConfig": {
       "type": "object",
       "properties": {
         "meta": {
+          "default": {},
           "type": [
             "object",
             "null"
@@ -6912,6 +8319,12 @@
       "description": "This configuration is a superset of all warehouse specific configurations that users can set",
       "type": "object",
       "properties": {
+        "adapter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "adapter_properties": {
           "type": [
             "object",
@@ -7000,6 +8413,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -7062,6 +8481,15 @@
             }
           ]
         },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "copy_grants": {
           "type": [
             "boolean",
@@ -7115,6 +8543,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -7122,9 +8556,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "docs": {
@@ -7156,7 +8604,14 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -7168,7 +8623,22 @@
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -7251,16 +8721,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -7310,6 +8781,22 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "liquid_clustered_by": {
@@ -7373,6 +8860,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -7399,10 +8892,30 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "partition_by": {
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -7425,6 +8938,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
           ]
         },
         "persist_docs": {
@@ -7458,12 +8977,45 @@
           ]
         },
         "primary_key": {
-          "default": null,
-          "allOf": [
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
             }
           ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "propagate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "query_tag": {
           "anyOf": [
@@ -7473,6 +9025,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "quote_columns": {
@@ -7486,6 +9044,16 @@
           "anyOf": [
             {
               "$ref": "#/definitions/DbtQuoting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -7508,6 +9076,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -7538,6 +9122,16 @@
             "null"
           ]
         },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "schedule": {
           "anyOf": [
             {
@@ -7566,6 +9160,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "skip_matched_step": {
           "type": [
             "boolean",
@@ -7573,6 +9176,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -7622,6 +9231,28 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sql_security": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ModelState"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "static_analysis": {
           "anyOf": [
             {
@@ -7659,6 +9290,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "table": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "table_tag": {
@@ -7743,6 +9380,12 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "unique_key": {
           "anyOf": [
             {
@@ -7753,7 +9396,41 @@
             }
           ]
         },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "updated_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
           "type": [
             "string",
             "null"
@@ -7775,6 +9452,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -7974,6 +9661,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -8016,6 +9709,15 @@
             "null"
           ]
         },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "copy_grants": {
           "type": [
             "boolean",
@@ -8057,6 +9759,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -8064,9 +9772,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "enable_list_inference": {
@@ -8088,7 +9810,14 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "event_time": {
+          "default": null,
           "type": [
             "string",
             "null"
@@ -8106,7 +9835,22 @@
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -8175,16 +9919,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -8227,6 +9972,22 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "liquid_clustered_by": {
@@ -8292,6 +10053,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -8318,10 +10085,30 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "partition_by": {
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -8346,18 +10133,63 @@
             }
           ]
         },
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "primary_key": {
-          "default": null,
-          "allOf": [
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
             }
           ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "query_tag": {
           "anyOf": [
             {
               "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -8380,6 +10212,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -8408,6 +10256,16 @@
           "type": [
             "string",
             "null"
+          ]
+        },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "schedule": {
@@ -8443,6 +10301,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "skip_matched_step": {
           "type": [
             "boolean",
@@ -8450,6 +10317,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -8489,6 +10362,18 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sql_security": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "static_analysis": {
           "anyOf": [
             {
@@ -8520,6 +10405,12 @@
             {
               "type": "null"
             }
+          ]
+        },
+        "table": {
+          "type": [
+            "string",
+            "null"
           ]
         },
         "table_tag": {
@@ -8592,6 +10483,46 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "use_safer_relation_operations": {
           "type": [
             "boolean",
@@ -8608,6 +10539,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -8703,11 +10644,22 @@
       ]
     },
     "StaticAnalysisOffReason": {
-      "type": "string",
-      "enum": [
-        "configuredoff",
-        "unabletofetchschema",
-        "nodownstream"
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "configuredoff",
+            "unabletofetchschema",
+            "nodownstream"
+          ]
+        },
+        {
+          "description": "No longer produced: a model with a custom materialization now honors its configured `static_analysis` (dbt-labs/fs#14357). Retained because `RunResultOutput` deserializes this field, so a `run_results.json` written by an older Fusion must still parse (e.g. `dbt retry`).",
+          "type": "string",
+          "enum": [
+            "custommaterialization"
+          ]
+        }
       ]
     },
     "StoreFailuresAs": {
@@ -8739,6 +10691,19 @@
         {
           "type": "integer",
           "format": "int64"
+        }
+      ]
+    },
+    "StringOrMap": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         }
       ]
     },
@@ -9067,6 +11032,12 @@
             "null"
           ]
         },
+        "catchup": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "category": {
           "anyOf": [
             {
@@ -9119,6 +11090,15 @@
             }
           ]
         },
+        "connection_overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "copy_grants": {
           "type": [
             "boolean",
@@ -9160,6 +11140,12 @@
             "null"
           ]
         },
+        "definer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "description": {
           "type": [
             "string",
@@ -9167,9 +11153,23 @@
           ]
         },
         "dist": {
-          "type": [
-            "string",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distribute_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "enable_list_inference": {
@@ -9190,13 +11190,34 @@
             "null"
           ]
         },
+        "engine": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "external_volume": {
           "type": [
             "string",
             "null"
           ]
         },
+        "fields": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "file_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
           "type": [
             "string",
             "null"
@@ -9248,16 +11269,17 @@
           ]
         },
         "indexes": {
-          "default": null,
-          "allOf": [
-            {
-              "$ref": "#/definitions/IndexesConfig"
-            }
-          ]
+          "$ref": "#/definitions/IndexesConfig"
         },
         "initialize": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "inserts_only": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -9300,6 +11322,22 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifetime": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "liquid_clustered_by": {
@@ -9353,6 +11391,12 @@
             "$ref": "#/definitions/AnyValue"
           }
         },
+        "mv_on_schema_change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "not_matched_by_source_action": {
           "type": [
             "string",
@@ -9379,10 +11423,30 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "order_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "partition_by": {
           "anyOf": [
             {
               "$ref": "#/definitions/PartitionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "partition_by_config": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
             },
             {
               "type": "null"
@@ -9407,18 +11471,63 @@
             }
           ]
         },
+        "persist_constraints": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
         "primary_key": {
-          "default": null,
-          "allOf": [
+          "$ref": "#/definitions/PrimaryKeyConfig"
+        },
+        "primary_key_config": {
+          "anyOf": [
             {
-              "$ref": "#/definitions/PrimaryKeyConfig"
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
             }
           ]
+        },
+        "projections": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
+        "query_settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
         },
         "query_tag": {
           "anyOf": [
             {
               "$ref": "#/definitions/QueryTag"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query_tags": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
             },
             {
               "type": "null"
@@ -9441,6 +11550,22 @@
         "refresh_warehouse": {
           "type": [
             "string",
+            "null"
+          ]
+        },
+        "refreshable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RefreshableConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repopulate_from_mvs_on_full_refresh": {
+          "type": [
+            "boolean",
             "null"
           ]
         },
@@ -9471,6 +11596,16 @@
             "null"
           ]
         },
+        "row_filter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RowFilterConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "schedule": {
           "anyOf": [
             {
@@ -9493,6 +11628,15 @@
             "null"
           ]
         },
+        "settings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/definitions/AnyValue"
+          }
+        },
         "skip_matched_step": {
           "type": [
             "boolean",
@@ -9500,6 +11644,12 @@
           ]
         },
         "skip_not_matched_step": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "skip_optimize": {
           "type": [
             "boolean",
             "null"
@@ -9539,6 +11689,18 @@
             "null"
           ]
         },
+        "source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sql_security": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "static_analysis": {
           "anyOf": [
             {
@@ -9561,6 +11723,12 @@
             "null"
           ]
         },
+        "table": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "table_tag": {
           "type": [
             "string",
@@ -9574,6 +11742,7 @@
           ]
         },
         "tags": {
+          "default": [],
           "anyOf": [
             {
               "$ref": "#/definitions/StringOrArrayOfStrings"
@@ -9630,6 +11799,46 @@
             "null"
           ]
         },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unique_tmp_table_suffix": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unlogged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "update_lag": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AnyValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "use_safer_relation_operations": {
           "type": [
             "boolean",
@@ -9646,6 +11855,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "zorder": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/StringOrArrayOfStrings"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -9771,6 +11990,21 @@
       "description": "Column entry inside a model version block.\n\nUnlike `ColumnProperties`, `name` is optional here because version column lists can contain include/exclude directives (e.g. `include: all, exclude: [col]`) that have no name.",
       "type": "object",
       "properties": {
+        "classifiers": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "codec": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "column_mask": {
           "anyOf": [
             {
@@ -9891,7 +12125,7 @@
             "null"
           ],
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/StringOrMap"
           }
         },
         "quote": {
@@ -9908,6 +12142,12 @@
           "items": {
             "$ref": "#/definitions/DataTests"
           }
+        },
+        "ttl": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false
@@ -9925,7 +12165,7 @@
           ]
         },
         "columns": {
-          "readOnly": true,
+          "description": "Columns for this version. Each entry is either a column definition or the single optional `include`/`exclude` directive controlling which model-level columns this version inherits. When no directive is given, every model-level column is inherited.",
           "type": [
             "array",
             "null"

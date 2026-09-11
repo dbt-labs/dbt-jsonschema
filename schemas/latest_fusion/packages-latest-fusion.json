@@ -79,7 +79,7 @@
         "package"
       ],
       "properties": {
-        "install-prerelease": {
+        "install_prerelease": {
           "description": "Allow installation of pre-release versions when resolving `version`.",
           "type": [
             "boolean",
@@ -141,15 +141,19 @@
       ],
       "properties": {
         "private": {
-          "description": "Private package identifier. Two-segment `org/repo` for GitHub or 2-part Azure DevOps (`azure_active_directory`); three-or-more-segment `org/group/repo` for GitLab subgroups or Azure DevOps `org/project/repo` (`ado` / `azure_devops`).",
+          "description": "Private package identifier. Two-segment `org/repo` for GitHub, legacy Azure DevOps (`azure_devops`), or Azure Active Directory (`azure_active_directory`); three-or-more-segment `org/group/repo` for GitLab subgroups or Azure DevOps `org/project/repo` (`ado`).",
           "type": "string",
           "pattern": "^[\\w\\-\\.]+(/[\\w\\-\\.]+){1,}$"
         },
         "provider": {
-          "description": "Git provider. One of `github` (default), `gitlab`, `ado`, `azure_devops`, or `azure_active_directory`. `ado` / `azure_devops` require an `org/project/repo` path; `azure_active_directory` is hosted-only and uses `org/repo`.",
-          "type": [
-            "string",
-            "null"
+          "description": "Git provider. Defaults to `github` when unset.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PrivatePackageProvider"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "revision": {
@@ -175,6 +179,32 @@
         }
       },
       "additionalProperties": false
+    },
+    "PrivatePackageProvider": {
+      "description": "Git provider hosting a private package.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "github",
+            "gitlab"
+          ]
+        },
+        {
+          "description": "Azure DevOps, also spelled `azure_devops`. Requires an `org/project/repo` path.",
+          "type": "string",
+          "enum": [
+            "ado"
+          ]
+        },
+        {
+          "description": "Azure DevOps through Azure Active Directory. Hosted only, uses `org/repo`.",
+          "type": "string",
+          "enum": [
+            "azure_active_directory"
+          ]
+        }
+      ]
     },
     "TarballPackage": {
       "type": "object",

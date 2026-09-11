@@ -26,6 +26,7 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "AnyValue": true,
     "AtomExpr": {
       "description": "The true leaves: either a method, a shorthand, or an exclude",
       "anyOf": [
@@ -39,7 +40,7 @@
           "description": "Direct method name as key with value",
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/SelectorValue"
+            "$ref": "#/definitions/SelectorMethodValue"
           }
         }
       ]
@@ -191,7 +192,7 @@
           "minimum": 0.0
         },
         "value": {
-          "$ref": "#/definitions/SelectorValue"
+          "$ref": "#/definitions/SelectorMethodValue"
         }
       },
       "additionalProperties": false
@@ -279,6 +280,17 @@
         },
         {
           "$ref": "#/definitions/AtomExpr"
+        }
+      ]
+    },
+    "SelectorMethodValue": {
+      "description": "A method argument. Loading accepts any shape dbt Core's `Any`-typed `value` would; `Unsupported` defers the failure to resolution, like dbt Core does.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/SelectorValue"
+        },
+        {
+          "$ref": "#/definitions/AnyValue"
         }
       ]
     },
