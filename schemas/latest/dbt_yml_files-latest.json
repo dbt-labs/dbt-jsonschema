@@ -373,6 +373,17 @@
           },
           "type_params": {
             "type": "object"
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "meta": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "additionalProperties": false
