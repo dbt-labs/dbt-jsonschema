@@ -788,6 +788,9 @@
         "+database": {
           "$ref": "#/$defs/database"
         },
+        "+delimiter": {
+          "type": "string"
+        },
         "+docs": {
           "$ref": "#/$defs/docs_config"
         },
@@ -838,6 +841,9 @@
         },
         "database": {
           "$ref": "#/$defs/database"
+        },
+        "delimiter": {
+          "type": "string"
         },
         "docs": {
           "$ref": "#/$defs/docs_config"
