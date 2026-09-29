@@ -1082,9 +1082,9 @@
           "description": "Configuration, specific to BigQuery adapter, used to setup authorized views.",
           "items": {
             "type": "object",
-            "required": ["database", "project"],
+            "required": ["dataset", "project"],
             "properties": {
-              "database": {
+              "dataset": {
                 "type": "string"
               },
               "project": {

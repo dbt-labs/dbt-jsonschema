@@ -902,12 +902,9 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "database",
-              "project"
-            ],
+            "required": ["dataset", "project"],
             "properties": {
-              "database": {
+              "dataset": {
                 "type": "string"
               },
               "project": {
