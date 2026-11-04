@@ -1448,9 +1448,13 @@
         },
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+group": {
@@ -1498,9 +1502,13 @@
       "properties": {
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+meta": {
@@ -1620,9 +1628,13 @@
         },
         "+bind": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+buckets": {
@@ -1682,9 +1694,13 @@
         },
         "+copy_grants": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_tags": {
@@ -1734,9 +1750,13 @@
         },
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+error_if": {
@@ -1765,9 +1785,13 @@
         },
         "+full_refresh": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+grant_access_to": {
@@ -2041,9 +2065,13 @@
         },
         "+secure": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+severity": {
@@ -2132,9 +2160,13 @@
         },
         "+store_failures": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+store_failures_as": {
@@ -2199,9 +2231,13 @@
         },
         "+transient": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+unlogged": {
@@ -2341,9 +2377,13 @@
       "properties": {
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+meta": {
@@ -2418,9 +2458,13 @@
           ]
         },
         "+enabled": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+entry_point": {
@@ -2564,9 +2608,13 @@
       "type": "object",
       "properties": {
         "+enabled": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+group": {
@@ -2713,9 +2761,13 @@
         },
         "+bind": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+buckets": {
@@ -2854,9 +2906,13 @@
         },
         "+copy_grants": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_tags": {
@@ -2968,9 +3024,13 @@
         },
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+engine": {
@@ -3051,9 +3111,13 @@
         },
         "+full_refresh": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+grant_access_to": {
@@ -3739,9 +3803,13 @@
         },
         "+secure": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+settings": {
@@ -3946,9 +4014,13 @@
         },
         "+transient": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+ttl": {
@@ -4068,9 +4140,13 @@
           ]
         },
         "+enabled": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+export_as": {
@@ -4186,9 +4262,13 @@
           ]
         },
         "+bind": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+buckets": {
@@ -4246,9 +4326,13 @@
           ]
         },
         "+copy_grants": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_tags": {
@@ -4311,9 +4395,13 @@
           ]
         },
         "+enabled": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+event_time": {
@@ -4335,9 +4423,13 @@
           ]
         },
         "+full_refresh": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+grant_access_to": {
@@ -4570,9 +4662,13 @@
           ]
         },
         "+quote_columns": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quoting": {
@@ -4654,9 +4750,13 @@
           ]
         },
         "+secure": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+skip_matched_step": {
@@ -4765,9 +4865,13 @@
           ]
         },
         "+transient": {
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+unlogged": {
@@ -4786,9 +4890,13 @@
       "properties": {
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+group": {
@@ -4826,9 +4934,13 @@
       "properties": {
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+meta": {
@@ -4928,9 +5040,13 @@
         },
         "+bind": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+buckets": {
@@ -5000,9 +5116,13 @@
         },
         "+copy_grants": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_tags": {
@@ -5068,9 +5188,13 @@
         },
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+event_time": {
@@ -5094,9 +5218,13 @@
         },
         "+full_refresh": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+grant_access_to": {
@@ -5369,9 +5497,13 @@
         },
         "+quote_columns": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+quoting": {
@@ -5456,9 +5588,13 @@
         },
         "+secure": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+skip_matched_step": {
@@ -5620,9 +5756,13 @@
         },
         "+transient": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+unique_key": {
@@ -5693,9 +5833,13 @@
         },
         "+bind": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+buckets": {
@@ -5777,9 +5921,13 @@
         },
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+event_time": {
@@ -6191,9 +6339,13 @@
         },
         "+bind": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+buckets": {
@@ -6253,9 +6405,13 @@
         },
         "+copy_grants": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+copy_tags": {
@@ -6299,9 +6455,13 @@
         },
         "+enabled": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+external_volume": {
@@ -6558,9 +6718,13 @@
         },
         "+secure": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+skip_matched_step": {
@@ -6673,9 +6837,13 @@
         },
         "+transient": {
           "default": null,
-          "type": [
-            "boolean",
-            "null"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JinjaBoolean"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "+unique_tmp_table_suffix": {
@@ -7055,6 +7223,17 @@
         }
       },
       "additionalProperties": false
+    },
+    "JinjaBoolean": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "pattern": "\\{\\{.*\\}\\}"
+        }
+      ]
     }
   }
 }
